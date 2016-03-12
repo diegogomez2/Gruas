@@ -1,0 +1,676 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="2"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Container class="javax.swing.JPanel" name="jPanel1">
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="labelPatente" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelDescripcion" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelModelo" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelPesoGrua" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelNChasis" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelTipoCombustible" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="panelTipoNeumaticos" alignment="0" max="32767" attributes="0"/>
+                      <Component id="textoPesoGrua" alignment="0" max="32767" attributes="0"/>
+                      <Component id="textoModelo" alignment="0" max="32767" attributes="0"/>
+                      <Component id="textoDescripcion" alignment="0" max="32767" attributes="0"/>
+                      <Component id="textoPatente" alignment="0" max="32767" attributes="0"/>
+                      <Component id="textoNChasis" alignment="0" max="32767" attributes="0"/>
+                      <Component id="comboTipoCombustible" alignment="0" max="32767" attributes="0"/>
+                      <Component id="labelObservaciones" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="jscroll" alignment="0" pref="281" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="botonIngresar" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="botonCancelar" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="fechas" alignment="1" max="32767" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="labelToneladas" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="labelNumeroMotor" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="labelMastil" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="labelMarca" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                          <Component id="textoMarca" max="32767" attributes="0"/>
+                                          <Component id="comboMastil" alignment="0" pref="231" max="32767" attributes="0"/>
+                                          <Component id="textoToneladas" alignment="1" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="1" attributes="0">
+                                              <Component id="textoAncho" min="-2" pref="109" max="-2" attributes="0"/>
+                                              <Component id="labelNeumaticosDelanteros" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="102" attributes="0">
+                                                  <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                                                  <Component id="labelLargo" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                  <Component id="textoLargo" min="-2" pref="104" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace min="22" pref="22" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="labelLargoUnas" min="-2" pref="86" max="-2" attributes="0"/>
+                                              <Component id="textoLargoUnas" min="-2" pref="118" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="102" attributes="0">
+                                                  <Component id="labelAlturaLevante" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace min="0" pref="21" max="32767" attributes="0"/>
+                                              </Group>
+                                              <Component id="textoAlturaLevante" max="32767" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <Component id="textoAlturaMastil" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="textoKMH" alignment="0" max="32767" attributes="0"/>
+                                      <Group type="102" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="labelAlturaMastil" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="labelKMH" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="labelNeumaticosTraseros" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="labelNumeroSerie" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="textoNeumaticosDelanteros" min="-2" pref="231" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                                  <Component id="textoNeumaticosTraseros" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="labelAncho" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="labelKMHUM" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="-2" pref="155" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" attributes="0">
+                                          <Group type="103" groupAlignment="1" attributes="0">
+                                              <Component id="textoKMHUM" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="textoNumeroMotor" max="32767" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="textoNumeroSerie" max="32767" attributes="0"/>
+                                      <Group type="102" attributes="0">
+                                          <Component id="labelHorasPM" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Component id="textoHorasPM" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="labelPatente" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelToneladas" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelKMH" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="textoPatente" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="textoToneladas" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="textoKMH" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Component id="labelDescripcion" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="textoDescripcion" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="textoMarca" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Component id="labelMarca" alignment="0" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="labelModelo" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelMastil" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelAlturaMastil" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="textoModelo" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="comboMastil" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="textoAlturaMastil" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="labelPesoGrua" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelAncho" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelLargo" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelLargoUnas" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelAlturaLevante" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="textoPesoGrua" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="textoAncho" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="textoLargo" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="textoLargoUnas" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="textoAlturaLevante" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="panelTipoNeumaticos" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="labelNChasis" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="textoNChasis" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="labelTipoCombustible" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="labelNeumaticosDelanteros" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="labelNeumaticosTraseros" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="textoNeumaticosTraseros" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="textoNeumaticosDelanteros" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="labelNumeroMotor" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="labelNumeroSerie" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="textoNumeroMotor" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="textoNumeroSerie" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="labelHorasPM" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="labelKMHUM" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="textoHorasPM" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="textoKMHUM" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Component id="comboTipoCombustible" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="labelObservaciones" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jscroll" pref="138" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="fechas" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="botonIngresar" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="botonCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="labelPatente">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Patente"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="textoPatente">
+          <Properties>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="textoDescripcion"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelDescripcion">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Descripci&#xf3;n"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="textoDescripcion">
+          <Properties>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Cursor de Texto"/>
+            </Property>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="textoModelo"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelModelo">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Modelo"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="textoModelo">
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelPesoGrua">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Peso Gr&#xfa;a (kilos)"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="textoPesoGrua">
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelNChasis">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="N&#xfa;mero Chasis"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="textoNChasis">
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelTipoCombustible">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Tipo Combustible"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="comboTipoCombustible">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="4">
+                <StringItem index="0" value="Item 1"/>
+                <StringItem index="1" value="Item 2"/>
+                <StringItem index="2" value="Item 3"/>
+                <StringItem index="3" value="Item 4"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
+        </Component>
+        <Container class="javax.swing.JPanel" name="panelTipoNeumaticos">
+          <Properties>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                <TitledBorder title="Tipo Neum&#xe1;ticos"/>
+              </Border>
+            </Property>
+          </Properties>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="comboTipoNeumaticos" pref="249" max="32767" attributes="0"/>
+                          <Component id="textoTipoNeumaticos" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="textoTipoNeumaticos" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="comboTipoNeumaticos" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JComboBox" name="comboTipoNeumaticos">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="4">
+                    <StringItem index="0" value="Item 1"/>
+                    <StringItem index="1" value="Item 2"/>
+                    <StringItem index="2" value="Item 3"/>
+                    <StringItem index="3" value="Item 4"/>
+                  </StringArray>
+                </Property>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JTextField" name="textoTipoNeumaticos">
+            </Component>
+          </SubComponents>
+        </Container>
+        <Component class="javax.swing.JLabel" name="labelObservaciones">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Observaciones"/>
+          </Properties>
+        </Component>
+        <Container class="javax.swing.JScrollPane" name="jscroll">
+          <AuxValues>
+            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+          </AuxValues>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JTextArea" name="textoObs">
+              <Properties>
+                <Property name="columns" type="int" value="20"/>
+                <Property name="rows" type="int" value="5"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Component class="javax.swing.JLabel" name="labelToneladas">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Toneladas"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="textoToneladas">
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelKMH">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Hor&#xf3;metro"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="textoKMH">
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelMarca">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Marca"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="textoMarca">
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelMastil">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="M&#xe1;stil"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="comboMastil">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="4">
+                <StringItem index="0" value="Item 1"/>
+                <StringItem index="1" value="Item 2"/>
+                <StringItem index="2" value="Item 3"/>
+                <StringItem index="3" value="Item 4"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelAlturaMastil">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Altura M&#xe1;stil (cm)"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="textoAlturaMastil">
+        </Component>
+        <Component class="javax.swing.JTextField" name="textoAncho">
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelAncho">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Ancho (cm)"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelLargo">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Largo (cm)"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="textoLargo">
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelLargoUnas">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Largo U&#xf1;as (cm)"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="textoLargoUnas">
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelAlturaLevante">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Al. levante"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="textoAlturaLevante">
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelNeumaticosDelanteros">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Neum&#xe1;ticos delanteros"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="textoNeumaticosDelanteros">
+        </Component>
+        <Component class="javax.swing.JTextField" name="textoNeumaticosTraseros">
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelNeumaticosTraseros">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Neum&#xe1;ticos traseros"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelNumeroMotor">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="N&#xfa;mero motor"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="textoNumeroMotor">
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelNumeroSerie">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="N&#xfa;mero de serie"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="textoNumeroSerie">
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelKMHUM">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="KM/H ult mantencion"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="textoKMHUM">
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelHorasPM">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Horas pr&#xf3;xima mantenci&#xf3;n"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="textoHorasPM">
+        </Component>
+        <Component class="javax.swing.JButton" name="botonIngresar">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Ingresar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonIngresarActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="botonCancelar">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Cancelar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonCancelarActionPerformed"/>
+          </Events>
+        </Component>
+        <Container class="javax.swing.JPanel" name="fechas">
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="labelFechaRT" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="labelFechaIngreso" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="textoFechaRT" pref="118" max="32767" attributes="0"/>
+                                  <Component id="textoFechaIngreso" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="labelFechaUM" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="labelFechaBaja" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="textoFechaBaja" pref="118" max="32767" attributes="0"/>
+                                  <Component id="textoFechaUM" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jSpinner1" min="-2" pref="125" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="labelFechaIngreso" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="textoFechaIngreso" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="textoFechaRT" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelFechaRT" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="textoFechaUM" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelFechaUM" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="textoFechaBaja" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelFechaBaja" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jSpinner1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="org.jdesktop.swingx.JXDatePicker" name="textoFechaRT">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textoFechaRTActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="org.jdesktop.swingx.JXDatePicker" name="textoFechaUM">
+            </Component>
+            <Component class="org.jdesktop.swingx.JXDatePicker" name="textoFechaBaja">
+            </Component>
+            <Component class="javax.swing.JSpinner" name="jSpinner1">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JSpinner(new SpinnerDateModel());&#xa;JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(jSpinner1, &quot;HH:mm:ss&quot;);&#xa;jSpinner1.setEditor(timeEditor);&#xa;jSpinner1.setValue(new Date())"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JLabel" name="labelFechaBaja">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Fecha de baja"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="labelFechaUM">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Fecha ultima mantencion"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="labelFechaRT">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Fecha revisi&#xf3;n t&#xe9;cnica"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="labelFechaIngreso">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Fecha ingreso"/>
+              </Properties>
+            </Component>
+            <Component class="org.jdesktop.swingx.JXDatePicker" name="textoFechaIngreso">
+            </Component>
+          </SubComponents>
+        </Container>
+      </SubComponents>
+    </Container>
+  </SubComponents>
+</Form>
