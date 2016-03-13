@@ -5,6 +5,8 @@
  */
 package controladores;
 
+import javax.swing.JPanel;
+import vistas.vistaClientesP;
 import vistas.vistaControlClientes;
 
 /**
@@ -13,6 +15,7 @@ import vistas.vistaControlClientes;
  */
 public class controladorClientes {
     static vistas.vistaControlClientes vistaClientes;
+    static vistas.vistaClientesP vistaClientesP;
     
     public void mostrarVistaControlClientes(String tipo, Object[][] data){
         if(vistaClientes != null) vistaClientes.setVisible(false);
@@ -42,5 +45,13 @@ public class controladorClientes {
     public void irVistaDetalleCliente(String rut) {
         controladorPrincipal miControlador = new controladorPrincipal();
         miControlador.crearControladorDetalleCliente(rut);
+    }
+
+    public JPanel mostrarTabControlClientes(String tipo, Object[][] data) {
+        //if(vistaClientes != null) vistaClientes.setVisible(false);
+        vistaClientesP = new vistaClientesP(tipo, data);
+        
+        //vistaClientes.setVisible(true);   
+        return vistaClientesP;
     }
 }

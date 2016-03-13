@@ -3,56 +3,57 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package vistas;
 
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Diego
+ * @author diego
  */
-public class vistaClientesP extends javax.swing.JPanel {
+public class vistaGruasP extends javax.swing.JPanel {
 
     /**
-     * Creates new form vistaClientesP
+     * Creates new form vistaGruasP
      */
     Object[][] data;
-    
-    public vistaClientesP(String tipo, Object[][] data) {
+    public vistaGruasP(String tipo, Object[][] data) {
         initComponents();
-        final int rows = 5;
-        String[] columNames = {"Rut", "Nombre", "Teléfono", "Dirección", "Razón social"};
+        String[] columNames = {"Patente", "Descripción", "Marca", "Modelo", "Tonelaje"};
         DefaultTableModel datos = new DefaultTableModel(data, columNames){
             @Override
             public boolean isCellEditable(int row, int column){
                 return false;
             }
         };
-        tablaClientes.setModel(datos);
-        tablaClientes.setRowSelectionInterval(0, 0);
-        tablaClientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tablaClientes.addMouseListener(new MouseAdapter(){
+        tablaGruas.setModel(datos);
+        tablaGruas.setRowSelectionInterval(0, 0);
+        tablaGruas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tablaGruas.addMouseListener(new MouseAdapter(){
             public void mousePressed(MouseEvent evt){
                 JTable table = (JTable)evt.getSource();
                 Point p = evt.getPoint();
                 int row = table.rowAtPoint(p);
                 if(evt.getClickCount() == 2){
-                    controladores.controladorClientes miControlador = new controladores.controladorClientes();
-                    miControlador.irVistaDetalleCliente(tablaClientes.getValueAt(row, 0).toString());
+                    controladores.controladorGruas miControlador = new controladores.controladorGruas();
+                    try {
+                        miControlador.irVistaDetalleGrua(tablaGruas.getValueAt(row, 0).toString());
+                    } catch (ParseException ex) {
+                        Logger.getLogger(vistaControlGruas.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
         });
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -64,43 +65,42 @@ public class vistaClientesP extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaClientes = new javax.swing.JTable();
-        botonAgregarCliente = new javax.swing.JButton();
+        tablaGruas = new javax.swing.JTable();
         botonEliminar = new javax.swing.JButton();
         botonModificar = new javax.swing.JButton();
+        botonAgregar = new javax.swing.JButton();
 
-        tablaClientes.setModel(new javax.swing.table.DefaultTableModel(
+        tablaGruas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"", null, null, null},
+                {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null}
             },
             new String [] {
-                "Rut", "Nombre", "Teléfono", "Dirección"
+                "Patente", "Descripción", "Marca", "Modelo"
             }
         ));
-        tablaClientes.setToolTipText("");
-        jScrollPane1.setViewportView(tablaClientes);
+        jScrollPane1.setViewportView(tablaGruas);
 
-        botonAgregarCliente.setText("Agregar Cliente");
-        botonAgregarCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonAgregarClienteActionPerformed(evt);
-            }
-        });
-
-        botonEliminar.setText("Eliminar Cliente");
+        botonEliminar.setText("Eliminar grúa");
         botonEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonEliminarActionPerformed(evt);
             }
         });
 
-        botonModificar.setText("Modificar Cliente");
+        botonModificar.setText("Modificar grúa");
         botonModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonModificarActionPerformed(evt);
+            }
+        });
+
+        botonAgregar.setText("Agregar grúa");
+        botonAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAgregarActionPerformed(evt);
             }
         });
 
@@ -111,7 +111,7 @@ public class vistaClientesP extends javax.swing.JPanel {
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(botonAgregarCliente)
+                .addComponent(botonAgregar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(botonEliminar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -120,71 +120,67 @@ public class vistaClientesP extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botonAgregar)
                     .addComponent(botonEliminar)
-                    .addComponent(botonAgregarCliente)
-                    .addComponent(botonModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(37, 37, 37))
+                    .addComponent(botonModificar))
+                .addGap(0, 25, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void botonAgregarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarClienteActionPerformed
-        controladores.controladorClientes miControlador = new controladores.controladorClientes();
-        miControlador.irVistaIngresarClientes();
-    }//GEN-LAST:event_botonAgregarClienteActionPerformed
-
     private void botonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarActionPerformed
-        controladores.controladorClientes miControlador = new controladores.controladorClientes();
-        String rut, nombres, apP;
+        controladores.controladorGruas miControlador = new controladores.controladorGruas();
+        String patente;
         int row = getFilaSeleccionada();
-        rut = getRutFila(row);
-        nombres = getNombresFila(row);
-        apP = getApPaternoFila(row);
-        int dialogResult = JOptionPane.showOptionDialog(tablaClientes, "Esta seguro que desea eliminar el cliente: \n "
-            + rut + " " + nombres + " " + apP, "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, 0);
-        if(dialogResult == JOptionPane.YES_OPTION)  miControlador.eliminarClientes(rut);
+        patente = getPatenteFila(row);
+        int dialogResult = JOptionPane.showOptionDialog(null, "Esta seguro que desea eliminar la grúa: \n "
+            + patente, "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, 0);
+        if(dialogResult == JOptionPane.YES_OPTION)  miControlador.eliminarGruas(patente);
     }//GEN-LAST:event_botonEliminarActionPerformed
 
     private void botonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarActionPerformed
-        controladores.controladorClientes miControlador = new controladores.controladorClientes();
-        boolean selected = tablaClientes.getSelectedRowCount() > 0;
+        controladores.controladorGruas miControlador = new controladores.controladorGruas();
+        boolean selected = tablaGruas.getSelectedRowCount() > 0;
         if(selected){
             int row = getFilaSeleccionada();
-            String rut = getRutFila(row);
-            String nombres = getNombresFila(row);
-            String apP = getApPaternoFila(row);
-            String[] rut_dv = rut.split("-");
-            miControlador.irVistaModificarClientes(rut_dv[0], nombres, apP);
+            String patente = getPatenteFila(row);
+            String desc = getDescripcionFila(row);
+            try {
+                miControlador.irVistaModificarGruas(patente, desc);
+            } catch (ParseException ex) {
+                Logger.getLogger(vistaControlGruas.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }else{
-            JOptionPane.showMessageDialog(tablaClientes, "Debe seleccionar un cliente para ser modificado");
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una grúa para ser modificada");
         }
     }//GEN-LAST:event_botonModificarActionPerformed
 
+    private void botonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarActionPerformed
+        controladores.controladorGruas miControlador = new controladores.controladorGruas();
+        miControlador.irVistaIngresarGruas();
+    }//GEN-LAST:event_botonAgregarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botonAgregarCliente;
+    private javax.swing.JButton botonAgregar;
     private javax.swing.JButton botonEliminar;
     private javax.swing.JButton botonModificar;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tablaClientes;
+    private javax.swing.JTable tablaGruas;
     // End of variables declaration//GEN-END:variables
     
     public int getFilaSeleccionada() {
-        return tablaClientes.getSelectedRow();
-    }
-
-    public String getRutFila(int row){
-        return tablaClientes.getValueAt(row, 0).toString();
+        return tablaGruas.getSelectedRow();
     }
     
-    public String getNombresFila(int row){
-        return tablaClientes.getValueAt(row,1).toString();
+    public String getPatenteFila(int row){
+        return tablaGruas.getValueAt(row, 0).toString();
     }
     
-    public String getApPaternoFila(int row){
-        return tablaClientes.getValueAt(row, 2).toString();
+    public String getDescripcionFila(int row){
+        return tablaGruas.getValueAt(row, 1).toString();
     }
 }

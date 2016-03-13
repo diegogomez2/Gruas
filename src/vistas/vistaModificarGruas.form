@@ -543,7 +543,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="botonIngresar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Ingresar"/>
+            <Property name="text" type="java.lang.String" value="Aceptar"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonIngresarActionPerformed"/>
@@ -564,32 +564,34 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="labelFechaRT" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="labelFechaIngreso" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="textoFechaRT" alignment="0" pref="118" max="32767" attributes="0"/>
-                                  <Component id="textoFechaIngreso" alignment="0" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="labelFechaUM" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="labelFechaBaja" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="textoFechaBaja" alignment="0" pref="118" max="32767" attributes="0"/>
-                                  <Component id="textoFechaUM" alignment="0" max="32767" attributes="0"/>
+                              <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="textoFechaBaja" min="-2" pref="79" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="jSpinner1" min="-2" pref="125" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="textoFechaUM" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="labelFechaRT" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="labelFechaIngreso" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="textoFechaIngreso" min="-2" max="-2" attributes="0"/>
+                                  <Component id="textoFechaRT" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jSpinner1" min="-2" pref="125" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -604,19 +606,19 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="textoFechaRT" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="labelFechaRT" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="textoFechaRT" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="textoFechaUM" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="labelFechaUM" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="textoFechaUM" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="textoFechaBaja" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="labelFechaBaja" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jSpinner1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="textoFechaBaja" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -624,15 +626,6 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="org.jdesktop.swingx.JXDatePicker" name="textoFechaRT">
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textoFechaRTActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="org.jdesktop.swingx.JXDatePicker" name="textoFechaUM">
-            </Component>
-            <Component class="org.jdesktop.swingx.JXDatePicker" name="textoFechaBaja">
-            </Component>
             <Component class="javax.swing.JSpinner" name="jSpinner1">
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JSpinner(new SpinnerDateModel());&#xa;JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(jSpinner1, &quot;HH:mm:ss&quot;);&#xa;jSpinner1.setEditor(timeEditor);&#xa;jSpinner1.setValue(new Date())"/>
@@ -659,6 +652,12 @@
               </Properties>
             </Component>
             <Component class="org.jdesktop.swingx.JXDatePicker" name="textoFechaIngreso">
+            </Component>
+            <Component class="org.jdesktop.swingx.JXDatePicker" name="textoFechaRT">
+            </Component>
+            <Component class="org.jdesktop.swingx.JXDatePicker" name="textoFechaUM">
+            </Component>
+            <Component class="org.jdesktop.swingx.JXDatePicker" name="textoFechaBaja">
             </Component>
           </SubComponents>
         </Container>

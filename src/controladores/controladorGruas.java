@@ -5,7 +5,10 @@
  */
 package controladores;
 
+import java.text.ParseException;
+import javax.swing.JPanel;
 import vistas.vistaControlGruas;
+import vistas.vistaGruasP;
 
 /**
  *
@@ -13,6 +16,7 @@ import vistas.vistaControlGruas;
  */
 public class controladorGruas {
     static vistas.vistaControlGruas vistaGruas;
+    static vistas.vistaGruasP vistaGruasP;
     
     public void mostrarVistaControlGruas(String tipo, Object[][] data){
         if(vistaGruas != null) vistaGruas.setVisible(false);
@@ -30,9 +34,25 @@ public class controladorGruas {
         miControlador.crearControladorEliminarGruas(patente);
     }
 
-    public void irVistaModificarGruas(String patente, String descripcion) {
+    public void irVistaModificarGruas(String patente, String descripcion) throws ParseException {
         controladorPrincipal miControlador = new controladorPrincipal();
-        miControlador.crearControladorModificarClientes(patente, descripcion);
+        miControlador.crearControladorModificarGruas(patente, descripcion);
+    }
+
+    public void irVistaDetalleGrua(String patente) throws ParseException {
+        controladorPrincipal miControlador = new controladorPrincipal();
+        miControlador.crearControladorDetalleGrua(patente);    
+    }
+
+    JPanel mostrarTabControlGruas(String tipo, Object[][] data) {
+        //if(vistaGruas != null) vistaGruas.setVisible(false);
+        vistaGruasP = new vistaGruasP(tipo, data);
+        //vistaGruas.setVisible(true);
+        return vistaGruasP;
+    }
+
+    public void irVistaModificarEmpleados(String patente, String desc) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

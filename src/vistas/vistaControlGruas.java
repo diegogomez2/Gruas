@@ -5,7 +5,14 @@
  */
 package vistas;
 
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
@@ -34,6 +41,21 @@ public class vistaControlGruas extends javax.swing.JFrame {
         tablaGruas.setModel(datos);
         tablaGruas.setRowSelectionInterval(0, 0);
         tablaGruas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tablaGruas.addMouseListener(new MouseAdapter(){
+            public void mousePressed(MouseEvent evt){
+                JTable table = (JTable)evt.getSource();
+                Point p = evt.getPoint();
+                int row = table.rowAtPoint(p);
+                if(evt.getClickCount() == 2){
+                    controladores.controladorGruas miControlador = new controladores.controladorGruas();
+                    try {
+                        miControlador.irVistaDetalleGrua(tablaGruas.getValueAt(row, 0).toString());
+                    } catch (ParseException ex) {
+                        Logger.getLogger(vistaControlGruas.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
     }
 
     /**
@@ -270,7 +292,11 @@ public class vistaControlGruas extends javax.swing.JFrame {
             int row = getFilaSeleccionada();
             String patente = getPatenteFila(row);
             String descripcion = getDescripcionFila(row);
-            miControlador.irVistaModificarGruas(patente, descripcion);
+            try {
+                miControlador.irVistaModificarGruas(patente, descripcion);
+            } catch (ParseException ex) {
+                Logger.getLogger(vistaControlGruas.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }else{
             JOptionPane.showMessageDialog(rootPane, "Debe seleccionar una grúa para ser modificada");
         }

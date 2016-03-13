@@ -5,8 +5,11 @@
  */
 package controladores;
 
+import java.awt.Component;
 import java.awt.Frame;
+import java.text.ParseException;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import vistas.vistaLogin;
 import modelos.modeloUsuarios;
@@ -135,10 +138,16 @@ public class controladorPrincipal {
         micontroladorEG.irVistaControlGruas(patente);
     }
     
-    public void crearControladorModificarClientes(String patente, String descripcion) {
-        //controladorModificarGruas micontroladorMG;
-        //micontroladorMG = new controladorModificarGruas();
-        //micontroladorMG.mostrarVistaModificarGrua(patente, descripcion);
+    void crearControladorDetalleGrua(String patente) throws ParseException {
+        controladorDetalleGruas micontroladorDG;
+        micontroladorDG = new controladorDetalleGruas();
+        micontroladorDG.mostrarVistaDetalleCliente(patente);
+    }
+    
+    public void crearControladorModificarClientes(String patente, String descripcion) throws ParseException {
+        controladorModificarGruas micontroladorMG;
+        micontroladorMG = new controladorModificarGruas();
+        micontroladorMG.mostrarVistaModificarGrua(patente, descripcion);
     }
     
     public void crearControladorIngresarOT() {
@@ -221,6 +230,55 @@ public class controladorPrincipal {
         miControlador.cambiarClave(pwNueva);
     }
 
+    String[] obtenerGruaPorPatente(String patente) {
+        modelos.modeloGruas grua = new modelos.modeloGruas();
+        String[] data = grua.obtenerClientePorRut(patente);
+        return data;    
+    }
+
+    public JPanel crearControladorClientesP() {
+        modelos.modeloClientes clientes;
+        clientes = new modelos.modeloClientes();
+        Object[][] data;
+        data = clientes.listarClientes();
+        micontroladorClientes = new controladorClientes();
+        return micontroladorClientes.mostrarTabControlClientes(tipo, data);
+    }
+
+    public JPanel crearcontroladorGruasP() {
+        modelos.modeloGruas gruas;
+        gruas = new modelos.modeloGruas();
+        Object[][] data;
+        data = gruas.listarGruas();
+        micontroladorGruas = new controladorGruas();
+        return micontroladorGruas.mostrarTabControlGruas(tipo, data);    
+    }
+
+    public Component crearcontroladorEmpleadosP() {
+        modelos.modeloEmpleados empleados;
+        empleados = new modelos.modeloEmpleados();
+        Object[][] data;
+        data = empleados.listarEmpleados();
+        micontroladorEmpleados = new controladorEmpleados();
+        return micontroladorEmpleados.mostrarTabControlEmpleados(tipo, data);
+    }
+
+    void crearControladorModificarGruas(String patente, String descripcion) throws ParseException {
+        controladorModificarGruas micontroladorMG;
+        micontroladorMG = new controladorModificarGruas();
+        micontroladorMG.mostrarVistaModificarGrua(patente, descripcion);    }
+
+    boolean modificarGrua(String[] data, String patente) {
+        modelos.modeloGruas grua = new modelos.modeloGruas();
+        if(grua.modificarGrua(data, patente).compareTo("correcto") == 0){
+            JOptionPane.showMessageDialog(miVistaL, "Grúa modificada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+            crearControladorGruas();
+            return true;
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al modificar la grúa selecionada", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
 
 
 }

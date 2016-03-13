@@ -57,9 +57,9 @@ public class vistaDetalleClientes extends javax.swing.JDialog {
         labelDireccion = new javax.swing.JLabel();
         textoDireccion = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        textoRegion = new javax.swing.JComboBox<>();
+        textoRegion = new javax.swing.JComboBox<String>();
         labelComuna = new javax.swing.JLabel();
-        textoComuna = new javax.swing.JComboBox<>();
+        textoComuna = new javax.swing.JComboBox<String>();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         textoObs = new javax.swing.JTextArea();
@@ -67,27 +67,67 @@ public class vistaDetalleClientes extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Informacion", 0, 0, null, java.awt.Color.black));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Informacion"));
 
         labelRut.setText("Rut");
 
+        textoRut.setForeground(new java.awt.Color(255, 51, 51));
+        textoRut.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        textoRut.setEnabled(false);
+
         labelNombres.setText("Nombres");
+
+        textoNombres.setForeground(new java.awt.Color(255, 51, 51));
+        textoNombres.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        textoNombres.setEnabled(false);
 
         labelApPaterno.setText("Apellido Paterno");
 
+        textoApPaterno.setForeground(new java.awt.Color(255, 51, 51));
+        textoApPaterno.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        textoApPaterno.setEnabled(false);
+
         labelApMaterno.setText("Apellido Materno");
+
+        textoApMaterno.setForeground(new java.awt.Color(255, 51, 51));
+        textoApMaterno.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        textoApMaterno.setEnabled(false);
 
         labelRazon.setText("Razón Social");
 
+        textoRazon.setForeground(new java.awt.Color(255, 51, 51));
+        textoRazon.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        textoRazon.setEnabled(false);
+
         jLabel1.setText("Giro");
+
+        textoGiro.setForeground(new java.awt.Color(255, 51, 51));
+        textoGiro.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        textoGiro.setEnabled(false);
 
         labelCorreo.setText("Correo");
 
+        textoCorreo.setForeground(new java.awt.Color(255, 51, 51));
+        textoCorreo.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        textoCorreo.setEnabled(false);
+
         labelTelefono.setText("Teléfono");
+
+        textoTelefono.setForeground(new java.awt.Color(255, 51, 51));
+        textoTelefono.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        textoTelefono.setEnabled(false);
 
         labelFax.setText("Fax");
 
+        textoFax.setForeground(new java.awt.Color(255, 51, 51));
+        textoFax.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        textoFax.setEnabled(false);
+
         labelCel.setText("Celular");
+
+        textoCel.setForeground(new java.awt.Color(255, 51, 51));
+        textoCel.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        textoCel.setEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -175,13 +215,19 @@ public class vistaDetalleClientes extends javax.swing.JDialog {
 
         labelDireccion.setText("Dirección");
 
+        textoDireccion.setForeground(new java.awt.Color(255, 51, 51));
+        textoDireccion.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        textoDireccion.setEnabled(false);
+
         jLabel2.setText("Región");
 
-        textoRegion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "METROPOLITANA" }));
+        textoRegion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "METROPOLITANA" }));
+        textoRegion.setEnabled(false);
 
         labelComuna.setText("Comuna");
 
-        textoComuna.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "La Florida", "Maipu", "La Cisterna", "Las Condes" }));
+        textoComuna.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "La Florida", "Maipu", "La Cisterna", "Las Condes" }));
+        textoComuna.setEnabled(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -222,7 +268,10 @@ public class vistaDetalleClientes extends javax.swing.JDialog {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Observaciones"));
 
         textoObs.setColumns(20);
+        textoObs.setForeground(new java.awt.Color(255, 51, 51));
         textoObs.setRows(5);
+        textoObs.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        textoObs.setEnabled(false);
         jScrollPane1.setViewportView(textoObs);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);

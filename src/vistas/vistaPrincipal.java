@@ -23,6 +23,12 @@ public class vistaPrincipal extends javax.swing.JFrame {
     public vistaPrincipal() {
         initComponents();
         setLocationRelativeTo(null);
+        //vistaClientesP tabClientes = new vistaClientesP();
+        //vistaPrincipal.addTab("Clientes", tabClientes);
+        controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
+        vistaPrincipal.addTab("Clientes", miControlador.crearControladorClientesP());
+        vistaPrincipal.addTab("Grúas", miControlador.crearcontroladorGruasP());
+        vistaPrincipal.addTab("Empleados", miControlador.crearcontroladorEmpleadosP());
     }
 
     /**
@@ -35,15 +41,6 @@ public class vistaPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         vistaPrincipal = new javax.swing.JTabbedPane();
-        vistaClientes = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tablaClientes = new javax.swing.JTable();
-        botonAgregarCliente = new javax.swing.JButton();
-        botonEliminar = new javax.swing.JButton();
-        botonModificar = new javax.swing.JButton();
-        vistaGruas = new javax.swing.JPanel();
-        vistaEmpleados = new javax.swing.JPanel();
-        vistaJornada = new javax.swing.JPanel();
         MenuPrincipal = new javax.swing.JMenuBar();
         MenuArchivo = new javax.swing.JMenu();
         MenuUsuarios = new javax.swing.JMenu();
@@ -70,106 +67,7 @@ public class vistaPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu Principal");
         setMinimumSize(new java.awt.Dimension(800, 600));
-
-        jScrollPane1.setBorder(null);
-
-        tablaClientes.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Rut", "Nombre", "Teléfono", "Dirección", "Razón social"
-            }
-        ));
-        jScrollPane1.setViewportView(tablaClientes);
-
-        botonAgregarCliente.setText("Agregar Cliente");
-        botonAgregarCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonAgregarClienteActionPerformed(evt);
-            }
-        });
-
-        botonEliminar.setText("Eliminar Cliente");
-        botonEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonEliminarActionPerformed(evt);
-            }
-        });
-
-        botonModificar.setText("Modificar Cliente");
-        botonModificar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonModificarActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout vistaClientesLayout = new javax.swing.GroupLayout(vistaClientes);
-        vistaClientes.setLayout(vistaClientesLayout);
-        vistaClientesLayout.setHorizontalGroup(
-            vistaClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, vistaClientesLayout.createSequentialGroup()
-                .addContainerGap(452, Short.MAX_VALUE)
-                .addComponent(botonAgregarCliente)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(botonEliminar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(botonModificar)
-                .addGap(14, 14, 14))
-            .addComponent(jScrollPane1)
-        );
-        vistaClientesLayout.setVerticalGroup(
-            vistaClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(vistaClientesLayout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 489, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(vistaClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botonEliminar)
-                    .addComponent(botonAgregarCliente)
-                    .addComponent(botonModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        vistaPrincipal.addTab("Clientes", vistaClientes);
-
-        javax.swing.GroupLayout vistaGruasLayout = new javax.swing.GroupLayout(vistaGruas);
-        vistaGruas.setLayout(vistaGruasLayout);
-        vistaGruasLayout.setHorizontalGroup(
-            vistaGruasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 801, Short.MAX_VALUE)
-        );
-        vistaGruasLayout.setVerticalGroup(
-            vistaGruasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 529, Short.MAX_VALUE)
-        );
-
-        vistaPrincipal.addTab("Grúas", vistaGruas);
-
-        javax.swing.GroupLayout vistaEmpleadosLayout = new javax.swing.GroupLayout(vistaEmpleados);
-        vistaEmpleados.setLayout(vistaEmpleadosLayout);
-        vistaEmpleadosLayout.setHorizontalGroup(
-            vistaEmpleadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 801, Short.MAX_VALUE)
-        );
-        vistaEmpleadosLayout.setVerticalGroup(
-            vistaEmpleadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 529, Short.MAX_VALUE)
-        );
-
-        vistaPrincipal.addTab("Empleados", vistaEmpleados);
-
-        javax.swing.GroupLayout vistaJornadaLayout = new javax.swing.GroupLayout(vistaJornada);
-        vistaJornada.setLayout(vistaJornadaLayout);
-        vistaJornadaLayout.setHorizontalGroup(
-            vistaJornadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 801, Short.MAX_VALUE)
-        );
-        vistaJornadaLayout.setVerticalGroup(
-            vistaJornadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 529, Short.MAX_VALUE)
-        );
-
-        vistaPrincipal.addTab("Jornadas", vistaJornada);
+        setPreferredSize(new java.awt.Dimension(800, 600));
 
         MenuArchivo.setText("Archivo");
 
@@ -313,39 +211,6 @@ public class vistaPrincipal extends javax.swing.JFrame {
         miControlador.crearControladorUsuarios();
     }//GEN-LAST:event_MenuCambioClaveActionPerformed
 
-    private void botonAgregarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarClienteActionPerformed
-        controladores.controladorClientes miControlador = new controladores.controladorClientes();
-        miControlador.irVistaIngresarClientes();
-    }//GEN-LAST:event_botonAgregarClienteActionPerformed
-
-    private void botonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarActionPerformed
-        controladores.controladorClientes miControlador = new controladores.controladorClientes();
-        String rut, nombres, apP;
-        int row = getFilaSeleccionada();
-        rut = getRutFila(row);
-        nombres = getNombresFila(row);
-        apP = getApPaternoFila(row);
-        int dialogResult = JOptionPane.showOptionDialog(rootPane, "Esta seguro que desea eliminar el cliente: \n "
-            + rut + " " + nombres + " " + apP, "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, 0);
-        if(dialogResult == JOptionPane.YES_OPTION)  miControlador.eliminarClientes(rut);
-    }//GEN-LAST:event_botonEliminarActionPerformed
-
-    private void botonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarActionPerformed
-        controladores.controladorClientes miControlador = new controladores.controladorClientes();
-        boolean selected = tablaClientes.getSelectedRowCount() > 0;
-        if(selected){
-            int row = getFilaSeleccionada();
-            String rut = getRutFila(row);
-            String nombres = getNombresFila(row);
-            String apP = getApPaternoFila(row);
-            String[] rut_dv = rut.split("-");
-            miControlador.irVistaModificarClientes(rut_dv[0], nombres, apP);
-        }else{
-            JOptionPane.showMessageDialog(rootPane, "Debe seleccionar un cliente para ser modificado");
-        }
-
-    }//GEN-LAST:event_botonModificarActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -403,33 +268,9 @@ public class vistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu MenuMantenciones;
     private javax.swing.JMenuBar MenuPrincipal;
     private javax.swing.JMenu MenuUsuarios;
-    private javax.swing.JButton botonAgregarCliente;
-    private javax.swing.JButton botonEliminar;
-    private javax.swing.JButton botonModificar;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tablaClientes;
-    private javax.swing.JPanel vistaClientes;
-    private javax.swing.JPanel vistaEmpleados;
-    private javax.swing.JPanel vistaGruas;
-    private javax.swing.JPanel vistaJornada;
     private javax.swing.JTabbedPane vistaPrincipal;
     // End of variables declaration//GEN-END:variables
     
-    public int getFilaSeleccionada() {
-        return tablaClientes.getSelectedRow();
-    }
-
-    public String getRutFila(int row){
-        return tablaClientes.getValueAt(row, 0).toString();
-    }
-    
-    public String getNombresFila(int row){
-        return tablaClientes.getValueAt(row,1).toString();
-    }
-    
-    public String getApPaternoFila(int row){
-        return tablaClientes.getValueAt(row, 2).toString();
-    }
 }
 

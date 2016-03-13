@@ -6,10 +6,17 @@
 
 package vistas;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
+import org.jdesktop.swingx.JXDatePicker;
 
 
 /**
@@ -20,6 +27,9 @@ public class vistaModificarGruas extends javax.swing.JDialog {
     /**
      * Creates new form vistaModificarGruas
      */
+    String patente;
+    DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+    
     public vistaModificarGruas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -86,9 +96,6 @@ public class vistaModificarGruas extends javax.swing.JDialog {
         botonIngresar = new javax.swing.JButton();
         botonCancelar = new javax.swing.JButton();
         fechas = new javax.swing.JPanel();
-        textoFechaRT = new org.jdesktop.swingx.JXDatePicker();
-        textoFechaUM = new org.jdesktop.swingx.JXDatePicker();
-        textoFechaBaja = new org.jdesktop.swingx.JXDatePicker();
         jSpinner1 = new javax.swing.JSpinner(new SpinnerDateModel());
         JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(jSpinner1, "HH:mm:ss");
         jSpinner1.setEditor(timeEditor);
@@ -98,6 +105,9 @@ public class vistaModificarGruas extends javax.swing.JDialog {
         labelFechaRT = new javax.swing.JLabel();
         labelFechaIngreso = new javax.swing.JLabel();
         textoFechaIngreso = new org.jdesktop.swingx.JXDatePicker();
+        textoFechaRT = new org.jdesktop.swingx.JXDatePicker();
+        textoFechaUM = new org.jdesktop.swingx.JXDatePicker();
+        textoFechaBaja = new org.jdesktop.swingx.JXDatePicker();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -180,7 +190,7 @@ public class vistaModificarGruas extends javax.swing.JDialog {
 
         labelHorasPM.setText("Horas próxima mantención");
 
-        botonIngresar.setText("Ingresar");
+        botonIngresar.setText("Aceptar");
         botonIngresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonIngresarActionPerformed(evt);
@@ -191,12 +201,6 @@ public class vistaModificarGruas extends javax.swing.JDialog {
         botonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonCancelarActionPerformed(evt);
-            }
-        });
-
-        textoFechaRT.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textoFechaRTActionPerformed(evt);
             }
         });
 
@@ -214,25 +218,26 @@ public class vistaModificarGruas extends javax.swing.JDialog {
             fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(fechasLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(fechasLayout.createSequentialGroup()
-                        .addGroup(fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelFechaRT)
-                            .addComponent(labelFechaIngreso))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(textoFechaRT, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
-                            .addComponent(textoFechaIngreso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(fechasLayout.createSequentialGroup()
                         .addGroup(fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(labelFechaUM)
                             .addComponent(labelFechaBaja))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(textoFechaBaja, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
-                            .addComponent(textoFechaUM, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(45, 45, 45)
+                        .addGroup(fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(fechasLayout.createSequentialGroup()
+                                .addComponent(textoFechaBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(textoFechaUM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(fechasLayout.createSequentialGroup()
+                        .addGroup(fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelFechaRT)
+                            .addComponent(labelFechaIngreso))
+                        .addGap(57, 57, 57)
+                        .addGroup(fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(textoFechaIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(textoFechaRT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         fechasLayout.setVerticalGroup(
@@ -244,17 +249,17 @@ public class vistaModificarGruas extends javax.swing.JDialog {
                     .addComponent(textoFechaIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textoFechaRT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelFechaRT))
+                    .addComponent(labelFechaRT)
+                    .addComponent(textoFechaRT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textoFechaUM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelFechaUM))
+                    .addComponent(labelFechaUM)
+                    .addComponent(textoFechaUM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textoFechaBaja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelFechaBaja)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textoFechaBaja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -472,13 +477,17 @@ public class vistaModificarGruas extends javax.swing.JDialog {
 
     private void botonIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonIngresarActionPerformed
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
-        controladores.controladorIngresarGruas miControladorIG = new controladores.controladorIngresarGruas();
-        String respuesta = miControladorIG.camposVacios();
+        controladores.controladorModificarGruas micontroladorMG = new controladores.controladorModificarGruas();
+        String respuesta = micontroladorMG.camposVacios();
         boolean esVacio = respuesta.length() == 0;
-        if(!esVacio){
+        if (!esVacio) {
             JOptionPane.showMessageDialog(this, respuesta, "Debe rellenar los siguientes campos", JOptionPane.INFORMATION_MESSAGE);
-        }else{
-            if(miControladorIG.irVistaControlGruas()) setVisible(false);
+            remarcarVacios();
+        } else {
+            remarcarVacios();
+            if (micontroladorMG.irVistaControlGruas()) {
+                setVisible(false); 
+            }
         }
     }//GEN-LAST:event_botonIngresarActionPerformed
 
@@ -595,4 +604,333 @@ public class vistaModificarGruas extends javax.swing.JDialog {
     private javax.swing.JTextField textoTipoNeumaticos;
     private javax.swing.JTextField textoToneladas;
     // End of variables declaration//GEN-END:variables
+
+    public String getTextoAlturaLevante() {
+        return textoAlturaLevante.getText();
+    }
+
+    public void setTextoAlturaLevante(String textoAlturaLevante) {
+        this.textoAlturaLevante.setText(textoAlturaLevante);
+    }
+
+    public String getTextoAlturaMastil() {
+        return textoAlturaMastil.getText();
+    }
+
+    public void setTextoAlturaMastil(String textoAlturaMastil) {
+        this.textoAlturaMastil.setText(textoAlturaMastil);
+    }
+
+    public String getTextoAncho() {
+        return textoAncho.getText();
+    }
+
+    public void setTextoAncho(String textoAncho) {
+        this.textoAncho.setText(textoAncho);
+    }
+
+    public String getTextoDescripcion() {
+        return textoDescripcion.getText();
+    }
+
+    public void setTextoDescripcion(String textoDescripcion) {
+        this.textoDescripcion.setText(textoDescripcion);
+    }
+
+    public String getTextoFechaBaja() {
+        Date fecha = textoFechaBaja.getDate();
+        if(fecha == null) return "";
+        String dateString = formatDate.format(textoFechaBaja.getDate());
+        return dateString;
+    }
+
+    public void setTextoFechaBaja(String textoFechaBaja) throws ParseException {
+        this.textoFechaBaja.setDate(formatDate.parse(textoFechaBaja));
+    }
+
+    public String getTextoFechaIngreso() {
+        Date fecha = textoFechaIngreso.getDate();
+        if(fecha == null) return "";
+        String dateString = formatDate.format(textoFechaIngreso.getDate());
+        return dateString;
+    }
+
+    public void setTextoFechaIngreso(String textoFechaIngreso) throws ParseException {
+        this.textoFechaIngreso.setDate(formatDate.parse(textoFechaIngreso));
+    }
+
+    public String getTextoFechaRT() {
+        Date fecha = textoFechaRT.getDate();
+        if(fecha == null) return "";
+        String dateString = formatDate.format(textoFechaRT.getDate());
+        return dateString;
+    }
+
+    public void setTextoFechaRT(String textoFechaRT) throws ParseException {
+        this.textoFechaRT.setDate(formatDate.parse(textoFechaRT));
+    }
+
+    public String getTextoFechaUM() {
+        Date fecha = textoFechaUM.getDate();
+        if(fecha == null) return "";
+        String dateString = formatDate.format(textoFechaUM.getDate());
+        return dateString;
+    }
+
+    public void setTextoFechaUM(String textoFechaUM) throws ParseException {
+        this.textoFechaUM.setDate(formatDate.parse(textoFechaUM));
+    }
+
+    public String getTextoHorasPM() {
+        return textoHorasPM.getText();
+    }
+
+    public void setTextoHorasPM(String textoHorasPM) {
+        this.textoHorasPM.setText(textoHorasPM);
+    }
+
+    public String getTextoKMH() {
+        return textoKMH.getText();
+    }
+
+    public void setTextoKMH(String textoKMH) {
+        this.textoKMH.setText(textoKMH);
+    }
+
+    public String getTextoKMHUM() {
+        return textoKMHUM.getText();
+    }
+
+    public void setTextoKMHUM(String textoKMHUM) {
+        this.textoKMHUM.setText(textoKMHUM);
+    }
+
+    public String getTextoLargo() {
+        return textoLargo.getText();
+    }
+
+    public void setTextoLargo(String textoLargo) {
+        this.textoLargo.setText(textoLargo);
+    }
+
+    public String getTextoLargoUnas() {
+        return textoLargoUnas.getText();
+    }
+
+    public void setTextoLargoUnas(String textoLargoUnas) {
+        this.textoLargoUnas.setText(textoLargoUnas);
+    }
+
+    public String getTextoMarca() {
+        return textoMarca.getText();
+    }
+
+    public void setTextoMarca(String textoMarca) {
+        this.textoMarca.setText(textoMarca);
+    }
+
+    public String getTextoModelo() {
+        return textoModelo.getText();
+    }
+
+    public void setTextoModelo(String textoModelo) {
+        this.textoModelo.setText(textoModelo);
+    }
+
+    public String getTextoNChasis() {
+        return textoNChasis.getText();
+    }
+
+    public void setTextoNChasis(String textoNChasis) {
+        this.textoNChasis.setText(textoNChasis);
+    }
+
+    public String getTextoNeumaticosDelanteros() {
+        return textoNeumaticosDelanteros.getText();
+    }
+
+    public void setTextoNeumaticosDelanteros(String textoNeumaticosDelanteros) {
+        this.textoNeumaticosDelanteros.setText(textoNeumaticosDelanteros);
+    }
+
+    public String getTextoNeumaticosTraseros() {
+        return textoNeumaticosTraseros.getText();
+    }
+
+    public void setTextoNeumaticosTraseros(String textoNeumaticosTraseros) {
+        this.textoNeumaticosTraseros.setText(textoNeumaticosTraseros);
+    }
+
+    public String getTextoNumeroMotor() {
+        return textoNumeroMotor.getText();
+    }
+
+    public void setTextoNumeroMotor(String textoNumeroMotor) {
+        this.textoNumeroMotor.setText(textoNumeroMotor);
+    }
+
+    public String getTextoNumeroSerie() {
+        return textoNumeroSerie.getText();
+    }
+
+    public void setTextoNumeroSerie(String textoNumeroSerie) {
+        this.textoNumeroSerie.setText(textoNumeroSerie);
+    }
+
+    public String getTextoObs() {
+        return textoObs.getText();
+    }
+
+    public void setTextoObs(String textoObs) {
+        this.textoObs.setText(textoObs);
+    }
+
+    public String getTextoPatente() {
+        return textoPatente.getText();
+    }
+
+    public void setTextoPatente(String textoPatente) {
+        this.textoPatente.setText(textoPatente);
+    }
+
+    public String getTextoPesoGrua() {
+        return textoPesoGrua.getText();
+    }
+
+    public void setTextoPesoGrua(String textoPesoGrua) {
+        this.textoPesoGrua.setText(textoPesoGrua);
+    }
+
+    public String getTextoTipoNeumaticos() {
+        return textoTipoNeumaticos.getText();
+    }
+
+    public void setTextoTipoNeumaticos(String textoTipoNeumaticos) {
+        this.textoTipoNeumaticos.setText(textoTipoNeumaticos);
+    }
+
+    public String getTextoToneladas() {
+        return textoToneladas.getText();
+    }
+
+    public void setTextoToneladas(String textoToneladas) {
+        this.textoToneladas.setText(textoToneladas);
+    }
+
+    public String getComboMastil() {
+        return comboMastil.getSelectedItem().toString();
+    }
+
+    public void setComboMastil(String comboMastil) {
+        this.comboMastil.setSelectedItem(comboMastil);
+    }
+
+    public String getComboTipoCombustible() {
+        return comboTipoCombustible.getSelectedItem().toString();
+    }
+
+    public void setComboTipoCombustible(String comboTipoCombustible) {
+        this.comboTipoCombustible.setSelectedItem(comboTipoCombustible);
+    }
+
+    public String getComboTipoNeumaticos() {
+        return comboTipoNeumaticos.getSelectedItem().toString();
+    }
+
+    public void setComboTipoNeumaticos(String comboTipoNeumaticos) {
+        this.comboTipoNeumaticos.setSelectedItem(comboTipoNeumaticos);
+    }
+    
+    private void remarcarVacios() {
+        boolean vacio;
+        vacio = (textoPatente.getText().compareTo("") == 0)? true : false;
+        setLabelPatente(vacio);
+        vacio = (textoDescripcion.getText().compareTo("") == 0)? true : false;
+        setLabelDescripción(vacio);
+        vacio = (textoModelo.getText().compareTo("") == 0)? true : false;
+        setLabelModelo(vacio);
+        vacio = (textoPesoGrua.getText().compareTo("") == 0)? true : false;
+        setLabelPesoGrua(vacio); 
+        vacio = (textoNChasis.getText().compareTo("") == 0)? true : false;
+        setLabelNChasis(vacio);
+        vacio = (textoKMH.getText().compareTo("") == 0)? true : false;
+        setLabelKMH(vacio);
+        vacio = (getTextoFechaIngreso().compareTo("") == 0)? true : false;
+        setLabelFechaIngreso(vacio);
+        vacio = (textoMarca.getText().compareTo("") == 0)? true : false;
+        setLabelMarca(vacio);   
+    }
+
+    public void setLabelPatente(boolean vacio) {
+        if(vacio){
+            labelPatente.setText("<html>Patente<font color='red'> (*)</font></html>");
+        }else{
+            labelPatente.setText("Patente");
+        }
+    }
+
+    public void setLabelDescripción(boolean vacio) {
+        if(vacio){
+            labelDescripcion.setText("<html>Descripción<font color='red'> (*)</font></html>");
+        }else{
+            labelDescripcion.setText("Descripción");
+        }    
+    }
+
+    public void setLabelModelo(boolean vacio) {
+        if(vacio){
+            labelModelo.setText("<html>Modelo<font color='red'> (*)</font></html>");
+        }else{
+            labelModelo.setText("Modelo");
+        }
+    }
+
+    public void setLabelPesoGrua(boolean vacio) {
+        if(vacio){
+            labelPesoGrua.setText("<html>Peso grúa<font color='red'> (*)</font></html>");
+        }else{
+            labelPesoGrua.setText("Peso grúa");
+        }
+    }
+
+    public void setLabelNChasis(boolean vacio) {
+        if(vacio){
+            labelNChasis.setText("<html>Número chasis<font color='red'> (*)</font></html>");
+        }else{
+            labelNChasis.setText("Número chasis");
+        }
+    }
+
+    public void setLabelKMH(boolean vacio) {
+        if(vacio){
+            labelKMH.setText("<html>Horómetro<font color='red'> (*)</font></html>");
+        }else{
+            labelKMH.setText("Horómetro");
+        }
+    }
+
+    public void setLabelFechaIngreso(boolean vacio) {
+        if(vacio){
+            labelFechaIngreso.setText("<html>Fecha ingreso<font color='red'> (*)</font></html>");
+        }else{
+            labelFechaIngreso.setText("Fecha ingreso");
+        }
+    }
+
+    public void setLabelMarca(boolean vacio) {
+        if(vacio){
+            labelMarca.setText("<html>Marca<font color='red'> (*)</font></html>");
+        }else{
+            labelMarca.setText("Marac");
+        }
+    }
+    
+    public void setPatente(String patente){
+        this.patente = patente;
+    }
+    
+    public String getPatente(){
+        return this.patente;
+    }
 }
+

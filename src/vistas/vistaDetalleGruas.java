@@ -6,28 +6,25 @@
 package vistas;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
-import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
-import org.jdesktop.swingx.JXDatePicker;
 
 /**
  *
- * @author Diego
+ * @author diego
  */
-public class vistaIngresarGruas extends javax.swing.JDialog {
+public class vistaDetalleGruas extends javax.swing.JDialog {
 
     /**
-     * Creates new form vistaIngresarGrua
+     * Creates new form vistaDetalleGruas
      */
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
 
-    public vistaIngresarGruas(java.awt.Frame parent, boolean modal) {
+    public vistaDetalleGruas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -90,8 +87,6 @@ public class vistaIngresarGruas extends javax.swing.JDialog {
         textoKMHUM = new javax.swing.JTextField();
         labelHorasPM = new javax.swing.JLabel();
         textoHorasPM = new javax.swing.JTextField();
-        botonIngresar = new javax.swing.JButton();
-        botonCancelar = new javax.swing.JButton();
         fechas = new javax.swing.JPanel();
         jSpinner1 = new javax.swing.JSpinner(new SpinnerDateModel());
         JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(jSpinner1, "HH:mm:ss");
@@ -105,31 +100,48 @@ public class vistaIngresarGruas extends javax.swing.JDialog {
         textoFechaRT = new org.jdesktop.swingx.JXDatePicker();
         textoFechaUM = new org.jdesktop.swingx.JXDatePicker();
         textoFechaBaja = new org.jdesktop.swingx.JXDatePicker();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         labelPatente.setText("Patente");
 
-        textoPatente.setNextFocusableComponent(textoDescripcion);
+        textoPatente.setDisabledTextColor(new java.awt.Color(153, 153, 153));
+        textoPatente.setEnabled(false);
 
         labelDescripcion.setText("Descripción");
 
         textoDescripcion.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        textoDescripcion.setNextFocusableComponent(textoModelo);
+        textoDescripcion.setDisabledTextColor(new java.awt.Color(153, 153, 153));
+        textoDescripcion.setEnabled(false);
 
         labelModelo.setText("Modelo");
 
+        textoModelo.setDisabledTextColor(new java.awt.Color(153, 153, 153));
+        textoModelo.setEnabled(false);
+
         labelPesoGrua.setText("Peso Grúa (kilos)");
 
+        textoPesoGrua.setDisabledTextColor(new java.awt.Color(153, 153, 153));
+        textoPesoGrua.setEnabled(false);
+
         labelNChasis.setText("Número Chasis");
+
+        textoNChasis.setDisabledTextColor(new java.awt.Color(153, 153, 153));
+        textoNChasis.setEnabled(false);
 
         labelTipoCombustible.setText("Tipo Combustible");
 
         comboTipoCombustible.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboTipoCombustible.setEnabled(false);
 
         panelTipoNeumaticos.setBorder(javax.swing.BorderFactory.createTitledBorder("Tipo Neumáticos"));
 
         comboTipoNeumaticos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboTipoNeumaticos.setEnabled(false);
+
+        textoTipoNeumaticos.setDisabledTextColor(new java.awt.Color(153, 153, 153));
+        textoTipoNeumaticos.setEnabled(false);
 
         javax.swing.GroupLayout panelTipoNeumaticosLayout = new javax.swing.GroupLayout(panelTipoNeumaticos);
         panelTipoNeumaticos.setLayout(panelTipoNeumaticosLayout);
@@ -156,53 +168,86 @@ public class vistaIngresarGruas extends javax.swing.JDialog {
 
         textoObs.setColumns(20);
         textoObs.setRows(5);
+        textoObs.setDisabledTextColor(new java.awt.Color(153, 153, 153));
+        textoObs.setEnabled(false);
         jscroll.setViewportView(textoObs);
 
         labelToneladas.setText("Toneladas");
 
+        textoToneladas.setDisabledTextColor(new java.awt.Color(153, 153, 153));
+        textoToneladas.setEnabled(false);
+
         labelKMH.setText("Horómetro");
 
+        textoKMH.setDisabledTextColor(new java.awt.Color(153, 153, 153));
+        textoKMH.setEnabled(false);
+
         labelMarca.setText("Marca");
+
+        textoMarca.setDisabledTextColor(new java.awt.Color(153, 153, 153));
+        textoMarca.setEnabled(false);
 
         labelMastil.setText("Mástil");
 
         comboMastil.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboMastil.setEnabled(false);
 
         labelAlturaMastil.setText("Altura Mástil (cm)");
+
+        textoAlturaMastil.setDisabledTextColor(new java.awt.Color(153, 153, 153));
+        textoAlturaMastil.setEnabled(false);
+
+        textoAncho.setDisabledTextColor(new java.awt.Color(153, 153, 153));
+        textoAncho.setEnabled(false);
 
         labelAncho.setText("Ancho (cm)");
 
         labelLargo.setText("Largo (cm)");
 
+        textoLargo.setDisabledTextColor(new java.awt.Color(153, 153, 153));
+        textoLargo.setEnabled(false);
+
         labelLargoUnas.setText("Largo Uñas (cm)");
+
+        textoLargoUnas.setDisabledTextColor(new java.awt.Color(153, 153, 153));
+        textoLargoUnas.setEnabled(false);
 
         labelAlturaLevante.setText("Al. levante");
 
+        textoAlturaLevante.setDisabledTextColor(new java.awt.Color(153, 153, 153));
+        textoAlturaLevante.setEnabled(false);
+
         labelNeumaticosDelanteros.setText("Neumáticos delanteros");
+
+        textoNeumaticosDelanteros.setDisabledTextColor(new java.awt.Color(153, 153, 153));
+        textoNeumaticosDelanteros.setEnabled(false);
+
+        textoNeumaticosTraseros.setDisabledTextColor(new java.awt.Color(153, 153, 153));
+        textoNeumaticosTraseros.setEnabled(false);
 
         labelNeumaticosTraseros.setText("Neumáticos traseros");
 
         labelNumeroMotor.setText("Número motor");
 
+        textoNumeroMotor.setDisabledTextColor(new java.awt.Color(153, 153, 153));
+        textoNumeroMotor.setEnabled(false);
+
         labelNumeroSerie.setText("Número de serie");
+
+        textoNumeroSerie.setDisabledTextColor(new java.awt.Color(153, 153, 153));
+        textoNumeroSerie.setEnabled(false);
 
         labelKMHUM.setText("KM/H ult mantencion");
 
+        textoKMHUM.setDisabledTextColor(new java.awt.Color(153, 153, 153));
+        textoKMHUM.setEnabled(false);
+
         labelHorasPM.setText("Horas próxima mantención");
 
-        botonIngresar.setText("Ingresar");
-        botonIngresar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonIngresarActionPerformed(evt);
-            }
-        });
+        textoHorasPM.setDisabledTextColor(new java.awt.Color(153, 153, 153));
+        textoHorasPM.setEnabled(false);
 
-        botonCancelar.setText("Cancelar");
-        botonCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonCancelarActionPerformed(evt);
-            }
-        });
+        jSpinner1.setEnabled(false);
 
         labelFechaBaja.setText("Fecha de baja");
 
@@ -211,6 +256,14 @@ public class vistaIngresarGruas extends javax.swing.JDialog {
         labelFechaRT.setText("Fecha revisión técnica");
 
         labelFechaIngreso.setText("Fecha ingreso");
+
+        textoFechaIngreso.setEditable(false);
+
+        textoFechaRT.setEditable(false);
+
+        textoFechaUM.setEditable(false);
+
+        textoFechaBaja.setEditable(false);
 
         javax.swing.GroupLayout fechasLayout = new javax.swing.GroupLayout(fechas);
         fechas.setLayout(fechasLayout);
@@ -221,23 +274,23 @@ public class vistaIngresarGruas extends javax.swing.JDialog {
                 .addGroup(fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(fechasLayout.createSequentialGroup()
                         .addGroup(fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelFechaRT)
-                            .addComponent(labelFechaIngreso))
-                        .addGap(24, 24, 24)
-                        .addGroup(fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(textoFechaIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textoFechaRT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(fechasLayout.createSequentialGroup()
-                        .addGroup(fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(labelFechaUM)
                             .addComponent(labelFechaBaja))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(45, 45, 45)
                         .addGroup(fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(fechasLayout.createSequentialGroup()
-                                .addComponent(textoFechaBaja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(textoFechaBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(textoFechaUM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(textoFechaUM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(fechasLayout.createSequentialGroup()
+                        .addGroup(fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelFechaRT)
+                            .addComponent(labelFechaIngreso))
+                        .addGap(57, 57, 57)
+                        .addGroup(fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(textoFechaIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(textoFechaRT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         fechasLayout.setVerticalGroup(
@@ -263,6 +316,13 @@ public class vistaIngresarGruas extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jButton1.setText("OK");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -286,12 +346,6 @@ public class vistaIngresarGruas extends javax.swing.JDialog {
                     .addComponent(labelObservaciones)
                     .addComponent(jscroll, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(botonIngresar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(botonCancelar)
-                        .addGap(21, 21, 21))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(37, 37, 37)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -327,7 +381,7 @@ public class vistaIngresarGruas extends javax.swing.JDialog {
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addComponent(labelAlturaLevante)
-                                                .addGap(0, 21, Short.MAX_VALUE))
+                                                .addGap(0, 0, Short.MAX_VALUE))
                                             .addComponent(textoAlturaLevante)))
                                     .addComponent(textoAlturaMastil)
                                     .addComponent(textoKMH)
@@ -359,8 +413,11 @@ public class vistaIngresarGruas extends javax.swing.JDialog {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(labelHorasPM)
                                         .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(textoHorasPM))))
-                        .addContainerGap())))
+                                    .addComponent(textoHorasPM)))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -453,9 +510,7 @@ public class vistaIngresarGruas extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(fechas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(botonIngresar)
-                            .addComponent(botonCancelar))))
+                        .addComponent(jButton1)))
                 .addContainerGap())
         );
 
@@ -475,25 +530,9 @@ public class vistaIngresarGruas extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void botonIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonIngresarActionPerformed
-        controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
-        controladores.controladorIngresarGruas miControladorIG = new controladores.controladorIngresarGruas();
-        String respuesta = miControladorIG.camposVacios();
-        boolean esVacio = respuesta.length() == 0;
-        if(!esVacio){
-            JOptionPane.showMessageDialog(this, respuesta, "Debe rellenar los siguientes campos", JOptionPane.INFORMATION_MESSAGE);
-        }else{
-            if(miControladorIG.irVistaControlGruas()) setVisible(false);
-        }
-    }//GEN-LAST:event_botonIngresarActionPerformed
-
-    private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
-        this.setVisible(false);
-    }//GEN-LAST:event_botonCancelarActionPerformed
-
-    private void textoFechaRTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoFechaRTActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textoFechaRTActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -512,21 +551,20 @@ public class vistaIngresarGruas extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(vistaIngresarGruas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(vistaDetalleGruas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(vistaIngresarGruas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(vistaDetalleGruas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(vistaIngresarGruas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(vistaDetalleGruas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(vistaIngresarGruas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(vistaDetalleGruas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                vistaIngresarGruas dialog = new vistaIngresarGruas(new javax.swing.JFrame(), true);
+                vistaDetalleGruas dialog = new vistaDetalleGruas(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -539,12 +577,11 @@ public class vistaIngresarGruas extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botonCancelar;
-    private javax.swing.JButton botonIngresar;
     private javax.swing.JComboBox<String> comboMastil;
     private javax.swing.JComboBox<String> comboTipoCombustible;
     private javax.swing.JComboBox<String> comboTipoNeumaticos;
     private javax.swing.JPanel fechas;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JScrollPane jscroll;
@@ -601,17 +638,36 @@ public class vistaIngresarGruas extends javax.swing.JDialog {
     private javax.swing.JTextField textoTipoNeumaticos;
     private javax.swing.JTextField textoToneladas;
     // End of variables declaration//GEN-END:variables
+    public String getTextoAlturaLevante() {
+        return textoAlturaLevante.getText();
+    }
+
+    public void setTextoAlturaLevante(String textoAlturaLevante) {
+        this.textoAlturaLevante.setText(textoAlturaLevante);
+    }
 
     public String getTextoAlturaMastil() {
         return textoAlturaMastil.getText();
+    }
+
+    public void setTextoAlturaMastil(String textoAlturaMastil) {
+        this.textoAlturaMastil.setText(textoAlturaMastil);
     }
 
     public String getTextoAncho() {
         return textoAncho.getText();
     }
 
+    public void setTextoAncho(String textoAncho) {
+        this.textoAncho.setText(textoAncho);
+    }
+
     public String getTextoDescripcion() {
         return textoDescripcion.getText();
+    }
+
+    public void setTextoDescripcion(String textoDescripcion) {
+        this.textoDescripcion.setText(textoDescripcion);
     }
 
     public String getTextoFechaBaja() {
@@ -621,6 +677,10 @@ public class vistaIngresarGruas extends javax.swing.JDialog {
         return dateString;
     }
 
+    public void setTextoFechaBaja(String textoFechaBaja) throws ParseException {
+        this.textoFechaBaja.setDate(formatDate.parse(textoFechaBaja));
+    }
+
     public String getTextoFechaIngreso() {
         Date fecha = textoFechaIngreso.getDate();
         if(fecha == null) return "";
@@ -628,11 +688,20 @@ public class vistaIngresarGruas extends javax.swing.JDialog {
         return dateString;
     }
 
+    public void setTextoFechaIngreso(String textoFechaIngreso) throws ParseException {
+        this.textoFechaIngreso.setDate(formatDate.parse(textoFechaIngreso));
+    }
+
     public String getTextoFechaRT() {
         Date fecha = textoFechaRT.getDate();
         if(fecha == null) return "";
         String dateString = formatDate.format(textoFechaRT.getDate());
-        return dateString;    }
+        return dateString;
+    }
+
+    public void setTextoFechaRT(String textoFechaRT) throws ParseException {
+        this.textoFechaRT.setDate(formatDate.parse(textoFechaRT));
+    }
 
     public String getTextoFechaUM() {
         Date fecha = textoFechaUM.getDate();
@@ -641,88 +710,167 @@ public class vistaIngresarGruas extends javax.swing.JDialog {
         return dateString;
     }
 
+    public void setTextoFechaUM(String textoFechaUM) throws ParseException {
+        this.textoFechaUM.setDate(formatDate.parse(textoFechaUM));
+    }
+
     public String getTextoHorasPM() {
         return textoHorasPM.getText();
+    }
+
+    public void setTextoHorasPM(String textoHorasPM) {
+        this.textoHorasPM.setText(textoHorasPM);
     }
 
     public String getTextoKMH() {
         return textoKMH.getText();
     }
 
+    public void setTextoKMH(String textoKMH) {
+        this.textoKMH.setText(textoKMH);
+    }
+
     public String getTextoKMHUM() {
         return textoKMHUM.getText();
+    }
+
+    public void setTextoKMHUM(String textoKMHUM) {
+        this.textoKMHUM.setText(textoKMHUM);
     }
 
     public String getTextoLargo() {
         return textoLargo.getText();
     }
 
+    public void setTextoLargo(String textoLargo) {
+        this.textoLargo.setText(textoLargo);
+    }
+
     public String getTextoLargoUnas() {
         return textoLargoUnas.getText();
+    }
+
+    public void setTextoLargoUnas(String textoLargoUnas) {
+        this.textoLargoUnas.setText(textoLargoUnas);
     }
 
     public String getTextoMarca() {
         return textoMarca.getText();
     }
 
+    public void setTextoMarca(String textoMarca) {
+        this.textoMarca.setText(textoMarca);
+    }
+
     public String getTextoModelo() {
         return textoModelo.getText();
+    }
+
+    public void setTextoModelo(String textoModelo) {
+        this.textoModelo.setText(textoModelo);
     }
 
     public String getTextoNChasis() {
         return textoNChasis.getText();
     }
 
+    public void setTextoNChasis(String textoNChasis) {
+        this.textoNChasis.setText(textoNChasis);
+    }
+
     public String getTextoNeumaticosDelanteros() {
         return textoNeumaticosDelanteros.getText();
+    }
+
+    public void setTextoNeumaticosDelanteros(String textoNeumaticosDelanteros) {
+        this.textoNeumaticosDelanteros.setText(textoNeumaticosDelanteros);
     }
 
     public String getTextoNeumaticosTraseros() {
         return textoNeumaticosTraseros.getText();
     }
 
+    public void setTextoNeumaticosTraseros(String textoNeumaticosTraseros) {
+        this.textoNeumaticosTraseros.setText(textoNeumaticosTraseros);
+    }
+
     public String getTextoNumeroMotor() {
         return textoNumeroMotor.getText();
+    }
+
+    public void setTextoNumeroMotor(String textoNumeroMotor) {
+        this.textoNumeroMotor.setText(textoNumeroMotor);
     }
 
     public String getTextoNumeroSerie() {
         return textoNumeroSerie.getText();
     }
 
-    public String getTextoObservaciones() {
+    public void setTextoNumeroSerie(String textoNumeroSerie) {
+        this.textoNumeroSerie.setText(textoNumeroSerie);
+    }
+
+    public String getTextoObs() {
         return textoObs.getText();
+    }
+
+    public void setTextoObs(String textoObs) {
+        this.textoObs.setText(textoObs);
     }
 
     public String getTextoPatente() {
         return textoPatente.getText();
     }
 
+    public void setTextoPatente(String textoPatente) {
+        this.textoPatente.setText(textoPatente);
+    }
+
     public String getTextoPesoGrua() {
         return textoPesoGrua.getText();
     }
 
-    public String getComboTipoNeumaticos() {
-        return comboTipoNeumaticos.getSelectedItem().toString();
-    }
-
-    public String getTextoToneladas() {
-        return textoToneladas.getText();
-    }
-
-    public String getComboMastil() {
-        return comboMastil.getSelectedItem().toString();
-    }
-
-    public String getComboTipoCombustible() {
-        return comboTipoCombustible.getSelectedItem().toString();
+    public void setTextoPesoGrua(String textoPesoGrua) {
+        this.textoPesoGrua.setText(textoPesoGrua);
     }
 
     public String getTextoTipoNeumaticos() {
         return textoTipoNeumaticos.getText();
     }
 
-    public String getTextoAlturaLevante() {
-        return textoAlturaLevante.getText();
-    }   
-}
+    public void setTextoTipoNeumaticos(String textoTipoNeumaticos) {
+        this.textoTipoNeumaticos.setText(textoTipoNeumaticos);
+    }
 
+    public String getTextoToneladas() {
+        return textoToneladas.getText();
+    }
+
+    public void setTextoToneladas(String textoToneladas) {
+        this.textoToneladas.setText(textoToneladas);
+    }
+
+    public String getComboMastil() {
+        return comboMastil.getSelectedItem().toString();
+    }
+
+    public void setComboMastil(String comboMastil) {
+        this.comboMastil.setSelectedItem(comboMastil);
+    }
+
+    public String getComboTipoCombustible() {
+        return comboTipoCombustible.getSelectedItem().toString();
+    }
+
+    public void setComboTipoCombustible(String comboTipoCombustible) {
+        this.comboTipoCombustible.setSelectedItem(comboTipoCombustible);
+    }
+
+    public String getComboTipoNeumaticos() {
+        return comboTipoNeumaticos.getSelectedItem().toString();
+    }
+
+    public void setComboTipoNeumaticos(String comboTipoNeumaticos) {
+        this.comboTipoNeumaticos.setSelectedItem(comboTipoNeumaticos);
+    }
+}
