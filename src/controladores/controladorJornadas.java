@@ -31,7 +31,7 @@ public class controladorJornadas {
     public void crearControladorPrincipal(JTabbedPane tabs){
         controladorPrincipal miControlador = new controladorPrincipal();
         tabs.remove(3);
-        tabs.insertTab("Jornada diaria", null, miControlador.crearcontroladorJornadaP(), null, 3);
+        tabs.insertTab("Jornada diaria", null, miControlador.crearControladorJornadaP(), null, 3);
         tabs.setSelectedIndex(3);
     }
     

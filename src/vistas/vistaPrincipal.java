@@ -28,9 +28,9 @@ public class vistaPrincipal extends javax.swing.JFrame {
         //vistaPrincipal.addTab("Clientes", tabClientes);
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
         vistaPrincipal.addTab("Clientes", miControlador.crearControladorClientesP());
-        vistaPrincipal.addTab("Grúas", miControlador.crearcontroladorGruasP());
-        vistaPrincipal.addTab("Empleados", miControlador.crearcontroladorEmpleadosP());
-        vistaPrincipal.addTab("Jornada Diaria", miControlador.crearcontroladorJornadaP());
+        vistaPrincipal.addTab("Grúas", miControlador.crearControladorGruasP());
+        vistaPrincipal.addTab("Empleados", miControlador.crearControladorEmpleadosP());
+        vistaPrincipal.addTab("Jornada Diaria", miControlador.crearControladorJornadaP());
     }
 
     /**
@@ -186,20 +186,20 @@ public class vistaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.setVisible(false);
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
-        miControlador.crearControladorGruas();
+//        miControlador.crearControladorGruas();
     }//GEN-LAST:event_MenuControlGruasActionPerformed
 
     private void MenuControlClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuControlClientesActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
-        miControlador.crearControladorClientes();
+//        miControlador.crearControladorClientes();
     }//GEN-LAST:event_MenuControlClientesActionPerformed
 
     private void MenuControlEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuControlEmpleadosActionPerformed
         this.setVisible(false);
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
-        miControlador.crearControladorEmpleados();
+//        miControlador.crearControladorEmpleados();
     }//GEN-LAST:event_MenuControlEmpleadosActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed

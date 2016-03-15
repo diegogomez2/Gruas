@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -82,8 +83,18 @@ public class vistaEmpleadosP extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tablaEmpleados);
 
         botonModificar.setText("Modificar empleado");
+        botonModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonModificarActionPerformed(evt);
+            }
+        });
 
         botonEliminar.setText("Eliminar empleado");
+        botonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonEliminarActionPerformed(evt);
+            }
+        });
 
         botonAgregar.setText("Agregar empleado");
         botonAgregar.addActionListener(new java.awt.event.ActionListener() {
@@ -126,6 +137,44 @@ public class vistaEmpleadosP extends javax.swing.JPanel {
         miControlador.crearControladorPrincipal(tabs);
     }//GEN-LAST:event_botonAgregarActionPerformed
 
+    private void botonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarActionPerformed
+        controladores.controladorEmpleados miControlador = new controladores.controladorEmpleados();
+        String rut, nombres;
+        boolean selected = tablaEmpleados.getSelectedRowCount() > 0;
+        if(selected){
+            int row = getFilaSeleccionada();
+            nombres = getNombresFila(row);
+            rut = getRutFila(row);
+            int dialogResult = JOptionPane.showOptionDialog(null, "Esta seguro que desea eliminar al empleado: \n "
+            + rut + "\n" + nombres, "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, 0);
+            if(dialogResult == JOptionPane.YES_OPTION)  miControlador.eliminarEmpleados(rut);
+            JTabbedPane tabs = (JTabbedPane)this.getParent();
+            miControlador.crearControladorPrincipal(tabs);
+        }else{
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un empleado para ser eliminado");
+        }
+    }//GEN-LAST:event_botonEliminarActionPerformed
+
+    private void botonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarActionPerformed
+        controladores.controladorEmpleados miControlador = new controladores.controladorEmpleados();
+        boolean selected = tablaEmpleados.getSelectedRowCount() > 0;
+        if(selected){
+            int row = getFilaSeleccionada();
+            String rut = getRutFila(row);
+            String nombres = getNombresFila(row);
+            String[] rut_dv = rut.split("-");
+            try {
+                miControlador.irVistaModificarEmpleados(rut_dv[0], nombres);
+            } catch (ParseException ex) {
+                Logger.getLogger(vistaEmpleadosP.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            JTabbedPane tabs = (JTabbedPane)this.getParent();
+            miControlador.crearControladorPrincipal(tabs);
+        }else{
+            JOptionPane.showMessageDialog(tablaEmpleados, "Debe seleccionar un empleado para ser modificado");
+        }
+    }//GEN-LAST:event_botonModificarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAgregar;
@@ -134,4 +183,16 @@ public class vistaEmpleadosP extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaEmpleados;
     // End of variables declaration//GEN-END:variables
+
+    public int getFilaSeleccionada() {
+        return tablaEmpleados.getSelectedRow();
+    }
+
+    public String getRutFila(int row){
+        return tablaEmpleados.getValueAt(row, 0).toString();
+    }
+    
+    public String getNombresFila(int row){
+        return tablaEmpleados.getValueAt(row,1).toString();
+    }
 }

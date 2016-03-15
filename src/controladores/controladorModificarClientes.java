@@ -17,7 +17,7 @@ import vistas.vistaModificarClientes;
 public class controladorModificarClientes {
     static vistas.vistaModificarClientes vistaMC;
     
-    public void mostrarVistaModificarCliente(String rut, String nombres, String apP){
+    public void mostrarVistaModificarCliente(String rut, String nombres){
         controladorPrincipal miControlador = new controladorPrincipal();
         String data[] = miControlador.obtenerClientePorRut(rut);
         vistaMC = new vistaModificarClientes(new javax.swing.JFrame(), true);

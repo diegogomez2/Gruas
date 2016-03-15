@@ -184,5 +184,59 @@ public class modeloEmpleados {
         }
         return data;
     }
+
+    public String eliminarEmpleado(String data) {
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("DELETE FROM empleados WHERE rut = ?");
+            pstm.setString(1, data);
+            pstm.execute();
+            pstm.close();
+            return "correcto";
+        }catch(SQLException e){
+            System.out.println(e);
+            return "incorrecto";
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+            return "incorrecto";
+        }
+    }
+
+    public String modificarEmpleado(String[] data, int rut) {
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("update empleados set rut=?, digito=?, nombres=?,"
+                    + "apPaterno=?, apMaterno=?, fechanac=?, telefono=?, correo=?, cargo=?, sueldo=?, "
+                    + "afp=?, salud=?, fechain=?, direccion=?, region=?, comuna=? WHERE rut=?");
+            pstm.setInt(1, Integer.parseInt(data[0]));
+            pstm.setString(2, data[1]);
+            pstm.setString(3, data[2]);
+            pstm.setString(4, data[3]);
+            pstm.setString(5, data[4]);
+            pstm.setDate(6, toSqlDate(data[5]));
+            pstm.setString(7, data[6]);
+            pstm.setString(8, data[7]);
+            pstm.setString(9, data[8]);
+            pstm.setInt(10, Integer.parseInt(data[9]));
+            pstm.setString(11, data[10]);
+            pstm.setString(12, data[11]);
+            pstm.setDate(13, toSqlDate(data[12]));
+            pstm.setString(14, data[13]);
+            pstm.setString(15, data[14]);
+            pstm.setString(16, data[15]);
+            pstm.setInt(17, rut);
+            pstm.executeUpdate();
+            pstm.close();
+        }catch(SQLException e){
+            System.out.println(e);
+            return "incorrecto";
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+            return "incorrecto";
+        }
+        return "correcto";
+    }
     
 }

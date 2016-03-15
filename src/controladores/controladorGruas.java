@@ -55,7 +55,7 @@ public class controladorGruas {
     public void crearControladorPrincipal(JTabbedPane tabs){
         controladorPrincipal miControlador = new controladorPrincipal();
         tabs.remove(1);
-        tabs.insertTab("Grúas", null, miControlador.crearcontroladorGruasP(), null, 1);
+        tabs.insertTab("Grúas", null, miControlador.crearControladorGruasP(), null, 1);
         tabs.setSelectedIndex(1);
     }
 }

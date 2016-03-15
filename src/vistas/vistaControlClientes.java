@@ -262,7 +262,7 @@ public class vistaControlClientes extends javax.swing.JFrame {
     private void MenuControlGruasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuControlGruasActionPerformed
         this.setVisible(false);
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
-        miControlador.crearControladorGruas();
+//        miControlador.crearControladorGruas();
     }//GEN-LAST:event_MenuControlGruasActionPerformed
 
     private void botonAgregarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarClienteActionPerformed
@@ -291,9 +291,8 @@ public class vistaControlClientes extends javax.swing.JFrame {
             int row = getFilaSeleccionada();
             String rut = getRutFila(row);
             String nombres = getNombresFila(row);
-            String apP = getApPaternoFila(row);
             String[] rut_dv = rut.split("-");
-            miControlador.irVistaModificarClientes(rut_dv[0], nombres, apP);
+            miControlador.irVistaModificarClientes(rut_dv[0], nombres);
         }else{
             JOptionPane.showMessageDialog(rootPane, "Debe seleccionar un cliente para ser modificado");
         }
@@ -302,7 +301,7 @@ public class vistaControlClientes extends javax.swing.JFrame {
     private void MenuControlEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuControlEmpleadosActionPerformed
         this.setVisible(false);
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
-        miControlador.crearControladorEmpleados();
+//        miControlador.crearControladorEmpleados();
     }//GEN-LAST:event_MenuControlEmpleadosActionPerformed
 
     /**

@@ -38,9 +38,9 @@ public class controladorClientes {
         miControlador.crearControladorEliminarClientes(rut);
     }
 
-    public void irVistaModificarClientes(String rut, String nombres, String apP) {
+    public void irVistaModificarClientes(String rut, String nombres) {
         controladorPrincipal miControlador = new controladorPrincipal();
-        miControlador.crearControladorModificarClientes(rut, nombres, apP);
+        miControlador.crearControladorModificarClientes(rut, nombres);
     }
 
     public void irVistaDetalleCliente(String rut) {

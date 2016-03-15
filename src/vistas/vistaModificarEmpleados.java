@@ -18,14 +18,15 @@ import org.jdesktop.swingx.JXDatePicker;
  *
  * @author diego
  */
-public class vistaDetalleEmpleados extends javax.swing.JDialog {
+public class vistaModificarEmpleados extends javax.swing.JDialog {
 
     /**
-     * Creates new form vistaDetalleEmpleados
+     * Creates new form vistaModificarEmpleados
      */
+    int rut;
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
     
-    public vistaDetalleEmpleados(java.awt.Frame parent, boolean modal) {
+    public vistaModificarEmpleados(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -73,6 +74,7 @@ public class vistaDetalleEmpleados extends javax.swing.JDialog {
         labelComuna = new javax.swing.JLabel();
         comboComuna = new javax.swing.JComboBox();
         botonOK = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -207,10 +209,17 @@ public class vistaDetalleEmpleados extends javax.swing.JDialog {
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
-        botonOK.setText("OK");
+        botonOK.setText("Cancelar");
         botonOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonOKActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Aceptar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -242,8 +251,10 @@ public class vistaDetalleEmpleados extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(botonOK, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botonOK, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -285,7 +296,9 @@ public class vistaDetalleEmpleados extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(textoCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
-                .addComponent(botonOK)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botonOK)
+                    .addComponent(jButton1))
                 .addContainerGap())
         );
 
@@ -293,11 +306,11 @@ public class vistaDetalleEmpleados extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -306,6 +319,24 @@ public class vistaDetalleEmpleados extends javax.swing.JDialog {
     private void botonOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonOKActionPerformed
         dispose();
     }//GEN-LAST:event_botonOKActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        controladores.controladorModificarEmpleados miControladorME = new controladores.controladorModificarEmpleados();
+        String respuesta = miControladorME.camposVacios();
+        boolean esVacio = respuesta.length() == 0;
+        if (!esVacio) {
+            JOptionPane.showMessageDialog(this, respuesta, "Debe rellenar los siguientes campos", JOptionPane.INFORMATION_MESSAGE);
+            //remarcarVacios();
+        } else {
+            //remarcarVacios();
+            boolean rutValido = miControladorME.verificarRut(getTextoRut());
+            if (rutValido) {
+                if (miControladorME.irVistaEmpleadosP()) {
+                    setVisible(false);
+                }
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -324,20 +355,20 @@ public class vistaDetalleEmpleados extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(vistaDetalleEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(vistaModificarEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(vistaDetalleEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(vistaModificarEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(vistaDetalleEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(vistaModificarEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(vistaDetalleEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(vistaModificarEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                vistaDetalleEmpleados dialog = new vistaDetalleEmpleados(new javax.swing.JFrame(), true);
+                vistaModificarEmpleados dialog = new vistaModificarEmpleados(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -356,6 +387,7 @@ public class vistaDetalleEmpleados extends javax.swing.JDialog {
     private javax.swing.JComboBox comboComuna;
     private javax.swing.JComboBox comboRegion;
     private javax.swing.JComboBox comboSalud;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -386,16 +418,16 @@ public class vistaDetalleEmpleados extends javax.swing.JDialog {
     private javax.swing.JTextField textoTelefono;
     // End of variables declaration//GEN-END:variables
 
+    public void setComboComuna(String comboComuna) {
+        this.comboComuna.setSelectedItem(comboComuna);
+    }
+
     public void setComboAFP(String comboAFP) {
         this.comboAFP.setSelectedItem(comboAFP);
     }
 
     public void setComboCargo(String comboCargo) {
         this.comboCargo.setSelectedItem(comboCargo);
-    }
-
-    public void setComboComuna(String comboComuna) {
-        this.comboComuna.setSelectedItem(comboComuna);
     }
 
     public void setComboRegion(String comboRegion) {
@@ -444,5 +476,79 @@ public class vistaDetalleEmpleados extends javax.swing.JDialog {
 
     public void setTextoTelefono(String textoTelefono) {
         this.textoTelefono.setText(textoTelefono);
+    }
+
+    public int getRut() {
+        return rut;
+    }
+
+    public void setRut(int rut) {
+        this.rut = rut;
+    }
+
+    public String getTextoRut() {
+        return textoRut.getText();
+    }
+
+    public String getComboAFP() {
+        return comboAFP.getSelectedItem().toString();
+    }
+
+    public String getComboCargo() {
+        return comboCargo.getSelectedItem().toString();
+    }
+
+    public String getComboComuna() {
+        return comboComuna.getSelectedItem().toString();
+    }
+
+    public String getComboRegion() {
+        return comboRegion.getSelectedItem().toString();
+    }
+
+    public String getComboSalud() {
+        return comboSalud.getSelectedItem().toString();
+    }
+
+    public String getTextoApMaterno() {
+        return textoApMaterno.getText();
+    }
+
+    public String getTextoApPaterno() {
+        return textoApPaterno.getText();
+    }
+
+    public String getTextoCorreo() {
+        return textoCorreo.getText();
+    }
+
+    public String getTextoDir() {
+        return textoDir.getText();
+    }
+
+    public String getTextoFechaIn() {
+        Date fecha = textoFechaIn.getDate();
+        if(fecha == null) return "";
+        String dateString = formatDate.format(textoFechaIn.getDate());
+        return dateString;
+    }
+
+    public String getTextoFechaNac() {
+        Date fecha = textoFechaNac.getDate();
+        if(fecha == null) return "";
+        String dateString = formatDate.format(textoFechaNac.getDate());
+        return dateString;
+    }
+
+    public String getTextoNombres() {
+        return textoNombres.getText();
+    }
+
+    public String getTextoSueldo() {
+        return textoSueldo.getText();
+    }
+
+    public String getTextoTelefono() {
+        return textoTelefono.getText();
     }
 }

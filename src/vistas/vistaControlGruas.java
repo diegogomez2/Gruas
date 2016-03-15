@@ -262,7 +262,7 @@ public class vistaControlGruas extends javax.swing.JFrame {
     private void MenuControlClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuControlClientesActionPerformed
         this.setVisible(false);
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
-        miControlador.crearControladorClientes();
+        //miControlador.crearControladorClientes();
     }//GEN-LAST:event_MenuControlClientesActionPerformed
 
     private void botonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarActionPerformed
@@ -285,7 +285,7 @@ public class vistaControlGruas extends javax.swing.JFrame {
     private void MenuControlEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuControlEmpleadosActionPerformed
         this.setVisible(false);
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
-        miControlador.crearControladorEmpleados();
+        //miControlador.crearControladorEmpleados();
     }//GEN-LAST:event_MenuControlEmpleadosActionPerformed
 
     private void botonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarActionPerformed

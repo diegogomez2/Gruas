@@ -231,13 +231,13 @@ public class vistaControlEmpleados extends javax.swing.JFrame {
     private void MenuControlClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuControlClientesActionPerformed
         this.setVisible(false);
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
-        miControlador.crearControladorClientes();
+//        miControlador.crearControladorClientes();
     }//GEN-LAST:event_MenuControlClientesActionPerformed
 
     private void MenuControlGruasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuControlGruasActionPerformed
         this.setVisible(false);
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
-        miControlador.crearControladorGruas();
+//        miControlador.crearControladorGruas();
     }//GEN-LAST:event_MenuControlGruasActionPerformed
 
     private void botonAgregarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarEmpleadoActionPerformed

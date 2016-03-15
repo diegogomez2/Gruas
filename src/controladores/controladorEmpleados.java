@@ -40,12 +40,22 @@ public class controladorEmpleados {
 
     public void crearControladorPrincipal(JTabbedPane tabs) {
         controladorPrincipal miControlador = new controladorPrincipal();
-        tabs.remove(3);
-        tabs.insertTab("Empleados", null, miControlador.crearControladorEmpleadosP(), null, 3);
-        tabs.setSelectedIndex(3);    }
+        tabs.remove(2);
+        tabs.insertTab("Empleados", null, miControlador.crearControladorEmpleadosP(), null, 2);
+        tabs.setSelectedIndex(2);   
+    }
 
     public void irVistaIngresarEmpleados() {
         controladorPrincipal miControlador = new controladorPrincipal();
         miControlador.crearControladorIngresarEmpleados();    }
+
+    public void eliminarEmpleados(String rut) {
+        controladorPrincipal miControlador = new controladorPrincipal();
+        miControlador.crearControladorEliminarEmpleados(rut);    }
+
+    public void irVistaModificarEmpleados(String rut, String nombres) throws ParseException {
+        controladorPrincipal miControlador = new controladorPrincipal();
+        miControlador.crearControladorModificarEmpleados(rut, nombres);
+    }
     
 }

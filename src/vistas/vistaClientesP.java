@@ -147,9 +147,8 @@ public class vistaClientesP extends javax.swing.JPanel {
             int row = getFilaSeleccionada();
             rut = getRutFila(row);
             nombres = getNombresFila(row);
-            apP = getApPaternoFila(row);
             int dialogResult = JOptionPane.showOptionDialog(tablaClientes, "Esta seguro que desea eliminar el cliente: \n "
-            + rut + " " + nombres + " " + apP, "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, 0);
+            + rut + "\n" + nombres, "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, 0);
             if(dialogResult == JOptionPane.YES_OPTION)  miControlador.eliminarClientes(rut);
             JTabbedPane tabs = (JTabbedPane)this.getParent();
             miControlador.crearControladorPrincipal(tabs);
@@ -165,9 +164,8 @@ public class vistaClientesP extends javax.swing.JPanel {
             int row = getFilaSeleccionada();
             String rut = getRutFila(row);
             String nombres = getNombresFila(row);
-            String apP = getApPaternoFila(row);
             String[] rut_dv = rut.split("-");
-            miControlador.irVistaModificarClientes(rut_dv[0], nombres, apP);
+            miControlador.irVistaModificarClientes(rut_dv[0], nombres);
             JTabbedPane tabs = (JTabbedPane)this.getParent();
             miControlador.crearControladorPrincipal(tabs);
         }else{
@@ -194,9 +192,5 @@ public class vistaClientesP extends javax.swing.JPanel {
     
     public String getNombresFila(int row){
         return tablaClientes.getValueAt(row,1).toString();
-    }
-    
-    public String getApPaternoFila(int row){
-        return tablaClientes.getValueAt(row, 2).toString();
     }
 }
