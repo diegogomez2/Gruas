@@ -11,6 +11,10 @@ import java.text.ParseException;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import modelos.modeloClientes;
 import vistas.vistaLogin;
 import modelos.modeloUsuarios;
 import vistas.vistaPrincipal;
@@ -25,10 +29,13 @@ public class controladorPrincipal {
     static controladorClientes micontroladorClientes;
     static controladorGruas micontroladorGruas;
     static controladorEmpleados micontroladorEmpleados;
+    static controladorJornadas micontroladorJornadas;
     static controladorOT micontroladorOT;
     static controladorUsuarios micontroladorUsuarios;
     static controladorDetalleClientes micontroladorDC;
     static vistaLogin miVistaL;
+    static vistaPrincipal mivistaP;
+    static vistas.vistaJornadasP mivistaJP;
     
     public static void main(String[] args) {
         miVistaL = new vistaLogin();
@@ -159,7 +166,6 @@ public class controladorPrincipal {
         modelos.modeloClientes cliente = new modelos.modeloClientes();
         if(cliente.ingresarCliente(data).compareTo("correcto") == 0){
             JOptionPane.showMessageDialog(miVistaL, "Cliente ingresado con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
-            crearControladorClientes();
             return true;
         }else{
             JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al ingresar los datos\n" 
@@ -172,7 +178,6 @@ public class controladorPrincipal {
         modelos.modeloClientes cliente = new modelos.modeloClientes();
         if(cliente.eliminarCliente(data).compareTo("correcto") == 0){
             JOptionPane.showMessageDialog(miVistaL, "Cliente eliminado con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
-            crearControladorClientes();
             return true;
         }else{
             JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al eliminar el cliente seleccionado", "Error", JOptionPane.ERROR_MESSAGE);
@@ -184,10 +189,20 @@ public class controladorPrincipal {
         modelos.modeloClientes cliente = new modelos.modeloClientes();
         if(cliente.modificarCliente(data, rut).compareTo("correcto") == 0){
             JOptionPane.showMessageDialog(miVistaL, "Cliente modificado con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
-            crearControladorClientes();
             return true;
         }else{
             JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al modificar el cliente selecionado", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+    
+    boolean modificarGrua(String[] data, String patente) {
+        modelos.modeloGruas grua = new modelos.modeloGruas();
+        if(grua.modificarGrua(data, patente).compareTo("correcto") == 0){
+            JOptionPane.showMessageDialog(miVistaL, "Grúa modificada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al modificar la grúa selecionada", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }
@@ -204,7 +219,6 @@ public class controladorPrincipal {
         modelos.modeloGruas grua = new modelos.modeloGruas();
         if(grua.ingresarGrua(data).compareTo("correcto") == 0){
             JOptionPane.showMessageDialog(miVistaL, "Grua ingresada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
-            crearControladorGruas();
             return true;
         }else{
             JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al ingresar los datos\n" 
@@ -217,7 +231,6 @@ public class controladorPrincipal {
         modelos.modeloGruas grua = new modelos.modeloGruas();
         if(grua.eliminarGrua(patente).compareTo("correcto") == 0){
             JOptionPane.showMessageDialog(miVistaL, "Grua eliminada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
-            crearControladorGruas();
             return true;
         }else{
             JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al eliminar la grúa seleccionada", "Error", JOptionPane.ERROR_MESSAGE);
@@ -268,17 +281,94 @@ public class controladorPrincipal {
         micontroladorMG = new controladorModificarGruas();
         micontroladorMG.mostrarVistaModificarGrua(patente, descripcion);    }
 
-    boolean modificarGrua(String[] data, String patente) {
-        modelos.modeloGruas grua = new modelos.modeloGruas();
-        if(grua.modificarGrua(data, patente).compareTo("correcto") == 0){
-            JOptionPane.showMessageDialog(miVistaL, "Grúa modificada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
-            crearControladorGruas();
+
+    public JPanel crearcontroladorJornadaP() {
+        modelos.modeloJornadas jornadas;
+        jornadas = new modelos.modeloJornadas();
+        Object[][] data;
+        data = jornadas.listarJornadas();
+        micontroladorJornadas = new controladorJornadas();
+        return micontroladorJornadas.mostrarTabControlJornadas(tipo, data);    
+    }
+    
+    public void updateTable(String[] data){
+        JTable tjornadas = mivistaJP.getTablaJornadas();
+        DefaultTableModel model = (DefaultTableModel) tjornadas.getModel();
+        model.addRow(new Object[]{data[2], data[3], data[4], data[0], "", data[7], data[1] });
+    }
+   
+    void crearControladorIngresarJornadas() {
+        modelos.modeloClientes clientes;
+        modelos.modeloGruas gruas;
+        modelos.modeloEmpleados empleados;
+        clientes = new modeloClientes();
+        gruas = new modelos.modeloGruas();
+        empleados = new modelos.modeloEmpleados();
+        Object[][] dataClientes, dataGruas, dataEmpleados;
+        dataClientes = clientes.obtenerRazonClientes();
+        dataGruas = gruas.obtenerDescGruas();
+        dataEmpleados = empleados.obtenerNombresEmpleados();
+        controladores.controladorIngresarJornadas micontroladorIJ;
+        micontroladorIJ = new controladorIngresarJornadas();
+        micontroladorIJ.mostrarVistaIngresarJornadas(dataClientes, dataGruas, dataEmpleados);
+    }
+
+    boolean ingresarJornada(String[] data) {
+        modelos.modeloJornadas jornada = new modelos.modeloJornadas();
+        if(jornada.ingresarJornada(data).compareTo("correcto") == 0){
+            JOptionPane.showMessageDialog(miVistaL, "Jornada ingresada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
             return true;
         }else{
-            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al modificar la grúa selecionada", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al ingresar los datos.\n", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+    
+    public void crearControladorPrincipal(JTabbedPane tabs, int i){
+        tabs.removeAll();
+        tabs.addTab("Clientes", crearControladorClientesP());
+        tabs.addTab("Grúas", crearcontroladorGruasP());
+        tabs.addTab("Empleados", crearcontroladorEmpleadosP());
+        tabs.addTab("Jornada Diaria", crearcontroladorJornadaP());
+        tabs.setSelectedIndex(i);
+    }
+
+    void crearControladorIngresarEmpleados() {
+        controladores.controladorIngresarEmpleados micontroladorIE;
+        micontroladorIE = new controladorIngresarEmpleados();
+        micontroladorIE.mostrarVistaIngresarEmpleados();
+    }
+
+    boolean ingresarEmpleado(String[] data) {
+        modelos.modeloEmpleados empleado = new modelos.modeloEmpleados();
+        if(empleado.ingresarEmpleados(data).compareTo("correcto") == 0){
+            JOptionPane.showMessageDialog(miVistaL, "Empleado ingresado con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al ingresar los datos.\n Compruebe que el rut sea correcto",
+                    "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }
 
+    Component crearControladorEmpleadosP() {
+        modelos.modeloEmpleados empleados;
+        empleados = new modelos.modeloEmpleados();
+        Object[][] data;
+        data = empleados.listarEmpleados();
+        micontroladorEmpleados = new controladorEmpleados();
+        return micontroladorEmpleados.mostrarTabControlEmpleados(tipo, data);    }
+
+    void crearControladorDetalleEmpleado(String rut) throws ParseException {
+        controladorDetalleEmpleados micontroladorDE;
+        micontroladorDE = new controladorDetalleEmpleados();
+        micontroladorDE.mostrarVistaDetalleEmpleado(rut);
+    }
+
+    String[] obtenerEmpleadoPorRut(String rut) {
+        modelos.modeloEmpleados empleado = new modelos.modeloEmpleados();
+        String[] data = empleado.obtenerEmpleadoPorRut(rut);
+        return data;
+    }
 
 }

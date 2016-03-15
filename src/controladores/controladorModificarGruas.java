@@ -49,6 +49,7 @@ public class controladorModificarGruas {
         vistaMG.setTextoKMHUM(data[25]);
         vistaMG.setTextoHorasPM(data[26]);
         vistaMG.setTextoFechaBaja(data[27]);
+        vistaMG.setPatente(data[0]);
         vistaMG.setLocationRelativeTo(null);
         vistaMG.setVisible(true);
     }

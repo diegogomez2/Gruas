@@ -8,6 +8,7 @@ package controladores;
 import java.awt.Component;
 import java.text.ParseException;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import vistas.vistaControlEmpleados;
 import vistas.vistaEmpleadosP;
 
@@ -34,7 +35,17 @@ public class controladorEmpleados {
 
     public void irVistaDetalleEmpleado(String rut) throws ParseException {
         controladorPrincipal miControlador = new controladorPrincipal();
-        miControlador.crearControladorDetalleGrua(rut); 
+        miControlador.crearControladorDetalleEmpleado(rut); 
     }
+
+    public void crearControladorPrincipal(JTabbedPane tabs) {
+        controladorPrincipal miControlador = new controladorPrincipal();
+        tabs.remove(3);
+        tabs.insertTab("Empleados", null, miControlador.crearControladorEmpleadosP(), null, 3);
+        tabs.setSelectedIndex(3);    }
+
+    public void irVistaIngresarEmpleados() {
+        controladorPrincipal miControlador = new controladorPrincipal();
+        miControlador.crearControladorIngresarEmpleados();    }
     
 }

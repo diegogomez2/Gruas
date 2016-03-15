@@ -297,7 +297,6 @@ public class vistaModificarClientes extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
-        controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
         controladores.controladorModificarClientes miControladorMC = new controladores.controladorModificarClientes();
         String respuesta = miControladorMC.camposVacios();
         boolean esVacio = respuesta.length() == 0;
@@ -535,7 +534,8 @@ public class vistaModificarClientes extends javax.swing.JDialog {
         vacio = (textoCorreo.getText().compareTo("") == 0)? true : false;
         setLabelCorreo(vacio);
         vacio = (textoDireccion.getText().compareTo("") == 0)? true : false;
-        setLabelDireccion(vacio);    }
+        setLabelDireccion(vacio);    
+    }
 
     public void setLabelApMaterno(boolean vacio) {
         if(vacio){

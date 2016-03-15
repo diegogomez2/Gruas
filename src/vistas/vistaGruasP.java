@@ -12,6 +12,7 @@ import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
@@ -36,7 +37,7 @@ public class vistaGruasP extends javax.swing.JPanel {
             }
         };
         tablaGruas.setModel(datos);
-        tablaGruas.setRowSelectionInterval(0, 0);
+        if(tablaGruas.getRowCount() > 0) tablaGruas.setRowSelectionInterval(0, 0);
         tablaGruas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tablaGruas.addMouseListener(new MouseAdapter(){
             public void mousePressed(MouseEvent evt){
@@ -134,11 +135,18 @@ public class vistaGruasP extends javax.swing.JPanel {
     private void botonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarActionPerformed
         controladores.controladorGruas miControlador = new controladores.controladorGruas();
         String patente;
-        int row = getFilaSeleccionada();
-        patente = getPatenteFila(row);
-        int dialogResult = JOptionPane.showOptionDialog(null, "Esta seguro que desea eliminar la grúa: \n "
+        boolean selected = tablaGruas.getSelectedRowCount() > 0;
+        if(selected){
+            int row = getFilaSeleccionada();
+            patente = getPatenteFila(row);
+            int dialogResult = JOptionPane.showOptionDialog(null, "Esta seguro que desea eliminar la grúa: \n "
             + patente, "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, 0);
-        if(dialogResult == JOptionPane.YES_OPTION)  miControlador.eliminarGruas(patente);
+            if(dialogResult == JOptionPane.YES_OPTION)  miControlador.eliminarGruas(patente);
+            JTabbedPane tabs = (JTabbedPane)this.getParent();
+            miControlador.crearControladorPrincipal(tabs);
+        }else{
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una grúa para ser eliminada");
+        }
     }//GEN-LAST:event_botonEliminarActionPerformed
 
     private void botonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarActionPerformed
@@ -153,6 +161,8 @@ public class vistaGruasP extends javax.swing.JPanel {
             } catch (ParseException ex) {
                 Logger.getLogger(vistaControlGruas.class.getName()).log(Level.SEVERE, null, ex);
             }
+            JTabbedPane tabs = (JTabbedPane)this.getParent();
+            miControlador.crearControladorPrincipal(tabs);
         }else{
             JOptionPane.showMessageDialog(null, "Debe seleccionar una grúa para ser modificada");
         }
@@ -161,6 +171,8 @@ public class vistaGruasP extends javax.swing.JPanel {
     private void botonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarActionPerformed
         controladores.controladorGruas miControlador = new controladores.controladorGruas();
         miControlador.irVistaIngresarGruas();
+        JTabbedPane tabs = (JTabbedPane)this.getParent();
+        miControlador.crearControladorPrincipal(tabs);
     }//GEN-LAST:event_botonAgregarActionPerformed
 
 

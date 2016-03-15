@@ -232,11 +232,47 @@ public class modeloGruas {
             pstm.executeUpdate();
             pstm.close();
         }catch(SQLException e){
-            System.out.println("aki "+e);
+            System.out.println(e);
             return "incorrecto";
         }catch(ClassNotFoundException e){
             System.out.println(e);
             return "incorrecto";
         }
-        return "correcto";    }
+        return "correcto";    
+    }
+
+    public Object[][] obtenerDescGruas() {
+        int registros = 0;
+        
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Gruas");
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+       }catch(SQLException e){
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        
+        Object[][] data = new String[registros][1];
+        
+        try{
+            PreparedStatement pstm = conn.prepareStatement("SELECT des FROM Gruas");
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while(res.next()){
+                String estdes = res.getString("des");
+                data[i][0] = estdes;
+                i++;
+            }
+            res.close();
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+        return data;  
+    }
 }

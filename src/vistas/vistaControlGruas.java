@@ -12,6 +12,7 @@ import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
@@ -39,7 +40,7 @@ public class vistaControlGruas extends javax.swing.JFrame {
             }
         };
         tablaGruas.setModel(datos);
-        tablaGruas.setRowSelectionInterval(0, 0);
+        if(tablaGruas.getRowCount() > 0) tablaGruas.setRowSelectionInterval(0, 0);
         tablaGruas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tablaGruas.addMouseListener(new MouseAdapter(){
             public void mousePressed(MouseEvent evt){
@@ -277,6 +278,8 @@ public class vistaControlGruas extends javax.swing.JFrame {
         int dialogResult = JOptionPane.showOptionDialog(rootPane, "Esta seguro que desea eliminar la grúa: \n "
                 + patente, "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, 0);
         if(dialogResult == JOptionPane.YES_OPTION)  miControlador.eliminarGruas(patente);
+        JTabbedPane tabs = (JTabbedPane)this.getParent();
+        miControlador.crearControladorPrincipal(tabs);
     }//GEN-LAST:event_botonEliminarActionPerformed
 
     private void MenuControlEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuControlEmpleadosActionPerformed

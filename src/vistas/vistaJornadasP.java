@@ -8,9 +8,8 @@ package vistas;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.text.ParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -20,35 +19,34 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author diego
  */
-public class vistaEmpleadosP extends javax.swing.JPanel {
+public class vistaJornadasP extends javax.swing.JPanel {
 
     /**
-     * Creates new form vistaEmpleadosP
+     * Creates new form vistaJornadaP
      */
-    public vistaEmpleadosP(String tipo, Object[][] data) {
+
+    public vistaJornadasP(String tipo, Object[][] data) {
         initComponents();
-        String[] columNames = {"Rut", "Nombre", "Cargo", "Teléfono"};
+        final int rows = 5;
+        String[] columNames = {"Código", "Grúa", "Cliente", "Operador", "Fecha de salida", "Número de OT", 
+        "Observaciones", "Hora"};
         DefaultTableModel datos = new DefaultTableModel(data, columNames){
             @Override
             public boolean isCellEditable(int row, int column){
                 return false;
             }
         };
-        tablaEmpleados.setModel(datos);
-        if(tablaEmpleados.getRowCount() > 0) tablaEmpleados.setRowSelectionInterval(0, 0);
-        tablaEmpleados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tablaEmpleados.addMouseListener(new MouseAdapter(){
+        tablaJornadas.setModel(datos);
+        if(tablaJornadas.getRowCount() > 0) tablaJornadas.setRowSelectionInterval(0, 0);
+        tablaJornadas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tablaJornadas.addMouseListener(new MouseAdapter(){
             public void mousePressed(MouseEvent evt){
                 JTable table = (JTable)evt.getSource();
                 Point p = evt.getPoint();
                 int row = table.rowAtPoint(p);
                 if(evt.getClickCount() == 2){
-                    controladores.controladorEmpleados miControlador = new controladores.controladorEmpleados();
-                    try {
-                        miControlador.irVistaDetalleEmpleado(tablaEmpleados.getValueAt(row, 0).toString());
-                    } catch (ParseException ex) {
-                        Logger.getLogger(vistaEmpleadosP.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    controladores.controladorJornadas miControlador = new controladores.controladorJornadas();
+                    //miControlador.irVistaDetalleJornada(tablaJornadas.getValueAt(row, 0).toString());
                 }
             }
         });    }
@@ -63,29 +61,29 @@ public class vistaEmpleadosP extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaEmpleados = new javax.swing.JTable();
+        tablaJornadas = new javax.swing.JTable();
         botonModificar = new javax.swing.JButton();
         botonEliminar = new javax.swing.JButton();
         botonAgregar = new javax.swing.JButton();
 
-        tablaEmpleados.setModel(new javax.swing.table.DefaultTableModel(
+        tablaJornadas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
-        jScrollPane1.setViewportView(tablaEmpleados);
+        jScrollPane1.setViewportView(tablaJornadas);
 
-        botonModificar.setText("Modificar empleado");
+        botonModificar.setText("Modificar Jornada");
 
-        botonEliminar.setText("Eliminar empleado");
+        botonEliminar.setText("Eliminar Jornada");
 
-        botonAgregar.setText("Agregar empleado");
+        botonAgregar.setText("Agregar Jornada");
         botonAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonAgregarActionPerformed(evt);
@@ -102,27 +100,28 @@ public class vistaEmpleadosP extends javax.swing.JPanel {
                 .addComponent(botonAgregar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(botonEliminar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(2, 2, 2)
                 .addComponent(botonModificar)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonModificar)
                     .addComponent(botonEliminar)
                     .addComponent(botonAgregar))
-                .addContainerGap())
+                .addGap(0, 32, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarActionPerformed
-        controladores.controladorEmpleados miControlador = new controladores.controladorEmpleados();
-        miControlador.irVistaIngresarEmpleados();
+        controladores.controladorJornadas miControlador = new controladores.controladorJornadas();
+        miControlador.irVistaIngresarJornadas();
         JTabbedPane tabs = (JTabbedPane)this.getParent();
+        int i = tabs.getSelectedIndex();
         miControlador.crearControladorPrincipal(tabs);
     }//GEN-LAST:event_botonAgregarActionPerformed
 
@@ -132,6 +131,11 @@ public class vistaEmpleadosP extends javax.swing.JPanel {
     private javax.swing.JButton botonEliminar;
     private javax.swing.JButton botonModificar;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tablaEmpleados;
+    private javax.swing.JTable tablaJornadas;
     // End of variables declaration//GEN-END:variables
+
+    public JTable getTablaJornadas() {
+        return tablaJornadas;
+    }
+
 }

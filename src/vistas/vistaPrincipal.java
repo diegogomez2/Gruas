@@ -9,13 +9,14 @@ import controladores.controladorPrincipal;
 import java.awt.PopupMenu;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 /**
  *
  * @author Diego
  */
 public class vistaPrincipal extends javax.swing.JFrame {
-    private JPanel vistaClientesP;
+    //private JPanel vistaClientesP;
 
     /**
      * Creates new form vistaPrincipal
@@ -29,6 +30,7 @@ public class vistaPrincipal extends javax.swing.JFrame {
         vistaPrincipal.addTab("Clientes", miControlador.crearControladorClientesP());
         vistaPrincipal.addTab("Grúas", miControlador.crearcontroladorGruasP());
         vistaPrincipal.addTab("Empleados", miControlador.crearcontroladorEmpleadosP());
+        vistaPrincipal.addTab("Jornada Diaria", miControlador.crearcontroladorJornadaP());
     }
 
     /**
@@ -170,11 +172,11 @@ public class vistaPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(vistaPrincipal)
+            .addComponent(vistaPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 548, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(vistaPrincipal)
+            .addComponent(vistaPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
         );
 
         pack();
@@ -269,8 +271,16 @@ public class vistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar MenuPrincipal;
     private javax.swing.JMenu MenuUsuarios;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JTabbedPane vistaPrincipal;
+    public javax.swing.JTabbedPane vistaPrincipal;
     // End of variables declaration//GEN-END:variables
+
+    public JTabbedPane getVistaPrincipal() {
+        return vistaPrincipal;
+    }
+    
+    public void agregartab(String nom){
+        vistaPrincipal.addTab(nom, new JPanel());
+    }
     
 }
 

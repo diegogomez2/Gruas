@@ -185,5 +185,40 @@ public class modeloClientes {
         }
         return "correcto";
     }
+
+    public Object[][] obtenerRazonClientes() {
+        int registros = 0;
+        
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Clientes");
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+       }catch(SQLException e){
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        
+        Object[][] data = new String[registros][1];
+        
+        try{
+            PreparedStatement pstm = conn.prepareStatement("SELECT razon FROM Clientes ORDER BY razon");
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while(res.next()){
+                String estrazon = res.getString("razon");
+                data[i][0] = estrazon;
+                i++;
+            }
+            res.close();
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+        return data;  
+    }
    
 }

@@ -7,6 +7,7 @@ package controladores;
 
 import java.text.ParseException;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import vistas.vistaControlGruas;
 import vistas.vistaGruasP;
 
@@ -50,10 +51,11 @@ public class controladorGruas {
         //vistaGruas.setVisible(true);
         return vistaGruasP;
     }
-
-    public void irVistaModificarEmpleados(String patente, String desc) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+    public void crearControladorPrincipal(JTabbedPane tabs){
+        controladorPrincipal miControlador = new controladorPrincipal();
+        tabs.remove(1);
+        tabs.insertTab("Grúas", null, miControlador.crearcontroladorGruasP(), null, 1);
+        tabs.setSelectedIndex(1);
     }
-    
-    
 }

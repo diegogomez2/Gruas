@@ -10,6 +10,7 @@ import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JOptionPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
@@ -36,7 +37,7 @@ public class vistaControlClientes extends javax.swing.JFrame {
             }
         };
         tablaClientes.setModel(datos);
-        tablaClientes.setRowSelectionInterval(0, 0);
+        if(tablaClientes.getRowCount() > 0) tablaClientes.setRowSelectionInterval(0, 0);
         tablaClientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tablaClientes.addMouseListener(new MouseAdapter(){
             public void mousePressed(MouseEvent evt){
@@ -279,6 +280,8 @@ public class vistaControlClientes extends javax.swing.JFrame {
         int dialogResult = JOptionPane.showOptionDialog(rootPane, "Esta seguro que desea eliminar el cliente: \n "
                 + rut + " " + nombres + " " + apP, "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, 0);
         if(dialogResult == JOptionPane.YES_OPTION)  miControlador.eliminarClientes(rut);
+        JTabbedPane tabs = (JTabbedPane)this.getParent();
+        miControlador.crearControladorPrincipal(tabs);
     }//GEN-LAST:event_botonEliminarActionPerformed
 
     private void botonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarActionPerformed

@@ -6,6 +6,7 @@
 package controladores;
 
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import vistas.vistaClientesP;
 import vistas.vistaControlClientes;
 
@@ -50,8 +51,14 @@ public class controladorClientes {
     public JPanel mostrarTabControlClientes(String tipo, Object[][] data) {
         //if(vistaClientes != null) vistaClientes.setVisible(false);
         vistaClientesP = new vistaClientesP(tipo, data);
-        
         //vistaClientes.setVisible(true);   
         return vistaClientesP;
+    }
+    
+    public void crearControladorPrincipal(JTabbedPane tabs){
+        controladorPrincipal miControlador = new controladorPrincipal();
+        tabs.remove(0);
+        tabs.insertTab("Clientes", null, miControlador.crearControladorClientesP(), null, 0);
+        tabs.setSelectedIndex(0);
     }
 }

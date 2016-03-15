@@ -476,7 +476,6 @@ public class vistaModificarGruas extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonIngresarActionPerformed
-        controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
         controladores.controladorModificarGruas micontroladorMG = new controladores.controladorModificarGruas();
         String respuesta = micontroladorMG.camposVacios();
         boolean esVacio = respuesta.length() == 0;
@@ -494,10 +493,6 @@ public class vistaModificarGruas extends javax.swing.JDialog {
     private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_botonCancelarActionPerformed
-
-    private void textoFechaRTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoFechaRTActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textoFechaRTActionPerformed
 
     /**
      * @param args the command line arguments
