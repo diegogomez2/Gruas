@@ -5,6 +5,7 @@
  */
 package vistas;
 
+import com.mxrck.autocompleter.TextAutoCompleter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -34,21 +35,23 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         textoFechaSalida.setDate(new Date());
-        String[] listaClientes = new String[clientes.length];
-        String[] listaGruas = new String[gruas.length];
-        String[] listaEmpleados = new String[empleados.length];
+        //String[] listaClientes = new String[clientes.length];
+        //String[] listaGruas = new String[gruas.length];
+        //String[] listaEmpleados = new String[empleados.length];
+        TextAutoCompleter listaClientes = new TextAutoCompleter(textoCliente);
+        TextAutoCompleter listaGruas = new TextAutoCompleter(textoGrua);
+        TextAutoCompleter listaEmpleados = new TextAutoCompleter(textoOperador);
         for(int i = 0; i < clientes.length; i++){
-            listaClientes[i] = clientes[i][0].toString();
+            //listaClientes[i] = clientes[i][0].toString();
+            listaClientes.addItem(clientes[i][0].toString());
         }
         for(int i = 0; i < gruas.length; i++){
-            listaGruas[i] = gruas[i][0].toString();
+            //listaGruas[i] = gruas[i][0].toString();
+            listaGruas.addItem(gruas[i][0].toString());
         }
         for(int i = 0; i < empleados.length; i++){
-            listaEmpleados[i] = empleados[i][0].toString();
+            listaEmpleados.addItem(empleados[i][0].toString());
         }
-        comboCliente.setModel(new DefaultComboBoxModel(listaClientes));
-        comboGrua.setModel(new DefaultComboBoxModel(listaGruas));
-        comboOperador.setModel(new DefaultComboBoxModel(listaEmpleados));
     }
 
     /**
@@ -65,11 +68,8 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
         labelHoraSalida = new javax.swing.JLabel();
         textoHoraSalida = new javax.swing.JSpinner(new SpinnerDateModel());
         labelGrua = new javax.swing.JLabel();
-        comboGrua = new javax.swing.JComboBox();
         labelCliente = new javax.swing.JLabel();
-        comboCliente = new javax.swing.JComboBox();
         labelOperador = new javax.swing.JLabel();
-        comboOperador = new javax.swing.JComboBox();
         labelFechaRegreso = new javax.swing.JLabel();
         textoFechaRegreso = new org.jdesktop.swingx.JXDatePicker();
         labelHoraRegreso = new javax.swing.JLabel();
@@ -79,7 +79,9 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
         textoObs = new javax.swing.JTextArea();
         botonCancelar = new javax.swing.JButton();
         botonAceptar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        textoCliente = new javax.swing.JTextField();
+        textoGrua = new javax.swing.JTextField();
+        textoOperador = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Ingresar Jornada de Trabajo");
@@ -94,15 +96,9 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
 
         labelGrua.setText("Grúa");
 
-        comboGrua.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         labelCliente.setText("Cliente");
 
-        comboCliente.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         labelOperador.setText("Operador");
-
-        comboOperador.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         labelFechaRegreso.setText("Fecha de regreso");
 
@@ -132,13 +128,6 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
             }
         });
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -160,10 +149,10 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
                                     .addComponent(labelOperador))
                                 .addGap(24, 24, 24)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(comboOperador, 0, 250, Short.MAX_VALUE)
-                                    .addComponent(comboGrua, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(comboCliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(textoHoraSalida))))
+                                    .addComponent(textoHoraSalida, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                                    .addComponent(textoCliente)
+                                    .addComponent(textoGrua)
+                                    .addComponent(textoOperador))))
                         .addGap(51, 51, 51)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(labelFechaRegreso)
@@ -176,8 +165,6 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
                             .addComponent(scrollpan, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botonAceptar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botonCancelar)))
@@ -206,27 +193,24 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
                         .addGap(18, 18, 18)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(scrollpan, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(botonCancelar)
+                            .addComponent(botonAceptar)))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(labelGrua)
-                            .addComponent(comboGrua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labelObs))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(28, 28, 28)
-                                .addComponent(labelCliente))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(comboCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
+                            .addComponent(labelObs)
+                            .addComponent(textoGrua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(25, 25, 25)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(labelCliente)
+                            .addComponent(textoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(labelOperador)
-                            .addComponent(comboOperador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(scrollpan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botonCancelar)
-                    .addComponent(botonAceptar)
-                    .addComponent(jButton1))
+                            .addComponent(textoOperador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
 
@@ -253,11 +237,6 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
                 }
         }
     }//GEN-LAST:event_botonAceptarActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        JRootPane tabs = this.getRootPane();
-        System.out.println("titulos"+ tabs.getName());
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -296,10 +275,6 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAceptar;
     private javax.swing.JButton botonCancelar;
-    private javax.swing.JComboBox comboCliente;
-    private javax.swing.JComboBox comboGrua;
-    private javax.swing.JComboBox comboOperador;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel labelCliente;
     private javax.swing.JLabel labelFechaRegreso;
     private javax.swing.JLabel labelFechaSalida;
@@ -309,11 +284,14 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
     private javax.swing.JLabel labelObs;
     private javax.swing.JLabel labelOperador;
     private javax.swing.JScrollPane scrollpan;
+    private javax.swing.JTextField textoCliente;
     private org.jdesktop.swingx.JXDatePicker textoFechaRegreso;
     private org.jdesktop.swingx.JXDatePicker textoFechaSalida;
+    private javax.swing.JTextField textoGrua;
     private javax.swing.JSpinner textoHoraRegreso;
     private javax.swing.JSpinner textoHoraSalida;
     private javax.swing.JTextArea textoObs;
+    private javax.swing.JTextField textoOperador;
     // End of variables declaration//GEN-END:variables
 
     public String getTextoFechaRegreso() {
@@ -346,17 +324,15 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
         return textoObs.getText();
     }
 
-    public String getComboCliente() {
-        return comboCliente.getSelectedItem().toString();
+    public String getTextoCliente() {
+        return textoCliente.getText();
     }
 
-    public String getComboGrua() {
-        return comboGrua.getSelectedItem().toString();
+    public String getTextoGrua() {
+        return textoGrua.getText();
     }
 
-    public String getComboOperador() {
-        return comboOperador.getSelectedItem().toString();
+    public String getTextoOperador() {
+        return textoOperador.getText();
     }
-
-    
 }

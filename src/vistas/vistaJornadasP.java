@@ -46,10 +46,11 @@ public class vistaJornadasP extends javax.swing.JPanel {
                 int row = table.rowAtPoint(p);
                 if(evt.getClickCount() == 2){
                     controladores.controladorJornadas miControlador = new controladores.controladorJornadas();
-                    //miControlador.irVistaDetalleJornada(tablaJornadas.getValueAt(row, 0).toString());
+                    miControlador.irVistaDetalleJornada(tablaJornadas.getValueAt(row, 0).toString());
                 }
             }
-        });    }
+        });    
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

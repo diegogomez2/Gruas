@@ -46,7 +46,7 @@ public class controladorIngresarJornadas {
     public boolean irVistaPrincipal() {
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
         String[] data = {vistaIJ.getTextoFechaSalida(), vistaIJ.getTextoHoraSalida(), 
-            vistaIJ.getComboCliente(), vistaIJ.getComboGrua(), vistaIJ.getComboOperador(), 
+            vistaIJ.getTextoGrua(), vistaIJ.getTextoCliente(), vistaIJ.getTextoOperador(), 
             vistaIJ.getTextoFechaRegreso(), vistaIJ.getTextoHoraRegreso(), vistaIJ.getTextoObs()};
         boolean flag = miControlador.ingresarJornada(data);
         return flag;

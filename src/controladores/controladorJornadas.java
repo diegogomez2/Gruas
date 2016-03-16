@@ -34,5 +34,10 @@ public class controladorJornadas {
         tabs.insertTab("Jornada diaria", null, miControlador.crearControladorJornadaP(), null, 3);
         tabs.setSelectedIndex(3);
     }
+
+    public void irVistaDetalleJornada(String rut) {
+        controladorPrincipal miControlador = new controladorPrincipal();
+        //miControlador.crearControladorDetalleJornadas(rut); 
+    }
     
 }

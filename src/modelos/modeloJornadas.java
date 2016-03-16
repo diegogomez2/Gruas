@@ -58,11 +58,12 @@ public class modeloJornadas {
         Object[][] data = new String[registros][8];
         
         try{
-            PreparedStatement pstm = conn.prepareStatement("SELECT fechaSalida, horaSalida, cliente,"
+            PreparedStatement pstm = conn.prepareStatement("SELECT idjornadas, fechaSalida, horaSalida, cliente,"
                     + "grua, operador, fechaRegreso, horaRegreso, obs FROM Jornadas ORDER BY idjornadas");
             ResultSet res = pstm.executeQuery();
             int i = 0;
             while(res.next()){
+                String estid = res.getString("idjornadas");
                 String estfsal = res.getString("fechaSalida");
                 String esthsal = res.getString("horaSalida");
                 String estcli = res.getString("cliente");
@@ -71,14 +72,14 @@ public class modeloJornadas {
                 String estfreg = res.getString("fechaRegreso");
                 String esthreg = res.getString("horaRegreso");
                 String estobs = res.getString("obs");
-                data[i][0] = estfsal;
-                data[i][1] = esthsal;
+                data[i][0] = estid;
+                data[i][1] = estgrua;
                 data[i][2] = estcli;
-                data[i][3] = estgrua;
-                data[i][4] = estop;
-                data[i][5] = estfreg;
-                data[i][6] = esthreg;
-                data[i][7] = estobs;
+                data[i][3] = estop;
+                data[i][4] = estfsal;
+                data[i][5] = null;
+                data[i][6] = estobs;
+                data[i][7] = esthsal;
                 i++;
             }
             res.close();

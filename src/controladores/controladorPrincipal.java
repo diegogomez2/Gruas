@@ -405,5 +405,11 @@ public class controladorPrincipal {
         }
     }
 
+    /*void crearControladorDetalleJornadas(String rut) {
+        controladorDetalleJornadas micontroladorDJ;
+        micontroladorDJ = new controladorDetalleJornadas();
+        micontroladorDJ.mostrarVistaDetalleJornada(rut);
+    }*/
+
     
 }
