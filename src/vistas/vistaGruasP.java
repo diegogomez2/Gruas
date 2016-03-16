@@ -49,7 +49,7 @@ public class vistaGruasP extends javax.swing.JPanel {
                     try {
                         miControlador.irVistaDetalleGrua(tablaGruas.getValueAt(row, 0).toString());
                     } catch (ParseException ex) {
-                        Logger.getLogger(vistaControlGruas.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(vistaGruasP.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
@@ -159,7 +159,7 @@ public class vistaGruasP extends javax.swing.JPanel {
             try {
                 miControlador.irVistaModificarGruas(patente, desc);
             } catch (ParseException ex) {
-                Logger.getLogger(vistaControlGruas.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(vistaGruasP.class.getName()).log(Level.SEVERE, null, ex);
             }
             JTabbedPane tabs = (JTabbedPane)this.getParent();
             miControlador.crearControladorPrincipal(tabs);

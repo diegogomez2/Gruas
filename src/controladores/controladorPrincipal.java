@@ -57,8 +57,6 @@ public class controladorPrincipal {
     }
     
     public void mostrarVentana(){
-        //controladorClientes miControladorC; borrar??
-        //controladorGruas miControladorG;
         miVistaL.setVisible(false);
         vistas.vistaPrincipal miVistaP = new vistaPrincipal();
         miVistaP.setVisible(true);
@@ -73,15 +71,6 @@ public class controladorPrincipal {
         tabs.addTab("Jornada Diaria", crearControladorJornadaP());
         tabs.setSelectedIndex(i);
     }
-    
-   /* public void crearControladorClientes(){
-        modelos.modeloClientes clientes;
-        clientes = new modelos.modeloClientes();
-        Object[][] data;
-        data = clientes.listarClientes();
-        micontroladorClientes = new controladorClientes();
-        micontroladorClientes.mostrarVistaControlClientes(tipo, data);
-    }*/
     
     public JPanel crearControladorClientesP() {
         modelos.modeloClientes clientes;
@@ -124,16 +113,7 @@ public class controladorPrincipal {
         micontroladorGruas = new controladorGruas();
         return micontroladorGruas.mostrarTabControlGruas(tipo, data);    
     }
-    /*
-    public void crearControladorGruas(){
-        modelos.modeloGruas gruas;
-        gruas = new modelos.modeloGruas();
-        Object[][] data;
-        data = gruas.listarGruas();
-        micontroladorGruas = new controladorGruas();
-        micontroladorGruas.mostrarVistaControlGruas(tipo, data);
-    }
-    */
+
     public void crearControladorIngresarGruas() {
         controladorIngresarGruas micontroladorIG;
         micontroladorIG = new controladorIngresarGruas();
@@ -166,16 +146,7 @@ public class controladorPrincipal {
         micontroladorEmpleados = new controladorEmpleados();
         return micontroladorEmpleados.mostrarTabControlEmpleados(tipo, data);    
     }
-    /*
-    public JPanel crearcontroladorEmpleadosP() {
-        modelos.modeloEmpleados empleados;
-        empleados = new modelos.modeloEmpleados();
-        Object[][] data;
-        data = empleados.listarEmpleados();
-        micontroladorEmpleados = new controladorEmpleados();
-        return micontroladorEmpleados.mostrarTabControlEmpleados(tipo, data);
-    }
-    */
+
     void crearControladorIngresarEmpleados() {
         controladores.controladorIngresarEmpleados micontroladorIE;
         micontroladorIE = new controladorIngresarEmpleados();
@@ -199,16 +170,7 @@ public class controladorPrincipal {
         micontroladorDE = new controladorDetalleEmpleados();
         micontroladorDE.mostrarVistaDetalleEmpleado(rut);
     }
-    
-    /*
-    public void crearControladorEmpleados() {
-        modelos.modeloEmpleados empleados;
-        empleados = new modelos.modeloEmpleados();
-        Object[][] data;
-        data = empleados.listarEmpleados();
-        micontroladorEmpleados = new controladorEmpleados();
-        micontroladorEmpleados.mostrarVistaControlEmpleados(tipo, data);
-    }*/
+
     public JPanel crearControladorJornadaP() {
         modelos.modeloJornadas jornadas;
         jornadas = new modelos.modeloJornadas();
@@ -253,7 +215,6 @@ public class controladorPrincipal {
     }
     
     //Funciones
-    
     public boolean ingresarCliente(String[] data){
         modelos.modeloClientes cliente = new modelos.modeloClientes();
         if(cliente.ingresarCliente(data).compareTo("correcto") == 0){
@@ -374,8 +335,6 @@ public class controladorPrincipal {
         return data;
     }
     
-    
-    
     public void crearControladorIngresarOT() {
         controladorIngresarOT micontroladorOT;
         micontroladorOT = new controladorIngresarOT();
@@ -387,13 +346,6 @@ public class controladorPrincipal {
         miControlador.cambiarClave(pwNueva);
     }
     
-    /*
-    public void updateTable(String[] data){
-        JTable tjornadas = mivistaJP.getTablaJornadas();
-        DefaultTableModel model = (DefaultTableModel) tjornadas.getModel();
-        model.addRow(new Object[]{data[2], data[3], data[4], data[0], "", data[7], data[1] });
-    }*/
-   
     boolean ingresarJornada(String[] data) {
         modelos.modeloJornadas jornada = new modelos.modeloJornadas();
         if(jornada.ingresarJornada(data).compareTo("correcto") == 0){
@@ -403,13 +355,5 @@ public class controladorPrincipal {
             JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al ingresar los datos.\n", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-    }
-
-    /*void crearControladorDetalleJornadas(String rut) {
-        controladorDetalleJornadas micontroladorDJ;
-        micontroladorDJ = new controladorDetalleJornadas();
-        micontroladorDJ.mostrarVistaDetalleJornada(rut);
-    }*/
-
-    
+    }   
 }

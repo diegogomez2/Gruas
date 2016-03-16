@@ -12,7 +12,6 @@ package controladores;
 class controladorEliminarGruas {
     String tipo;
     Object[][] data;
-    static vistas.vistaControlClientes vistaCG;
     
     public boolean irVistaControlGruas(String patente){
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();

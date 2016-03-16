@@ -5,8 +5,6 @@
  */
 package controladores;
 
-import vistas.vistaControlClientes;
-
 /**
  *
  * @author Diego
@@ -14,7 +12,6 @@ import vistas.vistaControlClientes;
 public class controladorEliminarClientes {
     String tipo;
     Object[][] data;
-    static vistas.vistaControlClientes vistaCC;
     
     public boolean irVistaControlClientes(String rut){
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();

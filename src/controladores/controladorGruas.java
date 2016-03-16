@@ -8,7 +8,6 @@ package controladores;
 import java.text.ParseException;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import vistas.vistaControlGruas;
 import vistas.vistaGruasP;
 
 /**
@@ -16,14 +15,8 @@ import vistas.vistaGruasP;
  * @author Diego
  */
 public class controladorGruas {
-    static vistas.vistaControlGruas vistaGruas;
     static vistas.vistaGruasP vistaGruasP;
-    
-    public void mostrarVistaControlGruas(String tipo, Object[][] data){
-        if(vistaGruas != null) vistaGruas.setVisible(false);
-        vistaGruas = new vistaControlGruas(tipo, data);
-        vistaGruas.setVisible(true);
-    }
+
 
     public void irVistaIngresarGruas() {
         controladorPrincipal miControlador = new controladorPrincipal();
@@ -46,9 +39,7 @@ public class controladorGruas {
     }
 
     JPanel mostrarTabControlGruas(String tipo, Object[][] data) {
-        //if(vistaGruas != null) vistaGruas.setVisible(false);
         vistaGruasP = new vistaGruasP(tipo, data);
-        //vistaGruas.setVisible(true);
         return vistaGruasP;
     }
     

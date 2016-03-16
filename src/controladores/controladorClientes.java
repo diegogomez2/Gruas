@@ -8,32 +8,21 @@ package controladores;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import vistas.vistaClientesP;
-import vistas.vistaControlClientes;
 
 /**
  *
  * @author Diego
  */
 public class controladorClientes {
-    static vistas.vistaControlClientes vistaClientes;
+
     static vistas.vistaClientesP vistaClientesP;
-    
-    public void mostrarVistaControlClientes(String tipo, Object[][] data){
-        if(vistaClientes != null) vistaClientes.setVisible(false);
-        vistaClientes = new vistaControlClientes(tipo, data);
-        vistaClientes.setVisible(true);
-    }
-    public void focusVistaControlClientes(){
-        vistaClientes.setFocusableWindowState(true);
-        vistaClientes.requestFocus();
-    }
-    
+
     public void irVistaIngresarClientes() {
         controladorPrincipal miControlador = new controladorPrincipal();
         miControlador.crearControladorIngresarClientes();
     }
-    
-    public void eliminarClientes(String rut){
+
+    public void eliminarClientes(String rut) {
         controladorPrincipal miControlador = new controladorPrincipal();
         miControlador.crearControladorEliminarClientes(rut);
     }
@@ -54,8 +43,8 @@ public class controladorClientes {
         //vistaClientes.setVisible(true);   
         return vistaClientesP;
     }
-    
-    public void crearControladorPrincipal(JTabbedPane tabs){
+
+    public void crearControladorPrincipal(JTabbedPane tabs) {
         controladorPrincipal miControlador = new controladorPrincipal();
         tabs.remove(0);
         tabs.insertTab("Clientes", null, miControlador.crearControladorClientesP(), null, 0);

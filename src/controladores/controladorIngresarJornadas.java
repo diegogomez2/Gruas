@@ -40,7 +40,7 @@ public class controladorIngresarJornadas {
         if (vistaIJ.getTextoHoraRegreso().compareTo("") == 0) {
             respuesta += "-Hora de regreso.\n";
         }
-        return respuesta;    
+        return respuesta;
     }
 
     public boolean irVistaPrincipal() {

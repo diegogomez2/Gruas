@@ -24,10 +24,10 @@ public class controladorIngresarGruas {
     
     public boolean irVistaControlGruas() {
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
-        String[] data = {vistaIG.getTextoPatente(), vistaIG.getTextoDescripcion(), vistaIG.getTextoModelo(), 
+        String[] data = {vistaIG.getTextoPatente(), vistaIG.getTextoDescripcion(), vistaIG.getTextoModelo(),
             vistaIG.getTextoPesoGrua(), vistaIG.getTextoTipoNeumaticos(), vistaIG.getComboTipoNeumaticos(),
             vistaIG.getTextoNChasis(), vistaIG.getComboTipoCombustible(), vistaIG.getTextoObservaciones(), vistaIG.getTextoToneladas(),
-            vistaIG.getTextoKMH(), vistaIG.getTextoFechaIngreso(), vistaIG.getTextoMarca(), vistaIG.getComboMastil(), 
+            vistaIG.getTextoKMH(), vistaIG.getTextoFechaIngreso(), vistaIG.getTextoMarca(), vistaIG.getComboMastil(),
             vistaIG.getTextoAlturaMastil(), vistaIG.getTextoAncho(), vistaIG.getTextoLargo(), vistaIG.getTextoLargoUnas(),
             vistaIG.getTextoAlturaLevante(), vistaIG.getTextoNeumaticosDelanteros(), vistaIG.getTextoNeumaticosTraseros(),
             vistaIG.getTextoNumeroMotor(), vistaIG.getTextoNumeroSerie(), vistaIG.getTextoFechaRT(), vistaIG.getTextoFechaUM(),
@@ -67,5 +67,4 @@ public class controladorIngresarGruas {
         if (vistaIG.getTextoFechaBaja().compareTo("") == 0) respuesta += "-Fecha de baja.\n";
         return respuesta;
     }
-    
 }

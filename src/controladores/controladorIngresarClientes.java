@@ -8,7 +8,6 @@ package controladores;
 import java.awt.Frame;
 import javax.swing.JOptionPane;
 import vistas.vistaIngresarClientes;
-import vistas.vistaControlClientes;
 
 /**
  *
