@@ -25,7 +25,7 @@ public class controladorIngresarGruas {
     public boolean irVistaControlGruas() {
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
         String[] data = {vistaIG.getTextoPatente(), vistaIG.getTextoDescripcion(), vistaIG.getTextoModelo(),
-            vistaIG.getTextoPesoGrua(), vistaIG.getTextoTipoNeumaticos(), vistaIG.getComboTipoNeumaticos(),
+            vistaIG.getTextoPesoGrua(), vistaIG.getComboTipoNeumaticos2(), vistaIG.getComboTipoNeumaticos(),
             vistaIG.getTextoNChasis(), vistaIG.getComboTipoCombustible(), vistaIG.getTextoObservaciones(), vistaIG.getTextoToneladas(),
             vistaIG.getTextoKMH(), vistaIG.getTextoFechaIngreso(), vistaIG.getTextoMarca(), vistaIG.getComboMastil(),
             vistaIG.getTextoAlturaMastil(), vistaIG.getTextoAncho(), vistaIG.getTextoLargo(), vistaIG.getTextoLargoUnas(),
@@ -42,14 +42,11 @@ public class controladorIngresarGruas {
         if (vistaIG.getTextoDescripcion().compareTo("") == 0) respuesta += "-Descripción.\n";
         if (vistaIG.getTextoModelo().compareTo("") == 0) respuesta += "-Modelo.\n";
         if (vistaIG.getTextoPesoGrua().compareTo("") == 0) respuesta += "-Peso Grúa.\n";
-        if (vistaIG.getTextoTipoNeumaticos().compareTo("") == 0) respuesta += "-Tipo Neumaticos.\n";
         if (vistaIG.getTextoNChasis().compareTo("") == 0) respuesta += "-Número de chasis .\n";
-        if (vistaIG.getComboTipoCombustible().compareTo("") == 0) respuesta += "-Tipo combustible.\n";
         if (vistaIG.getTextoObservaciones().compareTo("") == 0) respuesta += "-Observaciones.\n";
         if (vistaIG.getTextoToneladas().compareTo("") == 0) respuesta += "-Toneladas.\n";
         if (vistaIG.getTextoKMH().compareTo("") == 0) respuesta += "-Kilómetros/Horas.\n";
         if (vistaIG.getTextoMarca().compareTo("") == 0) respuesta += "-Marca.\n";
-        if (vistaIG.getComboMastil().compareTo("") == 0) respuesta += "-Mástil.\n";
         if (vistaIG.getTextoAlturaMastil().compareTo("") == 0) respuesta += "-Altura mástil.\n";
         if (vistaIG.getTextoAncho().compareTo("") == 0) respuesta += "-Ancho.\n";
         if (vistaIG.getTextoLargo().compareTo("") == 0) respuesta += "-Largo.\n";

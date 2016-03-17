@@ -35,18 +35,13 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         textoFechaSalida.setDate(new Date());
-        //String[] listaClientes = new String[clientes.length];
-        //String[] listaGruas = new String[gruas.length];
-        //String[] listaEmpleados = new String[empleados.length];
         TextAutoCompleter listaClientes = new TextAutoCompleter(textoCliente);
         TextAutoCompleter listaGruas = new TextAutoCompleter(textoGrua);
         TextAutoCompleter listaEmpleados = new TextAutoCompleter(textoOperador);
         for(int i = 0; i < clientes.length; i++){
-            //listaClientes[i] = clientes[i][0].toString();
             listaClientes.addItem(clientes[i][0].toString());
         }
         for(int i = 0; i < gruas.length; i++){
-            //listaGruas[i] = gruas[i][0].toString();
             listaGruas.addItem(gruas[i][0].toString());
         }
         for(int i = 0; i < empleados.length; i++){
@@ -85,6 +80,7 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Ingresar Jornada de Trabajo");
+        setResizable(false);
 
         labelFechaSalida.setText("Fecha de salida");
 

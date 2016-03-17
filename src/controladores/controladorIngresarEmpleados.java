@@ -15,8 +15,8 @@ public class controladorIngresarEmpleados {
     
     static vistas.vistaIngresarEmpleados vistaIE;
     
-    public void mostrarVistaIngresarEmpleados() {
-        vistaIE = new vistaIngresarEmpleados(new javax.swing.JFrame(), true);
+    public void mostrarVistaIngresarEmpleados(Object[][] dataRegiones) {
+        vistaIE = new vistaIngresarEmpleados(new javax.swing.JFrame(), true, dataRegiones);
         vistaIE.setLocationRelativeTo(null);
         vistaIE.setVisible(true);
     }
@@ -80,5 +80,10 @@ public class controladorIngresarEmpleados {
             respuesta += "-Comuna.\n";
         }
         return respuesta;
+    }
+
+    public Object[][] cargarComunas(int region) {
+        controladorPrincipal miControlador = new controladorPrincipal();
+        return miControlador.cargarComunas(region);
     }
 }

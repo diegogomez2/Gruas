@@ -18,8 +18,8 @@ public class controladorIngresarClientes {
     //String rut, nombre, direccion;
     static vistas.vistaIngresarClientes vistaIC;
 
-    public void mostrarVistaIngresarClientes() {
-        vistaIC = new vistaIngresarClientes(new javax.swing.JFrame(), true);
+    public void mostrarVistaIngresarClientes(Object[][] dataRegiones) {
+        vistaIC = new vistaIngresarClientes(new javax.swing.JFrame(), true, dataRegiones);
         vistaIC.setLocationRelativeTo(null);
         vistaIC.setVisible(true);
     }
@@ -104,5 +104,10 @@ public class controladorIngresarClientes {
             respuesta += "-Comuna.\n";
         }
         return respuesta;
+    }
+
+    public Object[][] cargarComunas(int region) {
+        controladorPrincipal miControlador = new controladorPrincipal();
+        return miControlador.cargarComunas(region);
     }
 }

@@ -23,7 +23,7 @@ public class modeloJornadas {
     
     static String login = "root";
     static String password = "205243";
-    static String url = "jdbc:mysql://localhost:3306/factgruas";
+    static String url = "jdbc:mysql://localhost:3306/fact_gruas";
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
     Connection conn = null;
 
@@ -58,20 +58,20 @@ public class modeloJornadas {
         Object[][] data = new String[registros][8];
         
         try{
-            PreparedStatement pstm = conn.prepareStatement("SELECT idjornadas, fechaSalida, horaSalida, cliente,"
-                    + "grua, operador, fechaRegreso, horaRegreso, obs FROM Jornadas ORDER BY idjornadas");
+            PreparedStatement pstm = conn.prepareStatement("SELECT id_jor, fsal_jor, hsal_jor, rut_cli,"
+                    + "pat_gru, rut_emp, freg_jor, hreg_jor, obs_jor FROM Jornadas ORDER BY id_jor");
             ResultSet res = pstm.executeQuery();
             int i = 0;
             while(res.next()){
-                String estid = res.getString("idjornadas");
-                String estfsal = res.getString("fechaSalida");
-                String esthsal = res.getString("horaSalida");
-                String estcli = res.getString("cliente");
-                String estgrua = res.getString("grua");
-                String estop = res.getString("operador");
-                String estfreg = res.getString("fechaRegreso");
-                String esthreg = res.getString("horaRegreso");
-                String estobs = res.getString("obs");
+                String estid = res.getString("id_jor");
+                String estfsal = res.getString("fsal_jor");
+                String esthsal = res.getString("hsal_jor");
+                String estcli = res.getString("rut_cli");
+                String estgrua = res.getString("rut_gru");
+                String estop = res.getString("rut_emp");
+                String estfreg = res.getString("freg_jor");
+                String esthreg = res.getString("hreg_jor");
+                String estobs = res.getString("obs_jor");
                 data[i][0] = estid;
                 data[i][1] = estgrua;
                 data[i][2] = estcli;
@@ -93,8 +93,8 @@ public class modeloJornadas {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("insert into jornadas (fechaSalida, horaSalida,"
-                    + "grua, cliente, operador, fechaRegreso, horaRegreso, obs) values (?, ?, ?, ?, ?, ?,"
+            PreparedStatement pstm = conn.prepareStatement("insert into jornadas (fsal_jor, hsal_jor,"
+                    + "rut_gru, rut_cli, rut_emp, freg_jor, hreg_jor, obs_jor) values (?, ?, ?, ?, ?, ?,"
                     + " ?, ?)");
             pstm.setDate(1, toSqlDate(data[0]));
             pstm.setString(2, data[1]);

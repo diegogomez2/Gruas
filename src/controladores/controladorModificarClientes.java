@@ -17,10 +17,10 @@ import vistas.vistaModificarClientes;
 public class controladorModificarClientes {
     static vistas.vistaModificarClientes vistaMC;
     
-    public void mostrarVistaModificarCliente(String rut, String nombres){
+    public void mostrarVistaModificarCliente(String rut, String nombres, Object[][] dataRegiones){
         controladorPrincipal miControlador = new controladorPrincipal();
         String data[] = miControlador.obtenerClientePorRut(rut);
-        vistaMC = new vistaModificarClientes(new javax.swing.JFrame(), true);
+        vistaMC = new vistaModificarClientes(new javax.swing.JFrame(), true, dataRegiones);
         vistaMC.setTextoRut(data[0]);
         vistaMC.setTextoNombres(data[1]);
         vistaMC.setTextoApPaterno(data[2]);
@@ -100,5 +100,10 @@ public class controladorModificarClientes {
         if(vistaMC.getTextoRegion().compareTo("") == 0) respuesta += "-Región.\n";
         if(vistaMC.getTextoComuna().compareTo("") == 0) respuesta += "-Comuna.\n";
         return respuesta;
+    }
+
+    public Object[][] cargarComunas(int region) {
+        controladorPrincipal miControlador = new controladorPrincipal();
+        return miControlador.cargarComunas(region);
     }
 }

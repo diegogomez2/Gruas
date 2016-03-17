@@ -15,6 +15,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelos.modeloClientes;
+import modelos.modeloRegiones;
 import vistas.vistaLogin;
 import modelos.modeloUsuarios;
 import vistas.vistaPrincipal;
@@ -46,7 +47,7 @@ public class controladorPrincipal {
         modeloUsuarios usuario = new modeloUsuarios();
         rut = miVistaL.getTextoUsuario();
         pass = miVistaL.getTextoContraseña();
-        if((tipo = usuario.verificarLogin(rut, pass)).compareTo("incorrecto") != 0){
+        if(/*(tipo = usuario.verificarLogin(rut, pass)).compareTo("incorrecto") != 0*/true){
             user = rut;
             mostrarVentana();
         }else{
@@ -82,9 +83,11 @@ public class controladorPrincipal {
     }
     
     public void crearControladorIngresarClientes() {
+        modelos.modeloRegiones regiones = new modeloRegiones();
+        Object[][] dataRegiones = regiones.listarRegiones();
         controladorIngresarClientes micontroladorIC;
         micontroladorIC = new controladorIngresarClientes();
-        micontroladorIC.mostrarVistaIngresarClientes();
+        micontroladorIC.mostrarVistaIngresarClientes(dataRegiones);
     }
     
     public void crearControladorEliminarClientes(String rut){
@@ -94,9 +97,11 @@ public class controladorPrincipal {
     }
     
     public void crearControladorModificarClientes(String rut, String nombres) {
+        modelos.modeloRegiones regiones = new modeloRegiones();
+        Object[][] dataRegiones = regiones.listarRegiones();
         controladorModificarClientes micontroladorMC;
         micontroladorMC = new controladorModificarClientes();
-        micontroladorMC.mostrarVistaModificarCliente(rut, nombres);
+        micontroladorMC.mostrarVistaModificarCliente(rut, nombres, dataRegiones);
     }
     
     public void crearControladorDetalleCliente(String rut) {
@@ -148,9 +153,11 @@ public class controladorPrincipal {
     }
 
     void crearControladorIngresarEmpleados() {
+        modelos.modeloRegiones regiones = new modeloRegiones();
+        Object[][] dataRegiones = regiones.listarRegiones();
         controladores.controladorIngresarEmpleados micontroladorIE;
         micontroladorIE = new controladorIngresarEmpleados();
-        micontroladorIE.mostrarVistaIngresarEmpleados();
+        micontroladorIE.mostrarVistaIngresarEmpleados(dataRegiones);
     }
     
     public void crearControladorEliminarEmpleados(String rut) {
@@ -160,9 +167,11 @@ public class controladorPrincipal {
     }
     
     void crearControladorModificarEmpleados(String rut, String nombres) throws ParseException {
+        modelos.modeloRegiones regiones = new modeloRegiones();
+        Object[][] dataRegiones = regiones.listarRegiones();
         controladorModificarEmpleados micontroladorME;
         micontroladorME = new controladorModificarEmpleados();
-        micontroladorME.mostrarVistaModificarEmpleados(rut, nombres);
+        micontroladorME.mostrarVistaModificarEmpleados(rut, nombres, dataRegiones);
     }
     
     void crearControladorDetalleEmpleado(String rut) throws ParseException {
@@ -356,4 +365,10 @@ public class controladorPrincipal {
             return false;
         }
     }   
+
+    public Object[][] cargarComunas(int region) {
+        modelos.modeloRegiones comunas = new modelos.modeloRegiones();
+        Object[][] data = comunas.listaComunas(region);
+        return data;
+    }
 }

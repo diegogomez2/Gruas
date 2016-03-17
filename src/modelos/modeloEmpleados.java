@@ -21,7 +21,7 @@ import java.text.SimpleDateFormat;
 public class modeloEmpleados {
     static String login = "root";
     static String password = "205243";
-    static String url = "jdbc:mysql://localhost:3306/factgruas";
+    static String url = "jdbc:mysql://localhost:3306/fact_gruas";
     Connection conn = null;
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
     
@@ -53,19 +53,20 @@ public class modeloEmpleados {
             System.out.println(e);
        }
         
-        Object[][] data = new String[registros][4]; //arreglar 15
+        Object[][] data = new String[registros][4];
         
         try{
-            PreparedStatement pstm = conn.prepareStatement("SELECT rut, digito, nombres, apPaterno, cargo, telefono FROM empleados ORDER BY rut");
+            PreparedStatement pstm = conn.prepareStatement("SELECT rut_emp, dig_emp, nom_emp, apP_emp,"
+                    + "car_emp, tel_emp FROM empleados ORDER BY rut_emp");
             ResultSet res = pstm.executeQuery();
             int i = 0;
             while(res.next()){
-                String estrut = res.getString("rut");
-                String estdigito = res.getString("digito");
-                String estnombres = res.getString("nombres");
-                String estapPaterno = res.getString("apPaterno");
-                String estcargo = res.getString("cargo");
-                String esttel = res.getString("telefono");
+                String estrut = res.getString("rut_emp");
+                String estdigito = res.getString("dig_emp");
+                String estnombres = res.getString("nom_emp");
+                String estapPaterno = res.getString("apP_emp");
+                String estcargo = res.getString("car_emp");
+                String esttel = res.getString("tel_emp");
                 data[i][0] = estrut + "-" + estdigito;
                 data[i][1] = estnombres + " " + estapPaterno;
                 data[i][2] = estcargo;
@@ -96,15 +97,15 @@ public class modeloEmpleados {
             System.out.println(e);
        }
         
-        Object[][] data = new String[registros][1]; //arreglar 15
+        Object[][] data = new String[registros][1];
         
         try{
-            PreparedStatement pstm = conn.prepareStatement("SELECT nombres, apPaterno FROM empleados ORDER BY nombres");
+            PreparedStatement pstm = conn.prepareStatement("SELECT nom_emp, apP_emp FROM empleados ORDER BY apP_emp");
             ResultSet res = pstm.executeQuery();
             int i = 0;
             while(res.next()){
-                String estnombres = res.getString("nombres");
-                String estapPaterno = res.getString("apPaterno");
+                String estnombres = res.getString("nom_emp");
+                String estapPaterno = res.getString("apP_emp");
                 data[i][0] = estnombres + " " + estapPaterno;
                 i++;
             }
@@ -119,9 +120,9 @@ public class modeloEmpleados {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("insert into empleados (rut, digito, nombres,"
-                    + "apPaterno, apMaterno, fechaNac, telefono, correo, cargo, sueldo, afp, salud, fechain, direccion,"
-                    + "region, comuna) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement pstm = conn.prepareStatement("insert into empleados (rut_emp, dig_emp, nom_emp,"
+                    + "apP_emp, apM_emp, fnac_emp, tel_emp, cor_emp, car_emp, sueldo_emp, afp_emp, sal_emp,"
+                    + "fin_emp, dir_emp, reg_emp, com_emp) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             pstm.setInt(1, Integer.parseInt(data[0]));
             pstm.setString(2, data[1]);
             pstm.setString(3, data[2]);
@@ -155,26 +156,26 @@ public class modeloEmpleados {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("SELECT * FROM empleados WHERE rut = ?");
+            PreparedStatement pstm = conn.prepareStatement("SELECT * FROM empleados WHERE rut_emp = ?");
             pstm.setString(1, rut);
             ResultSet res = pstm.executeQuery();
             res.next();
-            String estrut = res.getString("rut");
-            String estdigito = res.getString("digito");
-            String estnombres = res.getString("nombres");
-            String estapPaterno = res.getString("apPaterno");
-            String estapMaterno = res.getString("apMaterno");
-            String estfnac = res.getString("fechaNac");
-            String esttel = res.getString("telefono");
-            String estcorreo = res.getString("correo");
-            String estcargo = res.getString("cargo");
-            String estsueldo = res.getString("sueldo");
-            String estafp = res.getString("afp");
-            String estsalud = res.getString("salud");
-            String estfin = res.getString("fechain");
-            String estdir = res.getString("direccion");
-            String estregion = res.getString("region");
-            String estcom = res.getString("comuna");
+            String estrut = res.getString("rut_emp");
+            String estdigito = res.getString("dig_emp");
+            String estnombres = res.getString("nom_emp");
+            String estapPaterno = res.getString("apP_emp");
+            String estapMaterno = res.getString("apM_emp");
+            String estfnac = res.getString("fnac_emp");
+            String esttel = res.getString("tel_emp");
+            String estcorreo = res.getString("cor_emp");
+            String estcargo = res.getString("car_emp");
+            String estsueldo = res.getString("sueldo_emp");
+            String estafp = res.getString("afp_emp");
+            String estsalud = res.getString("sal_emp");
+            String estfin = res.getString("fin_emp");
+            String estdir = res.getString("dir_emp");
+            String estregion = res.getString("reg_emp");
+            String estcom = res.getString("com_emp");
             data = new String[]{estrut + "-" + estdigito , estnombres, estapPaterno, estapMaterno, estfnac
                     , esttel, estcorreo, estcargo, estsueldo, estafp, estsalud, estfin, estdir, estregion, estcom};
         }catch(SQLException e){
@@ -189,7 +190,7 @@ public class modeloEmpleados {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("DELETE FROM empleados WHERE rut = ?");
+            PreparedStatement pstm = conn.prepareStatement("DELETE FROM empleados WHERE rut_emp = ?");
             pstm.setString(1, data);
             pstm.execute();
             pstm.close();
@@ -207,9 +208,9 @@ public class modeloEmpleados {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("update empleados set rut=?, digito=?, nombres=?,"
-                    + "apPaterno=?, apMaterno=?, fechanac=?, telefono=?, correo=?, cargo=?, sueldo=?, "
-                    + "afp=?, salud=?, fechain=?, direccion=?, region=?, comuna=? WHERE rut=?");
+            PreparedStatement pstm = conn.prepareStatement("update empleados set rut_emp=?, dig_emp=?,"
+                    + "nom_emp=?, apP_emp=?, apM_emp=?, fnac_emp=?, tel_emp=?, cor_emp=?, car_emp=?,"
+                    + "sueldo_emp=?, afp_emp=?, sal_emp=?, fin_emp=?, dir_emp=?, reg_emp=?, com_emp=? WHERE rut_emp=?");
             pstm.setInt(1, Integer.parseInt(data[0]));
             pstm.setString(2, data[1]);
             pstm.setString(3, data[2]);

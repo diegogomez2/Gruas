@@ -17,10 +17,10 @@ public class controladorModificarEmpleados {
 
     static vistas.vistaModificarEmpleados vistaME;
     
-    void mostrarVistaModificarEmpleados(String rut, String nombres) throws ParseException {
+    void mostrarVistaModificarEmpleados(String rut, String nombres, Object[][] dataRegiones) throws ParseException {
         controladorPrincipal miControlador = new controladorPrincipal();
         String data[] = miControlador.obtenerEmpleadoPorRut(rut);
-        vistaME = new vistaModificarEmpleados(new javax.swing.JFrame(), true);
+        vistaME = new vistaModificarEmpleados(new javax.swing.JFrame(), true, dataRegiones);
         vistaME.setTextoRut(data[0]);
         vistaME.setTextoNombres(data[1]);
         vistaME.setTextoApPaterno(data[2]);

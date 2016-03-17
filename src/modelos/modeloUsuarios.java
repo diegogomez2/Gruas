@@ -15,7 +15,7 @@ import java.sql.*;
 public class modeloUsuarios {
     static String login = "root";
     static String password = "205243";
-    static String url = "jdbc:mysql://localhost:3306/factgruas";
+    static String url = "jdbc:mysql://localhost:3306/fact_gruas";
     Connection conn = null;
     
     public String verificarLogin(String rut, String pass){

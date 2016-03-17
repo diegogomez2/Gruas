@@ -5,7 +5,11 @@
  */
 package vistas;
 
+import controladores.controladorIngresarClientes;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -23,9 +27,34 @@ public class vistaIngresarClientes extends javax.swing.JDialog {
     /**
      * Creates new form vistaIngresarClientes
      */
-    public vistaIngresarClientes(java.awt.Frame parent, boolean modal) {
+    public vistaIngresarClientes(java.awt.Frame parent, boolean modal, final Object[][] regiones) {
         super(parent, modal);
         initComponents();
+        String[] listaRegiones = new String[regiones.length];
+        for(int i = 0; i < regiones.length; i++){
+            listaRegiones[i] = regiones[i][1].toString();
+        }
+        textoRegion.setModel(new DefaultComboBoxModel<String>(listaRegiones));
+        cargarComunas(regiones);
+        textoRegion.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                cargarComunas(regiones);
+            }
+        });
+    }
+    
+    public void cargarComunas(Object[][] regiones){
+        controladores.controladorIngresarClientes miControlador = new controladorIngresarClientes();
+        int index = textoRegion.getSelectedIndex();
+        int region = Integer.parseInt(regiones[index][0].toString());
+        Object[][] comunas = miControlador.cargarComunas(region);
+        String[] listaComunas = new String[comunas.length];
+        for(int i = 0; i < comunas.length; i++){
+            listaComunas[i] = comunas[i][0].toString();
+        }
+        textoComuna.setModel(new DefaultComboBoxModel<String>(listaComunas));
     }
 
     /**
@@ -358,15 +387,6 @@ public class vistaIngresarClientes extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                vistaIngresarClientes dialog = new vistaIngresarClientes(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setLocationRelativeTo(null);
-                dialog.setVisible(true);
             }
         });
     }

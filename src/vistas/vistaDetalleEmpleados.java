@@ -5,6 +5,7 @@
  */
 package vistas;
 
+import java.awt.Color;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,20 +41,6 @@ public class vistaDetalleEmpleados extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        labelRut = new javax.swing.JLabel();
-        textoRut = new javax.swing.JTextField();
-        labelNombres = new javax.swing.JLabel();
-        textoNombres = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        textoApPaterno = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        textoApMaterno = new javax.swing.JTextField();
-        labelFechaNac = new javax.swing.JLabel();
-        textoFechaNac = new org.jdesktop.swingx.JXDatePicker();
-        labelTelefono = new javax.swing.JLabel();
-        textoTelefono = new javax.swing.JTextField();
-        labelCorreo = new javax.swing.JLabel();
-        textoCorreo = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         labelCargo = new javax.swing.JLabel();
         comboCargo = new javax.swing.JComboBox();
@@ -61,9 +48,9 @@ public class vistaDetalleEmpleados extends javax.swing.JDialog {
         textoSueldo = new javax.swing.JTextField();
         labelAFP = new javax.swing.JLabel();
         comboAFP = new javax.swing.JComboBox();
-        jLabel3 = new javax.swing.JLabel();
+        labelSalud = new javax.swing.JLabel();
         comboSalud = new javax.swing.JComboBox();
-        jLabel4 = new javax.swing.JLabel();
+        labelFechaIn = new javax.swing.JLabel();
         textoFechaIn = new org.jdesktop.swingx.JXDatePicker();
         jPanel3 = new javax.swing.JPanel();
         labelDir = new javax.swing.JLabel();
@@ -73,41 +60,56 @@ public class vistaDetalleEmpleados extends javax.swing.JDialog {
         labelComuna = new javax.swing.JLabel();
         comboComuna = new javax.swing.JComboBox();
         botonOK = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        textoTelefono = new javax.swing.JTextField();
+        textoRut = new javax.swing.JTextField();
+        textoApPaterno = new javax.swing.JTextField();
+        labelFechaNac = new javax.swing.JLabel();
+        labelTelefono = new javax.swing.JLabel();
+        labelApMaterno = new javax.swing.JLabel();
+        textoApMaterno = new javax.swing.JTextField();
+        labelNombres = new javax.swing.JLabel();
+        labelCorreo = new javax.swing.JLabel();
+        labelApPaterno = new javax.swing.JLabel();
+        textoCorreo = new javax.swing.JTextField();
+        textoFechaNac = new org.jdesktop.swingx.JXDatePicker();
+        labelRut = new javax.swing.JLabel();
+        textoNombres = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-        labelRut.setText("Rut");
-
-        labelNombres.setText("Nombres");
-
-        jLabel1.setText("Apellido Paterno");
-
-        jLabel2.setText("Apellido Materno");
-
-        labelFechaNac.setText("Fecha de nacimiento");
-
-        labelTelefono.setText("Teléfono");
-
-        labelCorreo.setText("Correo");
+        setTitle("Detalle empleado");
+        setLocationByPlatform(true);
+        setResizable(false);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos sueldos"));
         jPanel2.setToolTipText("");
 
         labelCargo.setText("Cargo");
 
+        comboCargo.setEditable(true);
         comboCargo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboCargo.setEnabled(false);
 
         labelSueldo.setText("Sueldo");
 
+        textoSueldo.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        textoSueldo.setEnabled(false);
+
         labelAFP.setText("AFP");
 
+        comboAFP.setEditable(true);
         comboAFP.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboAFP.setEnabled(false);
 
-        jLabel3.setText("Salud");
+        labelSalud.setText("Salud");
 
+        comboSalud.setEditable(true);
         comboSalud.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboSalud.setEnabled(false);
 
-        jLabel4.setText("Fecha de ingreso");
+        labelFechaIn.setText("Fecha de ingreso");
+
+        textoFechaIn.setEnabled(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -117,7 +119,7 @@ public class vistaDetalleEmpleados extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
+                        .addComponent(labelFechaIn)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -126,13 +128,17 @@ public class vistaDetalleEmpleados extends javax.swing.JDialog {
                             .addComponent(comboCargo, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(labelAFP, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(comboAFP, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelSueldo)
-                            .addComponent(textoSueldo, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)
-                            .addComponent(comboSalud, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(19, 19, 19))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(labelSueldo)
+                                .addGap(127, 127, 127))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(textoSueldo, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(comboSalud, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(labelSalud))
+                                .addGap(19, 19, 19))))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,13 +154,13 @@ public class vistaDetalleEmpleados extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelAFP)
-                    .addComponent(jLabel3))
+                    .addComponent(labelSalud))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(comboAFP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(comboSalud, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel4)
+                .addComponent(labelFechaIn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(textoFechaIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -164,13 +170,20 @@ public class vistaDetalleEmpleados extends javax.swing.JDialog {
 
         labelDir.setText("Dirección");
 
+        textoDir.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        textoDir.setEnabled(false);
+
         labelRegion.setText("Región");
 
+        comboRegion.setEditable(true);
         comboRegion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboRegion.setEnabled(false);
 
         labelComuna.setText("Comuna");
 
+        comboComuna.setEditable(true);
         comboComuna.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboComuna.setEnabled(false);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -185,7 +198,7 @@ public class vistaDetalleEmpleados extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(textoDir)
-                    .addComponent(comboRegion, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(comboRegion, 0, 259, Short.MAX_VALUE)
                     .addComponent(comboComuna, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -214,36 +227,114 @@ public class vistaDetalleEmpleados extends javax.swing.JDialog {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Información"));
+
+        textoTelefono.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        textoTelefono.setEnabled(false);
+
+        textoRut.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        textoRut.setEnabled(false);
+
+        textoApPaterno.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        textoApPaterno.setEnabled(false);
+
+        labelFechaNac.setText("Fecha de nacimiento");
+
+        labelTelefono.setText("Teléfono");
+
+        labelApMaterno.setText("Apellido Materno");
+
+        textoApMaterno.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        textoApMaterno.setEnabled(false);
+
+        labelNombres.setText("Nombres");
+
+        labelCorreo.setText("Correo");
+
+        labelApPaterno.setText("Apellido Paterno");
+
+        textoCorreo.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        textoCorreo.setEnabled(false);
+
+        textoFechaNac.setEnabled(false);
+
+        labelRut.setText("Rut");
+
+        textoNombres.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        textoNombres.setEnabled(false);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(labelCorreo)
                     .addComponent(labelTelefono)
                     .addComponent(labelFechaNac)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1)
+                    .addComponent(labelApMaterno)
+                    .addComponent(labelApPaterno)
                     .addComponent(labelNombres)
                     .addComponent(labelRut)
                     .addComponent(textoRut)
                     .addComponent(textoNombres)
                     .addComponent(textoApPaterno)
                     .addComponent(textoApMaterno)
-                    .addComponent(textoFechaNac, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+                    .addComponent(textoFechaNac, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(textoTelefono)
-                    .addComponent(textoCorreo))
-                .addGap(84, 84, 84)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(textoCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelRut)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(textoRut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(labelNombres)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(textoNombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(labelApPaterno)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(textoApPaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(labelApMaterno)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(textoApMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(labelFechaNac)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(textoFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(labelTelefono)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(textoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(labelCorreo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(textoCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(botonOK, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(botonOK, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -251,40 +342,12 @@ public class vistaDetalleEmpleados extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(labelRut)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textoRut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(labelNombres)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textoNombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textoApPaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textoApMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(labelFechaNac)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textoFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(labelTelefono)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(labelCorreo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textoCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(botonOK)
                 .addContainerGap())
         );
@@ -356,22 +419,23 @@ public class vistaDetalleEmpleados extends javax.swing.JDialog {
     private javax.swing.JComboBox comboComuna;
     private javax.swing.JComboBox comboRegion;
     private javax.swing.JComboBox comboSalud;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JLabel labelAFP;
+    private javax.swing.JLabel labelApMaterno;
+    private javax.swing.JLabel labelApPaterno;
     private javax.swing.JLabel labelCargo;
     private javax.swing.JLabel labelComuna;
     private javax.swing.JLabel labelCorreo;
     private javax.swing.JLabel labelDir;
+    private javax.swing.JLabel labelFechaIn;
     private javax.swing.JLabel labelFechaNac;
     private javax.swing.JLabel labelNombres;
     private javax.swing.JLabel labelRegion;
     private javax.swing.JLabel labelRut;
+    private javax.swing.JLabel labelSalud;
     private javax.swing.JLabel labelSueldo;
     private javax.swing.JLabel labelTelefono;
     private javax.swing.JTextField textoApMaterno;
@@ -388,22 +452,27 @@ public class vistaDetalleEmpleados extends javax.swing.JDialog {
 
     public void setComboAFP(String comboAFP) {
         this.comboAFP.setSelectedItem(comboAFP);
+        ((JTextField)this.comboAFP.getEditor().getEditorComponent()).setDisabledTextColor(Color.black);
     }
 
     public void setComboCargo(String comboCargo) {
         this.comboCargo.setSelectedItem(comboCargo);
+        ((JTextField)this.comboCargo.getEditor().getEditorComponent()).setDisabledTextColor(Color.black);
     }
 
     public void setComboComuna(String comboComuna) {
         this.comboComuna.setSelectedItem(comboComuna);
+        ((JTextField)this.comboComuna.getEditor().getEditorComponent()).setDisabledTextColor(Color.black);
     }
 
     public void setComboRegion(String comboRegion) {
         this.comboRegion.setSelectedItem(comboRegion);
+        ((JTextField)this.comboRegion.getEditor().getEditorComponent()).setDisabledTextColor(Color.black);
     }
 
     public void setComboSalud(String comboSalud) {
         this.comboSalud.setSelectedItem(comboSalud);
+        ((JTextField)this.comboSalud.getEditor().getEditorComponent()).setDisabledTextColor(Color.black);
     }
 
     public void setTextoApMaterno(String textoApMaterno) {
@@ -439,7 +508,7 @@ public class vistaDetalleEmpleados extends javax.swing.JDialog {
     }
 
     public void setTextoSueldo(String textoSueldo) {
-        this.textoSueldo.setText(textoSueldo);
+        this.textoSueldo.setText("$ "+textoSueldo);
     }
 
     public void setTextoTelefono(String textoTelefono) {

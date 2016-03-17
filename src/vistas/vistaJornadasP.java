@@ -122,7 +122,6 @@ public class vistaJornadasP extends javax.swing.JPanel {
         controladores.controladorJornadas miControlador = new controladores.controladorJornadas();
         miControlador.irVistaIngresarJornadas();
         JTabbedPane tabs = (JTabbedPane)this.getParent();
-        int i = tabs.getSelectedIndex();
         miControlador.crearControladorPrincipal(tabs);
     }//GEN-LAST:event_botonAgregarActionPerformed
 
