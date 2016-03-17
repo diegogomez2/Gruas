@@ -58,17 +58,19 @@ public class modeloJornadas {
         Object[][] data = new String[registros][8];
         
         try{
-            PreparedStatement pstm = conn.prepareStatement("SELECT id_jor, fsal_jor, hsal_jor, rut_cli,"
-                    + "pat_gru, rut_emp, freg_jor, hreg_jor, obs_jor FROM Jornadas ORDER BY id_jor");
+            PreparedStatement pstm = conn.prepareStatement("SELECT id_jor, fsal_jor, hsal_jor, raz_cli,"
+                    + "pat_gru, nom_emp, apP_emp, freg_jor, hreg_jor, obs_jor FROM Jornadas INNER JOIN"
+                    + " clientes ON clientes.rut_cli = jornadas.rut_cli INNER JOIN empleados ON empleados.rut_emp "
+                    + "= jornadas.rut_emp ORDER BY id_jor");
             ResultSet res = pstm.executeQuery();
             int i = 0;
             while(res.next()){
                 String estid = res.getString("id_jor");
                 String estfsal = res.getString("fsal_jor");
                 String esthsal = res.getString("hsal_jor");
-                String estcli = res.getString("rut_cli");
+                String estcli = res.getString("raz_cli");
                 String estgrua = res.getString("pat_gru");
-                String estop = res.getString("rut_emp");
+                String estop = res.getString("nom_emp") + res.getString("apP_emp");
                 String estfreg = res.getString("freg_jor");
                 String esthreg = res.getString("hreg_jor");
                 String estobs = res.getString("obs_jor");
