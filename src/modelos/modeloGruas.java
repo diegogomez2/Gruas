@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat;
 public class modeloGruas {
     static String login = "root";
     static String password = "205243";
-    static String url = "jdbc:mysql://localhost:3306/factgruas";
+    static String url = "jdbc:mysql://localhost:3306/fact_gruas";
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
     Connection conn = null;
     
@@ -52,15 +52,16 @@ public class modeloGruas {
         Object[][] data = new String[registros][5];
         
         try{
-            PreparedStatement pstm = conn.prepareStatement("SELECT pat, des, mar, model, ton FROM gruas");
+            PreparedStatement pstm = conn.prepareStatement("SELECT pat_gru, des_gru, mar_gru, mod_gru, "
+                    + "ton_gru FROM gruas");
             ResultSet res = pstm.executeQuery();
             int i = 0;
             while(res.next()){
-                String estpat = res.getString("pat");
-                String estdes = res.getString("des");
-                String estmar = res.getString("mar");
-                String estmodel = res.getString("model");
-                String estton = res.getString("ton");
+                String estpat = res.getString("pat_gru");
+                String estdes = res.getString("des_gru");
+                String estmar = res.getString("mar_gru");
+                String estmodel = res.getString("mod_gru");
+                String estton = res.getString("ton_gru");
                 data[i][0] = estpat;
                 data[i][1] = estdes;
                 data[i][2] = estmar;
@@ -79,9 +80,10 @@ public class modeloGruas {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("insert into gruas (pat, des, model, peso,"
-                    + "tiponeum, tiponeum2, nchasis, tipocombs, obs, ton, kmh, fechain, mar, mastil, altmastil, ancho, largo,"
-                    + "largounas, alturalev, neumdel, neumtras, nmotor, nserie, fecharev, fechaum, kmhum, hpm, fechabaja)"
+            PreparedStatement pstm = conn.prepareStatement("insert into gruas (pat_gru, des_gru, mod_gru,"
+                    + "pes_gru, tneum_gru, tneum2_gru, ncha_gru, tcom_gru, obs_gru, ton_gru, kmh_gru,"
+                    + "fin_gru, mar_gru, mas_gru, altmas_gru, anc_gru, lar_gru, larU_gru, altlev_gru,"
+                    + "ndel_gru, ntra_gru, nmo_gru, nse_gru, frt_gru, fum_gru, kmhum_gru, hpm_gru, fba_gru)"
                     + " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             pstm.setString(1, data[0]); //patente
             pstm.setString(2, data[1]); //descripcion
@@ -129,7 +131,7 @@ public class modeloGruas {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("DELETE FROM gruas WHERE pat = ?");
+            PreparedStatement pstm = conn.prepareStatement("DELETE FROM gruas WHERE pat_gru = ?");
             pstm.setString(1, data);
             pstm.execute();
             pstm.close();
@@ -148,38 +150,38 @@ public class modeloGruas {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("SELECT * FROM gruas WHERE pat = ?");
+            PreparedStatement pstm = conn.prepareStatement("SELECT * FROM gruas WHERE pat_gru = ?");
             pstm.setString(1, patente);
             ResultSet res = pstm.executeQuery();
             res.next();
-            String estpat = res.getString("pat");
-            String estdesc = res.getString("des");
-            String estmod = res.getString("model");
-            String estpeso = res.getString("peso");
-            String esttiponeum = res.getString("tiponeum");
-            String esttiponeum2 = res.getString("tiponeum2");
-            String estnchasis = res.getString("nchasis");
-            String esttipocombs = res.getString("tipocombs");
-            String estobs = res.getString("obs");
-            String estton = res.getString("ton");
-            String estkmh = res.getString("kmh");
-            String estfechain = res.getString("fechain");
-            String estmarca = res.getString("mar");
-            String estmastil = res.getString("mastil");
-            String estaltmastil = res.getString("altmastil");
-            String estancho = res.getString("ancho");
-            String estlargo = res.getString("largo"); 
-            String estlargounas = res.getString("largounas");
-            String estaltlevante = res.getString("alturalev");
-            String estneumdel = res.getString("neumdel");
-            String estneumtras = res.getString("neumtras");
-            String estnmotor = res.getString("nmotor");
-            String estnserie = res.getString("nserie");
-            String estfechart = res.getString("fecharev");
-            String estfechaum = res.getString("fechaum");
-            String estfechakmhum = res.getString("kmhum");
-            String esthpm = res.getString("hpm");
-            String estfechabaja = res.getString("fechabaja");
+            String estpat = res.getString("pat_gru");
+            String estdesc = res.getString("des_gru");
+            String estmod = res.getString("mod_gru");
+            String estpeso = res.getString("pes_gru");
+            String esttiponeum = res.getString("tneum_gru");
+            String esttiponeum2 = res.getString("tneum2_gru");
+            String estnchasis = res.getString("ncha_gru");
+            String esttipocombs = res.getString("tcom_gru");
+            String estobs = res.getString("obs_gru");
+            String estton = res.getString("ton_gru");
+            String estkmh = res.getString("kmh_gru");
+            String estfechain = res.getString("fin_gru");
+            String estmarca = res.getString("mar_gru");
+            String estmastil = res.getString("mas_gru");
+            String estaltmastil = res.getString("altmas_gru");
+            String estancho = res.getString("anc_gru");
+            String estlargo = res.getString("lar_gru"); 
+            String estlargounas = res.getString("larU_gru");
+            String estaltlevante = res.getString("altlev_gru");
+            String estneumdel = res.getString("ndel_gru");
+            String estneumtras = res.getString("ntra_gru");
+            String estnmotor = res.getString("nmo_gru");
+            String estnserie = res.getString("nse_gru");
+            String estfechart = res.getString("frt_gru");
+            String estfechaum = res.getString("fum_gru");
+            String estfechakmhum = res.getString("kmhum_gru");
+            String esthpm = res.getString("hpm_gru");
+            String estfechabaja = res.getString("fba_gru");
             data = new String[]{estpat, estdesc , estmod, estpeso, esttiponeum, esttiponeum2, estnchasis,
                 esttipocombs, estobs, estton, estkmh, estfechain, estmarca, estmastil, estaltmastil, estancho,
                 estlargo, estlargounas, estaltlevante, estneumdel, estneumtras, estnmotor, estnserie, estfechart,
@@ -195,11 +197,11 @@ public class modeloGruas {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("update gruas set pat=?, des=?, model=?, peso=?,"
-                    + "tiponeum=?, tiponeum2=?, nchasis=?, tipocombs=?, obs=?, ton=?, kmh=?, fechain=?, mar=?,"
-                    + "mastil=?, altmastil=?, ancho=?, largo=?, largounas=?, alturalev=?, neumdel=?, neumtras=?,"
-                    + "nmotor=?, nserie=?, fecharev=?, fechaum=?, kmhum=?, hpm=?, fechabaja=?"
-                    + "WHERE pat=?");
+            PreparedStatement pstm = conn.prepareStatement("update gruas set pat_gru=?, de_grus=?, mod_gru=?,"
+                    + "pes_gru=?, tneum_gru=?, tneum2_gru=?, ncha_gru=?, tcom_gru=?, obs_gru=?, ton_gru=?,"
+                    + "kmh_gru=?, fin_gru=?, mar_gru=?, mas_gru=?, altmas_gru=?, anc_gru=?, lar_gru=?, "
+                    + "larU_gru=?, altlev_gru=?, ndel_gru=?, ntra_gru=?, nmo_gru=?, nse_gru=?, frt_gru=?, "
+                    + "fum_gru=?, kmhum_gru=?, hpm_gru=?, fba_gru=? WHERE pat_gru=?");
             pstm.setString(1, data[0]);
             pstm.setString(2, data[1]);
             pstm.setString(3, data[2]);
@@ -261,11 +263,11 @@ public class modeloGruas {
         Object[][] data = new String[registros][1];
         
         try{
-            PreparedStatement pstm = conn.prepareStatement("SELECT des FROM Gruas");
+            PreparedStatement pstm = conn.prepareStatement("SELECT des_gru FROM Gruas");
             ResultSet res = pstm.executeQuery();
             int i = 0;
             while(res.next()){
-                String estdes = res.getString("des");
+                String estdes = res.getString("des_gru");
                 data[i][0] = estdes;
                 i++;
             }

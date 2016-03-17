@@ -30,14 +30,21 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
      * Creates new form vistaIngresarJornadas
      */
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+    private Object[][] listaRutCli;
+    private Object[][] listaPatGru;
+    private Object[][] listaRutEmp;
     
-    public vistaIngresarJornadas(java.awt.Frame parent, boolean modal, Object[][] clientes, Object[][] gruas, Object[][] empleados) {
+    public vistaIngresarJornadas(java.awt.Frame parent, boolean modal, Object[][] clientes,
+            Object[][] gruas, Object[][] empleados) {
         super(parent, modal);
         initComponents();
         textoFechaSalida.setDate(new Date());
         TextAutoCompleter listaClientes = new TextAutoCompleter(textoCliente);
+        listaRutCli = (new modelos.modeloClientes().listarClientes());
         TextAutoCompleter listaGruas = new TextAutoCompleter(textoGrua);
+        listaPatGru = new modelos.modeloGruas().listarGruas();
         TextAutoCompleter listaEmpleados = new TextAutoCompleter(textoOperador);
+        listaRutEmp = new modelos.modeloEmpleados().listarEmpleados();
         for(int i = 0; i < clientes.length; i++){
             listaClientes.addItem(clientes[i][0].toString());
         }
@@ -45,7 +52,7 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
             listaGruas.addItem(gruas[i][0].toString());
         }
         for(int i = 0; i < empleados.length; i++){
-            listaEmpleados.addItem(empleados[i][0].toString());
+            listaEmpleados.addItem(listaRutEmp[i][0].toString());
         }
     }
 
@@ -331,4 +338,6 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
     public String getTextoOperador() {
         return textoOperador.getText();
     }
+    
+ 
 }

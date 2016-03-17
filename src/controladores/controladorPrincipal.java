@@ -47,7 +47,7 @@ public class controladorPrincipal {
         modeloUsuarios usuario = new modeloUsuarios();
         rut = miVistaL.getTextoUsuario();
         pass = miVistaL.getTextoContraseña();
-        if(/*(tipo = usuario.verificarLogin(rut, pass)).compareTo("incorrecto") != 0*/true){
+        if((tipo = usuario.verificarLogin(rut, pass)).compareTo("incorrecto") != 0){
             user = rut;
             mostrarVentana();
         }else{

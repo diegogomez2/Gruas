@@ -67,7 +67,7 @@ public class modeloJornadas {
                 String estfsal = res.getString("fsal_jor");
                 String esthsal = res.getString("hsal_jor");
                 String estcli = res.getString("rut_cli");
-                String estgrua = res.getString("rut_gru");
+                String estgrua = res.getString("pat_gru");
                 String estop = res.getString("rut_emp");
                 String estfreg = res.getString("freg_jor");
                 String esthreg = res.getString("hreg_jor");
@@ -91,16 +91,45 @@ public class modeloJornadas {
 
     public String ingresarJornada(String[] data) {
         try{
+            String rut_cli = null, pat_gru = null, rut_emp = null;
+            int dig_cli = 0, dig_emp;
+            String[] rut_dv = data[4].split("-");
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("insert into jornadas (fsal_jor, hsal_jor,"
-                    + "rut_gru, rut_cli, rut_emp, freg_jor, hreg_jor, obs_jor) values (?, ?, ?, ?, ?, ?,"
+            PreparedStatement pstm = conn.prepareStatement("Select rut_cli, dig_cli From clientes where "
+                    + "raz_cli = ?");
+            pstm.setString(1, data[3]);
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while(res.next()){
+                String estrutcli = res.getString("rut_cli");
+                String estdigcli = res.getString("dig_cli");
+                rut_cli = estrutcli;
+                dig_cli = Integer.parseInt(estdigcli);
+                i++;
+            }
+            res.close();
+            pstm.close();
+            pstm = conn.prepareStatement("Select pat_gru From gruas where "
+                    + "des_gru = ?");
+            pstm.setString(1, data[2]);
+            res = pstm.executeQuery();
+            i = 0;
+            while(res.next()){
+                String estpatgru = res.getString("pat_gru");
+                pat_gru = estpatgru;
+                i++;
+            }
+            res.close();
+            pstm.close();
+            pstm = conn.prepareStatement("insert into jornadas (fsal_jor, hsal_jor,"
+                    + "pat_gru, rut_cli, rut_emp, freg_jor, hreg_jor, obs_jor) values (?, ?, ?, ?, ?, ?,"
                     + " ?, ?)");
             pstm.setDate(1, toSqlDate(data[0]));
             pstm.setString(2, data[1]);
-            pstm.setString(3, data[2]);
-            pstm.setString(4, data[3]);
-            pstm.setString(5, data[4]);
+            pstm.setString(3, pat_gru);
+            pstm.setInt(4, Integer.parseInt(rut_cli));
+            pstm.setInt(5, Integer.parseInt(rut_dv[0]));
             pstm.setDate(6, toSqlDate(data[5]));
             pstm.setString(7, data[6]);
             pstm.setString(8, data[7]);
