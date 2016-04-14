@@ -22,7 +22,7 @@ public class controladorIngresarGruas {
         vistaIG.setVisible(true);
     }
     
-    public boolean irVistaControlGruas() {
+    public boolean irVistaGruasP() {
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
         String[] data = {vistaIG.getTextoPatente(), vistaIG.getTextoDescripcion(), vistaIG.getTextoModelo(),
             vistaIG.getTextoPesoGrua(), vistaIG.getComboTipoNeumaticos2(), vistaIG.getComboTipoNeumaticos(),

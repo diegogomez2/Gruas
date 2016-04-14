@@ -5,6 +5,9 @@
  */
 package controladores;
 
+import java.text.ParseException;
+import vistas.vistaDetalleJornadas;
+
 /**
  *
  * @author diego
@@ -12,24 +15,19 @@ package controladores;
 public class controladorDetalleJornadas {
     static vistas.vistaDetalleJornadas vistaDJ;
     
-    /*void mostrarVistaDetalleJornada(String rut){
+public void mostrarVistaDetalleJornadas(String id) throws ParseException{
         controladorPrincipal miControlador = new controladorPrincipal();
-        String data[] = miControlador.obtenerJornadaPorRut(rut);
+        String data[] = miControlador.obtenerJornadaPorId(id);
         vistaDJ = new vistaDetalleJornadas(new javax.swing.JFrame(), true);
-        vistaDJ.setTextoRut(data[0]);
-        vistaDJ.setTextoNombres(data[1]);
-        vistaDJ.setTextoApPaterno(data[2]);
-        vistaDJ.setTextoApMaterno(data[3]);
-        vistaDJ.setTextoRazon(data[4]);
-        vistaDJ.setTextoGiro(data[5]);
-        vistaDJ.setTextoCorreo(data[6]);
-        vistaDJ.setTextoTelefono(data[7]);
-        vistaDJ.setTextoFax(data[8]);
-        vistaDJ.setTextoCel(data[9]);
-        vistaDJ.setTextoDireccion(data[10]);
-        vistaDJ.setTextoRegion(data[11]);
-        vistaDJ.setTextoComuna(data[12]);
-        vistaDJ.setTextoObs(data[13]);
+        vistaDJ.setTextoFechaSalida(data[0]);
+        vistaDJ.setTextoHoraSalida(data[0]);
+        vistaDJ.setTextoGrua(data[1]);
+        vistaDJ.setTextoCliente(data[2]);
+        vistaDJ.setTextoOperador(data[3]);
+        vistaDJ.setTextoFechaRegreso(data[4]);
+        vistaDJ.setTextoHoraRegreso(data[4]);
+        vistaDJ.setTextoObs(data[5]);
         vistaDJ.setVisible(true);
-    }*/
+    }
+
 }

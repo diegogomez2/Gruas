@@ -145,7 +145,7 @@ public class modeloGruas {
         }
     }
 
-    public String[] obtenerClientePorRut(String patente) {
+    public String[] obtenerGruaPorPatente(String patente) {
         String data[] = new String[]{};
         try{
             Class.forName("com.mysql.jdbc.Driver");
@@ -191,7 +191,8 @@ public class modeloGruas {
         }catch(ClassNotFoundException e){
             System.out.println(e);
         }
-        return data;    }
+        return data;   
+    }
 
     public String modificarGrua(String[] data, String patente) {
         try{
@@ -276,5 +277,24 @@ public class modeloGruas {
             System.out.println(e);
         }
         return data;  
+    }
+
+    public String obtenerGruaPorDesc(String textoGrua) {
+        String data = null;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT * FROM gruas WHERE des_gru = ?");
+            pstm.setString(1, textoGrua);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            String estpat = res.getString("pat_gru");
+            data = estpat;
+        }catch(SQLException e){
+            System.out.println(e);
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+        }
+        return data;
     }
 }

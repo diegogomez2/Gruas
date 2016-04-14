@@ -23,8 +23,8 @@ class controladorDetalleGruas {
         vistaDG.setTextoDescripcion(data[1]);
         vistaDG.setTextoModelo(data[2]);
         vistaDG.setTextoPesoGrua(data[3]);
-        vistaDG.setTextoTipoNeumaticos(data[4]);
-        vistaDG.setComboTipoNeumaticos(data[5]);
+        vistaDG.setComboTipoNeumaticos(data[4]);
+        vistaDG.setComboTipoNeumaticos2(data[5]);
         vistaDG.setTextoNChasis(data[6]);
         vistaDG.setComboTipoCombustible(data[7]);
         vistaDG.setTextoObs(data[8]);

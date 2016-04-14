@@ -7,15 +7,15 @@ package controladores;
 
 /**
  *
- * @author Diego
+ * @author diego
  */
-class controladorEliminarGruas {
+class controladorEliminarJornadas {
     String tipo;
     Object[][] data;
-    
-    public boolean irVistaGruasP(String patente){
+
+    public boolean irVistaJornadasP(String id) {
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
-        boolean flag = miControlador.eliminarGruas(patente);
+        boolean flag = miControlador.eliminarJornadas(id);
         return flag;
     }
 }

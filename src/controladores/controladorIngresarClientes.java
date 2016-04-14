@@ -24,7 +24,7 @@ public class controladorIngresarClientes {
         vistaIC.setVisible(true);
     }
 
-    public boolean irVistaControlClientes() {
+    public boolean irVistaClientesP() {
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
         String[] rut_dv = vistaIC.getTextoRut().split("-");
         String[] data = {rut_dv[0], rut_dv[1], vistaIC.getTextoNombres(), vistaIC.getTextoApPaterno(),

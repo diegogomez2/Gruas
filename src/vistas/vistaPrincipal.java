@@ -51,14 +51,6 @@ public class vistaPrincipal extends javax.swing.JFrame {
         MenuAgenda = new javax.swing.JMenu();
         MenuJornadaDiaria = new javax.swing.JMenuItem();
         MenuGestionAgendas = new javax.swing.JMenuItem();
-        MenuClientes = new javax.swing.JMenu();
-        MenuControlClientes = new javax.swing.JMenuItem();
-        MenuEmpleados = new javax.swing.JMenu();
-        MenuControlEmpleados = new javax.swing.JMenuItem();
-        MenuLiquidaciones = new javax.swing.JMenuItem();
-        MenuFiniquitos = new javax.swing.JMenuItem();
-        MenuGruas = new javax.swing.JMenu();
-        MenuControlGruas = new javax.swing.JMenuItem();
         MenuCaja = new javax.swing.JMenu();
         MenuCobranza = new javax.swing.JMenu();
         MenuFacturacion = new javax.swing.JMenu();
@@ -97,48 +89,6 @@ public class vistaPrincipal extends javax.swing.JFrame {
         MenuAgenda.add(MenuGestionAgendas);
 
         MenuArchivo.add(MenuAgenda);
-
-        MenuClientes.setText("Clientes");
-
-        MenuControlClientes.setText("Control de clientes");
-        MenuControlClientes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuControlClientesActionPerformed(evt);
-            }
-        });
-        MenuClientes.add(MenuControlClientes);
-
-        MenuArchivo.add(MenuClientes);
-
-        MenuEmpleados.setText("Empleados");
-
-        MenuControlEmpleados.setText("Control de empleados");
-        MenuControlEmpleados.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuControlEmpleadosActionPerformed(evt);
-            }
-        });
-        MenuEmpleados.add(MenuControlEmpleados);
-
-        MenuLiquidaciones.setText("Liquidaciones");
-        MenuEmpleados.add(MenuLiquidaciones);
-
-        MenuFiniquitos.setText("Finiquitos");
-        MenuEmpleados.add(MenuFiniquitos);
-
-        MenuArchivo.add(MenuEmpleados);
-
-        MenuGruas.setText("Grúas");
-
-        MenuControlGruas.setText("Control de grúas");
-        MenuControlGruas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuControlGruasActionPerformed(evt);
-            }
-        });
-        MenuGruas.add(MenuControlGruas);
-
-        MenuArchivo.add(MenuGruas);
 
         MenuPrincipal.add(MenuArchivo);
 
@@ -181,26 +131,6 @@ public class vistaPrincipal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void MenuControlGruasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuControlGruasActionPerformed
-        // TODO add your handling code here:
-        this.setVisible(false);
-        controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
-//        miControlador.crearControladorGruas();
-    }//GEN-LAST:event_MenuControlGruasActionPerformed
-
-    private void MenuControlClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuControlClientesActionPerformed
-        // TODO add your handling code here:
-        this.setVisible(false);
-        controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
-//        miControlador.crearControladorClientes();
-    }//GEN-LAST:event_MenuControlClientesActionPerformed
-
-    private void MenuControlEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuControlEmpleadosActionPerformed
-        this.setVisible(false);
-        controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
-//        miControlador.crearControladorEmpleados();
-    }//GEN-LAST:event_MenuControlEmpleadosActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         this.setVisible(false);
@@ -254,19 +184,11 @@ public class vistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu MenuAyuda;
     private javax.swing.JMenu MenuCaja;
     private javax.swing.JMenuItem MenuCambioClave;
-    private javax.swing.JMenu MenuClientes;
     private javax.swing.JMenu MenuCobranza;
-    private javax.swing.JMenuItem MenuControlClientes;
-    private javax.swing.JMenuItem MenuControlEmpleados;
-    private javax.swing.JMenuItem MenuControlGruas;
     private javax.swing.JMenuItem MenuControlUsuarios;
-    private javax.swing.JMenu MenuEmpleados;
     private javax.swing.JMenu MenuFacturacion;
-    private javax.swing.JMenuItem MenuFiniquitos;
     private javax.swing.JMenuItem MenuGestionAgendas;
-    private javax.swing.JMenu MenuGruas;
     private javax.swing.JMenuItem MenuJornadaDiaria;
-    private javax.swing.JMenuItem MenuLiquidaciones;
     private javax.swing.JMenu MenuMantenciones;
     private javax.swing.JMenuBar MenuPrincipal;
     private javax.swing.JMenu MenuUsuarios;

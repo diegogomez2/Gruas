@@ -40,7 +40,7 @@ public class controladorModificarClientes {
         vistaMC.setVisible(true);
     }
     
-    public boolean irVistaControlClientes() {
+    public boolean irVistaClientesP() {
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
         String[] rut_dv = vistaMC.getTextoRut().split("-");
         String[] data = {rut_dv[0], rut_dv[1], vistaMC.getTextoNombres(), vistaMC.getTextoApPaterno(),

@@ -97,16 +97,17 @@ public class modeloEmpleados {
             System.out.println(e);
        }
         
-        Object[][] data = new String[registros][1];
+        Object[][] data = new String[registros][3];
         
         try{
-            PreparedStatement pstm = conn.prepareStatement("SELECT nom_emp, apP_emp FROM empleados ORDER BY apP_emp");
+            PreparedStatement pstm = conn.prepareStatement("SELECT nom_emp, apP_emp, apM_emp FROM empleados ORDER BY apP_emp");
             ResultSet res = pstm.executeQuery();
             int i = 0;
             while(res.next()){
                 String estnombres = res.getString("nom_emp");
                 String estapPaterno = res.getString("apP_emp");
-                data[i][0] = estnombres + " " + estapPaterno;
+                String estapMaterno = res.getString("apM_emp");
+                data[i][0] = estnombres + " " + estapPaterno + " " + estapMaterno;
                 i++;
             }
             res.close();
@@ -238,6 +239,37 @@ public class modeloEmpleados {
             return "incorrecto";
         }
         return "correcto";
+    }
+
+    public String obtenerEmpleadoPorNombre(String textoOperador) {
+        String data = null;
+        String[] nom = textoOperador.split(" ");
+        int size = nom.length;
+        if(size < 3) return null;
+        String apM = nom[size-1];
+        String apP = nom[size-2];
+        String nombres = "";
+        for(int i = 0; i < size - 2; i++){
+            nombres += nom[i];
+        }
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT rut_emp FROM empleados WHERE apP_emp = ? "
+                    + "AND apM_emp = ? AND nom_emp = ?");
+            pstm.setString(1, apP);
+            pstm.setString(2, apM);
+            pstm.setString(3, nombres);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            String estrut = res.getString("rut_emp");
+            data = estrut;
+        }catch(SQLException e){
+            System.out.println(e);
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+        }
+        return data;
     }
     
 }

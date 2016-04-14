@@ -219,5 +219,24 @@ public class modeloClientes {
         }
         return data;  
     }
+
+    public String obtenerClientePorRazon(String razon) {
+        String data = null;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT rut_cli FROM clientes WHERE raz_cli = ?");
+            pstm.setString(1, razon);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            String estrut = res.getString("rut_cli");
+            data = estrut;
+        }catch(SQLException e){
+            System.out.println("aki"+e);
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+        }
+        return data;
+    }
    
 }

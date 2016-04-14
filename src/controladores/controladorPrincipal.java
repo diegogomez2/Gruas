@@ -15,6 +15,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelos.modeloClientes;
+import modelos.modeloEmpleados;
+import modelos.modeloJornadas;
 import modelos.modeloRegiones;
 import vistas.vistaLogin;
 import modelos.modeloUsuarios;
@@ -93,7 +95,7 @@ public class controladorPrincipal {
     public void crearControladorEliminarClientes(String rut){
         controladorEliminarClientes micontroladorEC;
         micontroladorEC = new controladorEliminarClientes();
-        micontroladorEC.irVistaControlClientes(rut);
+        micontroladorEC.irVistaClientesP(rut);
     }
     
     public void crearControladorModificarClientes(String rut, String nombres) {
@@ -128,7 +130,7 @@ public class controladorPrincipal {
     public void crearControladorEliminarGruas(String patente) {
         controladorEliminarGruas micontroladorEG;
         micontroladorEG = new controladorEliminarGruas();
-        micontroladorEG.irVistaControlGruas(patente);
+        micontroladorEG.irVistaGruasP(patente);
     }
     
     public void crearControladorModificarGruas(String patente, String descripcion) throws ParseException {
@@ -300,7 +302,7 @@ public class controladorPrincipal {
     
     String[] obtenerGruaPorPatente(String patente) {
         modelos.modeloGruas grua = new modelos.modeloGruas();
-        String[] data = grua.obtenerClientePorRut(patente);
+        String[] data = grua.obtenerGruaPorPatente(patente);
         return data;    
     }
     
@@ -370,5 +372,77 @@ public class controladorPrincipal {
         modelos.modeloRegiones comunas = new modelos.modeloRegiones();
         Object[][] data = comunas.listaComunas(region);
         return data;
+    }
+
+    Object[][] obtenerRazonClientes() {
+        modelos.modeloClientes clientes = new modelos.modeloClientes();
+        Object[][] data = clientes.obtenerRazonClientes();
+        return data;
+    }
+
+    String obtenerClientePorRazon(String textoCliente) {
+        modelos.modeloClientes cliente = new modelos.modeloClientes();
+        String rut = cliente.obtenerClientePorRazon(textoCliente);
+        return rut;
+    }
+
+    String obtenerEmpleadoPorNombre(String textoOperador) {
+        modelos.modeloEmpleados empleado = new modelos.modeloEmpleados();
+        String rut = empleado.obtenerEmpleadoPorNombre(textoOperador);
+        return rut;
+    }
+
+    String obtenerGruaPorDesc(String textoGrua) {
+        modelos.modeloGruas grua = new modelos.modeloGruas();
+        String pat = grua.obtenerGruaPorDesc(textoGrua);
+        return pat;
+    }
+
+    void crearControladorDetalleJornadas(String id) throws ParseException {
+        controladorDetalleJornadas micontroladorDJ;
+        micontroladorDJ = new controladorDetalleJornadas();
+        micontroladorDJ.mostrarVistaDetalleJornadas(id);
+    }
+
+    public String[] obtenerJornadaPorId(String id) {
+        modelos.modeloJornadas jornada = new modelos.modeloJornadas();
+        String[] datos = jornada.obtenerJornadaPorId(id);
+        return datos;
+    }
+
+    void crearControladorEliminarJornadas(String id) {
+        controladorEliminarJornadas micontroladorEJ;
+        micontroladorEJ = new controladorEliminarJornadas();
+        micontroladorEJ.irVistaJornadasP(id);
+    }
+
+    boolean eliminarJornadas(String id) {
+        modelos.modeloJornadas jornada = new modelos.modeloJornadas();
+        if(jornada.eliminarJornada(id).compareTo("correcto") == 0){
+            JOptionPane.showMessageDialog(miVistaL, "Jornada eliminada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al eliminar la jornada seleccionada", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+
+    void crearControladorIngresarOts(String id) {
+        /*modelos.modeloClientes clientes;
+        modelos.modeloGruas gruas;
+        modelos.modeloEmpleados empleados;
+        clientes = new modeloClientes();
+        gruas = new modelos.modeloGruas();
+        empleados = new modelos.modeloEmpleados();
+        Object[][] dataClientes, dataGruas, dataEmpleados;
+        dataClientes = clientes.obtenerRazonClientes();
+        dataGruas = gruas.obtenerDescGruas();
+        dataEmpleados = empleados.obtenerNombresEmpleados();*/
+        String[] data;
+        modelos.modeloJornadas jornada = new modeloJornadas();
+        data = jornada.obtenerJornadaPorId(id);
+        controladores.controladorIngresarOts micontroladorIO;
+        micontroladorIO = new controladorIngresarOts();
+        micontroladorIO.mostrarVistaIngresarOts(data);
     }
 }

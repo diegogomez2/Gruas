@@ -25,6 +25,8 @@ public class vistaDetalleJornadas extends javax.swing.JDialog {
      * Creates new form vistaDetalleJornadas
      */
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+    DateFormat formatClock = new SimpleDateFormat("HH:mm:ss");
+    DateFormat formateDateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     
     public vistaDetalleJornadas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -46,55 +48,52 @@ public class vistaDetalleJornadas extends javax.swing.JDialog {
         labelHoraSalida = new javax.swing.JLabel();
         textoHoraSalida = new javax.swing.JSpinner(new SpinnerDateModel());
         labelGrua = new javax.swing.JLabel();
-        comboGrua = new javax.swing.JComboBox();
         labelCliente = new javax.swing.JLabel();
-        comboCliente = new javax.swing.JComboBox();
         labelOperador = new javax.swing.JLabel();
-        comboOperador = new javax.swing.JComboBox();
         labelFechaRegreso = new javax.swing.JLabel();
         textoFechaRegreso = new org.jdesktop.swingx.JXDatePicker();
         labelHoraRegreso = new javax.swing.JLabel();
-        textoHoraRegreso = new javax.swing.JSpinner(new SpinnerDateModel());
         labelObs = new javax.swing.JLabel();
+        textoGrua = new javax.swing.JTextField();
+        textoCliente = new javax.swing.JTextField();
+        botonCancelar = new javax.swing.JButton();
         scrollpan = new javax.swing.JScrollPane();
         textoObs = new javax.swing.JTextArea();
-        botonCancelar = new javax.swing.JButton();
+        textoHoraRegreso = new javax.swing.JSpinner(new SpinnerDateModel());
+        textoEmpleado = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         labelFechaSalida.setText("Fecha de salida");
+
+        textoFechaSalida.setEnabled(false);
 
         labelHoraSalida.setText("Hora de salida");
 
         JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(textoHoraSalida, "HH:mm:ss");
         textoHoraSalida.setEditor(timeEditor);
         textoHoraSalida.setValue(new Date());
+        textoHoraSalida.setEnabled(false);
 
         labelGrua.setText("Grúa");
 
-        comboGrua.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         labelCliente.setText("Cliente");
-
-        comboCliente.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         labelOperador.setText("Operador");
 
-        comboOperador.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         labelFechaRegreso.setText("Fecha de regreso");
+
+        textoFechaRegreso.setEnabled(false);
 
         labelHoraRegreso.setText("Hora de regreso");
 
-        JSpinner.DateEditor timeEditor2 = new JSpinner.DateEditor(textoHoraRegreso, "HH:mm:ss");
-        textoHoraRegreso.setEditor(timeEditor2);
-        textoHoraRegreso.setValue(new Date());
-
         labelObs.setText("Observaciones");
 
-        textoObs.setColumns(20);
-        textoObs.setRows(5);
-        scrollpan.setViewportView(textoObs);
+        textoGrua.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        textoGrua.setEnabled(false);
+
+        textoCliente.setDisabledTextColor(new java.awt.Color(0, 0, 0));
 
         botonCancelar.setText("OK");
         botonCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -103,86 +102,87 @@ public class vistaDetalleJornadas extends javax.swing.JDialog {
             }
         });
 
+        textoObs.setColumns(20);
+        textoObs.setRows(5);
+        textoObs.setEnabled(false);
+        scrollpan.setViewportView(textoObs);
+
+        JSpinner.DateEditor timeEditor2 = new JSpinner.DateEditor(textoHoraRegreso, "HH:mm:ss");
+        textoHoraRegreso.setEditor(timeEditor2);
+        textoHoraRegreso.setValue(new Date());
+        textoHoraRegreso.setEnabled(false);
+
+        textoEmpleado.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        textoEmpleado.setEnabled(false);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(botonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(botonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(labelFechaSalida)
-                                .addGap(18, 18, 18)
-                                .addComponent(textoFechaSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(labelHoraSalida)
-                                    .addComponent(labelGrua)
-                                    .addComponent(labelCliente)
-                                    .addComponent(labelOperador))
-                                .addGap(24, 24, 24)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(comboOperador, 0, 250, Short.MAX_VALUE)
-                                    .addComponent(comboGrua, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(comboCliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(textoHoraSalida))))
-                        .addGap(51, 51, 51)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(labelOperador)
+                            .addComponent(labelCliente)
+                            .addComponent(labelGrua)
+                            .addComponent(labelHoraSalida)
+                            .addComponent(labelFechaSalida)
+                            .addComponent(textoGrua)
+                            .addComponent(textoHoraSalida)
+                            .addComponent(textoFechaSalida, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
+                            .addComponent(textoEmpleado)
+                            .addComponent(textoCliente))
+                        .addGap(40, 40, 40)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(scrollpan)
                             .addComponent(labelFechaRegreso)
+                            .addComponent(labelObs)
                             .addComponent(labelHoraRegreso)
-                            .addComponent(labelObs))
-                        .addGap(22, 22, 22)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(textoFechaRegreso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(textoHoraRegreso)
-                            .addComponent(scrollpan, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
-                .addContainerGap())
+                            .addComponent(textoHoraRegreso, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelFechaSalida)
-                    .addComponent(textoFechaSalida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelFechaRegreso)
-                    .addComponent(textoFechaRegreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelHoraSalida)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(textoHoraSalida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(labelHoraRegreso)))
-                        .addGap(23, 23, 23))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(labelFechaSalida)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textoFechaSalida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(11, 11, 11)
+                        .addComponent(labelHoraSalida)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textoHoraSalida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(labelGrua)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textoGrua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(labelCliente)
+                        .addGap(10, 10, 10)
+                        .addComponent(textoCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(labelOperador)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textoEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(labelFechaRegreso)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textoFechaRegreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(11, 11, 11)
+                        .addComponent(labelHoraRegreso)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(textoHoraRegreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(labelGrua)
-                            .addComponent(comboGrua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labelObs))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(28, 28, 28)
-                                .addComponent(labelCliente))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(comboCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(labelOperador)
-                            .addComponent(comboOperador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(scrollpan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                        .addGap(11, 11, 11)
+                        .addComponent(labelObs)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(scrollpan)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(botonCancelar)
                 .addContainerGap())
         );
@@ -191,15 +191,11 @@ public class vistaDetalleJornadas extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 596, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -253,9 +249,6 @@ public class vistaDetalleJornadas extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonCancelar;
-    private javax.swing.JComboBox comboCliente;
-    private javax.swing.JComboBox comboGrua;
-    private javax.swing.JComboBox comboOperador;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel labelCliente;
     private javax.swing.JLabel labelFechaRegreso;
@@ -266,23 +259,26 @@ public class vistaDetalleJornadas extends javax.swing.JDialog {
     private javax.swing.JLabel labelObs;
     private javax.swing.JLabel labelOperador;
     private javax.swing.JScrollPane scrollpan;
+    private javax.swing.JTextField textoCliente;
+    private javax.swing.JTextField textoEmpleado;
     private org.jdesktop.swingx.JXDatePicker textoFechaRegreso;
     private org.jdesktop.swingx.JXDatePicker textoFechaSalida;
+    private javax.swing.JTextField textoGrua;
     private javax.swing.JSpinner textoHoraRegreso;
     private javax.swing.JSpinner textoHoraSalida;
     private javax.swing.JTextArea textoObs;
     // End of variables declaration//GEN-END:variables
 
-    public void setComboCliente(String comboCliente) {
-        this.comboCliente.setSelectedItem(comboCliente);
+    public void setTextoCliente(String comboCliente) {
+        this.textoCliente.setText(comboCliente);
     }
 
-    public void setComboGrua(String comboGrua) {
-        this.comboGrua.setSelectedItem(comboGrua);
+    public void setTextoGrua(String comboGrua) {
+        this.textoGrua.setText(comboGrua);
     }
 
-    public void setComboOperador(String comboOperador) {
-        this.comboOperador.setSelectedItem(comboOperador);
+    public void setTextoOperador(String comboOperador) {
+        this.textoEmpleado.setText(comboOperador);
     }
 
     public void setTextoFechaRegreso(String textoFechaRegreso) throws ParseException {
@@ -293,12 +289,12 @@ public class vistaDetalleJornadas extends javax.swing.JDialog {
         this.textoFechaSalida.setDate(formatDate.parse(textoFechaSalida));
     }
 
-    public void setTextoHoraRegreso(String textoHoraRegreso) {
-        this.textoHoraRegreso.setValue(textoHoraRegreso);
+    public void setTextoHoraRegreso(String textoHoraRegreso) throws ParseException {
+        this.textoHoraRegreso.setValue(formateDateTime.parse(textoHoraRegreso));
     }
 
-    public void setTextoHoraSalida(String textoHoraSalida) {
-        this.textoHoraSalida.setValue(textoHoraSalida);
+    public void setTextoHoraSalida(String textoHoraSalida) throws ParseException {
+        this.textoHoraSalida.setValue(formateDateTime.parse(textoHoraSalida));
     }
 
     public void setTextoObs(String textoObs) {

@@ -8,7 +8,11 @@ package vistas;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -46,7 +50,11 @@ public class vistaJornadasP extends javax.swing.JPanel {
                 int row = table.rowAtPoint(p);
                 if(evt.getClickCount() == 2){
                     controladores.controladorJornadas miControlador = new controladores.controladorJornadas();
-                    miControlador.irVistaDetalleJornada(tablaJornadas.getValueAt(row, 0).toString());
+                    try {
+                        miControlador.irVistaDetalleJornada(tablaJornadas.getValueAt(row, 0).toString());
+                    } catch (ParseException ex) {
+                        Logger.getLogger(vistaJornadasP.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
         });    
@@ -66,6 +74,7 @@ public class vistaJornadasP extends javax.swing.JPanel {
         botonModificar = new javax.swing.JButton();
         botonEliminar = new javax.swing.JButton();
         botonAgregar = new javax.swing.JButton();
+        botonAsignar = new javax.swing.JButton();
 
         tablaJornadas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -83,11 +92,23 @@ public class vistaJornadasP extends javax.swing.JPanel {
         botonModificar.setText("Modificar Jornada");
 
         botonEliminar.setText("Eliminar Jornada");
+        botonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonEliminarActionPerformed(evt);
+            }
+        });
 
         botonAgregar.setText("Agregar Jornada");
         botonAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonAgregarActionPerformed(evt);
+            }
+        });
+
+        botonAsignar.setText("Asignar OT");
+        botonAsignar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAsignarActionPerformed(evt);
             }
         });
 
@@ -97,7 +118,9 @@ public class vistaJornadasP extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(botonAsignar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(botonAgregar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(botonEliminar)
@@ -113,7 +136,8 @@ public class vistaJornadasP extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonModificar)
                     .addComponent(botonEliminar)
-                    .addComponent(botonAgregar))
+                    .addComponent(botonAgregar)
+                    .addComponent(botonAsignar))
                 .addGap(0, 32, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -125,9 +149,47 @@ public class vistaJornadasP extends javax.swing.JPanel {
         miControlador.crearControladorPrincipal(tabs);
     }//GEN-LAST:event_botonAgregarActionPerformed
 
+    private void botonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarActionPerformed
+        controladores.controladorJornadas miControlador = new controladores.controladorJornadas();
+        String id;
+        boolean selected = tablaJornadas.getSelectedRowCount() > 0;
+        if(selected){
+            int row = getFilaSeleccionada();
+            id = getIdFila(row);
+            int dialogResult = JOptionPane.showOptionDialog(null, "Esta seguro que desea eliminar la jornada: \n "
+            + "Código: " + id, "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, 0);
+            if(dialogResult == JOptionPane.YES_OPTION)  miControlador.eliminarJormadas(id);
+            JTabbedPane tabs = (JTabbedPane)this.getParent();
+            miControlador.crearControladorPrincipal(tabs);
+        }else{
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una jornada para ser eliminada");
+        }
+    }//GEN-LAST:event_botonEliminarActionPerformed
+
+    private void botonAsignarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAsignarActionPerformed
+        String id, idOt;
+        controladores.controladorJornadas miControlador = new controladores.controladorJornadas();
+        boolean selected = tablaJornadas.getSelectedRowCount() > 0;
+        if(selected){
+            int row = getFilaSeleccionada();
+            idOt = getIdOt(row);
+            id = getIdFila(row);
+            if(idOt != null){
+                JOptionPane.showMessageDialog(null, "Esta jornada ya tiene asignada una orden de trabajo");
+            }else{
+                miControlador.irVistaIngresarOts(id);
+                JTabbedPane tabs = (JTabbedPane)this.getParent();
+                miControlador.crearControladorPrincipal(tabs);
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una jornada para ser asignada");
+        }
+    }//GEN-LAST:event_botonAsignarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAgregar;
+    private javax.swing.JButton botonAsignar;
     private javax.swing.JButton botonEliminar;
     private javax.swing.JButton botonModificar;
     private javax.swing.JScrollPane jScrollPane1;
@@ -138,4 +200,20 @@ public class vistaJornadasP extends javax.swing.JPanel {
         return tablaJornadas;
     }
 
+    public int getFilaSeleccionada() {
+        return tablaJornadas.getSelectedRow();
+    }
+    
+    public String getIdFila(int row){
+        return tablaJornadas.getValueAt(row, 0).toString();
+    }
+    
+    public String getIdOt(int row){
+        Object data;
+        data = tablaJornadas.getValueAt(row, 5);
+        if(data != null){
+            return data.toString();
+        }
+        return null;
+    }
 }

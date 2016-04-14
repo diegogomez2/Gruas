@@ -43,13 +43,17 @@ public class controladorIngresarJornadas {
         return respuesta;
     }
 
-    public boolean irVistaPrincipal() {
+    public boolean irVistaJormadasP() {
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
-        String[] data = {vistaIJ.getTextoFechaSalida(), vistaIJ.getTextoHoraSalida(), 
-            vistaIJ.getTextoGrua(), vistaIJ.getTextoCliente(), vistaIJ.getTextoOperador(), 
-            vistaIJ.getTextoFechaRegreso(), vistaIJ.getTextoHoraRegreso(), vistaIJ.getTextoObs()};
+        String rut_cli = miControlador.obtenerClientePorRazon(vistaIJ.getTextoCliente());
+        String rut_emp = miControlador.obtenerEmpleadoPorNombre(vistaIJ.getTextoOperador());
+        String pat_gru = miControlador.obtenerGruaPorDesc(vistaIJ.getTextoGrua());
+        if(rut_cli == null | rut_emp == null | pat_gru == null){
+            return false;
+        }
+        String[] data = {vistaIJ.getTextoFechaSalida(), vistaIJ.getTextoHoraSalida(), pat_gru, rut_cli, 
+            rut_emp, vistaIJ.getTextoFechaRegreso(), vistaIJ.getTextoHoraRegreso(), vistaIJ.getTextoObs()};
         boolean flag = miControlador.ingresarJornada(data);
         return flag;
-    }
-    
+    }    
 }

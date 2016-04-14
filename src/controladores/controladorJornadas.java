@@ -5,6 +5,7 @@
  */
 package controladores;
 
+import java.text.ParseException;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
@@ -35,9 +36,19 @@ public class controladorJornadas {
         tabs.setSelectedIndex(3);
     }
 
-    public void irVistaDetalleJornada(String rut) {
+    public void irVistaDetalleJornada(String id) throws ParseException {
         controladorPrincipal miControlador = new controladorPrincipal();
-        //miControlador.crearControladorDetalleJornadas(rut); 
+        miControlador.crearControladorDetalleJornadas(id); 
+    }
+
+    public void eliminarJormadas(String id) {
+        controladorPrincipal miControlador = new controladorPrincipal();
+        miControlador.crearControladorEliminarJornadas(id);
+    }
+
+    public void irVistaIngresarOts(String id) {
+        controladorPrincipal miControlador = new controladorPrincipal();
+        miControlador.crearControladorIngresarOts(id);
     }
     
 }

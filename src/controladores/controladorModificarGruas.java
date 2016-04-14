@@ -25,8 +25,8 @@ public class controladorModificarGruas {
         vistaMG.setTextoDescripcion(data[1]);
         vistaMG.setTextoModelo(data[2]);
         vistaMG.setTextoPesoGrua(data[3]);
-        vistaMG.setTextoTipoNeumaticos(data[4]);
-        vistaMG.setComboTipoNeumaticos(data[5]);
+        vistaMG.setComboTipoNeumaticos(data[4]);
+        vistaMG.setComboTipoNeumaticos2(data[5]);
         vistaMG.setTextoNChasis(data[6]);
         vistaMG.setComboTipoCombustible(data[7]);
         vistaMG.setTextoObs(data[8]);
@@ -60,7 +60,6 @@ public class controladorModificarGruas {
         if(vistaMG.getTextoDescripcion().compareTo("") == 0) respuesta += "-Descripción.\n";
         if(vistaMG.getTextoModelo().compareTo("") == 0 ) respuesta += "-Modelo.\n";
         if(vistaMG.getTextoPesoGrua().compareTo("") == 0) respuesta += "-Peso Grúa.\n";
-        if(vistaMG.getTextoTipoNeumaticos().compareTo("") == 0) respuesta += "-Tipo neumáticos.\n";
         if(vistaMG.getTextoNChasis().compareTo("") == 0) respuesta += "-Número de chasis.\n";
         if(vistaMG.getTextoToneladas().compareTo("") == 0) respuesta += "-Toneladas.\n";
         if(vistaMG.getTextoKMH().compareTo("") == 0) respuesta += "-Horómetro.\n";
@@ -69,10 +68,10 @@ public class controladorModificarGruas {
         return respuesta;
     }
     
-    public boolean irVistaControlGruas() {
+    public boolean irVistaGruasP() {
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
         String[] data = {vistaMG.getTextoPatente(), vistaMG.getTextoDescripcion(), vistaMG.getTextoModelo(),
-            vistaMG.getTextoPesoGrua(), vistaMG.getTextoTipoNeumaticos(), vistaMG.getComboTipoNeumaticos(),
+            vistaMG.getTextoPesoGrua(), vistaMG.getComboTipoNeumaticos(), vistaMG.getComboTipoNeumaticos2(),
             vistaMG.getTextoNChasis(), vistaMG.getComboTipoCombustible(), vistaMG.getTextoObs(),
             vistaMG.getTextoToneladas(), vistaMG.getTextoKMH(), vistaMG.getTextoFechaIngreso(),
             vistaMG.getTextoMarca(), vistaMG.getComboMastil(), vistaMG.getTextoAlturaMastil(), 

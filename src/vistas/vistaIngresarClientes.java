@@ -347,7 +347,7 @@ public class vistaIngresarClientes extends javax.swing.JDialog {
             remarcarVacios();
             boolean rutValido = miControladorIC.verificarRut(getTextoRut());
             if (rutValido) {
-                if (miControladorIC.irVistaControlClientes()) {
+                if (miControladorIC.irVistaClientesP()) {
                     setVisible(false);
                 }
             }

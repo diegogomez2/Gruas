@@ -5,7 +5,7 @@
  */
 package controladores;
 
-import vistas.vistaIngresarOT;
+import vistas.vistaIngresarOts;
 
 /**
  *
@@ -13,10 +13,11 @@ import vistas.vistaIngresarOT;
  */
 class controladorIngresarOT {
 
-    static vistas.vistaIngresarOT vistaOT;
+    static vistas.vistaIngresarOts vistaOT;
     void mostrarVistaIngresarOT() {
-        vistaOT = new vistaIngresarOT(new javax.swing.JFrame(), true);
-        vistaOT.setLocationRelativeTo(null);
-        vistaOT.setVisible(true);    }
+//        vistaOT = new vistaIngresarOts(new javax.swing.JFrame(), true);
+//        vistaOT.setLocationRelativeTo(null);
+//        vistaOT.setVisible(true);    
+    }
     
 }

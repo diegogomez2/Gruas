@@ -13,7 +13,7 @@ public class controladorEliminarClientes {
     String tipo;
     Object[][] data;
     
-    public boolean irVistaControlClientes(String rut){
+    public boolean irVistaClientesP(String rut){
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
         String[] rut_dv = rut.split("-");
         boolean flag = miControlador.eliminarClientes(rut_dv[0]);
