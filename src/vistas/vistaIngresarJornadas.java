@@ -248,7 +248,7 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
             //remarcarVacios();
         } else {
             //remarcarVacios();
-                if (miControladorIJ.irVistaJormadasP()) {
+                if (miControladorIJ.irVistaJornadasP()) {
                     setVisible(false);
                 }else{
                     JOptionPane.showMessageDialog(this, "Se generó un error al ingresar la jornada\n"

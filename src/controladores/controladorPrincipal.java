@@ -367,6 +367,18 @@ public class controladorPrincipal {
             return false;
         }
     }   
+    
+    public boolean ingresarOt(String[] data){
+        modelos.modeloOts ot = new modelos.modeloOts();
+        if(ot.ingresarOt(data).compareTo("correcto") == 0){
+            JOptionPane.showMessageDialog(miVistaL, "Orden de trabajo ingresada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al ingresar los datos\n" 
+                    + "", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
 
     public Object[][] cargarComunas(int region) {
         modelos.modeloRegiones comunas = new modelos.modeloRegiones();

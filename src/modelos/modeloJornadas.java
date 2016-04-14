@@ -65,7 +65,7 @@ public class modeloJornadas {
         
         try{
             PreparedStatement pstm = conn.prepareStatement("SELECT id_jor, fsal_jor, raz_cli,"
-                    + "pat_gru, nom_emp, apP_emp, freg_jor, obs_jor, id_ot FROM Jornadas INNER JOIN"
+                    + "pat_gru, nom_emp, apP_emp, freg_jor, obs_jor FROM Jornadas INNER JOIN"
                     + " clientes ON clientes.rut_cli = jornadas.rut_cli INNER JOIN empleados ON empleados.rut_emp "
                     + "= jornadas.rut_emp ORDER BY id_jor");
             ResultSet res = pstm.executeQuery();
@@ -78,7 +78,7 @@ public class modeloJornadas {
                 String estop = res.getString("nom_emp") + " " + res.getString("apP_emp");
                 String estfreg = res.getString("freg_jor");
                 String estobs = res.getString("obs_jor");
-                String estidot = res.getString("id_ot");
+                //String estidot = res.getString("id_ot");
                 String[] date = estfsal.split(" ");
                 String[] time = date[1].split(Pattern.quote("."));
                 data[i][0] = estid;
@@ -86,7 +86,7 @@ public class modeloJornadas {
                 data[i][2] = estcli;
                 data[i][3] = estop;
                 data[i][4] = date[0];
-                data[i][5] = estidot;
+                data[i][5] = null;
                 data[i][6] = estobs;
                 data[i][7] = time[0];
                 i++;
@@ -100,6 +100,42 @@ public class modeloJornadas {
         return data;
     }
 
+    public String obtenerIdOt(String id){
+        int registros = 0;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM ots where id_jor = ?");
+            pstm.setString(1, id);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+       }catch(SQLException e){
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        if(registros == 0) return "null";
+        
+        String data = "null";
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT id_ot From ots Where id_jor = ?");
+            pstm.setString(1, id);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            String estidot = res.getString("id_ot");
+            data = estidot;
+        }catch(SQLException e){
+            System.out.println(e);
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+        }
+        return data;
+    }
+    
     public String ingresarJornada(String[] data) {
         try{
             Class.forName("com.mysql.jdbc.Driver");
@@ -130,7 +166,7 @@ public class modeloJornadas {
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("SELECT fsal_jor, des_gru, raz_cli,"
                     + "nom_emp, apP_emp, apM_emp, freg_jor, obs_jor, clientes.rut_cli, clientes.dig_cli,"
-                    + "gir_cli FROM jornadas INNER JOIN clientes ON "
+                    + "gir_cli, dir_cli, tel_cli FROM jornadas INNER JOIN clientes ON "
                     + "jornadas.rut_cli = clientes.rut_cli INNER JOIN gruas ON gruas.pat_gru = jornadas.pat_gru "
                     + "INNER JOIN empleados ON empleados.rut_emp = jornadas.rut_emp WHERE id_jor = ?");
             pstm.setString(1, id);
@@ -145,7 +181,9 @@ public class modeloJornadas {
             String estfreg = res.getString("freg_jor");
             String estobs = res.getString("obs_jor");
             String estgir = res.getString("gir_cli");
-            data = new String[]{estfsal, estdes, estraz, estnom, estfreg, estobs, estrutcli, estdigcli, estraz, estgir};
+            String estdir = res.getString("dir_cli");
+            String esttel = res.getString("tel_cli");
+            data = new String[]{estfsal, estdes, estraz, estnom, estfreg, estobs, estrutcli, estdigcli, estraz, estgir, estdir, esttel, id};
         }catch(SQLException e){
             System.out.println(e);
         }catch(ClassNotFoundException e){

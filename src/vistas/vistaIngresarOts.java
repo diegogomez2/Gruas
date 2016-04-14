@@ -6,7 +6,9 @@
 package vistas;
 
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
 
 
@@ -19,15 +21,19 @@ public class vistaIngresarOts extends javax.swing.JDialog {
     /**
      * Creates new form vistaIngresarOT
      */
+    String id;
+    
     public vistaIngresarOts(java.awt.Frame parent, boolean modal, String[] data) {
         super(parent, modal);
         initComponents();
+        id = data[12];
         textoRutCliente.setText(data[6]+"-"+data[7]);
         textoGiro.setText(data[9]);
         textoRazon.setText(data[8]);
         textoEmpleado.setText(data[3]);
         textoGrua.setText(data[1]);
-        
+        textoDireccion.setText(data[10]);
+        textoTelefono.setText(data[11]);   
     }
 
     /**
@@ -41,9 +47,9 @@ public class vistaIngresarOts extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         labelSeñores = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        textoContacto = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        textoDireccion = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         textoGiro = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -52,7 +58,7 @@ public class vistaIngresarOts extends javax.swing.JDialog {
         textoRutCliente = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<String>();
-        jTextField6 = new javax.swing.JTextField();
+        textoTelefono = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         textoRazon = new javax.swing.JTextField();
@@ -84,11 +90,11 @@ public class vistaIngresarOts extends javax.swing.JDialog {
         jLabel19 = new javax.swing.JLabel();
         jTextField12 = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
-        jTextField13 = new javax.swing.JTextField();
+        textoDespachado = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
-        jTextField14 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        textoObs = new javax.swing.JTextField();
+        botonIngresar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         textoEmpleado = new javax.swing.JTextField();
         textoGrua = new javax.swing.JTextField();
@@ -269,7 +275,12 @@ public class vistaIngresarOts extends javax.swing.JDialog {
 
         jLabel22.setText("Observación en faena");
 
-        jButton1.setText("Ingresar");
+        botonIngresar.setText("Ingresar");
+        botonIngresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonIngresarActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Cancelar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -288,11 +299,11 @@ public class vistaIngresarOts extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(textoDespachado, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(286, 286, 286)
-                                        .addComponent(jButton1)
+                                        .addComponent(botonIngresar)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jButton2))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -305,7 +316,7 @@ public class vistaIngresarOts extends javax.swing.JDialog {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel22)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE))
-                                    .addComponent(jTextField14)))))
+                                    .addComponent(textoObs)))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -313,10 +324,10 @@ public class vistaIngresarOts extends javax.swing.JDialog {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(textoContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(labelSeñores)
                                         .addComponent(jLabel1)
-                                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(textoDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jLabel2)
                                         .addComponent(textoGiro, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jLabel3)))
@@ -326,7 +337,7 @@ public class vistaIngresarOts extends javax.swing.JDialog {
                                     .addComponent(textoRutCliente)
                                     .addComponent(jLabel5)
                                     .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextField6)
+                                    .addComponent(textoTelefono)
                                     .addComponent(jLabel6)
                                     .addComponent(jLabel7)
                                     .addComponent(textoRazon, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -363,7 +374,7 @@ public class vistaIngresarOts extends javax.swing.JDialog {
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textoContacto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textoRutCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jXDatePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -373,7 +384,7 @@ public class vistaIngresarOts extends javax.swing.JDialog {
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textoDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -384,7 +395,7 @@ public class vistaIngresarOts extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textoGiro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -409,12 +420,12 @@ public class vistaIngresarOts extends javax.swing.JDialog {
                     .addComponent(jLabel22))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textoDespachado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textoObs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textoEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(botonIngresar)
                     .addComponent(jButton2))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -438,6 +449,18 @@ public class vistaIngresarOts extends javax.swing.JDialog {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void botonIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonIngresarActionPerformed
+        controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
+        controladores.controladorIngresarOts miControladorIO = new controladores.controladorIngresarOts();
+        String respuesta = miControladorIO.camposVacios();
+        boolean esVacio = respuesta.length() == 0;
+        if(!esVacio){
+            JOptionPane.showMessageDialog(this, respuesta, "Debe rellenar los siguientes campos", JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            if(miControladorIO.irVistaJornadasP(id)) setVisible(false);
+        }
+    }//GEN-LAST:event_botonIngresarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -477,7 +500,7 @@ public class vistaIngresarOts extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton botonIngresar;
     private javax.swing.JButton jButton2;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox<String> jComboBox1;
@@ -509,15 +532,10 @@ public class vistaIngresarOts extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField13;
-    private javax.swing.JTextField jTextField14;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
     private org.jdesktop.swingx.JXDatePicker jXDatePicker1;
@@ -525,10 +543,56 @@ public class vistaIngresarOts extends javax.swing.JDialog {
     private javax.swing.JSpinner spinnerFinFaena;
     private javax.swing.JSpinner spinnerHoraLlegada;
     private javax.swing.JSpinner spinnerHoraSalida;
+    private javax.swing.JTextField textoContacto;
+    private javax.swing.JTextField textoDespachado;
+    private javax.swing.JTextField textoDireccion;
     private javax.swing.JTextField textoEmpleado;
     private javax.swing.JTextField textoGiro;
     private javax.swing.JTextField textoGrua;
+    private javax.swing.JTextField textoObs;
     private javax.swing.JTextField textoRazon;
     private javax.swing.JTextField textoRutCliente;
+    private javax.swing.JTextField textoTelefono;
     // End of variables declaration//GEN-END:variables
+
+    public String getTextoContacto() {
+        return textoContacto.getText();
+    }
+
+    public String getTextoDireccion() {
+        return textoDireccion.getText();
+    }
+
+    public String getTextoEmpleado() {
+        return textoEmpleado.getText();
+    }
+
+    public String getTextoGiro() {
+        return textoGiro.getText();
+    }
+
+    public String getTextoGrua() {
+        return textoGrua.getText();
+    }
+
+    public String getTextoRazon() {
+        return textoRazon.getText();
+    }
+
+    public String getTextoRutCliente() {
+        return textoRutCliente.getText();
+    }
+
+    public String getTextoTelefono() {
+        return textoTelefono.getText();
+    }
+
+    public String getTextoDespachado() {
+        return textoDespachado.getText();
+    }
+
+    public String getTextoObs() {
+        return textoObs.getText();
+    }
+
 }

@@ -43,7 +43,7 @@ public class controladorIngresarJornadas {
         return respuesta;
     }
 
-    public boolean irVistaJormadasP() {
+    public boolean irVistaJornadasP() {
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
         String rut_cli = miControlador.obtenerClientePorRazon(vistaIJ.getTextoCliente());
         String rut_emp = miControlador.obtenerEmpleadoPorNombre(vistaIJ.getTextoOperador());
