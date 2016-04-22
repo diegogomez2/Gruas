@@ -32,8 +32,8 @@ public class vistaJornadasP extends javax.swing.JPanel {
     public vistaJornadasP(String tipo, Object[][] data) {
         initComponents();
         final int rows = 5;
-        String[] columNames = {"Código", "Grúa", "Cliente", "Operador", "Fecha de salida", "Número de OT", 
-        "Observaciones", "Hora"};
+        String[] columNames = {"Código", "Grúa", "Cliente", "Operador", "Fecha de salida", "Hora",
+            "Observaciones"};
         DefaultTableModel datos = new DefaultTableModel(data, columNames){
             @Override
             public boolean isCellEditable(int row, int column){
@@ -167,20 +167,25 @@ public class vistaJornadasP extends javax.swing.JPanel {
     }//GEN-LAST:event_botonEliminarActionPerformed
 
     private void botonAsignarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAsignarActionPerformed
-        String id, idOt;
+        String id;
+        int idOt;
         controladores.controladorJornadas miControlador = new controladores.controladorJornadas();
         boolean selected = tablaJornadas.getSelectedRowCount() > 0;
         if(selected){
             int row = getFilaSeleccionada();
-            idOt = getIdOt(row);
+            //idOt = getIdOt(row);
             id = getIdFila(row);
-            if(idOt != null){
-                JOptionPane.showMessageDialog(null, "Esta jornada ya tiene asignada una orden de trabajo");
-            }else{
+            try {
+                //            if(idOt != -1){
+//                JOptionPane.showMessageDialog(null, "Esta jornada ya tiene asignada una orden de trabajo");
+//            }else{
                 miControlador.irVistaIngresarOts(id);
+            } catch (ParseException ex) {
+                Logger.getLogger(vistaJornadasP.class.getName()).log(Level.SEVERE, null, ex);
+            }
                 JTabbedPane tabs = (JTabbedPane)this.getParent();
                 miControlador.crearControladorPrincipal(tabs);
-            }
+            //}
         }else{
             JOptionPane.showMessageDialog(null, "Debe seleccionar una jornada para ser asignada");
         }
@@ -206,14 +211,5 @@ public class vistaJornadasP extends javax.swing.JPanel {
     
     public String getIdFila(int row){
         return tablaJornadas.getValueAt(row, 0).toString();
-    }
-    
-    public String getIdOt(int row){
-        Object data;
-        data = tablaJornadas.getValueAt(row, 5);
-        if(data != null){
-            return data.toString();
-        }
-        return null;
     }
 }

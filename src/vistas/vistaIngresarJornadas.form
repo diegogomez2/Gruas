@@ -155,7 +155,8 @@
         <Component class="javax.swing.JSpinner" name="textoHoraSalida">
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JSpinner(new SpinnerDateModel())"/>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(textoHoraSalida, &quot;HH:mm:ss&quot;);&#xa;textoHoraSalida.setEditor(timeEditor);&#xa;textoHoraSalida.setValue(new Date());"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(textoHoraSalida, &quot;HH:mm&quot;);&#xa;textoHoraSalida.setEditor(timeEditor);&#xa;textoHoraSalida.setValue(new Date());"/>
+            <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="vistaIngresarJornadas_textoHoraSalida"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="labelGrua">
@@ -188,7 +189,7 @@
         <Component class="javax.swing.JSpinner" name="textoHoraRegreso">
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JSpinner(new SpinnerDateModel())"/>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JSpinner.DateEditor timeEditor2 = new JSpinner.DateEditor(textoHoraRegreso, &quot;HH:mm:ss&quot;);&#xa;textoHoraRegreso.setEditor(timeEditor2);&#xa;textoHoraRegreso.setValue(new Date());"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JSpinner.DateEditor timeEditor2 = new JSpinner.DateEditor(textoHoraRegreso, &quot;HH:mm&quot;);&#xa;textoHoraRegreso.setEditor(timeEditor2);&#xa;textoHoraRegreso.setValue(new Date());"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="labelObs">

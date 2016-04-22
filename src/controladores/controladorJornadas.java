@@ -46,7 +46,7 @@ public class controladorJornadas {
         miControlador.crearControladorEliminarJornadas(id);
     }
 
-    public void irVistaIngresarOts(String id) {
+    public void irVistaIngresarOts(String id) throws ParseException {
         controladorPrincipal miControlador = new controladorPrincipal();
         miControlador.crearControladorIngresarOts(id);
     }

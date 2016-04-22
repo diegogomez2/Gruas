@@ -83,8 +83,8 @@ public class modeloGruas {
             PreparedStatement pstm = conn.prepareStatement("insert into gruas (pat_gru, des_gru, mod_gru,"
                     + "pes_gru, tneum_gru, tneum2_gru, ncha_gru, tcom_gru, obs_gru, ton_gru, kmh_gru,"
                     + "fin_gru, mar_gru, mas_gru, altmas_gru, anc_gru, lar_gru, larU_gru, altlev_gru,"
-                    + "ndel_gru, ntra_gru, nmo_gru, nse_gru, frt_gru, fum_gru, kmhum_gru, hpm_gru, fba_gru)"
-                    + " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    + "ndel_gru, ntra_gru, nmo_gru, nse_gru, frt_gru, fum_gru, kmhum_gru)"
+                    + " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             pstm.setString(1, data[0]); //patente
             pstm.setString(2, data[1]); //descripcion
             pstm.setString(3, data[2]); //modelo
@@ -112,7 +112,6 @@ public class modeloGruas {
             pstm.setDate(25,toSqlDate(data[24])); //fechaum
             pstm.setInt(26, Integer.parseInt(data[25])); //kmhum
             pstm.setInt(27, Integer.parseInt(data[26])); //horaspm
-            pstm.setDate(28, toSqlDate(data[27])); //fechabaja
             pstm.execute();
             pstm.close();
         }catch(SQLException e){

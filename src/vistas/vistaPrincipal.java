@@ -31,6 +31,8 @@ public class vistaPrincipal extends javax.swing.JFrame {
         vistaPrincipal.addTab("Grúas", miControlador.crearControladorGruasP());
         vistaPrincipal.addTab("Empleados", miControlador.crearControladorEmpleadosP());
         vistaPrincipal.addTab("Jornada Diaria", miControlador.crearControladorJornadaP());
+        vistaPrincipal.addTab("OTs", miControlador.crearControladorOtsP());
+        vistaPrincipal.addTab("Facturas", miControlador.crearControladorFacturasP());
     }
 
     /**
@@ -135,7 +137,7 @@ public class vistaPrincipal extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         this.setVisible(false);
         controladores.controladorPrincipal miControlador = new controladorPrincipal();
-        miControlador.crearControladorOT();
+        miControlador.crearControladorOtsP();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void MenuCambioClaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuCambioClaveActionPerformed

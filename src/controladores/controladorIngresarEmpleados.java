@@ -30,7 +30,8 @@ public class controladorIngresarEmpleados {
             vistaIE.getComboSalud(), vistaIE.getTextoFechaIn(), vistaIE.getTextoDir(), vistaIE.getComboRegion(),
             vistaIE.getComboComuna()};
         boolean flag = miControlador.ingresarEmpleado(data);
-        return flag;    }
+        return flag;    
+    }
 
     public String camposVacios() {
         String respuesta = "";

@@ -18,6 +18,7 @@ import modelos.modeloClientes;
 import modelos.modeloEmpleados;
 import modelos.modeloJornadas;
 import modelos.modeloRegiones;
+import modelos.modeloTonelajes;
 import vistas.vistaLogin;
 import modelos.modeloUsuarios;
 import vistas.vistaPrincipal;
@@ -33,7 +34,8 @@ public class controladorPrincipal {
     static controladorGruas micontroladorGruas;
     static controladorEmpleados micontroladorEmpleados;
     static controladorJornadas micontroladorJornadas;
-    static controladorOT micontroladorOT;
+    static controladorOts micontroladorOts;
+    static controladorFacturas micontroladorFacturas;
     static controladorUsuarios micontroladorUsuarios;
     static controladorDetalleClientes micontroladorDC;
     static vistaLogin miVistaL;
@@ -122,9 +124,11 @@ public class controladorPrincipal {
     }
 
     public void crearControladorIngresarGruas() {
+        modelos.modeloTonelajes tonelajes = new modeloTonelajes();
+        Object[][] dataTonelajes = tonelajes.listarTonelajes();
         controladorIngresarGruas micontroladorIG;
         micontroladorIG = new controladorIngresarGruas();
-        micontroladorIG.mostrarVistaIngresarGruas();
+        micontroladorIG.mostrarVistaIngresarGruas(dataTonelajes);
     }
     
     public void crearControladorEliminarGruas(String patente) {
@@ -207,14 +211,24 @@ public class controladorPrincipal {
         micontroladorIJ.mostrarVistaIngresarJornadas(dataClientes, dataGruas, dataEmpleados);
     }
     
-    public void crearControladorOT() {
-        modelos.modeloEmpleados empleados;
-        empleados = new modelos.modeloEmpleados();
+    public JPanel crearControladorOtsP() {
+        modelos.modeloOts ots;
+        ots = new modelos.modeloOts();
         Object[][] data;
-        data = empleados.obtenerNombresEmpleados();
-        micontroladorOT = new controladorOT();
-        micontroladorOT.mostrarVistaOT(tipo, data);
+        data = ots.listarOts();
+        micontroladorOts = new controladorOts();
+        return micontroladorOts.mostrarTabControlOts(tipo, data);    
     }
+    
+    public JPanel crearControladorFacturasP() {
+        modelos.modeloOts ots;
+        ots = new modelos.modeloOts();
+        Object[][] data;
+        data = ots.listarFacturas();
+        micontroladorFacturas = new controladorFacturas();
+        return micontroladorFacturas.mostrarTabControlFacturas(tipo, data);    
+    }
+    
     
     public void crearControladorUsuarios() {
         modelos.modeloUsuarios usuarios;
@@ -346,10 +360,10 @@ public class controladorPrincipal {
         return data;
     }
     
-    public void crearControladorIngresarOT() {
-        controladorIngresarOT micontroladorOT;
-        micontroladorOT = new controladorIngresarOT();
-        micontroladorOT.mostrarVistaIngresarOT();    
+    public void crearControladorIngresarOT(String[] data) throws ParseException {
+        controladorIngresarOts micontroladorOT;
+        micontroladorOT = new controladorIngresarOts();
+        micontroladorOT.mostrarVistaIngresarOts(data);    
     }
     
     public void cambiarClaveUsuario(String pwNueva) {
@@ -439,7 +453,7 @@ public class controladorPrincipal {
         }
     }
 
-    void crearControladorIngresarOts(String id) {
+    void crearControladorIngresarOts(String id) throws ParseException {
         /*modelos.modeloClientes clientes;
         modelos.modeloGruas gruas;
         modelos.modeloEmpleados empleados;

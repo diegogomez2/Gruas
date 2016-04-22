@@ -31,6 +31,7 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
      */
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
     SimpleDateFormat formatClock = new SimpleDateFormat("HH:mm:ss");
+    DateFormat formatDia = new SimpleDateFormat("EEE");
     
     
     public vistaIngresarJornadas(java.awt.Frame parent, boolean modal, Object[][] clientes,
@@ -91,7 +92,7 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
 
         labelHoraSalida.setText("Hora de salida");
 
-        JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(textoHoraSalida, "HH:mm:ss");
+        JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(textoHoraSalida, "HH:mm");
         textoHoraSalida.setEditor(timeEditor);
         textoHoraSalida.setValue(new Date());
 
@@ -105,7 +106,7 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
 
         labelHoraRegreso.setText("Hora de regreso");
 
-        JSpinner.DateEditor timeEditor2 = new JSpinner.DateEditor(textoHoraRegreso, "HH:mm:ss");
+        JSpinner.DateEditor timeEditor2 = new JSpinner.DateEditor(textoHoraRegreso, "HH:mm");
         textoHoraRegreso.setEditor(timeEditor2);
         textoHoraRegreso.setValue(new Date());
 
@@ -319,6 +320,20 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
         if(fecha == null) return "";
         String dateString = formatDate.format(textoFechaRegreso.getDate());
         return dateString;
+    }
+    
+    public String getDiaSalida(){
+        Date fecha = textoFechaSalida.getDate();
+        if(fecha == null) return "";
+        String dia = formatDia.format(textoFechaSalida.getDate());
+        return dia;
+    }
+    
+    public String getDiaRegreso(){
+        Date fecha = textoFechaRegreso.getDate();
+        if(fecha == null) return "";
+        String dia = formatDia.format(textoFechaRegreso.getDate());
+        return dia;
     }
 
     public String getTextoFechaSalida() {

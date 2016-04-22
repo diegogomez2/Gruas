@@ -52,7 +52,8 @@ public class controladorIngresarJornadas {
             return false;
         }
         String[] data = {vistaIJ.getTextoFechaSalida(), vistaIJ.getTextoHoraSalida(), pat_gru, rut_cli, 
-            rut_emp, vistaIJ.getTextoFechaRegreso(), vistaIJ.getTextoHoraRegreso(), vistaIJ.getTextoObs()};
+            rut_emp, vistaIJ.getTextoFechaRegreso(), vistaIJ.getTextoHoraRegreso(), vistaIJ.getTextoObs(),
+            vistaIJ.getDiaSalida(), vistaIJ.getDiaRegreso()};
         boolean flag = miControlador.ingresarJornada(data);
         return flag;
     }    
