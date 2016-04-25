@@ -76,15 +76,15 @@ public class controladorIngresarClientes {
         if (vistaIC.getTextoRut().compareTo("") == 0) {
             respuesta += "-Rut.\n";
         }
-        if (vistaIC.getTextoNombres().compareTo("") == 0) {
-            respuesta += "-Nombres.\n";
-        }
-        if (vistaIC.getTextoApPaterno().compareTo("") == 0) {
-            respuesta += "-Apellido paterno.\n";
-        }
-        if (vistaIC.getTextoApMaterno().compareTo("") == 0) {
-            respuesta += "-Apellido materno.\n";
-        }
+//        if (vistaIC.getTextoNombres().compareTo("") == 0) {
+//            respuesta += "-Nombres.\n";
+//        }
+//        if (vistaIC.getTextoApPaterno().compareTo("") == 0) {
+//            respuesta += "-Apellido paterno.\n";
+//        }
+//        if (vistaIC.getTextoApMaterno().compareTo("") == 0) {
+//            respuesta += "-Apellido materno.\n";
+//        }
         if (vistaIC.getTextoRazon().compareTo("") == 0) {
             respuesta += "-Razón social.\n";
         }
@@ -102,6 +102,9 @@ public class controladorIngresarClientes {
         }
         if (vistaIC.getTextoComuna().compareTo("") == 0) {
             respuesta += "-Comuna.\n";
+        }
+        if(vistaIC.getTextoTelefono().compareTo("") == 0){
+            respuesta += "-Teléfono.\n";
         }
         return respuesta;
     }

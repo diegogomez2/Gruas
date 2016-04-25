@@ -14,10 +14,10 @@ import vistas.vistaFacturasP;
  */
 public class controladorFacturas {
     
-    static vistas.vistaOtsP vistaFacturasP;
+    static vistas.vistaFacturasP vistaFacturasP;
     
     JPanel mostrarTabControlFacturas(String tipo, Object[][] data) {
-        vistaFacturasP = new vistas.vistaOtsP(tipo, data);  
+        vistaFacturasP = new vistas.vistaFacturasP(tipo, data);  
         return vistaFacturasP;
     }
 }

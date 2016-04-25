@@ -272,4 +272,48 @@ public class modeloOts {
         }
         return "correcto";
     }
+    
+    public String[] obtenerFacturaPorId(String idOt){
+        String[] data = new String[10];
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT clientes.rut_cli, raz_cli, gir_cli,"
+                    + "dir_cli, reg_cli, com_cli, total_ot, neto_ot, iva_ot, fact_ot FROM jornadas INNER JOIN clientes"
+                    + " ON clientes.rut_cli = jornadas.rut_cli where cod_ot = ?");
+             pstm.setString(1, idOt);
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while(res.next()){
+                String estrut = res.getString("rut_cli");
+                String estraz = res.getString("raz_cli");
+                String estgir = res.getString("gir_cli");
+                String estdir = res.getString("dir_cli");
+                String estreg = res.getString("reg_cli");
+                String estcom = res.getString("com_cli");
+                String esttot = res.getString("total_ot");
+                String estnet = res.getString("neto_ot");
+                String estiva = res.getString("iva_ot");
+                //String estcodot = res.getString("cod_ot");
+                String estfact = res.getString("fact_ot");
+                data[0] = estrut;
+                data[1] = estraz;
+                data[2] = estgir;
+                data[3] = estdir;
+                data[4] = estreg;
+                data[5] = estcom;
+                data[6] = esttot;
+                data[7] = estnet;
+                data[8] = estiva;
+                data[9] = estfact;
+                i++;
+            }
+            res.close();
+       }catch(SQLException e){
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        return data;
+    }
 }

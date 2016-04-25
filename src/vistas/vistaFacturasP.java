@@ -82,7 +82,7 @@ public class vistaFacturasP extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tablaFacturas);
 
-        botonFacturar.setText("Facturar OT");
+        botonFacturar.setText("Crear Factura");
         botonFacturar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonFacturarActionPerformed(evt);
@@ -110,7 +110,8 @@ public class vistaFacturasP extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonFacturarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonFacturarActionPerformed
-        // TODO add your handling code here:
+        controladores.controladorCrearFactura miControlador = new controladores.controladorCrearFactura();
+        miControlador.crearDocXML("312312");
     }//GEN-LAST:event_botonFacturarActionPerformed
 
 
@@ -119,4 +120,10 @@ public class vistaFacturasP extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaFacturas;
     // End of variables declaration//GEN-END:variables
+    
+    public String getIdFact(){
+        return tablaFacturas.getValueAt(0, 0).toString();
+    }
 }
+
+

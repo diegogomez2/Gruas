@@ -274,13 +274,13 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jPanel4" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
                           <Component id="jPanel5" pref="0" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="fechas" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -382,7 +382,7 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="labelNeumaticosDelanteros">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Neum&#xe1;ticos delanteros"/>
+                    <Property name="text" type="java.lang.String" value="Medida Neum&#xe1;ticos delanteros"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="labelLargo">
@@ -608,7 +608,7 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="labelNeumaticosTraseros">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Neum&#xe1;ticos traseros"/>
+                    <Property name="text" type="java.lang.String" value="Medida Neum&#xe1;ticos traseros"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JComboBox" name="comboMastil">

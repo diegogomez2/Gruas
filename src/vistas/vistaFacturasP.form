@@ -60,7 +60,7 @@
     </Container>
     <Component class="javax.swing.JButton" name="botonFacturar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Facturar OT"/>
+        <Property name="text" type="java.lang.String" value="Crear Factura"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonFacturarActionPerformed"/>

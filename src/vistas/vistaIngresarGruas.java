@@ -218,7 +218,7 @@ public class vistaIngresarGruas extends javax.swing.JDialog {
 
         labelAncho.setText("Ancho (cm)");
 
-        labelNeumaticosDelanteros.setText("Neumáticos delanteros");
+        labelNeumaticosDelanteros.setText("Medida Neumáticos delanteros");
 
         labelLargo.setText("Largo (cm)");
 
@@ -326,7 +326,7 @@ public class vistaIngresarGruas extends javax.swing.JDialog {
 
         comboTipoCombustible.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Diesel" }));
 
-        labelNeumaticosTraseros.setText("Neumáticos traseros");
+        labelNeumaticosTraseros.setText("Medida Neumáticos traseros");
 
         comboMastil.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Doble" }));
 
@@ -479,12 +479,12 @@ public class vistaIngresarGruas extends javax.swing.JDialog {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fechas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(30, 30, 30))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
