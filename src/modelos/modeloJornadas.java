@@ -27,6 +27,7 @@ public class modeloJornadas {
     static String password = "205243";
     static String url = "jdbc:mysql://localhost:3306/fact_gruas";
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+    DateFormat newFormat = new SimpleDateFormat("dd-MM-yyyy");
     DateFormat formatDateTime = new SimpleDateFormat("yyy-MM-dd HH:mm:ss");
     DateFormat formatClock = new SimpleDateFormat("HH:mm:ss");
     Connection conn = null;
@@ -74,6 +75,8 @@ public class modeloJornadas {
                 String estid = res.getString("id_jor");
                 String estfsal = res.getString("fsal_jor");
                 String esthorsal = res.getString("horsal_jor");
+                java.util.Date fecha = formatDate.parse(estfsal);
+                estfsal = newFormat.format(fecha);
                 String estcli = res.getString("raz_cli");
                 String estgrua = res.getString("pat_gru");
                 String estop = res.getString("nom_emp") + " " + res.getString("apP_emp");
@@ -214,6 +217,34 @@ public class modeloJornadas {
             System.out.println(e);
             return "incorrecto";
         }
+    }
+    
+    public String modificarJornada(String[] data, String id){
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("update jornadas set fsal_jor=?, horsal_jor=?, "
+                    + "pat_gru=?, rut_cli=?, rut_emp=?, freg_jor = ?, horlleg_jor=?, obs_jor=?"
+                    + " WHERE id_jor=?");
+            pstm.setString(1, data[0]);
+            pstm.setString(2, data[1]);
+            pstm.setString(3, data[2]);
+            pstm.setString(4, data[3]);
+            pstm.setString(5, data[4]);
+            pstm.setString(6, data[5]);
+            pstm.setString(7, data[6]);
+            pstm.setString(8, data[7]);
+            pstm.setString(9, id);
+            pstm.executeUpdate();
+            pstm.close();
+        }catch(SQLException e){
+            System.out.println(e);
+            return "incorrecto";
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+            return "incorrecto";
+        }
+        return "correcto";
     }
     
 }

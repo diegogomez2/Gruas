@@ -31,7 +31,7 @@ public class vistaClientesP extends javax.swing.JPanel {
     public vistaClientesP(String tipo, Object[][] data) {
         initComponents();
         final int rows = 5;
-        String[] columNames = {"Rut", "Nombre", "Teléfono", "Dirección", "Razón social"};
+        String[] columNames = {"Rut", "Razón social", "Teléfono", "Dirección", "Contacto"};
         DefaultTableModel datos = new DefaultTableModel(data, columNames){
             @Override
             public boolean isCellEditable(int row, int column){

@@ -63,12 +63,8 @@ public class vistaModificarClientes extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         labelRut = new javax.swing.JLabel();
         textoRut = new javax.swing.JTextField();
-        labelNombres = new javax.swing.JLabel();
-        textoNombres = new javax.swing.JTextField();
-        labelApPaterno = new javax.swing.JLabel();
-        textoApPaterno = new javax.swing.JTextField();
-        labelApMaterno = new javax.swing.JLabel();
-        textoApMaterno = new javax.swing.JTextField();
+        labelContacto = new javax.swing.JLabel();
+        textoContacto = new javax.swing.JTextField();
         labelRazon = new javax.swing.JLabel();
         textoRazon = new javax.swing.JTextField();
         labelGiro = new javax.swing.JLabel();
@@ -77,8 +73,6 @@ public class vistaModificarClientes extends javax.swing.JDialog {
         textoCorreo = new javax.swing.JTextField();
         labelTelefono = new javax.swing.JLabel();
         textoTelefono = new javax.swing.JTextField();
-        labelFax = new javax.swing.JLabel();
-        textoFax = new javax.swing.JTextField();
         labelCel = new javax.swing.JLabel();
         textoCel = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
@@ -100,11 +94,7 @@ public class vistaModificarClientes extends javax.swing.JDialog {
 
         labelRut.setText("Rut");
 
-        labelNombres.setText("Nombres");
-
-        labelApPaterno.setText("Apellido Paterno");
-
-        labelApMaterno.setText("Apellido Materno");
+        labelContacto.setText("Contacto");
 
         labelRazon.setText("Razón Social");
 
@@ -113,8 +103,6 @@ public class vistaModificarClientes extends javax.swing.JDialog {
         labelCorreo.setText("Correo");
 
         labelTelefono.setText("Teléfono");
-
-        labelFax.setText("Fax");
 
         labelCel.setText("Celular");
 
@@ -125,33 +113,23 @@ public class vistaModificarClientes extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(textoCel)
-                    .addComponent(textoRut)
-                    .addComponent(textoNombres)
-                    .addComponent(textoApPaterno)
-                    .addComponent(textoApMaterno)
-                    .addComponent(textoRazon)
-                    .addComponent(textoGiro)
-                    .addComponent(textoCorreo)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(textoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(textoFax))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(labelRut)
-                            .addComponent(labelNombres)
-                            .addComponent(labelApPaterno)
-                            .addComponent(labelApMaterno)
+                            .addComponent(labelContacto)
                             .addComponent(labelRazon)
                             .addComponent(labelGiro)
                             .addComponent(labelCorreo)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(labelTelefono)
-                                .addGap(143, 143, 143)
-                                .addComponent(labelFax))
+                            .addComponent(labelTelefono)
                             .addComponent(labelCel))
-                        .addGap(0, 167, Short.MAX_VALUE)))
+                        .addGap(0, 310, Short.MAX_VALUE))
+                    .addComponent(textoTelefono)
+                    .addComponent(textoRut)
+                    .addComponent(textoContacto)
+                    .addComponent(textoCel)
+                    .addComponent(textoRazon)
+                    .addComponent(textoGiro)
+                    .addComponent(textoCorreo))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -162,17 +140,9 @@ public class vistaModificarClientes extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(textoRut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(labelNombres)
+                .addComponent(labelContacto)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textoNombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(labelApPaterno)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textoApPaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(labelApMaterno)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textoApMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(textoContacto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelRazon)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -186,13 +156,9 @@ public class vistaModificarClientes extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(textoCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelTelefono)
-                    .addComponent(labelFax))
+                .addComponent(labelTelefono)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textoFax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(textoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelCel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -327,9 +293,9 @@ public class vistaModificarClientes extends javax.swing.JDialog {
         boolean esVacio = respuesta.length() == 0;
         if (!esVacio) {
             JOptionPane.showMessageDialog(this, respuesta, "Debe rellenar los siguientes campos", JOptionPane.INFORMATION_MESSAGE);
-            remarcarVacios();
+            //remarcarVacios();
         } else {
-            remarcarVacios();
+            //remarcarVacios();
             boolean rutValido = miControladorMC.verificarRut(getTextoRut());
             if (rutValido) {
                 if (miControladorMC.irVistaClientesP()) {
@@ -385,27 +351,21 @@ public class vistaModificarClientes extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel labelApMaterno;
-    private javax.swing.JLabel labelApPaterno;
     private javax.swing.JLabel labelCel;
     private javax.swing.JLabel labelComuna;
+    private javax.swing.JLabel labelContacto;
     private javax.swing.JLabel labelCorreo;
     private javax.swing.JLabel labelDireccion;
-    private javax.swing.JLabel labelFax;
     private javax.swing.JLabel labelGiro;
-    private javax.swing.JLabel labelNombres;
     private javax.swing.JLabel labelRazon;
     private javax.swing.JLabel labelRut;
     private javax.swing.JLabel labelTelefono;
-    private javax.swing.JTextField textoApMaterno;
-    private javax.swing.JTextField textoApPaterno;
     private javax.swing.JTextField textoCel;
     private javax.swing.JComboBox<String> textoComuna;
+    private javax.swing.JTextField textoContacto;
     private javax.swing.JTextField textoCorreo;
     private javax.swing.JTextField textoDireccion;
-    private javax.swing.JTextField textoFax;
     private javax.swing.JTextField textoGiro;
-    private javax.swing.JTextField textoNombres;
     private javax.swing.JTextArea textoObs;
     private javax.swing.JTextField textoRazon;
     private javax.swing.JComboBox<String> textoRegion;
@@ -415,14 +375,6 @@ public class vistaModificarClientes extends javax.swing.JDialog {
 
     public int getRut(){
         return rut;
-    }
-    
-    public String getTextoApMaterno() {
-        return textoApMaterno.getText();
-    }
-
-    public String getTextoApPaterno() {
-        return textoApPaterno.getText();
     }
 
     public String getTextoCel() {
@@ -441,16 +393,12 @@ public class vistaModificarClientes extends javax.swing.JDialog {
         return textoDireccion.getText();
     }
 
-    public String getTextoFax() {
-        return textoFax.getText();
-    }
-
     public String getTextoGiro() {
         return textoGiro.getText();
     }
 
-    public String getTextoNombres() {
-        return textoNombres.getText();
+    public String getTextoContacto() {
+        return textoContacto.getText();
     }
 
     public String getTextoObs() {
@@ -476,14 +424,6 @@ public class vistaModificarClientes extends javax.swing.JDialog {
     public void setRut(int rut){
         this.rut = rut;
     }
-    
-    public void setTextoApMaterno(String textoApMaterno) {
-        this.textoApMaterno.setText(textoApMaterno);
-    }
-
-    public void setTextoApPaterno(String textoApPaterno) {
-        this.textoApPaterno.setText(textoApPaterno);
-    }
 
     public void setTextoCel(String textoCel) {
         this.textoCel.setText(textoCel);
@@ -501,16 +441,12 @@ public class vistaModificarClientes extends javax.swing.JDialog {
         this.textoDireccion.setText(textoDireccion);
     }
 
-    public void setTextoFax(String textoFax) {
-        this.textoFax.setText(textoFax);
-    }
-
     public void setTextoGiro(String textoGiro) {
         this.textoGiro.setText(textoGiro);
     }
 
-    public void setTextoNombres(String textoNombres) {
-        this.textoNombres.setText(textoNombres);
+    public void setTextoContacto(String textoNombres) {
+        this.textoContacto.setText(textoNombres);
     }
 
     public void setTextoObs(String textoObs) {
@@ -533,87 +469,72 @@ public class vistaModificarClientes extends javax.swing.JDialog {
         this.textoTelefono.setText(textoTelefono);
     }
 
-    private void remarcarVacios() {
-        boolean vacio;
-        vacio = (textoRut.getText().compareTo("") == 0)? true : false;
-        setLabelRut(vacio);
-        vacio = (textoNombres.getText().compareTo("") == 0)? true : false;
-        setLabelNombres(vacio);
-       vacio = (textoApPaterno.getText().compareTo("") == 0)? true : false;
-        setLabelApPaterno(vacio);
-        vacio = (textoApMaterno.getText().compareTo("") == 0)? true : false;
-        setLabelApMaterno(vacio);
-        vacio = (textoRazon.getText().compareTo("") == 0)? true : false;
-        setLabelRazon(vacio);
-        vacio = (textoGiro.getText().compareTo("") == 0)? true : false;
-        setLabelGiro(vacio);
-        vacio = (textoCorreo.getText().compareTo("") == 0)? true : false;
-        setLabelCorreo(vacio);
-        vacio = (textoDireccion.getText().compareTo("") == 0)? true : false;
-        setLabelDireccion(vacio);    
-    }
+//    private void remarcarVacios() {
+//        boolean vacio;
+//        vacio = (textoRut.getText().compareTo("") == 0)? true : false;
+//        setLabelRut(vacio);
+//        vacio = (textoContacto.getText().compareTo("") == 0)? true : false;
+//        setLabelNombres(vacio);
+//       vacio = (textoApPaterno.getText().compareTo("") == 0)? true : false;
+//        setLabelApPaterno(vacio);
+//        vacio = (textoApMaterno.getText().compareTo("") == 0)? true : false;
+//        setLabelApMaterno(vacio);
+//        vacio = (textoRazon.getText().compareTo("") == 0)? true : false;
+//        setLabelRazon(vacio);
+//        vacio = (textoGiro.getText().compareTo("") == 0)? true : false;
+//        setLabelGiro(vacio);
+//        vacio = (textoCorreo.getText().compareTo("") == 0)? true : false;
+//        setLabelCorreo(vacio);
+//        vacio = (textoDireccion.getText().compareTo("") == 0)? true : false;
+//        setLabelDireccion(vacio);    
+//    }
 
-    public void setLabelApMaterno(boolean vacio) {
-        if(vacio){
-            labelApMaterno.setText("<html>Apellido Materno<font color='red'> (*)</font></html>");
-        }else{
-            labelApMaterno.setText("Apellido Materno");
-        }
-    }
-
-    public void setLabelApPaterno(boolean vacio) {
-        if(vacio){
-            labelApPaterno.setText("<html>Apellido Paterno<font color='red'> (*)</font></html>");
-        }else{
-            labelApPaterno.setText("Apellido Paterno");
-        }    
-    }
-
-    public void setLabelCorreo(boolean vacio) {
-        if(vacio){
-            labelCorreo.setText("<html>Correo<font color='red'> (*)</font></html>");
-        }else{
-            labelCorreo.setText("Correo");
-        }
-    }
-
-    public void setLabelDireccion(boolean vacio) {
-        if(vacio){
-            labelDireccion.setText("<html>Dirección<font color='red'> (*)</font></html>");
-        }else{
-            labelDireccion.setText("Dirección");
-        }
-    }
-
-    public void setLabelNombres(boolean vacio) {
-        if(vacio){
-            labelNombres.setText("<html>Nombres<font color='red'> (*)</font></html>");
-        }else{
-            labelNombres.setText("Nombres");
-        }
-    }
-
-    public void setLabelRazon(boolean vacio) {
-        if(vacio){
-            labelRazon.setText("<html>Razón<font color='red'> (*)</font></html>");
-        }else{
-            labelRazon.setText("Razón");
-        }
-    }
-
-    public void setLabelRut(boolean vacio) {
-        if(vacio){
-            labelRut.setText("<html>Rut<font color='red'> (*)</font></html>");
-        }else{
-            labelRut.setText("Rut");
-        }
-    }
-
-    public void setLabelGiro(boolean vacio) {
-        if(vacio){
-            labelGiro.setText("<html>Giro<font color='red'> (*)</font></html>");
-        }else{
-            labelGiro.setText("Giro");
-        }
-    }
+//
+//    public void setLabelCorreo(boolean vacio) {
+//        if(vacio){
+//            labelCorreo.setText("<html>Correo<font color='red'> (*)</font></html>");
+//        }else{
+//            labelCorreo.setText("Correo");
+//        }
+//    }
+//
+//    public void setLabelDireccion(boolean vacio) {
+//        if(vacio){
+//            labelDireccion.setText("<html>Dirección<font color='red'> (*)</font></html>");
+//        }else{
+//            labelDireccion.setText("Dirección");
+//        }
+//    }
+//
+//    public void setLabelNombres(boolean vacio) {
+//        if(vacio){
+//            labelContacto.setText("<html>Nombres<font color='red'> (*)</font></html>");
+//        }else{
+//            labelContacto.setText("Nombres");
+//        }
+//    }
+//
+//    public void setLabelRazon(boolean vacio) {
+//        if(vacio){
+//            labelRazon.setText("<html>Razón<font color='red'> (*)</font></html>");
+//        }else{
+//            labelRazon.setText("Razón");
+//        }
+//    }
+//
+//    public void setLabelRut(boolean vacio) {
+//        if(vacio){
+//            labelRut.setText("<html>Rut<font color='red'> (*)</font></html>");
+//        }else{
+//            labelRut.setText("Rut");
+//        }
+//    }
+//
+//    public void setLabelGiro(boolean vacio) {
+//        if(vacio){
+//            labelGiro.setText("<html>Giro<font color='red'> (*)</font></html>");
+//        }else{
+//            labelGiro.setText("Giro");
+//        }
+//    }
 }

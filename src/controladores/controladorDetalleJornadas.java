@@ -20,13 +20,14 @@ public void mostrarVistaDetalleJornadas(String id) throws ParseException{
         String data[] = miControlador.obtenerJornadaPorId(id);
         vistaDJ = new vistaDetalleJornadas(new javax.swing.JFrame(), true);
         vistaDJ.setTextoFechaSalida(data[0]);
-        vistaDJ.setTextoHoraSalida(data[0]);
-        vistaDJ.setTextoGrua(data[1]);
-        vistaDJ.setTextoCliente(data[2]);
-        vistaDJ.setTextoOperador(data[3]);
-        vistaDJ.setTextoFechaRegreso(data[4]);
-        vistaDJ.setTextoHoraRegreso(data[4]);
-        vistaDJ.setTextoObs(data[5]);
+        vistaDJ.setTextoHoraSalida(data[1]);
+        vistaDJ.setTextoFechaRegreso(data[2]);
+        vistaDJ.setTextoHoraRegreso(data[3]);
+        vistaDJ.setTextoGrua(data[4]);
+        vistaDJ.setTextoOperador(data[5]);
+        vistaDJ.setTextoObs(data[6]);
+        vistaDJ.setTextoCliente(data[9]);
+        vistaDJ.setLocationRelativeTo(null);
         vistaDJ.setVisible(true);
     }
 

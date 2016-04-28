@@ -35,6 +35,7 @@ class controladorDetalleEmpleados {
         vistaDE.setTextoDir(data[12]);
         vistaDE.setComboRegion(data[13]);
         vistaDE.setComboComuna(data[14]);
+        vistaDE.setLocationRelativeTo(null);
         vistaDE.setVisible(true);
     }
     

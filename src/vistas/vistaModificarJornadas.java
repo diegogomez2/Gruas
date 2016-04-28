@@ -7,42 +7,37 @@ package vistas;
 
 import com.mxrck.autocompleter.TextAutoCompleter;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JRootPane;
-import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
-import javax.swing.JTabbedPane;
 import javax.swing.SpinnerDateModel;
-import org.jdesktop.swingx.JXDatePicker;
 
 /**
  *
  * @author diego
  */
-public class vistaIngresarJornadas extends javax.swing.JDialog {
+public class vistaModificarJornadas extends javax.swing.JDialog {
 
     /**
-     * Creates new form vistaIngresarJornadas
+     * Creates new form vistaModificarJornadas
      */
+    String id;
+    
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
-    SimpleDateFormat formatClock = new SimpleDateFormat("HH:mm");
+    DateFormat formatClock = new SimpleDateFormat("HH:mm");
+    DateFormat formateDateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     DateFormat formatDia = new SimpleDateFormat("EEE");
     
-    
-    public vistaIngresarJornadas(java.awt.Frame parent, boolean modal, Object[][] clientes,
+    public vistaModificarJornadas(java.awt.Frame parent, boolean modal, Object[][] clientes,
             Object[][] gruas, Object[][] empleados) {
         super(parent, modal);
         initComponents();
-        textoFechaSalida.setDate(new Date());
-        controladores.controladorIngresarJornadas miControlador = new controladores.controladorIngresarJornadas();
         TextAutoCompleter listaClientes = new TextAutoCompleter(textoCliente);
         TextAutoCompleter listaGruas = new TextAutoCompleter(textoGrua);
-        TextAutoCompleter listaEmpleados = new TextAutoCompleter(textoOperador);
+        TextAutoCompleter listaEmpleados = new TextAutoCompleter(textoEmpleado);
         for(int i = 0; i < clientes.length; i++){
             listaClientes.addItem(clientes[i][0].toString());
         }
@@ -82,11 +77,9 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
         botonAceptar = new javax.swing.JButton();
         textoCliente = new javax.swing.JTextField();
         textoGrua = new javax.swing.JTextField();
-        textoOperador = new javax.swing.JTextField();
+        textoEmpleado = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Ingresar Jornada de Trabajo");
-        setResizable(false);
 
         labelFechaSalida.setText("Fecha de salida");
 
@@ -130,10 +123,6 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
             }
         });
 
-        textoCliente.setNextFocusableComponent(textoOperador);
-
-        textoGrua.setNextFocusableComponent(textoCliente);
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -172,7 +161,7 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
                             .addComponent(textoHoraSalida)
                             .addComponent(textoFechaSalida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(textoCliente)
-                            .addComponent(textoOperador, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(textoEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addContainerGap(313, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
@@ -216,7 +205,7 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(labelOperador)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(textoOperador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textoEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(65, Short.MAX_VALUE)))
         );
 
@@ -241,18 +230,18 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
         JFrame tabs = (JFrame)this.getParent();
         System.out.println(tabs.getTitle());
-        controladores.controladorIngresarJornadas miControladorIJ = new controladores.controladorIngresarJornadas();
-        String respuesta = miControladorIJ.camposVacios();
+        controladores.controladorModificarJornadas miControladorMJ = new controladores.controladorModificarJornadas();
+        String respuesta = miControladorMJ.camposVacios();
         boolean esVacio = respuesta.length() == 0;
         if (!esVacio) {
             JOptionPane.showMessageDialog(this, respuesta, "Debe rellenar los siguientes campos", JOptionPane.INFORMATION_MESSAGE);
         } else {
-                if (miControladorIJ.irVistaJornadasP()) {
-                    setVisible(false);
-                }else{
-                    JOptionPane.showMessageDialog(this, "Se generó un error al ingresar la jornada\n"
-                            + "Por favor compruebe que el cliente, grúa y empleados sean correctos", "Error" , JOptionPane.INFORMATION_MESSAGE);
-                }
+            if (miControladorMJ.irVistaJornadasP()) {
+                setVisible(false);
+            }else{
+                JOptionPane.showMessageDialog(this, "Se generó un error al ingresar la jornada\n"
+                    + "Por favor compruebe que el cliente, grúa y empleados sean correctos", "Error" , JOptionPane.INFORMATION_MESSAGE);
+            }
         }
     }//GEN-LAST:event_botonAceptarActionPerformed
 
@@ -273,13 +262,13 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(vistaIngresarJornadas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(vistaModificarJornadas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(vistaIngresarJornadas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(vistaModificarJornadas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(vistaIngresarJornadas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(vistaModificarJornadas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(vistaIngresarJornadas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(vistaModificarJornadas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -304,15 +293,51 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
     private javax.swing.JLabel labelOperador;
     private javax.swing.JScrollPane scrollpan;
     private javax.swing.JTextField textoCliente;
+    private javax.swing.JTextField textoEmpleado;
     private org.jdesktop.swingx.JXDatePicker textoFechaRegreso;
     private org.jdesktop.swingx.JXDatePicker textoFechaSalida;
     private javax.swing.JTextField textoGrua;
     private javax.swing.JSpinner textoHoraRegreso;
     private javax.swing.JSpinner textoHoraSalida;
     private javax.swing.JTextArea textoObs;
-    private javax.swing.JTextField textoOperador;
     // End of variables declaration//GEN-END:variables
 
+    public void setTextoCliente(String comboCliente) {
+        this.textoCliente.setText(comboCliente);
+    }
+
+    public void setTextoGrua(String comboGrua) {
+        this.textoGrua.setText(comboGrua);
+    }
+
+    public void setTextoOperador(String comboOperador) {
+        this.textoEmpleado.setText(comboOperador);
+    }
+
+    public void setTextoFechaRegreso(String textoFechaRegreso) throws ParseException {
+        this.textoFechaRegreso.setDate(formatDate.parse(textoFechaRegreso));
+    }
+
+    public void setTextoFechaSalida(String textoFechaSalida) throws ParseException {
+        this.textoFechaSalida.setDate(formatDate.parse(textoFechaSalida));
+    }
+
+    public void setTextoHoraRegreso(String textoHoraRegreso) throws ParseException {
+        this.textoHoraRegreso.setValue(formatClock.parse(textoHoraRegreso));
+    }
+
+    public void setTextoHoraSalida(String textoHoraSalida) throws ParseException {
+        this.textoHoraSalida.setValue(formatClock.parse(textoHoraSalida));
+    }
+
+    public void setTextoObs(String textoObs) {
+        this.textoObs.setText(textoObs);
+    }
+    
+    public void setId(String id){
+        this.id = id;
+    }
+    
     public String getTextoFechaRegreso() {
         Date fecha = textoFechaRegreso.getDate();
         if(fecha == null) return "";
@@ -366,8 +391,10 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
     }
 
     public String getTextoOperador() {
-        return textoOperador.getText();
+        return textoEmpleado.getText();
     }
     
- 
+    public String getId(){
+        return id;
+    }
 }

@@ -90,6 +90,11 @@ public class vistaJornadasP extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tablaJornadas);
 
         botonModificar.setText("Modificar Jornada");
+        botonModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonModificarActionPerformed(evt);
+            }
+        });
 
         botonEliminar.setText("Eliminar Jornada");
         botonEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -190,6 +195,24 @@ public class vistaJornadasP extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una jornada para ser asignada");
         }
     }//GEN-LAST:event_botonAsignarActionPerformed
+
+    private void botonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarActionPerformed
+        controladores.controladorJornadas miControlador = new controladores.controladorJornadas();
+        boolean selected = tablaJornadas.getSelectedRowCount() > 0;
+        if(selected){
+            int row = getFilaSeleccionada();
+            String id = getIdFila(row);
+            try {
+                miControlador.irVistaModificarJornadas(id);
+            } catch (ParseException ex) {
+                Logger.getLogger(vistaJornadasP.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            JTabbedPane tabs = (JTabbedPane)this.getParent();
+            miControlador.crearControladorPrincipal(tabs);
+        }else{
+            JOptionPane.showMessageDialog(tablaJornadas, "Debe seleccionar una jornada para ser modificada");
+        }
+    }//GEN-LAST:event_botonModificarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

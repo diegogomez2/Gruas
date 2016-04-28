@@ -25,7 +25,7 @@ public class vistaDetalleJornadas extends javax.swing.JDialog {
      * Creates new form vistaDetalleJornadas
      */
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
-    DateFormat formatClock = new SimpleDateFormat("HH:mm:ss");
+    DateFormat formatClock = new SimpleDateFormat("HH:mm");
     DateFormat formateDateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     
     public vistaDetalleJornadas(java.awt.Frame parent, boolean modal) {
@@ -290,11 +290,11 @@ public class vistaDetalleJornadas extends javax.swing.JDialog {
     }
 
     public void setTextoHoraRegreso(String textoHoraRegreso) throws ParseException {
-        this.textoHoraRegreso.setValue(formateDateTime.parse(textoHoraRegreso));
+        this.textoHoraRegreso.setValue(formatClock.parse(textoHoraRegreso));
     }
 
     public void setTextoHoraSalida(String textoHoraSalida) throws ParseException {
-        this.textoHoraSalida.setValue(formateDateTime.parse(textoHoraSalida));
+        this.textoHoraSalida.setValue(formatClock.parse(textoHoraSalida));
     }
 
     public void setTextoObs(String textoObs) {

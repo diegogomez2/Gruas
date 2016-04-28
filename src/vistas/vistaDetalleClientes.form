@@ -49,14 +49,14 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jPanel3" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="jPanel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="11" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
               <Component id="botonCancelar" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -76,39 +76,27 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="textoCel" alignment="0" max="32767" attributes="0"/>
                       <Component id="textoRut" alignment="0" max="32767" attributes="0"/>
-                      <Component id="textoNombres" alignment="0" max="32767" attributes="0"/>
-                      <Component id="textoApPaterno" alignment="0" max="32767" attributes="0"/>
-                      <Component id="textoApMaterno" alignment="0" max="32767" attributes="0"/>
+                      <Component id="textoContacto" alignment="0" max="32767" attributes="0"/>
+                      <Component id="textoCel" alignment="0" max="32767" attributes="0"/>
                       <Component id="textoRazon" alignment="0" max="32767" attributes="0"/>
                       <Component id="textoGiro" alignment="0" max="32767" attributes="0"/>
                       <Component id="textoCorreo" alignment="0" max="32767" attributes="0"/>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="textoTelefono" min="-2" pref="168" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="textoFax" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
+                      <Component id="textoTelefono" alignment="0" max="32767" attributes="0"/>
+                      <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="labelRut" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="labelNombres" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="labelApPaterno" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="labelApMaterno" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="labelContacto" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="labelRazon" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="labelCorreo" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="labelTelefono" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="143" max="-2" attributes="0"/>
-                                  <Component id="labelFax" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="labelTelefono" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="labelCel" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="0" pref="167" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="310" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -123,17 +111,9 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="textoRut" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="labelNombres" min="-2" max="-2" attributes="0"/>
+                  <Component id="labelContacto" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="textoNombres" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="labelApPaterno" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="textoApPaterno" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="labelApMaterno" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="textoApMaterno" min="-2" max="-2" attributes="0"/>
+                  <Component id="textoContacto" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="labelRazon" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -147,15 +127,9 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="textoCorreo" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="labelTelefono" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="labelFax" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="labelTelefono" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="textoTelefono" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="textoFax" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="textoTelefono" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="labelCel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -182,44 +156,12 @@
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="labelNombres">
+        <Component class="javax.swing.JLabel" name="labelContacto">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Nombres"/>
+            <Property name="text" type="java.lang.String" value="Contacto"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="textoNombres">
-          <Properties>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="33" green="33" red="ff" type="rgb"/>
-            </Property>
-            <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="66" green="66" red="66" type="rgb"/>
-            </Property>
-            <Property name="enabled" type="boolean" value="false"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="labelApPaterno">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Apellido Paterno"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="textoApPaterno">
-          <Properties>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="33" green="33" red="ff" type="rgb"/>
-            </Property>
-            <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="66" green="66" red="66" type="rgb"/>
-            </Property>
-            <Property name="enabled" type="boolean" value="false"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="labelApMaterno">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Apellido Materno"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="textoApMaterno">
+        <Component class="javax.swing.JTextField" name="textoContacto">
           <Properties>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="33" green="33" red="ff" type="rgb"/>
@@ -284,22 +226,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textoTelefono">
-          <Properties>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="33" green="33" red="ff" type="rgb"/>
-            </Property>
-            <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="66" green="66" red="66" type="rgb"/>
-            </Property>
-            <Property name="enabled" type="boolean" value="false"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="labelFax">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Fax"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="textoFax">
           <Properties>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="33" green="33" red="ff" type="rgb"/>

@@ -211,6 +211,22 @@ public class controladorPrincipal {
         micontroladorIJ.mostrarVistaIngresarJornadas(dataClientes, dataGruas, dataEmpleados);
     }
     
+    public void crearControladorModificarJornadas(String id) throws ParseException {
+        modelos.modeloClientes clientes;
+        modelos.modeloGruas gruas;
+        modelos.modeloEmpleados empleados;
+        clientes = new modeloClientes();
+        gruas = new modelos.modeloGruas();
+        empleados = new modelos.modeloEmpleados();
+        Object[][] dataClientes, dataGruas, dataEmpleados;
+        dataClientes = clientes.obtenerRazonClientes();
+        dataGruas = gruas.obtenerDescGruas();
+        dataEmpleados = empleados.obtenerNombresEmpleados();
+        controladorModificarJornadas micontroladorMJ;
+        micontroladorMJ = new controladorModificarJornadas();
+        micontroladorMJ.mostrarVistaModificarJornadas(id, dataClientes, dataGruas, dataEmpleados);
+    }
+    
     public JPanel crearControladorOtsP() {
         modelos.modeloOts ots;
         ots = new modelos.modeloOts();
@@ -382,6 +398,17 @@ public class controladorPrincipal {
         }
     }   
     
+    public boolean modificarJornada(String[] data, String id){
+        modelos.modeloJornadas jornada = new modelos.modeloJornadas();
+        if(jornada.modificarJornada(data, id).compareTo("correcto") == 0){
+            JOptionPane.showMessageDialog(miVistaL, "Jornada modificada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al modificar la jornada selecionada", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+    
     public boolean ingresarOt(String[] data){
         modelos.modeloOts ot = new modelos.modeloOts();
         if(ot.ingresarOt(data).compareTo("correcto") == 0){
@@ -454,16 +481,6 @@ public class controladorPrincipal {
     }
 
     void crearControladorIngresarOts(String id) throws ParseException {
-        /*modelos.modeloClientes clientes;
-        modelos.modeloGruas gruas;
-        modelos.modeloEmpleados empleados;
-        clientes = new modeloClientes();
-        gruas = new modelos.modeloGruas();
-        empleados = new modelos.modeloEmpleados();
-        Object[][] dataClientes, dataGruas, dataEmpleados;
-        dataClientes = clientes.obtenerRazonClientes();
-        dataGruas = gruas.obtenerDescGruas();
-        dataEmpleados = empleados.obtenerNombresEmpleados();*/
         String[] data;
         modelos.modeloJornadas jornada = new modeloJornadas();
         data = jornada.obtenerJornadaPorId(id);

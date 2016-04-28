@@ -27,10 +27,10 @@ public class controladorIngresarClientes {
     public boolean irVistaClientesP() {
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
         String[] rut_dv = vistaIC.getTextoRut().split("-");
-        String[] data = {rut_dv[0], rut_dv[1], vistaIC.getTextoNombres(), vistaIC.getTextoApPaterno(),
-            vistaIC.getTextoApMaterno(), vistaIC.getTextoRazon(), vistaIC.getTextoGiro(), vistaIC.getTextoCorreo(),
-            vistaIC.getTextoTelefono(), vistaIC.getTextoFax(), vistaIC.getTextoCel(), vistaIC.getTextoDireccion(),
-            vistaIC.getTextoRegion(), vistaIC.getTextoComuna(), vistaIC.getTextoObs()};
+        String[] data = {rut_dv[0], rut_dv[1], vistaIC.getTextoContacto(), vistaIC.getTextoRazon(), 
+            vistaIC.getTextoGiro(), vistaIC.getTextoCorreo(), vistaIC.getTextoTelefono(), 
+            vistaIC.getTextoCel(), vistaIC.getTextoDireccion(), vistaIC.getTextoRegion(),
+            vistaIC.getTextoComuna(), vistaIC.getTextoObs()};
         boolean flag = miControlador.ingresarCliente(data);
         return flag;
     }
@@ -76,15 +76,8 @@ public class controladorIngresarClientes {
         if (vistaIC.getTextoRut().compareTo("") == 0) {
             respuesta += "-Rut.\n";
         }
-//        if (vistaIC.getTextoNombres().compareTo("") == 0) {
-//            respuesta += "-Nombres.\n";
-//        }
-//        if (vistaIC.getTextoApPaterno().compareTo("") == 0) {
-//            respuesta += "-Apellido paterno.\n";
-//        }
-//        if (vistaIC.getTextoApMaterno().compareTo("") == 0) {
-//            respuesta += "-Apellido materno.\n";
-//        }
+//        if (vistaIC.getTextoContacto().compareTo("") == 0) {
+//            respuesta += "-Contacto.\n";
         if (vistaIC.getTextoRazon().compareTo("") == 0) {
             respuesta += "-Razón social.\n";
         }

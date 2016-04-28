@@ -22,19 +22,16 @@ public class controladorModificarClientes {
         String data[] = miControlador.obtenerClientePorRut(rut);
         vistaMC = new vistaModificarClientes(new javax.swing.JFrame(), true, dataRegiones);
         vistaMC.setTextoRut(data[0]);
-        vistaMC.setTextoNombres(data[1]);
-        vistaMC.setTextoApPaterno(data[2]);
-        vistaMC.setTextoApMaterno(data[3]);
-        vistaMC.setTextoRazon(data[4]);
-        vistaMC.setTextoGiro(data[5]);
-        vistaMC.setTextoCorreo(data[6]);
-        vistaMC.setTextoTelefono(data[7]);
-        vistaMC.setTextoFax(data[8]);
-        vistaMC.setTextoCel(data[9]);
-        vistaMC.setTextoDireccion(data[10]);
-        vistaMC.setTextoRegion(data[11]);
-        vistaMC.setTextoComuna(data[12]);
-        vistaMC.setTextoObs(data[13]);
+        vistaMC.setTextoContacto(data[1]);
+        vistaMC.setTextoRazon(data[2]);
+        vistaMC.setTextoGiro(data[3]);
+        vistaMC.setTextoCorreo(data[4]);
+        vistaMC.setTextoTelefono(data[5]);
+        vistaMC.setTextoCel(data[6]);
+        vistaMC.setTextoDireccion(data[7]);
+        vistaMC.setTextoRegion(data[8]);
+        vistaMC.setTextoComuna(data[9]);
+        vistaMC.setTextoObs(data[10]);
         vistaMC.setRut(Integer.parseInt(data[0].split("-")[0]));
         vistaMC.setLocationRelativeTo(null);
         vistaMC.setVisible(true);
@@ -43,9 +40,9 @@ public class controladorModificarClientes {
     public boolean irVistaClientesP() {
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
         String[] rut_dv = vistaMC.getTextoRut().split("-");
-        String[] data = {rut_dv[0], rut_dv[1], vistaMC.getTextoNombres(), vistaMC.getTextoApPaterno(),
-            vistaMC.getTextoApMaterno(), vistaMC.getTextoRazon(), vistaMC.getTextoGiro(), vistaMC.getTextoCorreo(),
-            vistaMC.getTextoTelefono(), vistaMC.getTextoFax(), vistaMC.getTextoCel(), vistaMC.getTextoDireccion(),
+        String[] data = {rut_dv[0], rut_dv[1], vistaMC.getTextoContacto(), vistaMC.getTextoRazon(),
+            vistaMC.getTextoGiro(), vistaMC.getTextoCorreo(), vistaMC.getTextoTelefono(), 
+            vistaMC.getTextoCel(), vistaMC.getTextoDireccion(),
             vistaMC.getTextoRegion(), vistaMC.getTextoComuna(), vistaMC.getTextoObs()};
         boolean flag = miControlador.modificarCliente(data, vistaMC.getRut());
         return flag;
@@ -90,9 +87,7 @@ public class controladorModificarClientes {
     public String camposVacios(){
         String respuesta = "";
         if(vistaMC.getTextoRut().compareTo("") == 0) respuesta += "-Rut.\n";
-        if(vistaMC.getTextoNombres().compareTo("") == 0) respuesta += "-Nombres.\n";
-        if(vistaMC.getTextoApPaterno().compareTo("") == 0 ) respuesta += "-Apellido paterno.\n";
-        if(vistaMC.getTextoApMaterno().compareTo("") == 0) respuesta += "-Apellido materno.\n";
+        //if(vistaMC.getTextoContacto().compareTo("") == 0) respuesta += "-Nombres.\n";
         if(vistaMC.getTextoRazon().compareTo("") == 0) respuesta += "-Razón social.\n";
         if(vistaMC.getTextoGiro().compareTo("") == 0) respuesta += "-Giro.\n";
         if(vistaMC.getTextoCorreo().compareTo("") == 0) respuesta += "-Correo.\n";

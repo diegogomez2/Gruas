@@ -51,4 +51,9 @@ public class controladorJornadas {
         miControlador.crearControladorIngresarOts(id);
     }
     
+    public void irVistaModificarJornadas(String id) throws ParseException{
+        controladorPrincipal miControlador = new controladorPrincipal();
+        miControlador.crearControladorModificarJornadas(id);
+    }
+    
 }

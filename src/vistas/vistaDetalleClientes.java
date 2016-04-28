@@ -36,12 +36,8 @@ public class vistaDetalleClientes extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         labelRut = new javax.swing.JLabel();
         textoRut = new javax.swing.JTextField();
-        labelNombres = new javax.swing.JLabel();
-        textoNombres = new javax.swing.JTextField();
-        labelApPaterno = new javax.swing.JLabel();
-        textoApPaterno = new javax.swing.JTextField();
-        labelApMaterno = new javax.swing.JLabel();
-        textoApMaterno = new javax.swing.JTextField();
+        labelContacto = new javax.swing.JLabel();
+        textoContacto = new javax.swing.JTextField();
         labelRazon = new javax.swing.JLabel();
         textoRazon = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -50,8 +46,6 @@ public class vistaDetalleClientes extends javax.swing.JDialog {
         textoCorreo = new javax.swing.JTextField();
         labelTelefono = new javax.swing.JLabel();
         textoTelefono = new javax.swing.JTextField();
-        labelFax = new javax.swing.JLabel();
-        textoFax = new javax.swing.JTextField();
         labelCel = new javax.swing.JLabel();
         textoCel = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
@@ -77,23 +71,11 @@ public class vistaDetalleClientes extends javax.swing.JDialog {
         textoRut.setDisabledTextColor(new java.awt.Color(102, 102, 102));
         textoRut.setEnabled(false);
 
-        labelNombres.setText("Nombres");
+        labelContacto.setText("Contacto");
 
-        textoNombres.setForeground(new java.awt.Color(255, 51, 51));
-        textoNombres.setDisabledTextColor(new java.awt.Color(102, 102, 102));
-        textoNombres.setEnabled(false);
-
-        labelApPaterno.setText("Apellido Paterno");
-
-        textoApPaterno.setForeground(new java.awt.Color(255, 51, 51));
-        textoApPaterno.setDisabledTextColor(new java.awt.Color(102, 102, 102));
-        textoApPaterno.setEnabled(false);
-
-        labelApMaterno.setText("Apellido Materno");
-
-        textoApMaterno.setForeground(new java.awt.Color(255, 51, 51));
-        textoApMaterno.setDisabledTextColor(new java.awt.Color(102, 102, 102));
-        textoApMaterno.setEnabled(false);
+        textoContacto.setForeground(new java.awt.Color(255, 51, 51));
+        textoContacto.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        textoContacto.setEnabled(false);
 
         labelRazon.setText("Razón Social");
 
@@ -119,12 +101,6 @@ public class vistaDetalleClientes extends javax.swing.JDialog {
         textoTelefono.setDisabledTextColor(new java.awt.Color(102, 102, 102));
         textoTelefono.setEnabled(false);
 
-        labelFax.setText("Fax");
-
-        textoFax.setForeground(new java.awt.Color(255, 51, 51));
-        textoFax.setDisabledTextColor(new java.awt.Color(102, 102, 102));
-        textoFax.setEnabled(false);
-
         labelCel.setText("Celular");
 
         textoCel.setForeground(new java.awt.Color(255, 51, 51));
@@ -138,33 +114,23 @@ public class vistaDetalleClientes extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(textoCel)
                     .addComponent(textoRut)
-                    .addComponent(textoNombres)
-                    .addComponent(textoApPaterno)
-                    .addComponent(textoApMaterno)
+                    .addComponent(textoContacto)
+                    .addComponent(textoCel)
                     .addComponent(textoRazon)
                     .addComponent(textoGiro)
                     .addComponent(textoCorreo)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(textoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(textoFax))
+                    .addComponent(textoTelefono)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(labelRut)
-                            .addComponent(labelNombres)
-                            .addComponent(labelApPaterno)
-                            .addComponent(labelApMaterno)
+                            .addComponent(labelContacto)
                             .addComponent(labelRazon)
                             .addComponent(jLabel1)
                             .addComponent(labelCorreo)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(labelTelefono)
-                                .addGap(143, 143, 143)
-                                .addComponent(labelFax))
+                            .addComponent(labelTelefono)
                             .addComponent(labelCel))
-                        .addGap(0, 167, Short.MAX_VALUE)))
+                        .addGap(0, 310, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -175,17 +141,9 @@ public class vistaDetalleClientes extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(textoRut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(labelNombres)
+                .addComponent(labelContacto)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textoNombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(labelApPaterno)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textoApPaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(labelApMaterno)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textoApMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(textoContacto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelRazon)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -199,13 +157,9 @@ public class vistaDetalleClientes extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(textoCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelTelefono)
-                    .addComponent(labelFax))
+                .addComponent(labelTelefono)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textoFax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(textoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelCel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -328,7 +282,7 @@ public class vistaDetalleClientes extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(botonCancelar)
                 .addContainerGap())
         );
@@ -391,26 +345,20 @@ public class vistaDetalleClientes extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel labelApMaterno;
-    private javax.swing.JLabel labelApPaterno;
     private javax.swing.JLabel labelCel;
     private javax.swing.JLabel labelComuna;
+    private javax.swing.JLabel labelContacto;
     private javax.swing.JLabel labelCorreo;
     private javax.swing.JLabel labelDireccion;
-    private javax.swing.JLabel labelFax;
-    private javax.swing.JLabel labelNombres;
     private javax.swing.JLabel labelRazon;
     private javax.swing.JLabel labelRut;
     private javax.swing.JLabel labelTelefono;
-    private javax.swing.JTextField textoApMaterno;
-    private javax.swing.JTextField textoApPaterno;
     private javax.swing.JTextField textoCel;
     private javax.swing.JComboBox<String> textoComuna;
+    private javax.swing.JTextField textoContacto;
     private javax.swing.JTextField textoCorreo;
     private javax.swing.JTextField textoDireccion;
-    private javax.swing.JTextField textoFax;
     private javax.swing.JTextField textoGiro;
-    private javax.swing.JTextField textoNombres;
     private javax.swing.JTextArea textoObs;
     private javax.swing.JTextField textoRazon;
     private javax.swing.JComboBox<String> textoRegion;
@@ -418,13 +366,6 @@ public class vistaDetalleClientes extends javax.swing.JDialog {
     private javax.swing.JTextField textoTelefono;
     // End of variables declaration//GEN-END:variables
 
-    public void setTextoApMaterno(String textoApMaterno) {
-        this.textoApMaterno.setText(textoApMaterno);
-    }
-
-    public void setTextoApPaterno(String textoApPaterno) {
-        this.textoApPaterno.setText(textoApPaterno);
-    }
 
     public void setTextoCel(String textoCel) {
         this.textoCel.setText(textoCel);
@@ -443,16 +384,12 @@ public class vistaDetalleClientes extends javax.swing.JDialog {
         this.textoDireccion.setText(textoDireccion);
     }
 
-    public void setTextoFax(String textoFax) {
-        this.textoFax.setText(textoFax);
-    }
-
     public void setTextoGiro(String textoGiro) {
         this.textoGiro.setText(textoGiro);
     }
 
-    public void setTextoNombres(String textoNombres) {
-        this.textoNombres.setText(textoNombres);
+    public void setTextoContacto(String textoContacto) {
+        this.textoContacto.setText(textoContacto);
     }
 
     public void setTextoObs(String textoObs) {
