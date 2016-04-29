@@ -6,6 +6,8 @@
 package controladores;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
@@ -29,10 +31,14 @@ import org.w3c.dom.Element;
  */
 public class controladorCrearFactura {
     
+    DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
     static vistas.vistaFacturasP vistaF;
     
     public String crearDocXML(String[] idOts, String valorNeto, String valorIva, String valorTotal){
         
+        modelos.modeloFacturas factura = new modelos.modeloFacturas();
+//        String fecha = new Date().toString();
+//        formatDate.
         try{
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -57,7 +63,8 @@ public class controladorCrearFactura {
             id.appendChild(folio);
             
             Element fecEmision = doc.createElement("FchEmision");
-            fecEmision.appendChild(doc.createTextNode(new Date().toString()));
+            fecEmision.appendChild(doc.createTextNode(formatDate.format(new Date())));
+            id.appendChild(fecEmision);
             
             Element fpago = doc.createElement("FmaPago");
             fpago.appendChild(doc.createTextNode("VER FORMA"));
@@ -171,6 +178,8 @@ public class controladorCrearFactura {
                 Element mtoItem = doc.createElement("MtoItem");
                 mtoItem.appendChild(doc.createTextNode(data[7]));
                 detalle.appendChild(mtoItem);
+                
+                factura.ingresarFacturadas(idOts[i], formatDate.format(new Date()));
             }
                         
             TransformerFactory transformerFactory = TransformerFactory.newInstance();

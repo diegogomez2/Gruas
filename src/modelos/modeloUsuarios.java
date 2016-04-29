@@ -7,6 +7,7 @@ package modelos;
 
 import controladores.controladorPrincipal;
 import java.sql.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -35,8 +36,10 @@ public class modeloUsuarios {
             pstm.close();
         }catch(SQLException e){
             System.out.println(e);
+            JOptionPane.showMessageDialog(null, e);
             e.printStackTrace();
         }catch(ClassNotFoundException e){
+            JOptionPane.showMessageDialog(null, e);
             System.out.println(e);
             System.out.println(url);
         }
@@ -57,8 +60,10 @@ public class modeloUsuarios {
             }
             pstm.close();
         }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e);
             System.out.println(e);
         }catch(ClassNotFoundException e){
+            JOptionPane.showMessageDialog(null, e);
             System.out.println(e);
             System.out.println(url);
         }

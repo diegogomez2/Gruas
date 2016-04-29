@@ -24,7 +24,7 @@ import static modelos.modeloJornadas.url;
  */
 public class modeloOts {
     static String login = "root";
-    static String password = "205243";
+    static String password = "gruas_205243";
     static String url = "jdbc:mysql://localhost:3306/fact_gruas";
     Connection conn = null;
     

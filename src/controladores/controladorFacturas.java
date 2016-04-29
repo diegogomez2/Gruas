@@ -27,7 +27,7 @@ public class controladorFacturas {
     public void crearControladorPrincipal(JTabbedPane tabs){
         controladorPrincipal miControlador = new controladorPrincipal();
         tabs.remove(5);
-        tabs.insertTab("Facturas", null, miControlador.crearControladorFacturasP(), null, 5);
+        tabs.insertTab("A Facturar", null, miControlador.crearControladorFacturasP(), null, 5);
         tabs.setSelectedIndex(5);
     }
     
