@@ -49,4 +49,9 @@ public class controladorGruas {
         tabs.insertTab("Grúas", null, miControlador.crearControladorGruasP(), null, 1);
         tabs.setSelectedIndex(1);
     }
+    
+    public void agregarHoras(String desc, int horas){
+        modelos.modeloGruas grua = new modelos.modeloGruas();
+        grua.actualizarHorometro(horas, desc);
+    }
 }

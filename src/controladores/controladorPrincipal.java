@@ -256,7 +256,7 @@ public class controladorPrincipal {
 //        modelos.modeloOts ots;
 //        ots = new modelos.modeloOts();
 //        Object[][] data;
-//        data = ots.listarFacturadas();
+//        data = ots.obtenerNetoTotal(tipo);
 //        micontroladorFacturadas = new controladorFacturadas();
 //        return micontroladorFacturadas.mostrarTabControlFacturadas(tipo, data);    
 //    }

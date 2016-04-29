@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
@@ -110,6 +111,7 @@ public class vistaFacturasP extends javax.swing.JPanel {
 
     private void botonFacturarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonFacturarActionPerformed
         controladores.controladorCrearFactura miControlador = new controladores.controladorCrearFactura();
+        controladores.controladorOts micontroladorOts = new controladores.controladorOts();
         int filas = tablaFacturas.getRowCount();
         String[] idOts = new String[filas];
         int neto = 0, iva = 0, total = 0;
@@ -124,7 +126,9 @@ public class vistaFacturasP extends javax.swing.JPanel {
         if(respuesta.compareTo("correcto") == 0){
             controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
             if((micontroladorFacturas.archivarFacturas(idOts).compareTo("correcto") == 0)){
-                
+                JTabbedPane tabs = (JTabbedPane)this.getParent();
+                micontroladorOts.crearControladorPrincipal(tabs);
+                miControlador.crearControladorPrincipal(tabs);
             }
         }
     }//GEN-LAST:event_botonFacturarActionPerformed

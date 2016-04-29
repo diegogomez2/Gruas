@@ -29,6 +29,8 @@ public class vistaJornadasP extends javax.swing.JPanel {
      * Creates new form vistaJornadaP
      */
 
+    int horas = 0;
+    
     public vistaJornadasP(String tipo, Object[][] data) {
         initComponents();
         final int rows = 5;
@@ -175,6 +177,7 @@ public class vistaJornadasP extends javax.swing.JPanel {
         String id;
         controladores.controladorJornadas miControlador = new controladores.controladorJornadas();
         controladores.controladorOts miControladorOt = new controladores.controladorOts();
+        //controladores.controladorGruas micontroladorGruas = new controladores.controladorGruas();
         boolean selected = tablaJornadas.getSelectedRowCount() > 0;
         if(selected){
             int row = getFilaSeleccionada();
@@ -187,6 +190,7 @@ public class vistaJornadasP extends javax.swing.JPanel {
                 JTabbedPane tabs = (JTabbedPane)this.getParent();
                 miControladorOt.crearControladorPrincipal(tabs);
                 miControlador.crearControladorPrincipal(tabs);
+                //micontroladorGruas.agregarHoras(getGruaFila(row));
         }else{
             JOptionPane.showMessageDialog(null, "Debe seleccionar una jornada para ser asignada");
         }
@@ -230,5 +234,13 @@ public class vistaJornadasP extends javax.swing.JPanel {
     
     public String getIdFila(int row){
         return tablaJornadas.getValueAt(row, 0).toString();
+    }
+    
+    public String getGruaFila(int row){
+        return tablaJornadas.getValueAt(row, 1).toString();
+    }
+    
+    public void setHoras(int horas){
+        this.horas = horas;
     }
 }

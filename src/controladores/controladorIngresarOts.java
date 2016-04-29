@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.regex.Pattern;
 import javax.swing.JTabbedPane;
 import vistas.vistaIngresarOts;
+import vistas.vistaJornadasP;
 
 /**
  *
@@ -37,12 +38,12 @@ public class controladorIngresarOts {
         tabs.setSelectedIndex(3);
     }
     
-    public boolean irVistaJornadasP(String id) {
+    public boolean irVistaJornadasP(String id, int horas) {
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
         String[] data = {vistaIO.getTextoContacto(), vistaIO.getTextoFechaOt(), vistaIO.getComboFormaPago(),
             vistaIO.getComboCondPago(), vistaIO.getTextoDespachado(), id, vistaIO.getTextoCodigo(),
             removeDots(vistaIO.getTextoNeto()), removeDots(vistaIO.getTextoIva()), 
-            removeDots(vistaIO.getTextoBruto()), vistaIO.getSpinnerFinFaena()};
+            removeDots(vistaIO.getTextoBruto()), vistaIO.getSpinnerFinFaena(), Integer.toString(horas)};
         boolean flag = miControlador.ingresarOt(data);
         return flag;
     } 
@@ -67,7 +68,7 @@ public class controladorIngresarOts {
         return respuesta;
     }
     
-    public String[] calcularTarifa(String diaInicio, String diaFin, String horaInicio, String horaFin, String ton, String desc) throws ParseException{
+    public String[] calcularTarifa(String diaInicio, String diaFin, String horaInicio, String horaFin, String ton) throws ParseException{
         int horasTotales = 0;
         modelos.modeloOts ots = new modelos.modeloOts();
         String[] data;// = {};
@@ -130,7 +131,7 @@ public class controladorIngresarOts {
             day1 = nextDay(day1);
         }
         data = new String[]{Integer.toString((int)totalTarifa), String.valueOf((int)(totalTarifa * 0.19)),
-            String.valueOf((int)(totalTarifa * 1.19))};
+            String.valueOf((int)(totalTarifa * 1.19)), Integer.toString(horasTotales)};
         StringBuilder str = new StringBuilder(data[0]);
         data[0] = addDots(str);
         str = new StringBuilder(data[1]);
@@ -138,6 +139,7 @@ public class controladorIngresarOts {
         str = new StringBuilder(data[2]);
         data[2] = addDots(str);
         //actualizarHorometro(horasTotales, desc);
+        //
         return data;
     }
     

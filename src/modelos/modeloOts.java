@@ -48,7 +48,7 @@ public class modeloOts {
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("update jornadas set cont_ot = ?, fec_ot = ?, pag_ot = ?,"
                     + "cond_ot = ?, desp_ot = ?, cod_ot = ?, neto_ot = ?, iva_ot = ?, total_ot = ?, "
-                    + "horfin_ot=? where"
+                    + "horfin_ot=?, hortot_ot=? where"
                     + " id_jor = ?");
             pstm.setString(1, data[0]);
             pstm.setString(2, data[1]);
@@ -60,7 +60,8 @@ public class modeloOts {
             pstm.setInt(8, Integer.parseInt(data[8]));
             pstm.setInt(9, Integer.parseInt(data[9]));
             pstm.setString(10, data[10]);
-            pstm.setInt(11, Integer.parseInt(data[5]));
+            pstm.setInt(11, Integer.parseInt(data[11]));
+            pstm.setInt(12, Integer.parseInt(data[5]));
             pstm.execute();
             pstm.close();
         }catch(SQLException e){
@@ -319,12 +320,12 @@ public class modeloOts {
     }
     
     public String[] obtenerFacturaPorId(String idOt){
-        String[] data = new String[11];
+        String[] data = new String[12];
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("SELECT clientes.rut_cli, raz_cli, gir_cli,"
-                    + "dir_cli, reg_cli, com_cli, total_ot, neto_ot, iva_ot, fact_ot, cod_ot"
+                    + "dir_cli, reg_cli, com_cli, total_ot, neto_ot, iva_ot, fact_ot, cod_ot, hortot_ot"
                     + " FROM jornadas INNER JOIN clientes"
                     + " ON clientes.rut_cli = jornadas.rut_cli where cod_ot = ?");
             pstm.setString(1, idOt);
@@ -342,6 +343,7 @@ public class modeloOts {
                 String estiva = res.getString("iva_ot");
                 String estcodot = res.getString("cod_ot");
                 String estfact = res.getString("fact_ot");
+                String esthor = res.getString("hortot_ot");
                 data[0] = estrut;
                 data[1] = estraz;
                 data[2] = estgir;
@@ -353,6 +355,7 @@ public class modeloOts {
                 data[8] = estiva;
                 data[9] = estfact;
                 data[10] = estcodot;
+                data[11] = esthor;
                 i++;
             }
             res.close();
@@ -457,5 +460,56 @@ public class modeloOts {
             System.out.println(e);
         }
         return data;
+    }
+    
+    public String[] obtenerNetoTotal(String id_fac){
+        int registros = 0;
+        int neto = 0;
+        String[] datos;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM detallefactura where id_fac = ?");
+            pstm.setInt(1, Integer.parseInt(id_fac));
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+        }catch(SQLException e){
+            System.out.println(e);
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+        }
+        
+        datos = new String[registros];
+        
+        try{
+            PreparedStatement pstm = conn.prepareStatement("SELECT neto_ot FROM Jornadas INNER JOIN"
+                    + " detallefactura ON jornadas.id_jor = detallefactura.id_jor Where id_fac = ?");
+            pstm.setInt(1, Integer.parseInt(id_fac));
+            ResultSet res = pstm.executeQuery();
+            
+            int i = 0;
+            while(res.next()){
+                neto += res.getInt("neto_ot");
+                i++;
+            }
+            res.close();
+            
+            pstm = conn.prepareStatement("Select raz_cli From jornadas INNER JOIN clientes ON "
+                    + "jornadas.rut_cli = clientes.rut_cli INNER JOIN detallefactura ON jornada.id_jor "
+                    + "= detallelfactura.id_jor where id_fac = ?");
+            pstm.setInt(1, Integer.parseInt(id_fac));
+            res = pstm.executeQuery();
+            
+            String estraz = res.getString("raz_cli");
+            datos[0] = estraz;
+            datos[1] = Integer.toString(neto);
+        }catch(SQLException e){
+            System.out.println(e);
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        return datos;
     }
 }

@@ -5,6 +5,7 @@
  */
 package vistas;
 
+import controladores.controladorGruas;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,6 +27,7 @@ public class vistaIngresarOts extends javax.swing.JDialog {
     /**
      * Creates new form vistaIngresarOT
      */
+    int horas = 0;
     String ton;
     String fechaInicio, fechaFin;
     String diaInicio, diaFin;
@@ -44,7 +46,7 @@ public class vistaIngresarOts extends javax.swing.JDialog {
         ton = data[14];
         //System.out.println(diaInicio+" "+horaInicio+"\n"+diaFin+" "+horaFin+" "+ton);
         controladores.controladorIngresarOts miControlador = new controladores.controladorIngresarOts();
-        String[] valores = miControlador.calcularTarifa(diaInicio, diaFin, horaInicio, horaFin, ton, data[4]);
+        String[] valores = miControlador.calcularTarifa(diaInicio, diaFin, horaInicio, horaFin, ton);
         textoGrua.setText(data[4]);
         textoEmpleado.setText(data[5]);
         textoObs.setText(data[6]);
@@ -62,7 +64,7 @@ public class vistaIngresarOts extends javax.swing.JDialog {
         spinnerHoraLlegada.setValue(formatClock.parse(horaFin));
         spinnerFinFaena.setValue(formatClock.parse(horaFin));
         textoFechaOt.setDate(new Date());
-        
+        horas = Integer.parseInt(valores[3]);
     }
 
     /**
@@ -495,7 +497,11 @@ public class vistaIngresarOts extends javax.swing.JDialog {
         if(!esVacio){
             JOptionPane.showMessageDialog(this, respuesta, "Debe rellenar los siguientes campos", JOptionPane.INFORMATION_MESSAGE);
         }else{
-            if(miControladorIO.irVistaJornadasP(id)) setVisible(false);
+            if(miControladorIO.irVistaJornadasP(id, horas)){
+                setVisible(false);
+                controladores.controladorGruas micontroladorGruas = new controladorGruas();
+                micontroladorGruas.agregarHoras(textoGrua.getText(), horas);
+            }
         }
     }//GEN-LAST:event_botonIngresarActionPerformed
 
@@ -671,5 +677,12 @@ public class vistaIngresarOts extends javax.swing.JDialog {
         return hora;
     }
 
+    public void setHoras(int horas){
+        this.horas = horas;
+    }
+    
+    public int getHoras(){
+        return this.horas;
+    }
  
 }

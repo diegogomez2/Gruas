@@ -8,6 +8,7 @@ package controladores;
 import java.io.File;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.JTabbedPane;
 import javax.xml.crypto.dsig.TransformException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -164,7 +165,7 @@ public class controladorCrearFactura {
                 codItem.appendChild(valCod);
                 
                 Element nomItem = doc.createElement("NmbItem");
-                nomItem.appendChild(doc.createTextNode("#Horas DE GRUA HORQUILLA O.T.:"+data[10]));
+                nomItem.appendChild(doc.createTextNode(data[11]+" HORAS DE GRUA HORQUILLA O.T.:"+data[10]));
                 detalle.appendChild(nomItem);
                 
                 Element mtoItem = doc.createElement("MtoItem");
@@ -189,5 +190,12 @@ public class controladorCrearFactura {
             tfe.printStackTrace();
             return "incorrecto";
         }
+    }
+    
+    public void crearControladorPrincipal(JTabbedPane tabs) {
+        controladorPrincipal miControlador = new controladorPrincipal();
+        tabs.remove(5);
+        tabs.insertTab("A facturar", null, miControlador.crearControladorFacturasP(), null, 5);
+        tabs.setSelectedIndex(5);
     }
 }
