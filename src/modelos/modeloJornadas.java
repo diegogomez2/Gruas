@@ -26,11 +26,12 @@ public class modeloJornadas {
     static String login = "root";
     static String password = "205243";
     static String url = "jdbc:mysql://localhost:3306/fact_gruas";
+    Connection conn = null;
+    
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
     DateFormat newFormat = new SimpleDateFormat("dd-MM-yyyy");
     DateFormat formatDateTime = new SimpleDateFormat("yyy-MM-dd HH:mm:ss");
     DateFormat formatClock = new SimpleDateFormat("HH:mm:ss");
-    Connection conn = null;
 
     public String toSqlDateTime(String data){
         String datetime = null;

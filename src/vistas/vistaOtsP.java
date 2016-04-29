@@ -5,6 +5,8 @@
  */
 package vistas;
 
+import java.util.regex.PatternSyntaxException;
+import javax.swing.RowFilter;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -15,7 +17,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+import org.jdesktop.swingx.sort.TableSortController;
 
 /**
  *
@@ -26,20 +33,21 @@ public class vistaOtsP extends javax.swing.JPanel {
     /**
      * Creates new form vistaOtsP
      */
+    DefaultTableModel datos;
     public vistaOtsP(String tipo, Object[][] data) {
         initComponents();
         final int rows = 5;
         String[] columNames = {"Código OT", "Razon", "Giro", "Dirección", "Región", "Comuna", "Fecha",
             "Neto", "IVA", "Total"};
-        DefaultTableModel datos = new DefaultTableModel(data, columNames){
+        datos = new DefaultTableModel(data, columNames){
             @Override
             public boolean isCellEditable(int row, int column){
                 return false;
             }
         };
         tablaOts.setModel(datos);
+        
         if(tablaOts.getRowCount() > 0) tablaOts.setRowSelectionInterval(0, 0);
-        tablaOts.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tablaOts.addMouseListener(new MouseAdapter(){
             public void mousePressed(MouseEvent evt){
                 JTable table = (JTable)evt.getSource();
@@ -69,6 +77,8 @@ public class vistaOtsP extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaOts = new javax.swing.JTable();
         botonFacturar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        textoFiltro = new javax.swing.JTextField();
 
         tablaOts.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -90,6 +100,14 @@ public class vistaOtsP extends javax.swing.JPanel {
             }
         });
 
+        jLabel1.setText("Filtrar");
+
+        textoFiltro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                textoFiltroKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -97,16 +115,28 @@ public class vistaOtsP extends javax.swing.JPanel {
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(botonFacturar)
-                .addGap(18, 18, 18))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(botonFacturar)
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(textoFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(textoFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(botonFacturar)
-                .addGap(0, 9, Short.MAX_VALUE))
+                .addGap(0, 6, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -134,11 +164,18 @@ public class vistaOtsP extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_botonFacturarActionPerformed
 
+    private void textoFiltroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoFiltroKeyReleased
+        String query = textoFiltro.getText();
+        filtroPorRazon(query);
+    }//GEN-LAST:event_textoFiltroKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonFacturar;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaOts;
+    private javax.swing.JTextField textoFiltro;
     // End of variables declaration//GEN-END:variables
     
     public JTable getTablaOts() {
@@ -155,5 +192,11 @@ public class vistaOtsP extends javax.swing.JPanel {
     
     public String getIdOt(int row){
         return tablaOts.getValueAt(row, 0).toString();
+    }
+    
+    public void filtroPorRazon(String query){
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<DefaultTableModel>(datos);
+        tablaOts.setRowSorter(sorter);
+        sorter.setRowFilter(RowFilter.regexFilter(query));
     }
 }

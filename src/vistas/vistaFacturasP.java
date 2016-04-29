@@ -26,7 +26,6 @@ public class vistaFacturasP extends javax.swing.JPanel {
      */
     public vistaFacturasP(String tipo, Object[][] data) {
         initComponents();
-        initComponents();
         //final int rows = 5;
         String[] columNames = {"Código OT", "Razon", "Giro", "Dirección", "Región", "Comuna", "Fecha",
              "Neto", "IVA", "Total"};

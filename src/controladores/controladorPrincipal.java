@@ -258,7 +258,7 @@ public class controladorPrincipal {
 //        Object[][] data;
 //        data = ots.listarFacturadas();
 //        micontroladorFacturadas = new controladorFacturadas();
-//        //return micontroladorFacturadas.mostrarTabControlFacturadas(tipo, data);    
+//        return micontroladorFacturadas.mostrarTabControlFacturadas(tipo, data);    
 //    }
     
     void crearControladorDetalleFacturas(String id) throws ParseException {

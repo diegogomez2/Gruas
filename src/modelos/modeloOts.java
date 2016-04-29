@@ -26,8 +26,10 @@ public class modeloOts {
     static String login = "root";
     static String password = "205243";
     static String url = "jdbc:mysql://localhost:3306/fact_gruas";
-    DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
     Connection conn = null;
+    
+    DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+    DateFormat newFormat = new SimpleDateFormat("dd-MM-yyyy");
     
     public java.sql.Date toSqlDate(String data){
         java.util.Date parsed = null;
@@ -100,6 +102,8 @@ public class modeloOts {
             int i = 0;
             while(res.next()){
                 String estfec = res.getString("fec_ot");
+                java.util.Date fecha = formatDate.parse(estfec);
+                estfec = newFormat.format(fecha);
                 String estraz = res.getString("raz_cli");
                 String estgir = res.getString("gir_cli");
                 String estdir = res.getString("dir_cli");
@@ -244,6 +248,8 @@ public class modeloOts {
             int i = 0;
             while(res.next()){
                 String estfec = res.getString("fec_ot");
+                java.util.Date fecha = formatDate.parse(estfec);
+                estfec = newFormat.format(fecha);
                 String estraz = res.getString("raz_cli");
                 String estgir = res.getString("gir_cli");
                 String estdir = res.getString("dir_cli");
@@ -396,7 +402,7 @@ public class modeloOts {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM jornadas where fact_ot = 1");
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM jornadas where fact_ot = 2");
             ResultSet res = pstm.executeQuery();
             res.next();
             registros = res.getInt("total");
@@ -419,6 +425,8 @@ public class modeloOts {
             int i = 0;
             while(res.next()){
                 String estfec = res.getString("fec_ot");
+                java.util.Date fecha = formatDate.parse(estfec);
+                estfec = newFormat.format(fecha);
                 String estraz = res.getString("raz_cli");
                 String estgir = res.getString("gir_cli");
                 String estdir = res.getString("dir_cli");
