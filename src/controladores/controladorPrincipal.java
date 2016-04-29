@@ -36,6 +36,7 @@ public class controladorPrincipal {
     static controladorJornadas micontroladorJornadas;
     static controladorOts micontroladorOts;
     static controladorFacturas micontroladorFacturas;
+    static controladorFacturadas micontroladorFacturadas;
     static controladorUsuarios micontroladorUsuarios;
     static controladorDetalleClientes micontroladorDC;
     static vistaLogin miVistaL;
@@ -249,6 +250,21 @@ public class controladorPrincipal {
         data = ots.listarFacturas();
         micontroladorFacturas = new controladorFacturas();
         return micontroladorFacturas.mostrarTabControlFacturas(tipo, data);    
+    }
+    
+//    public JPanel crearControladorFacturadasP() {
+//        modelos.modeloOts ots;
+//        ots = new modelos.modeloOts();
+//        Object[][] data;
+//        data = ots.listarFacturadas();
+//        micontroladorFacturadas = new controladorFacturadas();
+//        //return micontroladorFacturadas.mostrarTabControlFacturadas(tipo, data);    
+//    }
+    
+    void crearControladorDetalleFacturas(String id) throws ParseException {
+        controladorDetalleFacturas micontroladorDF;
+        micontroladorDF = new controladorDetalleFacturas();
+        micontroladorDF.mostrarVistaDetalleFacturas(id);
     }
     
     

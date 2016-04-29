@@ -30,7 +30,7 @@ public class vistaOtsP extends javax.swing.JPanel {
         initComponents();
         final int rows = 5;
         String[] columNames = {"Código OT", "Razon", "Giro", "Dirección", "Región", "Comuna", "Fecha",
-            "Total", "Neto", "IVA"};
+            "Neto", "IVA", "Total"};
         DefaultTableModel datos = new DefaultTableModel(data, columNames){
             @Override
             public boolean isCellEditable(int row, int column){
@@ -114,6 +114,7 @@ public class vistaOtsP extends javax.swing.JPanel {
         String id;
         String idOt;
         controladores.controladorOts miControlador = new controladores.controladorOts();
+        controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
         boolean selected = tablaOts.getSelectedRowCount() > 0;
         if(selected){
             int row = getFilaSeleccionada();
@@ -124,8 +125,9 @@ public class vistaOtsP extends javax.swing.JPanel {
             }else{
                 miControlador.ingresarFactura(idOt);
                 JTabbedPane tabs = (JTabbedPane)this.getParent();
+                micontroladorFacturas.crearControladorPrincipal(tabs);
                 miControlador.crearControladorPrincipal(tabs);
-                JOptionPane.showMessageDialog(null, "Orden de trabajo facturada con éxito");
+                //JOptionPane.showMessageDialog(null, "Orden de trabajo facturada con éxito");
             }
         }else{
             JOptionPane.showMessageDialog(null, "Debe seleccionar una orden de trabajo para ser facturada");

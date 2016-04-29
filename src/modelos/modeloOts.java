@@ -15,6 +15,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.regex.Pattern;
 import static modelos.modeloClientes.url;
+import static modelos.modeloGruas.url;
 import static modelos.modeloJornadas.url;
 
 /**
@@ -76,7 +77,7 @@ public class modeloOts {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM jornadas where not cod_ot = -1");
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM jornadas where not cod_ot = -1 and fact_ot < 2");
             ResultSet res = pstm.executeQuery();
             res.next();
             registros = res.getInt("total");
@@ -94,7 +95,7 @@ public class modeloOts {
                     + "reg_cli, com_cli, pat_gru, nom_emp, apP_emp, obs_jor, cod_ot, total_ot, neto_ot, "
                     + "iva_ot, fact_ot FROM Jornadas INNER JOIN"
                     + " clientes ON clientes.rut_cli = jornadas.rut_cli INNER JOIN empleados ON empleados.rut_emp "
-                    + "= jornadas.rut_emp Where not cod_ot = -1 and fact_ot < 3 ORDER BY cod_ot, fact_ot");
+                    + "= jornadas.rut_emp Where not cod_ot = -1 and fact_ot < 2 ORDER BY cod_ot, fact_ot");
             ResultSet res = pstm.executeQuery();
             int i = 0;
             while(res.next()){
@@ -119,9 +120,9 @@ public class modeloOts {
                 data[i][4] = estreg;
                 data[i][5] = estcom;
                 data[i][6] = estfec;
-                data[i][7] = esttot;
-                data[i][8] = estnet;
-                data[i][9] = estiva;
+                data[i][7] = estnet;
+                data[i][8] = estiva;
+                data[i][9] = esttot;
                 data[i][10] = estfact;
                 //data[i][1] = estgrua;
                 //data[i][3] = estop;
@@ -252,7 +253,7 @@ public class modeloOts {
                 String estnet = res.getString("neto_ot");
                 String estiva = res.getString("iva_ot");
                 String estcodot = res.getString("cod_ot");
-                String estfact = res.getString("fact_ot");
+                //String estfact = res.getString("fact_ot");
                 data[i][0] = estcodot;
                 data[i][1] = estraz;
                 data[i][2] = estgir;
@@ -260,10 +261,10 @@ public class modeloOts {
                 data[i][4] = estreg;
                 data[i][5] = estcom;
                 data[i][6] = estfec;
-                data[i][7] = esttot;
-                data[i][8] = estnet;
-                data[i][9] = estiva;
-                data[i][10] = estfact;
+                data[i][7] = estnet;
+                data[i][8] = estiva;
+                data[i][9] = esttot;
+                //data[i][10] = estfact;
                 i++;
             }
             res.close();
@@ -312,12 +313,13 @@ public class modeloOts {
     }
     
     public String[] obtenerFacturaPorId(String idOt){
-        String[] data = new String[10];
+        String[] data = new String[11];
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("SELECT clientes.rut_cli, raz_cli, gir_cli,"
-                    + "dir_cli, reg_cli, com_cli, total_ot, neto_ot, iva_ot, fact_ot FROM jornadas INNER JOIN clientes"
+                    + "dir_cli, reg_cli, com_cli, total_ot, neto_ot, iva_ot, fact_ot, cod_ot"
+                    + " FROM jornadas INNER JOIN clientes"
                     + " ON clientes.rut_cli = jornadas.rut_cli where cod_ot = ?");
             pstm.setString(1, idOt);
             ResultSet res = pstm.executeQuery();
@@ -332,7 +334,7 @@ public class modeloOts {
                 String esttot = res.getString("total_ot");
                 String estnet = res.getString("neto_ot");
                 String estiva = res.getString("iva_ot");
-                //String estcodot = res.getString("cod_ot");
+                String estcodot = res.getString("cod_ot");
                 String estfact = res.getString("fact_ot");
                 data[0] = estrut;
                 data[1] = estraz;
@@ -344,6 +346,7 @@ public class modeloOts {
                 data[7] = estnet;
                 data[8] = estiva;
                 data[9] = estfact;
+                data[10] = estcodot;
                 i++;
             }
             res.close();
@@ -352,6 +355,99 @@ public class modeloOts {
        }catch(ClassNotFoundException e){
             System.out.println(e);
        }
+        return data;
+    }
+    
+    public void actualizarHoras(int horas, String id){
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("update jornadas set hortot_ot = ? WHERE id_jor = ?");
+            pstm.setInt(1, horas);
+            pstm.setString(2, id);
+            pstm.executeUpdate();
+        }catch(SQLException e){
+            System.out.println(e);
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+        }
+    }
+    
+    public String archivarFactura(String idOt){
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("update jornadas set fact_ot = 2 WHERE cod_ot = ?");
+            pstm.setInt(1, Integer.parseInt(idOt));
+            pstm.executeUpdate();
+        }catch(SQLException e){
+            System.out.println(e);
+            return "incorrecto";
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+            return "incorrecto";
+        }
+        return "correcto";
+    }
+    
+    public Object[][] listarFacturadas(){
+        int registros = 0;
+        
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM jornadas where fact_ot = 1");
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+       }catch(SQLException e){
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        
+        Object[][] data = new String[registros][11];
+        
+        try{
+            PreparedStatement pstm = conn.prepareStatement("SELECT id_jor, fec_ot, raz_cli, gir_cli, dir_cli,"
+                    + "reg_cli, com_cli, obs_jor, cod_ot, total_ot, neto_ot, "
+                    + "iva_ot, fact_ot FROM Jornadas INNER JOIN"
+                    + " clientes ON clientes.rut_cli = jornadas.rut_cli INNER JOIN empleados ON empleados.rut_emp "
+                    + "= jornadas.rut_emp Where not cod_ot = -1 and fact_ot = 1 ORDER BY cod_ot, fact_ot");
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while(res.next()){
+                String estfec = res.getString("fec_ot");
+                String estraz = res.getString("raz_cli");
+                String estgir = res.getString("gir_cli");
+                String estdir = res.getString("dir_cli");
+                String estreg = res.getString("reg_cli");
+                String estcom = res.getString("com_cli");
+                String esttot = res.getString("total_ot");
+                String estnet = res.getString("neto_ot");
+                String estiva = res.getString("iva_ot");
+                String estcodot = res.getString("cod_ot");
+                //String estfact = res.getString("fact_ot");
+                data[i][0] = estcodot;
+                data[i][1] = estraz;
+                data[i][2] = estgir;
+                data[i][3] = estdir;
+                data[i][4] = estreg;
+                data[i][5] = estcom;
+                data[i][6] = estfec;
+                data[i][7] = estnet;
+                data[i][8] = estiva;
+                data[i][9] = esttot;
+                //data[i][10] = estfact;
+                i++;
+            }
+            res.close();
+        }catch(SQLException e){
+            System.out.println(e);
+        }catch(Exception e){
+            System.out.println(e);
+        }
         return data;
     }
 }

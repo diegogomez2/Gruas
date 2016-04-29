@@ -5,64 +5,31 @@
  */
 package vistas;
 
+import java.awt.Color;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
-import org.jdesktop.swingx.JXDatePicker;
-
 
 /**
  *
- * @author Diego
+ * @author diego
  */
-public class vistaIngresarOts extends javax.swing.JDialog {
+public class vistaDetalleFacturas extends javax.swing.JDialog {
 
     /**
-     * Creates new form vistaIngresarOT
+     * Creates new form vistaDetalleFacturas
      */
-    String ton;
-    String fechaInicio, fechaFin;
-    String diaInicio, diaFin;
-    String horaInicio, horaFin;
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
-    SimpleDateFormat formatClock = new SimpleDateFormat("HH:mm:ss");
-    String id;
+    DateFormat formatClock = new SimpleDateFormat("HH:mm");
+    DateFormat formateDateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     
-    public vistaIngresarOts(java.awt.Frame parent, boolean modal, String[] data) throws ParseException {
+    public vistaDetalleFacturas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        diaInicio = data[0];
-        horaInicio = data[1];
-        diaFin = data[2];
-        horaFin = data[3];
-        ton = data[14];
-        //System.out.println(diaInicio+" "+horaInicio+"\n"+diaFin+" "+horaFin+" "+ton);
-        controladores.controladorIngresarOts miControlador = new controladores.controladorIngresarOts();
-        String[] valores = miControlador.calcularTarifa(diaInicio, diaFin, horaInicio, horaFin, ton, data[4]);
-        textoGrua.setText(data[4]);
-        textoEmpleado.setText(data[5]);
-        textoObs.setText(data[6]);
-        textoRutCliente.setText(data[7]+"-"+data[8]);
-        textoRazon2.setText(data[9]);
-        textoRazon.setText(data[9]);
-        textoGiro.setText(data[10]);
-        textoDireccion.setText(data[11]);
-        textoTelefono.setText(data[12]);   
-        id = data[13];
-        textoNeto.setText(valores[0]);
-        textoIva.setText(valores[1]);
-        textoBruto.setText(valores[2]);
-        spinnerHoraSalida.setValue(formatClock.parse(horaInicio));
-        spinnerHoraLlegada.setValue(formatClock.parse(horaFin));
-        spinnerFinFaena.setValue(formatClock.parse(horaFin));
-        textoFechaOt.setDate(new Date());
-        
     }
 
     /**
@@ -123,43 +90,70 @@ public class vistaIngresarOts extends javax.swing.JDialog {
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         textoObs = new javax.swing.JTextField();
-        botonIngresar = new javax.swing.JButton();
-        botonCancelar = new javax.swing.JButton();
+        botonOk = new javax.swing.JButton();
         textoEmpleado = new javax.swing.JTextField();
         textoGrua = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
         textoCodigo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Ingresar Orden de trabajo");
 
         labelSeñores.setText("Señores");
 
+        textoRazon2.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        textoRazon2.setEnabled(false);
+
         jLabel1.setText("Dirección");
+
+        textoDireccion.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        textoDireccion.setEnabled(false);
 
         jLabel2.setText("Giro");
 
+        textoGiro.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        textoGiro.setEnabled(false);
+
         jLabel3.setText("Solicitado por");
+
+        textoContacto.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        textoContacto.setEnabled(false);
 
         jLabel4.setText("Rut");
 
+        textoRutCliente.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        textoRutCliente.setEnabled(false);
+
         jLabel5.setText("Ciudad");
 
+        jComboBox1.setEditable(true);
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione un item" }));
+        jComboBox1.setEnabled(false);
+
+        textoTelefono.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        textoTelefono.setEnabled(false);
 
         jLabel6.setText("Teléfono");
 
         jLabel7.setText("Trabajo realizado en");
 
+        textoRazon.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        textoRazon.setEnabled(false);
+
         jLabel8.setText("Fecha");
+
+        textoFechaOt.setEnabled(false);
 
         jLabel9.setText("Forma de pago");
 
+        comboFormaPago.setEditable(true);
         comboFormaPago.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Al día", "30 días", "60 días", "90 días" }));
+        comboFormaPago.setEnabled(false);
 
         jLabel10.setText("Condición de pago");
 
+        comboCondPago.setEditable(true);
         comboCondPago.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Transferencia", "Efectivo", "Cheque" }));
+        comboCondPago.setEnabled(false);
 
         jLabel11.setText("Grúa");
 
@@ -170,6 +164,7 @@ public class vistaIngresarOts extends javax.swing.JDialog {
         JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(spinnerHoraSalida, "HH:mm");
         spinnerHoraSalida.setEditor(timeEditor);
         spinnerHoraSalida.setValue(new Date());
+        spinnerHoraSalida.setEnabled(false);
 
         labelHoraSalida.setText("Hora salida");
 
@@ -178,12 +173,14 @@ public class vistaIngresarOts extends javax.swing.JDialog {
         JSpinner.DateEditor timeEditor2 = new JSpinner.DateEditor(spinnerFinFaena, "HH:mm");
         spinnerFinFaena.setEditor(timeEditor2);
         spinnerFinFaena.setValue(new Date());
+        spinnerFinFaena.setEnabled(false);
 
         labelHoraLlegada.setText("Hora llegada");
 
         JSpinner.DateEditor timeEditor3 = new JSpinner.DateEditor(spinnerHoraLlegada, "HH:mm");
         spinnerHoraLlegada.setEditor(timeEditor3);
         spinnerHoraLlegada.setValue(new Date());
+        spinnerHoraLlegada.setEnabled(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -224,9 +221,18 @@ public class vistaIngresarOts extends javax.swing.JDialog {
 
         jLabel15.setText("Neto total");
 
+        textoNeto.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        textoNeto.setEnabled(false);
+
         jLabel16.setText("Bruto");
 
+        textoBruto.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        textoBruto.setEnabled(false);
+
         jLabel17.setText("IVA");
+
+        textoIva.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        textoIva.setEnabled(false);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -265,7 +271,13 @@ public class vistaIngresarOts extends javax.swing.JDialog {
 
         jLabel18.setText("Nombre");
 
+        jTextField11.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        jTextField11.setEnabled(false);
+
         jLabel19.setText("C.I.");
+
+        jTextField12.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        jTextField12.setEnabled(false);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -297,25 +309,33 @@ public class vistaIngresarOts extends javax.swing.JDialog {
 
         jLabel20.setText("Despachado por");
 
+        textoDespachado.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        textoDespachado.setEnabled(false);
+
         jLabel21.setText("Operador");
 
         jLabel22.setText("Observación en faena");
 
-        botonIngresar.setText("Ingresar");
-        botonIngresar.addActionListener(new java.awt.event.ActionListener() {
+        textoObs.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        textoObs.setEnabled(false);
+
+        botonOk.setText("OK");
+        botonOk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonIngresarActionPerformed(evt);
+                botonOkActionPerformed(evt);
             }
         });
 
-        botonCancelar.setText("Cancelar");
-        botonCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonCancelarActionPerformed(evt);
-            }
-        });
+        textoEmpleado.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        textoEmpleado.setEnabled(false);
+
+        textoGrua.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        textoGrua.setEnabled(false);
 
         jLabel23.setText("Codigo Ot");
+
+        textoCodigo.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        textoCodigo.setEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -328,20 +348,19 @@ public class vistaIngresarOts extends javax.swing.JDialog {
                         .addComponent(textoDespachado, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(286, 286, 286)
-                                .addComponent(botonIngresar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(botonCancelar))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addComponent(textoEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(textoEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 194, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(botonOk, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel20)
                         .addGap(409, 409, 409)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel22)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE))
                             .addComponent(textoObs)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -461,9 +480,7 @@ public class vistaIngresarOts extends javax.swing.JDialog {
                     .addComponent(textoObs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textoEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botonIngresar)
-                    .addComponent(botonCancelar))
+                .addComponent(botonOk)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -477,27 +494,15 @@ public class vistaIngresarOts extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 2, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
+    private void botonOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonOkActionPerformed
         dispose();
-    }//GEN-LAST:event_botonCancelarActionPerformed
-
-    private void botonIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonIngresarActionPerformed
-        controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
-        controladores.controladorIngresarOts miControladorIO = new controladores.controladorIngresarOts();
-        String respuesta = miControladorIO.camposVacios();
-        boolean esVacio = respuesta.length() == 0;
-        if(!esVacio){
-            JOptionPane.showMessageDialog(this, respuesta, "Debe rellenar los siguientes campos", JOptionPane.INFORMATION_MESSAGE);
-        }else{
-            if(miControladorIO.irVistaJornadasP(id)) setVisible(false);
-        }
-    }//GEN-LAST:event_botonIngresarActionPerformed
+    }//GEN-LAST:event_botonOkActionPerformed
 
     /**
      * @param args the command line arguments
@@ -516,29 +521,34 @@ public class vistaIngresarOts extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(vistaIngresarOts.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(vistaDetalleFacturas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(vistaIngresarOts.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(vistaDetalleFacturas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(vistaIngresarOts.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(vistaDetalleFacturas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(vistaIngresarOts.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(vistaDetalleFacturas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                vistaDetalleFacturas dialog = new vistaDetalleFacturas(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botonCancelar;
-    private javax.swing.JButton botonIngresar;
+    private javax.swing.JButton botonOk;
     private javax.swing.JComboBox<String> comboCondPago;
     private javax.swing.JComboBox<String> comboFormaPago;
     private javax.swing.JCheckBox jCheckBox1;
@@ -593,83 +603,89 @@ public class vistaIngresarOts extends javax.swing.JDialog {
     private javax.swing.JTextField textoRutCliente;
     private javax.swing.JTextField textoTelefono;
     // End of variables declaration//GEN-END:variables
-
-    public String getTextoContacto() {
-        return textoContacto.getText();
+public void setComboCondPago(String comboCondPago) {
+        this.comboCondPago.setSelectedItem(comboCondPago);
+        ((JTextField)this.comboCondPago.getEditor().getEditorComponent()).setDisabledTextColor(Color.black);
     }
 
-    public String getTextoDireccion() {
-        return textoDireccion.getText();
+    public void setComboFormaPago(String comboFormaPago) {
+        this.comboFormaPago.setSelectedItem(comboFormaPago);
+        ((JTextField)this.comboFormaPago.getEditor().getEditorComponent()).setDisabledTextColor(Color.black);
     }
 
-    public String getTextoEmpleado() {
-        return textoEmpleado.getText();
+    public void setTextoBruto(String textoBruto) {
+        this.textoBruto.setText(textoBruto);
     }
 
-    public String getTextoGiro() {
-        return textoGiro.getText();
+    public void setTextoCodigo(String textoCodigo) {
+        this.textoCodigo.setText(textoCodigo);
     }
 
-    public String getTextoGrua() {
-        return textoGrua.getText();
+    public void setTextoContacto(String textoContacto) {
+        this.textoContacto .setText(textoContacto);
     }
 
-    public String getTextoRazon() {
-        return textoRazon.getText();
+    public void setTextoDespachado(String textoDespachado) {
+        this.textoDespachado.setText(textoDespachado);
     }
 
-    public String getTextoRutCliente() {
-        return textoRutCliente.getText();
+    public void setTextoDireccion(String textoDireccion) {
+        this.textoDireccion.setText(textoDireccion);
     }
 
-    public String getTextoTelefono() {
-        return textoTelefono.getText();
+    public void setTextoEmpleado(String textoEmpleado) {
+        this.textoEmpleado.setText(textoEmpleado);
     }
 
-    public String getTextoDespachado() {
-        return textoDespachado.getText();
+    public void setTextoFechaOt(String textoFechaOt) throws ParseException {
+        this.textoFechaOt.setDate(formatDate.parse(textoFechaOt));
     }
 
-    public String getTextoObs() {
-        return textoObs.getText();
+    public void setTextoGiro(String textoGiro) {
+        this.textoGiro.setText(textoGiro);
     }
 
-    public String getComboCondPago() {
-        return comboCondPago.getSelectedItem().toString();
+    public void setTextoGrua(String textoGrua) {
+        this.textoGrua.setText(textoGrua);
     }
 
-    public String getComboFormaPago() {
-        return comboFormaPago.getSelectedItem().toString();
+    public void setTextoIva(String textoIva) {
+        this.textoIva.setText(textoIva);
     }
 
-    public String getTextoFechaOt() {
-        Date fecha = textoFechaOt.getDate();
-        if(fecha == null) return "";
-        String dateString = formatDate.format(textoFechaOt.getDate());
-        return dateString;
+    public void setTextoNeto(String textoNeto) {
+        this.textoNeto.setText(textoNeto);
     }
 
-    public String getTextoCodigo() {
-        return textoCodigo.getText();
+    public void setTextoObs(String textoObs) {
+        this.textoObs.setText(textoObs);
     }
 
-    public String getTextoBruto() {
-        return textoBruto.getText();
+    public void setTextoRazon(String textoRazon) {
+        this.textoRazon.setText(textoRazon);
     }
 
-    public String getTextoIva() {
-        return textoIva.getText();
+    public void setTextoRazon2(String textoRazon2) {
+        this.textoRazon2.setText(textoRazon2);
     }
 
-    public String getTextoNeto() {
-        return textoNeto.getText();
+    public void setTextoRutCliente(String textoRutCliente) {
+        this.textoRutCliente.setText(textoRutCliente);
     }
 
-    public String getSpinnerFinFaena() {
-        String hora = formatClock.format(spinnerFinFaena.getValue());
-        if(hora == null) return "";
-        return hora;
+    public void setTextoTelefono(String textoTelefono) {
+        this.textoTelefono.setText(textoTelefono);
     }
 
- 
+    public void setSpinnerFinFaena(String spinnerFinFaena) throws ParseException {
+        this.spinnerFinFaena.setValue(formatClock.parse(spinnerFinFaena));
+    }
+
+    public void setSpinnerHoraLlegada(String spinnerHoraLlegada) throws ParseException {
+        this.spinnerHoraLlegada.setValue(formatClock.parse(spinnerHoraLlegada));
+    }
+
+    public void setSpinnerHoraSalida(String spinnerHoraSalida) throws ParseException {
+        this.spinnerHoraSalida.setValue(formatClock.parse(spinnerHoraSalida));
+    }
 }

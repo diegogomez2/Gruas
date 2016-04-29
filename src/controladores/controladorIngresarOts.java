@@ -67,7 +67,8 @@ public class controladorIngresarOts {
         return respuesta;
     }
     
-    public String[] calcularTarifa(String diaInicio, String diaFin, String horaInicio, String horaFin, String ton) throws ParseException{
+    public String[] calcularTarifa(String diaInicio, String diaFin, String horaInicio, String horaFin, String ton, String desc) throws ParseException{
+        int horasTotales = 0;
         modelos.modeloOts ots = new modelos.modeloOts();
         String[] data;// = {};
         int tarifa;// = 0;
@@ -116,6 +117,7 @@ public class controladorIngresarOts {
                 long minutes = (tramoDiff / (1000 * 60)) % 60;
                 long hours = (tramoDiff / (1000 * 60 * 60)) % 24;
                 float duracionTramo = hours + (float)minutes/60;
+                horasTotales += duracionTramo;
 //                System.out.println("duracion tramo " +duracionTramo);
                 totalTarifa += duracionTramo * tarifa;
 //                System.out.println("tarifa parcial "+totalTarifa);
@@ -135,6 +137,7 @@ public class controladorIngresarOts {
         data[1] = addDots(str);
         str = new StringBuilder(data[2]);
         data[2] = addDots(str);
+        //actualizarHorometro(horasTotales, desc);
         return data;
     }
     
@@ -187,6 +190,11 @@ public class controladorIngresarOts {
         }
         //System.out.println("new data "+new_data);
         return new_data;
+    }
+    
+    public void actualizarHorometro(int horas, String desc){
+        modelos.modeloGruas grua = new modelos.modeloGruas();
+        grua.actualizarHorometro(horas, desc);
     }
     
 }

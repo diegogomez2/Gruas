@@ -27,9 +27,9 @@ public class vistaFacturasP extends javax.swing.JPanel {
     public vistaFacturasP(String tipo, Object[][] data) {
         initComponents();
         initComponents();
-        final int rows = 5;
+        //final int rows = 5;
         String[] columNames = {"Código OT", "Razon", "Giro", "Dirección", "Región", "Comuna", "Fecha",
-            "Total", "Neto", "IVA"};
+             "Neto", "IVA", "Total"};
         DefaultTableModel datos = new DefaultTableModel(data, columNames){
             @Override
             public boolean isCellEditable(int row, int column){
@@ -45,9 +45,9 @@ public class vistaFacturasP extends javax.swing.JPanel {
                 Point p = evt.getPoint();
                 int row = table.rowAtPoint(p);
                 if(evt.getClickCount() == 2){
-                    controladores.controladorJornadas miControlador = new controladores.controladorJornadas();
+                    controladores.controladorFacturas miControlador = new controladores.controladorFacturas();
                     try {
-                        miControlador.irVistaDetalleJornada(tablaFacturas.getValueAt(row, 0).toString());
+                        miControlador.irVistaDetalleFacturas(tablaFacturas.getValueAt(row, 0).toString());
                     } catch (ParseException ex) {
                         Logger.getLogger(vistaJornadasP.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -82,7 +82,7 @@ public class vistaFacturasP extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tablaFacturas);
 
-        botonFacturar.setText("Crear Factura");
+        botonFacturar.setText("Generar XML");
         botonFacturar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonFacturarActionPerformed(evt);
@@ -111,7 +111,23 @@ public class vistaFacturasP extends javax.swing.JPanel {
 
     private void botonFacturarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonFacturarActionPerformed
         controladores.controladorCrearFactura miControlador = new controladores.controladorCrearFactura();
-        miControlador.crearDocXML("312312");
+        int filas = tablaFacturas.getRowCount();
+        String[] idOts = new String[filas];
+        int neto = 0, iva = 0, total = 0;
+        for(int i = 0; i < filas; i++){
+            idOts[i] = getIdFact(i);
+            neto += getNetoFact(i);
+            iva += getIvaFact(i);
+            total += getTotalFact(i);
+        }
+        String respuesta = miControlador.crearDocXML(idOts, Integer.toString(neto), Integer.toString(iva),
+                Integer.toString(total));
+        if(respuesta.compareTo("correcto") == 0){
+            controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
+            if((micontroladorFacturas.archivarFacturas(idOts).compareTo("correcto") == 0)){
+                
+            }
+        }
     }//GEN-LAST:event_botonFacturarActionPerformed
 
 
@@ -121,8 +137,20 @@ public class vistaFacturasP extends javax.swing.JPanel {
     private javax.swing.JTable tablaFacturas;
     // End of variables declaration//GEN-END:variables
     
-    public String getIdFact(){
-        return tablaFacturas.getValueAt(0, 0).toString();
+    public String getIdFact(int row){
+        return tablaFacturas.getValueAt(row, 0).toString();
+    }
+    
+    public int getNetoFact(int row){
+        return Integer.parseInt(tablaFacturas.getValueAt(row, 7).toString());
+    }
+    
+    public int getIvaFact(int row){
+        return Integer.parseInt(tablaFacturas.getValueAt(row, 8).toString());
+    }
+    
+    public int getTotalFact(int row){
+        return Integer.parseInt(tablaFacturas.getValueAt(row, 9).toString());
     }
 }
 

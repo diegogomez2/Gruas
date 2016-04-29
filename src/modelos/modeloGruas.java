@@ -296,4 +296,19 @@ public class modeloGruas {
         }
         return data;
     }
+    
+    public void actualizarHorometro(int horas, String desc){
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("update gruas set horo_gru = horo_gru + ? WHERE des_gru = ?");
+            pstm.setInt(1, horas);
+            pstm.setString(2, desc);
+            pstm.executeUpdate();
+        }catch(SQLException e){
+            System.out.println(e);
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+        }
+    }
 }

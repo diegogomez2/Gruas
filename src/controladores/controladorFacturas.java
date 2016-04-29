@@ -5,8 +5,10 @@
  */
 package controladores;
 
+import java.text.ParseException;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import modelos.modeloOts;
 import vistas.vistaFacturasP;
 
 /**
@@ -27,5 +29,18 @@ public class controladorFacturas {
         tabs.remove(5);
         tabs.insertTab("Facturas", null, miControlador.crearControladorFacturasP(), null, 5);
         tabs.setSelectedIndex(5);
+    }
+    
+    public void irVistaDetalleFacturas(String id) throws ParseException{
+        controladorPrincipal miControlador = new controladorPrincipal();
+        miControlador.crearControladorDetalleFacturas(id);
+    }
+    
+    public String archivarFacturas(String[] idOts){
+        modelos.modeloOts factura = new modeloOts();
+        for(int i = 0; i < idOts.length; i++){
+            factura.archivarFactura(idOts[i]);
+        }
+        return "correcto";
     }
 }
