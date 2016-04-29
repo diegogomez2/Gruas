@@ -3,7 +3,6 @@
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
-    <Property name="title" type="java.lang.String" value="Ingresar Orden de trabajo"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -31,7 +30,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="2" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -42,21 +41,20 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="textoDespachado" min="-2" pref="216" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <EmptySpace min="-2" pref="286" max="-2" attributes="0"/>
-                                  <Component id="botonIngresar" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="botonCancelar" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                                   <Component id="textoEmpleado" min="-2" pref="201" max="-2" attributes="0"/>
+                                  <EmptySpace pref="221" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="botonOk" min="-2" pref="94" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -64,17 +62,17 @@
                           <Component id="jLabel20" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="409" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
                                   <Component id="jLabel22" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="73" max="32767" attributes="0"/>
+                                  <EmptySpace pref="63" max="32767" attributes="0"/>
                               </Group>
-                              <Component id="textoObs" max="32767" attributes="0"/>
+                              <Component id="textoObs" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="textoContacto" min="-2" pref="199" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="textoContacto" alignment="1" min="-2" pref="199" max="-2" attributes="0"/>
+                              <Group type="103" alignment="1" groupAlignment="0" attributes="0">
                                   <Component id="textoRazon2" alignment="0" min="-2" pref="199" max="-2" attributes="0"/>
                                   <Component id="labelSeñores" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -83,41 +81,41 @@
                                   <Component id="textoGiro" alignment="0" min="-2" pref="199" max="-2" attributes="0"/>
                                   <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                              <Component id="jPanel2" alignment="1" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                                      <Component id="textoRutCliente" max="32767" attributes="0"/>
-                                      <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="textoRutCliente" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="jComboBox1" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="textoTelefono" max="32767" attributes="0"/>
-                                      <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+                                      <Component id="textoTelefono" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="textoRazon" alignment="0" min="-2" pref="187" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jLabel21" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jPanel3" max="32767" attributes="0"/>
+                                      <Component id="jLabel21" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jPanel3" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
                           <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                              <Component id="textoFechaOt" max="32767" attributes="0"/>
-                              <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel8" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="textoFechaOt" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jLabel9" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="comboFormaPago" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel10" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="comboCondPago" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
-                              <Component id="jPanel4" max="32767" attributes="0"/>
-                              <Component id="textoGrua" max="32767" attributes="0"/>
+                              <Component id="jLabel11" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jPanel4" alignment="0" max="32767" attributes="0"/>
+                              <Component id="textoGrua" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                       </Group>
@@ -128,9 +126,9 @@
                           <Component id="jLabel23" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                                   <Component id="jCheckBox1" min="-2" max="-2" attributes="0"/>
                               </Group>
@@ -147,7 +145,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="labelSeñores" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -218,10 +216,7 @@
                       <Component id="textoEmpleado" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="botonIngresar" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="botonCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="botonOk" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -234,6 +229,12 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textoRazon2">
+          <Properties>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="textoRazon2.setDisabledTextColor(new java.awt.Color(0, 0, 0));"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
@@ -241,6 +242,12 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textoDireccion">
+          <Properties>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="textoDireccion.setDisabledTextColor(new java.awt.Color(0, 0, 0));"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
@@ -248,6 +255,12 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textoGiro">
+          <Properties>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="textoGiro.setDisabledTextColor(new java.awt.Color(0, 0, 0));"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
@@ -255,6 +268,12 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textoContacto">
+          <Properties>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="textoContacto.setDisabledTextColor(new java.awt.Color(0, 0, 0));"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
@@ -262,6 +281,12 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textoRutCliente">
+          <Properties>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="textoRutCliente.setDisabledTextColor(new java.awt.Color(0, 0, 0));"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
@@ -270,17 +295,25 @@
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBox1">
           <Properties>
+            <Property name="editable" type="boolean" value="true"/>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="1">
                 <StringItem index="0" value="Seleccione un item"/>
               </StringArray>
             </Property>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="textoTelefono">
+          <Properties>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="textoTelefono.setDisabledTextColor(new java.awt.Color(0, 0, 0));"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">
           <Properties>
@@ -293,6 +326,12 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textoRazon">
+          <Properties>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="textoRazon.setDisabledTextColor(new java.awt.Color(0, 0, 0));"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel8">
           <Properties>
@@ -300,6 +339,9 @@
           </Properties>
         </Component>
         <Component class="org.jdesktop.swingx.JXDatePicker" name="textoFechaOt">
+          <Properties>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel9">
           <Properties>
@@ -308,6 +350,7 @@
         </Component>
         <Component class="javax.swing.JComboBox" name="comboFormaPago">
           <Properties>
+            <Property name="editable" type="boolean" value="true"/>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
                 <StringItem index="0" value="Al d&#xed;a"/>
@@ -316,6 +359,7 @@
                 <StringItem index="3" value="90 d&#xed;as"/>
               </StringArray>
             </Property>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -328,6 +372,7 @@
         </Component>
         <Component class="javax.swing.JComboBox" name="comboCondPago">
           <Properties>
+            <Property name="editable" type="boolean" value="true"/>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="3">
                 <StringItem index="0" value="Transferencia"/>
@@ -335,6 +380,7 @@
                 <StringItem index="2" value="Cheque"/>
               </StringArray>
             </Property>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -371,7 +417,7 @@
                       </Group>
                       <EmptySpace pref="56" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="spinnerFinFaena" min="-2" max="-2" attributes="0"/>
+                          <Component id="spinnerFinFaena" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Group type="103" alignment="1" groupAlignment="0" attributes="0">
                               <Component id="spinnerHoraLlegada" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="spinnerHoraSalida" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -405,6 +451,9 @@
           </Layout>
           <SubComponents>
             <Component class="javax.swing.JSpinner" name="spinnerHoraSalida">
+              <Properties>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JSpinner(new SpinnerDateModel())"/>
                 <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(spinnerHoraSalida, &quot;HH:mm&quot;);&#xa;spinnerHoraSalida.setEditor(timeEditor);&#xa;spinnerHoraSalida.setValue(new Date());"/>
@@ -421,6 +470,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JSpinner" name="spinnerFinFaena">
+              <Properties>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JSpinner(new SpinnerDateModel())"/>
                 <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JSpinner.DateEditor timeEditor2 = new JSpinner.DateEditor(spinnerFinFaena, &quot;HH:mm&quot;);&#xa;spinnerFinFaena.setEditor(timeEditor2);&#xa;spinnerFinFaena.setValue(new Date());"/>
@@ -432,6 +484,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JSpinner" name="spinnerHoraLlegada">
+              <Properties>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JSpinner(new SpinnerDateModel())"/>
                 <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JSpinner.DateEditor timeEditor3 = new JSpinner.DateEditor(spinnerHoraLlegada, &quot;HH:mm&quot;);&#xa;spinnerHoraLlegada.setEditor(timeEditor3);&#xa;spinnerHoraLlegada.setValue(new Date());"/>
@@ -451,7 +506,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel15" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -460,7 +515,7 @@
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="textoNeto" max="32767" attributes="0"/>
+                          <Component id="textoNeto" alignment="0" max="32767" attributes="0"/>
                           <Component id="textoBruto" alignment="0" max="32767" attributes="0"/>
                           <Component id="textoIva" alignment="0" max="32767" attributes="0"/>
                       </Group>
@@ -469,7 +524,7 @@
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="textoNeto" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel15" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -496,6 +551,12 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="textoNeto">
+              <Properties>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="textoNeto.setDisabledTextColor(new java.awt.Color(0, 0, 0));"/>
+              </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel16">
               <Properties>
@@ -503,6 +564,12 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="textoBruto">
+              <Properties>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="textoBruto.setDisabledTextColor(new java.awt.Color(0, 0, 0));"/>
+              </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel17">
               <Properties>
@@ -510,6 +577,12 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="textoIva">
+              <Properties>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="textoIva.setDisabledTextColor(new java.awt.Color(0, 0, 0));"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>
@@ -525,7 +598,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel18" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -533,8 +606,8 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jTextField11" max="32767" attributes="0"/>
-                          <Component id="jTextField12" pref="92" max="32767" attributes="0"/>
+                          <Component id="jTextField11" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jTextField12" alignment="0" pref="92" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -564,6 +637,12 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextField11">
+              <Properties>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jTextField11.setDisabledTextColor(new java.awt.Color(0, 0, 0));"/>
+              </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel19">
               <Properties>
@@ -571,6 +650,12 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextField12">
+              <Properties>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jTextField12.setDisabledTextColor(new java.awt.Color(0, 0, 0));"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>
@@ -580,6 +665,12 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textoDespachado">
+          <Properties>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="textoDespachado.setDisabledTextColor(new java.awt.Color(0, 0, 0));"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel21">
           <Properties>
@@ -592,26 +683,36 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textoObs">
-        </Component>
-        <Component class="javax.swing.JButton" name="botonIngresar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Ingresar"/>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="textoObs.setDisabledTextColor(new java.awt.Color(0, 0, 0));"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="botonOk">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="OK"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonIngresarActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="botonCancelar">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Cancelar"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonCancelarActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonOkActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="textoEmpleado">
+          <Properties>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="textoEmpleado.setDisabledTextColor(new java.awt.Color(0, 0, 0));"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="textoGrua">
+          <Properties>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="textoGrua.setDisabledTextColor(new java.awt.Color(0, 0, 0));"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel23">
           <Properties>
@@ -619,6 +720,12 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textoCodigo">
+          <Properties>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="textoCodigo.setDisabledTextColor(new java.awt.Color(0, 0, 0));"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

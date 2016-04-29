@@ -6,6 +6,7 @@
 package controladores;
 
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import vistas.vistaFacturasP;
 
 /**
@@ -19,5 +20,12 @@ public class controladorFacturas {
     JPanel mostrarTabControlFacturas(String tipo, Object[][] data) {
         vistaFacturasP = new vistas.vistaFacturasP(tipo, data);  
         return vistaFacturasP;
+    }
+    
+    public void crearControladorPrincipal(JTabbedPane tabs){
+        controladorPrincipal miControlador = new controladorPrincipal();
+        tabs.remove(5);
+        tabs.insertTab("Facturas", null, miControlador.crearControladorFacturasP(), null, 5);
+        tabs.setSelectedIndex(5);
     }
 }

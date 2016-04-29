@@ -173,24 +173,20 @@ public class vistaJornadasP extends javax.swing.JPanel {
 
     private void botonAsignarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAsignarActionPerformed
         String id;
-        int idOt;
         controladores.controladorJornadas miControlador = new controladores.controladorJornadas();
+        controladores.controladorOts miControladorOt = new controladores.controladorOts();
         boolean selected = tablaJornadas.getSelectedRowCount() > 0;
         if(selected){
             int row = getFilaSeleccionada();
-            //idOt = getIdOt(row);
             id = getIdFila(row);
             try {
-                //            if(idOt != -1){
-//                JOptionPane.showMessageDialog(null, "Esta jornada ya tiene asignada una orden de trabajo");
-//            }else{
                 miControlador.irVistaIngresarOts(id);
             } catch (ParseException ex) {
                 Logger.getLogger(vistaJornadasP.class.getName()).log(Level.SEVERE, null, ex);
             }
                 JTabbedPane tabs = (JTabbedPane)this.getParent();
+                miControladorOt.crearControladorPrincipal(tabs);
                 miControlador.crearControladorPrincipal(tabs);
-            //}
         }else{
             JOptionPane.showMessageDialog(null, "Debe seleccionar una jornada para ser asignada");
         }

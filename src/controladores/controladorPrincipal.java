@@ -236,6 +236,12 @@ public class controladorPrincipal {
         return micontroladorOts.mostrarTabControlOts(tipo, data);    
     }
     
+    void crearControladorDetalleOts(String id) throws ParseException {
+        controladorDetalleOts micontroladorDO;
+        micontroladorDO = new controladorDetalleOts();
+        micontroladorDO.mostrarVistaDetalleOts(id);
+    }
+    
     public JPanel crearControladorFacturasP() {
         modelos.modeloOts ots;
         ots = new modelos.modeloOts();
@@ -487,5 +493,11 @@ public class controladorPrincipal {
         controladores.controladorIngresarOts micontroladorIO;
         micontroladorIO = new controladorIngresarOts();
         micontroladorIO.mostrarVistaIngresarOts(data);
+    }
+    
+    public String[] obtenerOtPorId(String id) {
+        modelos.modeloOts ot = new modelos.modeloOts();
+        String[] datos = ot.obtenerOtPorId(id);
+        return datos;
     }
 }

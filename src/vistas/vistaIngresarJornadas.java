@@ -240,7 +240,6 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
 
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
         JFrame tabs = (JFrame)this.getParent();
-        System.out.println(tabs.getTitle());
         controladores.controladorIngresarJornadas miControladorIJ = new controladores.controladorIngresarJornadas();
         String respuesta = miControladorIJ.camposVacios();
         boolean esVacio = respuesta.length() == 0;

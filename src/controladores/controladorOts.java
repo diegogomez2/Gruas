@@ -43,9 +43,9 @@ public class controladorOts {
     public void crearControladorPrincipal(JTabbedPane tabs){
         controladorPrincipal miControlador = new controladorPrincipal();
         tabs.remove(4);
-        tabs.remove(4);
+        //tabs.remove(4);
         tabs.insertTab("OTs", null, miControlador.crearControladorOtsP(), null, 4);
-        tabs.insertTab("Facturas", null, miControlador.crearControladorFacturasP(), null, 5);
+        //tabs.insertTab("Facturas", null, miControlador.crearControladorFacturasP(), null, 5);
         tabs.setSelectedIndex(4);
     }
     
@@ -54,5 +54,10 @@ public class controladorOts {
         modelos.modeloOts ots = new modelos.modeloOts();
         respuesta = ots.ingresarFactura(idOt);
         return respuesta;
+    }
+    
+    public void irVistaDetalleOts(String id) throws ParseException{
+        controladorPrincipal miControlador = new controladorPrincipal();
+        miControlador.crearControladorDetalleOts(id);
     }
 }

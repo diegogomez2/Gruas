@@ -44,7 +44,8 @@ public class modeloOts {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("update jornadas set cont_ot = ?, fec_ot = ?, pag_ot = ?,"
-                    + "cond_ot = ?, desp_ot = ?, cod_ot = ?, neto_ot = ?, iva_ot = ?, total_ot = ? where"
+                    + "cond_ot = ?, desp_ot = ?, cod_ot = ?, neto_ot = ?, iva_ot = ?, total_ot = ?, "
+                    + "horfin_ot=? where"
                     + " id_jor = ?");
             pstm.setString(1, data[0]);
             pstm.setString(2, data[1]);
@@ -55,13 +56,12 @@ public class modeloOts {
             pstm.setInt(7, Integer.parseInt(data[7]));
             pstm.setInt(8, Integer.parseInt(data[8]));
             pstm.setInt(9, Integer.parseInt(data[9]));
-            pstm.setInt(10, Integer.parseInt(data[5]));
-            System.out.println(pstm);
+            pstm.setString(10, data[10]);
+            pstm.setInt(11, Integer.parseInt(data[5]));
             pstm.execute();
             pstm.close();
         }catch(SQLException e){
             System.out.println(e);
-            System.out.println(data[0]);
             return "incorrecto";
         }catch(ClassNotFoundException e){
             System.out.println(e);
@@ -140,6 +140,54 @@ public class modeloOts {
         return data;
     }
     
+    public String[] obtenerOtPorId(String id){
+        String[] data = new String[]{};
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT fsal_jor, horsal_jor, freg_jor, horlleg_jor,"
+                    + "des_gru, raz_cli, nom_emp, apP_emp, apM_emp, freg_jor, obs_jor, clientes.rut_cli, clientes.dig_cli,"
+                    + "gir_cli, dir_cli, tel_cli, ton_gru, fec_ot, cod_ot, pag_ot, cond_ot, cont_ot, "
+                    + "total_ot, neto_ot, iva_ot, desp_ot, horfin_ot  FROM jornadas INNER JOIN clientes ON "
+                    + "jornadas.rut_cli = clientes.rut_cli INNER JOIN gruas ON gruas.pat_gru = jornadas.pat_gru "
+                    + "INNER JOIN empleados ON empleados.rut_emp = jornadas.rut_emp WHERE cod_ot = ?");
+            pstm.setString(1, id);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            String estrutcli = res.getString("clientes.rut_cli");
+            String estdigcli = res.getString("clientes.dig_cli");
+            String estfsal = res.getString("fsal_jor");
+            String esthorsal = res.getString("horsal_jor");
+            String estdes = res.getString("des_gru");
+            String estraz = res.getString("raz_cli");
+            String estnom = res.getString("nom_emp") + " " + res.getString("apP_emp") + " " + res.getString("apM_emp");
+            String estfreg = res.getString("freg_jor");
+            String esthorlleg = res.getString("horlleg_jor");
+            String estobs = res.getString("obs_jor");
+            String estgir = res.getString("gir_cli");
+            String estdir = res.getString("dir_cli");
+            String esttel = res.getString("tel_cli");
+            String estton = res.getString("ton_gru");
+            String estfot = res.getString("fec_ot");
+            String estcond = res.getString("cod_ot");
+            String estpago = res.getString("pag_ot");
+            String estcont = res.getString("cont_ot");
+            String esttot = res.getString("total_ot");
+            String estneto = res.getString("neto_ot");
+            String estiva = res.getString("iva_ot");
+            String estdesp = res.getString("desp_ot");
+            String esthorfin = res.getString("horfin_ot");
+            data = new String[]{estfsal, esthorsal, estfreg, esthorlleg, estdes, estnom, estobs
+                    , estrutcli, estdigcli, estraz, estgir, estdir, esttel, id, estton, estfot, estcond
+                    , estpago, estcont, esttot, estneto, estiva, estdesp, esthorfin};
+        }catch(SQLException e){
+            System.out.println(e);
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+        }
+        return data;
+    }
+    
     public String[] getTarifa(String diaInicio, String horaInicio, String day, String ton){
         String data[] = new String[]{};
         try{
@@ -153,7 +201,6 @@ public class modeloOts {
             pstm.setString(2, horaInicio);
             pstm.setString(3, horaInicio);
             pstm.setString(4, day);
-            //System.out.println(pstm);
             ResultSet res = pstm.executeQuery();
             res.next();
             String estprec = res.getString("prec_tar");
@@ -188,7 +235,7 @@ public class modeloOts {
         
         try{
             PreparedStatement pstm = conn.prepareStatement("SELECT id_jor, fec_ot, raz_cli, gir_cli, dir_cli,"
-                    + "reg_cli, com_cli, pat_gru, nom_emp, apP_emp, obs_jor, cod_ot, total_ot, neto_ot, "
+                    + "reg_cli, com_cli, obs_jor, cod_ot, total_ot, neto_ot, "
                     + "iva_ot, fact_ot FROM Jornadas INNER JOIN"
                     + " clientes ON clientes.rut_cli = jornadas.rut_cli INNER JOIN empleados ON empleados.rut_emp "
                     + "= jornadas.rut_emp Where not cod_ot = -1 and fact_ot = 1 ORDER BY cod_ot, fact_ot");
@@ -204,9 +251,6 @@ public class modeloOts {
                 String esttot = res.getString("total_ot");
                 String estnet = res.getString("neto_ot");
                 String estiva = res.getString("iva_ot");
-                //String estgrua = res.getString("pat_gru");
-                //String estop = res.getString("nom_emp") + " " + res.getString("apP_emp");
-                //String estobs = res.getString("obs_jor");
                 String estcodot = res.getString("cod_ot");
                 String estfact = res.getString("fact_ot");
                 data[i][0] = estcodot;
@@ -220,12 +264,6 @@ public class modeloOts {
                 data[i][8] = estnet;
                 data[i][9] = estiva;
                 data[i][10] = estfact;
-                //data[i][1] = estgrua;
-                //data[i][3] = estop;
-                //data[i][4] = date[0];
-                //data[i][5] = null;
-                //data[i][6] = estobs;
-                //data[i][7] = time[0];
                 i++;
             }
             res.close();
@@ -281,7 +319,7 @@ public class modeloOts {
             PreparedStatement pstm = conn.prepareStatement("SELECT clientes.rut_cli, raz_cli, gir_cli,"
                     + "dir_cli, reg_cli, com_cli, total_ot, neto_ot, iva_ot, fact_ot FROM jornadas INNER JOIN clientes"
                     + " ON clientes.rut_cli = jornadas.rut_cli where cod_ot = ?");
-             pstm.setString(1, idOt);
+            pstm.setString(1, idOt);
             ResultSet res = pstm.executeQuery();
             int i = 0;
             while(res.next()){

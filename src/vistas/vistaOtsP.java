@@ -46,9 +46,9 @@ public class vistaOtsP extends javax.swing.JPanel {
                 Point p = evt.getPoint();
                 int row = table.rowAtPoint(p);
                 if(evt.getClickCount() == 2){
-                    controladores.controladorJornadas miControlador = new controladores.controladorJornadas();
+                    controladores.controladorOts miControlador = new controladores.controladorOts();
                     try {
-                        miControlador.irVistaDetalleJornada(tablaOts.getValueAt(row, 0).toString());
+                        miControlador.irVistaDetalleOts(tablaOts.getValueAt(row, 0).toString());
                     } catch (ParseException ex) {
                         Logger.getLogger(vistaJornadasP.class.getName()).log(Level.SEVERE, null, ex);
                     }

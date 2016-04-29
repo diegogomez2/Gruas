@@ -42,7 +42,7 @@ public class controladorIngresarOts {
         String[] data = {vistaIO.getTextoContacto(), vistaIO.getTextoFechaOt(), vistaIO.getComboFormaPago(),
             vistaIO.getComboCondPago(), vistaIO.getTextoDespachado(), id, vistaIO.getTextoCodigo(),
             removeDots(vistaIO.getTextoNeto()), removeDots(vistaIO.getTextoIva()), 
-            removeDots(vistaIO.getTextoBruto())};
+            removeDots(vistaIO.getTextoBruto()), vistaIO.getSpinnerFinFaena()};
         boolean flag = miControlador.ingresarOt(data);
         return flag;
     } 
@@ -69,12 +69,12 @@ public class controladorIngresarOts {
     
     public String[] calcularTarifa(String diaInicio, String diaFin, String horaInicio, String horaFin, String ton) throws ParseException{
         modelos.modeloOts ots = new modelos.modeloOts();
-        String[] data = {};
-        int tarifa = 0;
+        String[] data;// = {};
+        int tarifa;// = 0;
         Date fecha = formatDate.parse(diaInicio);
         String day1 = formatDay.format(fecha);
         Date fecha2 = formatDate.parse(diaFin);
-        String day2 = formatDay.format(fecha);
+        //String day2 = formatDay.format(fecha);
         
         long diff = fecha2.getTime() - fecha.getTime();
         long difDias = diff/(60*60*1000*24);
@@ -82,7 +82,7 @@ public class controladorIngresarOts {
         horas[0] = horaInicio;
         horas[2*((int)difDias+1)-1] = horaFin;
         for(int i = 1; i < 2*(difDias)+1; i++){
-            System.out.println(i%2);
+            //System.out.println(i%2);
             if(i%2 == 0) {
                 horas[i] = "00:00";
             }else{
@@ -92,38 +92,38 @@ public class controladorIngresarOts {
         long totalTarifa = 0;
         String hora;
         for(int i = 0; i < difDias+1; i++){
-            System.out.println("IIIII "+i);
+            //System.out.println("IIIII "+i);
         boolean flag = true;
             while(flag){
                 data = ots.getTarifa(diaInicio, horas[2*i], getIdDia(day1), ton);
                 tarifa = Integer.parseInt(data[0]);
                 hora = data[1];
                 if(hora.compareTo("00:00:00") == 0) hora = "24:00:00";
-                System.out.println("tarifa "+tarifa + " hora "+hora );
+                //System.out.println("tarifa "+tarifa + " hora "+hora );
                 Date horaIn = formatClock.parse(horas[2*i]);
                 Date horaF = formatClock.parse(horas[2*i+1]);
-                System.out.println("hora ini " +horaIn + "ms: " +horaIn.getTime());
-                System.out.println("hora final "+horaF + " ms: " + horaF.getTime() );
+//                System.out.println("hora ini " +horaIn + "ms: " +horaIn.getTime());
+//                System.out.println("hora final "+horaF + " ms: " + horaF.getTime() );
                 Date finTramo = formatClock.parse(hora);
-                System.out.println("fin tramo " + hora + " ms: " +finTramo.getTime());
-                long tramoDiff = 0;
+//                System.out.println("fin tramo " + hora + " ms: " +finTramo.getTime());
+                long tramoDiff;// = 0;
                 if(finTramo.getTime() > horaF.getTime()){
                     tramoDiff = horaF.getTime() - horaIn.getTime();
                 }else{
                     tramoDiff = finTramo.getTime() - horaIn.getTime();
                 }
-                System.out.println("primer tramo " + tramoDiff);
+//                System.out.println("primer tramo " + tramoDiff);
                 long minutes = (tramoDiff / (1000 * 60)) % 60;
                 long hours = (tramoDiff / (1000 * 60 * 60)) % 24;
                 float duracionTramo = hours + (float)minutes/60;
-                System.out.println("duracion tramo " +duracionTramo);
+//                System.out.println("duracion tramo " +duracionTramo);
                 totalTarifa += duracionTramo * tarifa;
-                System.out.println("tarifa parcial "+totalTarifa);
+//                System.out.println("tarifa parcial "+totalTarifa);
                 tramoDiff = horaF.getTime() - finTramo.getTime();
-                System.out.println("tramo restante " + tramoDiff);
+//                System.out.println("tramo restante " + tramoDiff);
                 if(tramoDiff <= 0)  flag = false;
                 horas[2*i] = formatClock.format(finTramo.getTime());
-                System.out.println("hora inicio nueva "+horas[2*i]);
+//                System.out.println("hora inicio nueva "+horas[2*i]);
             }
             day1 = nextDay(day1);
         }
@@ -179,13 +179,13 @@ public class controladorIngresarOts {
     }
     
     public String removeDots(String data){
-        System.out.println("data "+data);
+        //System.out.println("data "+data);
         String new_data = "";
         String[] data_dev = data.split(Pattern.quote("."));
         for(int i = 0; i < data_dev.length; i++){
             new_data = new_data + data_dev[i];
         }
-        System.out.println("new data "+new_data);
+        //System.out.println("new data "+new_data);
         return new_data;
     }
     
