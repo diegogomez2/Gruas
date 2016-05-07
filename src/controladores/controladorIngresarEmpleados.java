@@ -50,12 +50,12 @@ public class controladorIngresarEmpleados {
         if (vistaIE.getTextoFechaNac().compareTo("") == 0) {
             respuesta += "-Fecha de Nacimiento.\n";
         }
-        if (vistaIE.getTextoTelefono().compareTo("") == 0) {
-            respuesta += "-Teléfono.\n";
-        }
-        if (vistaIE.getTextoCorreo().compareTo("") == 0) {
-            respuesta += "-Correo.\n";
-        }
+//        if (vistaIE.getTextoTelefono().compareTo("") == 0) {
+//            respuesta += "-Teléfono.\n";
+//        }
+//        if (vistaIE.getTextoCorreo().compareTo("") == 0) {
+//            respuesta += "-Correo.\n";
+//        }
         if (vistaIE.getComboCargo().compareTo("") == 0) {
             respuesta += "-Cargo.\n";
         }
@@ -83,7 +83,7 @@ public class controladorIngresarEmpleados {
         return respuesta;
     }
 
-    public Object[][] cargarComunas(int region) {
+    public Object[] cargarComunas(int region) {
         controladorPrincipal miControlador = new controladorPrincipal();
         return miControlador.cargarComunas(region);
     }

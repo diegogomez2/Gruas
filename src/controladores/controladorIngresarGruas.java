@@ -16,7 +16,7 @@ public class controladorIngresarGruas {
 
     static vistas.vistaIngresarGruas vistaIG;
     
-    void mostrarVistaIngresarGruas(Object[][] dataTonelajes) {
+    void mostrarVistaIngresarGruas(Object[] dataTonelajes) {
         vistaIG = new vistaIngresarGruas(new javax.swing.JFrame(), true, dataTonelajes);
         vistaIG.setLocationRelativeTo(null);
         vistaIG.setVisible(true);

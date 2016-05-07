@@ -15,7 +15,7 @@ import vistas.vistaModificarJornadas;
 public class controladorModificarJornadas {
     static vistas.vistaModificarJornadas vistaMJ;
     
-    public void mostrarVistaModificarJornadas(String id, Object[][] clientes, Object[][] gruas, Object[][] empleados) throws ParseException{
+    public void mostrarVistaModificarJornadas(String id, Object[] clientes, Object[] gruas, Object[] empleados) throws ParseException{
         controladorPrincipal miControlador = new controladorPrincipal();
         String data[] = miControlador.obtenerJornadaPorId(id);
         vistaMJ = new vistaModificarJornadas(new javax.swing.JFrame(), true, clientes, gruas, empleados);

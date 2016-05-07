@@ -125,7 +125,7 @@ public class vistaFacturasP extends javax.swing.JPanel {
                 Integer.toString(total));
         if(respuesta.compareTo("correcto") == 0){
             controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
-            if((micontroladorFacturas.archivarFacturas(idOts).compareTo("correcto") == 0)){
+            if((micontroladorFacturas.archivarFacturas(idOts, neto, iva, total).compareTo("correcto") == 0)){
                 JTabbedPane tabs = (JTabbedPane)this.getParent();
                 micontroladorOts.crearControladorPrincipal(tabs);
                 miControlador.crearControladorPrincipal(tabs);

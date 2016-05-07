@@ -12,10 +12,10 @@ import javax.swing.JPanel;
  * @author diego
  */
 public class controladorFacturadas {
-//    static vistas.vistaFacturadasP vistaFacturadasP;
-//    
-//    JPanel mostrarTabControlFacturas(String tipo, Object[][] data) {
-//        vistaFacturadasP = new vistas.vistaFacturasP(tipo, data);  
-//        return vistaFacturadasP;
-//    }
+    static vistas.vistaFacturadasP vistaFacturadasP;
+    
+    JPanel mostrarTabControlFacturadasP(String tipo, Object[][] data) {
+        vistaFacturadasP = new vistas.vistaFacturadasP(tipo, data);  
+        return vistaFacturadasP;
+    }
 }

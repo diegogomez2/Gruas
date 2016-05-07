@@ -34,6 +34,7 @@ public class modeloClientes {
             res.close();
        }catch(SQLException e){
             System.out.println(e);
+            e.printStackTrace();
        }catch(ClassNotFoundException e){
             System.out.println(e);
        }
@@ -71,8 +72,8 @@ public class modeloClientes {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("insert into clientes (rut_cli, dig_cli,"
-                    + "con_cli, raz_cli, gir_cli, cor_cli, tel_cli, cel_cli, dir_cli, reg_cli, com_cli,"
-                    + "obs_cli) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    + "con_cli, raz_cli, gir_cli, cor_cli, tel_cli, cel_cli, dir_cli, reg_cli, ciu_cli,"
+                    + "com_cli, obs_cli) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             pstm.setInt(1, Integer.parseInt(data[0]));
             pstm.setString(2, data[1]);
             pstm.setString(3, data[2]);
@@ -85,6 +86,7 @@ public class modeloClientes {
             pstm.setString(10, data[9]);
             pstm.setString(11, data[10]);
             pstm.setString(12, data[11]);
+            pstm.setString(13, data[12]);
             pstm.execute();
             pstm.close();
         }catch(SQLException e){
@@ -125,19 +127,20 @@ public class modeloClientes {
             ResultSet res = pstm.executeQuery();
             res.next();
             String estrut = res.getString("rut_cli");
-            String estdigito = res.getString("dig_cli");
+            String estdig = res.getString("dig_cli");
             String estcon = res.getString("con_cli");
-            String estrazon = res.getString("raz_cli");
-            String estgiro = res.getString("gir_cli");
-            String estcorreo = res.getString("cor_cli");
-            String esttelefono = res.getString("tel_cli");
+            String estraz = res.getString("raz_cli");
+            String estgir = res.getString("gir_cli");
+            String estcor = res.getString("cor_cli");
+            String esttel = res.getString("tel_cli");
             String estcel = res.getString("cel_cli");
-            String estdireccion = res.getString("dir_cli");
-            String estregion = res.getString("reg_cli");
-            String estcomuna = res.getString("com_cli");
+            String estdir = res.getString("dir_cli");
+            String estreg = res.getString("reg_cli");
+            String estciu = res.getString("ciu_cli");
+            String estcom = res.getString("com_cli");
             String estobs = res.getString("obs_cli");
-            data = new String[]{estrut + "-" + estdigito , estcon, estrazon, estgiro, estcorreo,
-                esttelefono, estcel, estdireccion, estregion, estcomuna, estobs};
+            data = new String[]{estrut + "-" + estdig , estcon, estraz, estgir, estcor,
+                esttel, estcel, estdir, estreg, estciu, estcom, estobs};
         }catch(SQLException e){
             System.out.println(e);
         }catch(ClassNotFoundException e){
@@ -152,7 +155,7 @@ public class modeloClientes {
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("update clientes set rut_cli=?, dig_cli=?, "
                     + "con_cli = ?, raz_cli=?, gir_cli=?, cor_cli=?, tel_cli=?, cel_cli=?, dir_cli=?, reg_cli=?,"
-                    + "com_cli=?, obs_cli=? WHERE rut_cli=?");
+                    + "ciu_cli=?, com_cli=?, obs_cli=? WHERE rut_cli=?");
             pstm.setInt(1, Integer.parseInt(data[0]));
             pstm.setString(2, data[1]);
             pstm.setString(3, data[2]);
@@ -165,7 +168,8 @@ public class modeloClientes {
             pstm.setString(10, data[9]);
             pstm.setString(11, data[10]);
             pstm.setString(12, data[11]);
-            pstm.setInt(13, rut);
+            pstm.setString(13, data[12]);
+            pstm.setInt(14, rut);
             pstm.executeUpdate();
             pstm.close();
         }catch(SQLException e){
@@ -178,7 +182,7 @@ public class modeloClientes {
         return "correcto";
     }
 
-    public Object[][] obtenerRazonClientes() {
+    public Object[] obtenerRazonClientes() {
         int registros = 0;
         
         try{
@@ -195,7 +199,7 @@ public class modeloClientes {
             System.out.println(e);
        }
         
-        Object[][] data = new String[registros][1];
+        Object[] data = new String[registros];
         
         try{
             PreparedStatement pstm = conn.prepareStatement("SELECT raz_cli FROM Clientes ORDER BY raz_cli");
@@ -203,7 +207,7 @@ public class modeloClientes {
             int i = 0;
             while(res.next()){
                 String estrazon = res.getString("raz_cli");
-                data[i][0] = estrazon;
+                data[i] = estrazon;
                 i++;
             }
             res.close();

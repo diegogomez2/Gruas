@@ -31,21 +31,21 @@ public class vistaModificarJornadas extends javax.swing.JDialog {
     DateFormat formateDateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     DateFormat formatDia = new SimpleDateFormat("EEE");
     
-    public vistaModificarJornadas(java.awt.Frame parent, boolean modal, Object[][] clientes,
-            Object[][] gruas, Object[][] empleados) {
+    public vistaModificarJornadas(java.awt.Frame parent, boolean modal, Object[] clientes,
+            Object[] gruas, Object[] empleados) {
         super(parent, modal);
         initComponents();
         TextAutoCompleter listaClientes = new TextAutoCompleter(textoCliente);
         TextAutoCompleter listaGruas = new TextAutoCompleter(textoGrua);
         TextAutoCompleter listaEmpleados = new TextAutoCompleter(textoEmpleado);
         for(int i = 0; i < clientes.length; i++){
-            listaClientes.addItem(clientes[i][0].toString());
+            listaClientes.addItem(clientes[i].toString());
         }
         for(int i = 0; i < gruas.length; i++){
-            listaGruas.addItem(gruas[i][0].toString());
+            listaGruas.addItem(gruas[i].toString());
         }
         for(int i = 0; i < empleados.length; i++){
-            listaEmpleados.addItem(empleados[i][0].toString());
+            listaEmpleados.addItem(empleados[i].toString());
         }
     }
 

@@ -595,8 +595,9 @@
                 <Component class="javax.swing.JComboBox" name="comboTipoCombustible">
                   <Properties>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="1">
+                      <StringArray count="2">
                         <StringItem index="0" value="Diesel"/>
+                        <StringItem index="1" value="Gas"/>
                       </StringArray>
                     </Property>
                   </Properties>
@@ -649,31 +650,18 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="textoFechaRT" max="32767" attributes="0"/>
+                              <Component id="labelFechaRT" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="textoFechaIngreso" alignment="1" pref="210" max="32767" attributes="0"/>
+                              <Component id="labelFechaIngreso" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="textoFechaRT" min="-2" pref="194" max="-2" attributes="0"/>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="labelFechaRT" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="textoFechaIngreso" alignment="0" min="-2" pref="210" max="-2" attributes="0"/>
-                                      <Component id="labelFechaIngreso" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace max="32767" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="labelFechaUM" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="93" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
-                                          <Component id="textoFechaUM" min="-2" pref="210" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                              </Group>
+                              <Component id="labelFechaUM" min="-2" max="-2" attributes="0"/>
+                              <Component id="textoFechaUM" min="-2" pref="210" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -685,15 +673,17 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Component id="labelFechaIngreso" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="labelFechaIngreso" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="labelFechaUM" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="textoFechaIngreso" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                                   <Component id="labelFechaRT" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
-                                  <Component id="labelFechaUM" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                                   <Component id="textoFechaUM" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>

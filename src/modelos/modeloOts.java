@@ -24,7 +24,7 @@ import static modelos.modeloJornadas.url;
  */
 public class modeloOts {
     static String login = "root";
-    static String password = "gruas_205243";
+    static String password = "205243";
     static String url = "jdbc:mysql://localhost:3306/fact_gruas";
     Connection conn = null;
     
@@ -66,6 +66,7 @@ public class modeloOts {
             pstm.close();
         }catch(SQLException e){
             System.out.println(e);
+            e.printStackTrace();
             return "incorrecto";
         }catch(ClassNotFoundException e){
             System.out.println(e);
@@ -140,6 +141,7 @@ public class modeloOts {
             res.close();
         }catch(SQLException e){
             System.out.println(e);
+            e.printStackTrace();
         }catch(Exception e){
             System.out.println(e);
         }
@@ -188,6 +190,7 @@ public class modeloOts {
                     , estpago, estcont, esttot, estneto, estiva, estdesp, esthorfin};
         }catch(SQLException e){
             System.out.println(e);
+            e.printStackTrace();
         }catch(ClassNotFoundException e){
             System.out.println(e);
         }
@@ -214,6 +217,7 @@ public class modeloOts {
             data = new String[]{estprec, esthfin};
         }catch(SQLException e){
             System.out.println(e);
+            e.printStackTrace();
         }catch(ClassNotFoundException e){
             System.out.println(e);
         }
@@ -277,6 +281,7 @@ public class modeloOts {
             res.close();
         }catch(SQLException e){
             System.out.println(e);
+            e.printStackTrace();
         }catch(Exception e){
             System.out.println(e);
         }
@@ -382,12 +387,13 @@ public class modeloOts {
         }
     }
     
-    public String archivarFactura(String idOt){
+    public String archivarFactura(String idOt, String id){
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("update jornadas set fact_ot = 2 WHERE cod_ot = ?");
-            pstm.setInt(1, Integer.parseInt(idOt));
+            PreparedStatement pstm = conn.prepareStatement("update jornadas set fact_ot = 2, id_fac = ? WHERE cod_ot = ?");
+            pstm.setInt(1, Integer.parseInt(id));
+            pstm.setInt(2, Integer.parseInt(idOt));
             pstm.executeUpdate();
         }catch(SQLException e){
             System.out.println(e);
@@ -399,7 +405,7 @@ public class modeloOts {
         return "correcto";
     }
     
-    public Object[][] listarFacturadas(){
+    public Object[][] listarFacturadas2(){
         int registros = 0;
         
         try{
@@ -423,7 +429,7 @@ public class modeloOts {
                     + "reg_cli, com_cli, obs_jor, cod_ot, total_ot, neto_ot, "
                     + "iva_ot, fact_ot FROM Jornadas INNER JOIN"
                     + " clientes ON clientes.rut_cli = jornadas.rut_cli INNER JOIN empleados ON empleados.rut_emp "
-                    + "= jornadas.rut_emp Where not cod_ot = -1 and fact_ot = 1 ORDER BY cod_ot, fact_ot");
+                    + "= jornadas.rut_emp Where not cod_ot = -1 and fact_ot = 2 ORDER BY cod_ot, fact_ot");
             ResultSet res = pstm.executeQuery();
             int i = 0;
             while(res.next()){
@@ -505,6 +511,30 @@ public class modeloOts {
             String estraz = res.getString("raz_cli");
             datos[0] = estraz;
             datos[1] = Integer.toString(neto);
+        }catch(SQLException e){
+            System.out.println(e);
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        return datos;
+    }
+    
+    public String[] obtenerTotales(String id_jor){
+        String[] datos;
+        
+        datos = new String[3];
+        
+        try{
+            PreparedStatement pstm = conn.prepareStatement("SELECT neto_ot, , iva_ot, total_ot FROM Jornadas "
+                    + "Where id_jor = ?");
+            pstm.setInt(1, Integer.parseInt(id_jor));
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            String estnet = res.getString("neto_ot");
+            String estbru = res.getString("total_ot");
+            String estiva = res.getString("iva_ot");
+            datos = new String[]{estnet, estbru, estiva};
+            res.close();
         }catch(SQLException e){
             System.out.println(e);
         }catch(Exception e){

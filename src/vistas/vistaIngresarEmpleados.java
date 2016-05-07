@@ -50,10 +50,10 @@ public class vistaIngresarEmpleados extends javax.swing.JDialog {
         controladores.controladorIngresarEmpleados miControlador = new controladorIngresarEmpleados();
         int index = comboRegion.getSelectedIndex();
         int region = Integer.parseInt(regiones[index][0].toString());
-        Object[][] comunas = miControlador.cargarComunas(region);
+        Object[] comunas = miControlador.cargarComunas(region);
         String[] listaComunas = new String[comunas.length];
         for(int i = 0; i < comunas.length; i++){
-            listaComunas[i] = comunas[i][0].toString();
+            listaComunas[i] = comunas[i].toString();
         }
         comboComuna.setModel(new DefaultComboBoxModel<String>(listaComunas));
     }
@@ -118,7 +118,7 @@ public class vistaIngresarEmpleados extends javax.swing.JDialog {
 
         labelAFP.setText("AFP");
 
-        comboAFP.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboAFP.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "CUPRUM", "HABITAT", "CAPITAL", "PLANVITAL", "PROVIDA", "MODELO" }));
 
         labelSalud.setText("Salud");
 

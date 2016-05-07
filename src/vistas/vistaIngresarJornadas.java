@@ -34,8 +34,8 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
     DateFormat formatDia = new SimpleDateFormat("EEE");
     
     
-    public vistaIngresarJornadas(java.awt.Frame parent, boolean modal, Object[][] clientes,
-            Object[][] gruas, Object[][] empleados) {
+    public vistaIngresarJornadas(java.awt.Frame parent, boolean modal, Object[] clientes,
+            Object[] gruas, Object[] empleados) {
         super(parent, modal);
         initComponents();
         textoFechaSalida.setDate(new Date());
@@ -44,13 +44,13 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
         TextAutoCompleter listaGruas = new TextAutoCompleter(textoGrua);
         TextAutoCompleter listaEmpleados = new TextAutoCompleter(textoOperador);
         for(int i = 0; i < clientes.length; i++){
-            listaClientes.addItem(clientes[i][0].toString());
+            listaClientes.addItem(clientes[i].toString());
         }
         for(int i = 0; i < gruas.length; i++){
-            listaGruas.addItem(gruas[i][0].toString());
+            listaGruas.addItem(gruas[i].toString());
         }
         for(int i = 0; i < empleados.length; i++){
-            listaEmpleados.addItem(empleados[i][0].toString());
+            listaEmpleados.addItem(empleados[i].toString());
         }
     }
 
@@ -367,6 +367,4 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
     public String getTextoOperador() {
         return textoOperador.getText();
     }
-    
- 
 }

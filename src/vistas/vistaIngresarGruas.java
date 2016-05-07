@@ -28,12 +28,12 @@ public class vistaIngresarGruas extends javax.swing.JDialog {
      */
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
 
-    public vistaIngresarGruas(java.awt.Frame parent, boolean modal, Object[][] tonelajes) {
+    public vistaIngresarGruas(java.awt.Frame parent, boolean modal, Object[] tonelajes) {
         super(parent, modal);
         initComponents();
         String[] listarTonelajes = new String[tonelajes.length];
         for(int i = 0; i < tonelajes.length; i++){
-            listarTonelajes[i] = tonelajes[i][0].toString();
+            listarTonelajes[i] = tonelajes[i].toString();
         }
         comboToneladas.setModel(new DefaultComboBoxModel<String>(listarTonelajes));
     }
@@ -324,7 +324,7 @@ public class vistaIngresarGruas extends javax.swing.JDialog {
 
         labelAlturaMastil.setText("Altura Mástil (cm)");
 
-        comboTipoCombustible.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Diesel" }));
+        comboTipoCombustible.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Diesel", "Gas" }));
 
         labelNeumaticosTraseros.setText("Medida Neumáticos traseros");
 
@@ -423,23 +423,15 @@ public class vistaIngresarGruas extends javax.swing.JDialog {
             fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(fechasLayout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(textoFechaRT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelFechaRT, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(textoFechaIngreso, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+                    .addComponent(labelFechaIngreso, javax.swing.GroupLayout.Alignment.LEADING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(fechasLayout.createSequentialGroup()
-                        .addComponent(textoFechaRT, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(fechasLayout.createSequentialGroup()
-                        .addGroup(fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelFechaRT)
-                            .addComponent(textoFechaIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labelFechaIngreso))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(fechasLayout.createSequentialGroup()
-                                .addComponent(labelFechaUM)
-                                .addGap(93, 93, 93))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, fechasLayout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addComponent(textoFechaUM, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addComponent(labelFechaUM)
+                    .addComponent(textoFechaUM, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         fechasLayout.setVerticalGroup(
@@ -448,14 +440,15 @@ public class vistaIngresarGruas extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(fechasLayout.createSequentialGroup()
-                        .addComponent(labelFechaIngreso)
+                        .addGroup(fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(labelFechaIngreso)
+                            .addComponent(labelFechaUM))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(textoFechaIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
                         .addComponent(labelFechaRT))
                     .addGroup(fechasLayout.createSequentialGroup()
-                        .addComponent(labelFechaUM)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(20, 20, 20)
                         .addComponent(textoFechaUM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(10, 10, 10)
                 .addComponent(textoFechaRT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)

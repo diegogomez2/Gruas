@@ -37,8 +37,7 @@ public class controladorCrearFactura {
     public String crearDocXML(String[] idOts, String valorNeto, String valorIva, String valorTotal){
         
         modelos.modeloFacturas factura = new modelos.modeloFacturas();
-//        String fecha = new Date().toString();
-//        formatDate.
+        
         try{
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -179,7 +178,8 @@ public class controladorCrearFactura {
                 mtoItem.appendChild(doc.createTextNode(data[7]));
                 detalle.appendChild(mtoItem);
                 
-                factura.ingresarFacturadas(idOts[i], formatDate.format(new Date()));
+//                factura.ingresarFacturada(formatDate.format(new Date()), valorNeto, valorIva,
+//                        valorTotal);
             }
                         
             TransformerFactory transformerFactory = TransformerFactory.newInstance();

@@ -51,10 +51,10 @@ public class vistaModificarEmpleados extends javax.swing.JDialog {
         controladores.controladorModificarClientes miControlador = new controladorModificarClientes();
         int index = comboRegion.getSelectedIndex();
         int region = Integer.parseInt(regiones[index][0].toString());
-        Object[][] comunas = miControlador.cargarComunas(region);
+        Object[] comunas = miControlador.cargarComunas(region);
         String[] listaComunas = new String[comunas.length];
         for(int i = 0; i < comunas.length; i++){
-            listaComunas[i] = comunas[i][0].toString();
+            listaComunas[i] = comunas[i].toString();
         }
         comboComuna.setModel(new DefaultComboBoxModel<String>(listaComunas));
     }
@@ -115,7 +115,7 @@ public class vistaModificarEmpleados extends javax.swing.JDialog {
 
         labelCargo.setText("Cargo");
 
-        comboCargo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboCargo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Jefe", "Operador", "Empleado" }));
 
         labelSueldo.setText("Sueldo");
 

@@ -26,7 +26,7 @@ public class vistaFacturadasP extends javax.swing.JPanel {
      */
     public vistaFacturadasP(String tipo, Object[][] data) {
         initComponents();
-         String[] columNames = {"Código Fact", "Razon", "Giro", "Dirección", "Región", "Comuna", "Fecha",
+         String[] columNames = {"Código Fact", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
              "Neto", "IVA", "Total"};
         DefaultTableModel datos = new DefaultTableModel(data, columNames){
             @Override

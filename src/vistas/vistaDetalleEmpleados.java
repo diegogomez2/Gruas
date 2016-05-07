@@ -508,7 +508,7 @@ public class vistaDetalleEmpleados extends javax.swing.JDialog {
     }
 
     public void setTextoSueldo(String textoSueldo) {
-        this.textoSueldo.setText("$ "+textoSueldo);
+        this.textoSueldo.setText("$ "+String.format("%,d",Integer.parseInt(textoSueldo)));
     }
 
     public void setTextoTelefono(String textoTelefono) {

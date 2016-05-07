@@ -20,7 +20,8 @@ public class controladorModificarClientes {
     public void mostrarVistaModificarCliente(String rut, String nombres, Object[][] dataRegiones){
         controladorPrincipal miControlador = new controladorPrincipal();
         String data[] = miControlador.obtenerClientePorRut(rut);
-        vistaMC = new vistaModificarClientes(new javax.swing.JFrame(), true, dataRegiones);
+        vistaMC = new vistaModificarClientes(new javax.swing.JFrame(), true, dataRegiones, data[8], data[9],
+        data[10]);
         vistaMC.setTextoRut(data[0]);
         vistaMC.setTextoContacto(data[1]);
         vistaMC.setTextoRazon(data[2]);
@@ -29,9 +30,10 @@ public class controladorModificarClientes {
         vistaMC.setTextoTelefono(data[5]);
         vistaMC.setTextoCel(data[6]);
         vistaMC.setTextoDireccion(data[7]);
-        vistaMC.setTextoRegion(data[8]);
-        vistaMC.setTextoComuna(data[9]);
-        vistaMC.setTextoObs(data[10]);
+        vistaMC.setComboRegion(data[8]);
+        vistaMC.setComboCiudad(data[9]);
+        vistaMC.setComboComuna(data[10]);
+        vistaMC.setTextoObs(data[11]);
         vistaMC.setRut(Integer.parseInt(data[0].split("-")[0]));
         vistaMC.setLocationRelativeTo(null);
         vistaMC.setVisible(true);
@@ -43,7 +45,7 @@ public class controladorModificarClientes {
         String[] data = {rut_dv[0], rut_dv[1], vistaMC.getTextoContacto(), vistaMC.getTextoRazon(),
             vistaMC.getTextoGiro(), vistaMC.getTextoCorreo(), vistaMC.getTextoTelefono(), 
             vistaMC.getTextoCel(), vistaMC.getTextoDireccion(),
-            vistaMC.getTextoRegion(), vistaMC.getTextoComuna(), vistaMC.getTextoObs()};
+            vistaMC.getComboRegion(), vistaMC.getComboCiudad(), vistaMC.getComboComuna(), vistaMC.getTextoObs()};
         boolean flag = miControlador.modificarCliente(data, vistaMC.getRut());
         return flag;
     }
@@ -90,15 +92,20 @@ public class controladorModificarClientes {
         //if(vistaMC.getTextoContacto().compareTo("") == 0) respuesta += "-Nombres.\n";
         if(vistaMC.getTextoRazon().compareTo("") == 0) respuesta += "-Razón social.\n";
         if(vistaMC.getTextoGiro().compareTo("") == 0) respuesta += "-Giro.\n";
-        if(vistaMC.getTextoCorreo().compareTo("") == 0) respuesta += "-Correo.\n";
+        //if(vistaMC.getTextoCorreo().compareTo("") == 0) respuesta += "-Correo.\n";
         if(vistaMC.getTextoDireccion().compareTo("") == 0) respuesta += "-Dirección.\n";
-        if(vistaMC.getTextoRegion().compareTo("") == 0) respuesta += "-Región.\n";
-        if(vistaMC.getTextoComuna().compareTo("") == 0) respuesta += "-Comuna.\n";
+        if(vistaMC.getComboRegion().compareTo("") == 0) respuesta += "-Región.\n";
+        if(vistaMC.getComboComuna().compareTo("") == 0) respuesta += "-Comuna.\n";
         return respuesta;
     }
 
-    public Object[][] cargarComunas(int region) {
+    public Object[] cargarComunas(int region) {
         controladorPrincipal miControlador = new controladorPrincipal();
         return miControlador.cargarComunas(region);
+    }
+    
+    public Object[] cargarCiudades(int region) {
+        controladorPrincipal miControlador = new controladorPrincipal();
+        return miControlador.cargarCiudades(region);
     }
 }

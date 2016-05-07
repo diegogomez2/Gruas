@@ -126,7 +126,7 @@ public class controladorPrincipal {
 
     public void crearControladorIngresarGruas() {
         modelos.modeloTonelajes tonelajes = new modeloTonelajes();
-        Object[][] dataTonelajes = tonelajes.listarTonelajes();
+        Object[] dataTonelajes = tonelajes.listarTonelajes();
         controladorIngresarGruas micontroladorIG;
         micontroladorIG = new controladorIngresarGruas();
         micontroladorIG.mostrarVistaIngresarGruas(dataTonelajes);
@@ -203,7 +203,7 @@ public class controladorPrincipal {
         clientes = new modeloClientes();
         gruas = new modelos.modeloGruas();
         empleados = new modelos.modeloEmpleados();
-        Object[][] dataClientes, dataGruas, dataEmpleados;
+        Object[] dataClientes, dataGruas, dataEmpleados;
         dataClientes = clientes.obtenerRazonClientes();
         dataGruas = gruas.obtenerDescGruas();
         dataEmpleados = empleados.obtenerNombresEmpleados();
@@ -219,7 +219,7 @@ public class controladorPrincipal {
         clientes = new modeloClientes();
         gruas = new modelos.modeloGruas();
         empleados = new modelos.modeloEmpleados();
-        Object[][] dataClientes, dataGruas, dataEmpleados;
+        Object[] dataClientes, dataGruas, dataEmpleados;
         dataClientes = clientes.obtenerRazonClientes();
         dataGruas = gruas.obtenerDescGruas();
         dataEmpleados = empleados.obtenerNombresEmpleados();
@@ -252,21 +252,20 @@ public class controladorPrincipal {
         return micontroladorFacturas.mostrarTabControlFacturas(tipo, data);    
     }
     
-//    public JPanel crearControladorFacturadasP() {
-//        modelos.modeloOts ots;
-//        ots = new modelos.modeloOts();
-//        Object[][] data;
-//        data = ots.obtenerNetoTotal(tipo);
-//        micontroladorFacturadas = new controladorFacturadas();
-//        return micontroladorFacturadas.mostrarTabControlFacturadas(tipo, data);    
-//    }
+    public JPanel crearControladorFacturadasP() {
+        modelos.modeloFacturas facturas;
+        facturas = new modelos.modeloFacturas();
+        Object[][] data;
+        data = facturas.listarFacturadas();
+        micontroladorFacturadas = new controladorFacturadas();
+        return micontroladorFacturadas.mostrarTabControlFacturadasP(tipo, data);    
+    }
     
     void crearControladorDetalleFacturas(String id) throws ParseException {
         controladorDetalleFacturas micontroladorDF;
         micontroladorDF = new controladorDetalleFacturas();
         micontroladorDF.mostrarVistaDetalleFacturas(id);
     }
-    
     
     public void crearControladorUsuarios() {
         modelos.modeloUsuarios usuarios;
@@ -398,10 +397,10 @@ public class controladorPrincipal {
         return data;
     }
     
-    public void crearControladorIngresarOT(String[] data) throws ParseException {
+    public void crearControladorIngresarOT(String[] data, Object[] ciudades) throws ParseException {
         controladorIngresarOts micontroladorOT;
         micontroladorOT = new controladorIngresarOts();
-        micontroladorOT.mostrarVistaIngresarOts(data);    
+        micontroladorOT.mostrarVistaIngresarOts(data, ciudades);    
     }
     
     public void cambiarClaveUsuario(String pwNueva) {
@@ -443,15 +442,21 @@ public class controladorPrincipal {
         }
     }
 
-    public Object[][] cargarComunas(int region) {
+    public Object[] cargarComunas(int region) {
         modelos.modeloRegiones comunas = new modelos.modeloRegiones();
-        Object[][] data = comunas.listaComunas(region);
+        Object[] data = comunas.listaComunas(region);
+        return data;
+    }
+    
+    public Object[] cargarCiudades(int region) {
+        modelos.modeloRegiones ciudades = new modelos.modeloRegiones();
+        Object[] data = ciudades.listaCiudades(region);
         return data;
     }
 
-    Object[][] obtenerRazonClientes() {
+    Object[] obtenerRazonClientes() {
         modelos.modeloClientes clientes = new modelos.modeloClientes();
-        Object[][] data = clientes.obtenerRazonClientes();
+        Object[] data = clientes.obtenerRazonClientes();
         return data;
     }
 
@@ -504,11 +509,14 @@ public class controladorPrincipal {
 
     void crearControladorIngresarOts(String id) throws ParseException {
         String[] data;
+        Object[] ciudades;
         modelos.modeloJornadas jornada = new modeloJornadas();
+        modelos.modeloRegiones ciudad = new modeloRegiones();
         data = jornada.obtenerJornadaPorId(id);
+        ciudades = ciudad.listaCiudades2();
         controladores.controladorIngresarOts micontroladorIO;
         micontroladorIO = new controladorIngresarOts();
-        micontroladorIO.mostrarVistaIngresarOts(data);
+        micontroladorIO.mostrarVistaIngresarOts(data, ciudades);
     }
     
     public String[] obtenerOtPorId(String id) {

@@ -21,34 +21,52 @@ public class vistaModificarClientes extends javax.swing.JDialog {
     /**
      * Creates new form vistaModificarClientes
      */
-    public vistaModificarClientes(java.awt.Frame parent, boolean modal, final Object[][] regiones) {
+    public vistaModificarClientes(java.awt.Frame parent, boolean modal, final Object[][] regiones, String reg,
+            String ciu, String com) {
         super(parent, modal);
         initComponents();
         String[] listaRegiones = new String[regiones.length];
         for(int i = 0; i < regiones.length; i++){
             listaRegiones[i] = regiones[i][1].toString();
         }
-        textoRegion.setModel(new DefaultComboBoxModel<String>(listaRegiones));
+        comboRegion.setModel(new DefaultComboBoxModel<String>(listaRegiones));
         cargarComunas(regiones);
-        textoRegion.addActionListener(new ActionListener() {
+        cargarCiudades(regiones);
+        setComboRegion(reg);
+        setComboCiudad(ciu);
+        setComboComuna(com);
+        comboRegion.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
                 cargarComunas(regiones);
+                cargarCiudades(regiones);
             }
         });
     }
     
     public void cargarComunas(Object[][] regiones){
         controladores.controladorModificarClientes miControlador = new controladorModificarClientes();
-        int index = textoRegion.getSelectedIndex();
+        int index = comboRegion.getSelectedIndex();
         int region = Integer.parseInt(regiones[index][0].toString());
-        Object[][] comunas = miControlador.cargarComunas(region);
+        Object[] comunas = miControlador.cargarComunas(region);
         String[] listaComunas = new String[comunas.length];
         for(int i = 0; i < comunas.length; i++){
-            listaComunas[i] = comunas[i][0].toString();
+            listaComunas[i] = comunas[i].toString();
         }
-        textoComuna.setModel(new DefaultComboBoxModel<String>(listaComunas));
+        comboComuna.setModel(new DefaultComboBoxModel<String>(listaComunas));
+    }
+    
+    public void cargarCiudades(Object[][] regiones){
+        controladores.controladorModificarClientes miControlador = new controladorModificarClientes();
+        int index = comboRegion.getSelectedIndex();
+        int region = Integer.parseInt(regiones[index][0].toString());
+        Object[] ciudades = miControlador.cargarCiudades(region);
+        String[] listaCiudades = new String[ciudades.length];
+        for(int i = 0; i < ciudades.length; i++){
+            listaCiudades[i] = ciudades[i].toString();
+        }
+        comboCiudad.setModel(new DefaultComboBoxModel<String>(listaCiudades));
     }
 
     /**
@@ -79,9 +97,11 @@ public class vistaModificarClientes extends javax.swing.JDialog {
         labelDireccion = new javax.swing.JLabel();
         textoDireccion = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        textoRegion = new javax.swing.JComboBox<String>();
+        comboRegion = new javax.swing.JComboBox<String>();
         labelComuna = new javax.swing.JLabel();
-        textoComuna = new javax.swing.JComboBox<String>();
+        comboComuna = new javax.swing.JComboBox<String>();
+        jLabel1 = new javax.swing.JLabel();
+        comboCiudad = new javax.swing.JComboBox();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         textoObs = new javax.swing.JTextArea();
@@ -163,7 +183,7 @@ public class vistaModificarClientes extends javax.swing.JDialog {
                 .addComponent(labelCel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(textoCel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Domicilio"));
@@ -174,6 +194,8 @@ public class vistaModificarClientes extends javax.swing.JDialog {
 
         labelComuna.setText("Comuna");
 
+        jLabel1.setText("Ciudad");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -182,14 +204,16 @@ public class vistaModificarClientes extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(textoDireccion)
-                    .addComponent(textoRegion, 0, 0, Short.MAX_VALUE)
+                    .addComponent(comboRegion, 0, 0, Short.MAX_VALUE)
+                    .addComponent(comboComuna, 0, 0, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(labelDireccion)
                             .addComponent(jLabel2)
+                            .addComponent(jLabel1)
                             .addComponent(labelComuna))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(textoComuna, 0, 0, Short.MAX_VALUE))
+                    .addComponent(comboCiudad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -202,12 +226,16 @@ public class vistaModificarClientes extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textoRegion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(comboRegion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(comboCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelComuna)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textoComuna, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(comboComuna, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Observaciones"));
@@ -229,7 +257,7 @@ public class vistaModificarClientes extends javax.swing.JDialog {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -271,13 +299,15 @@ public class vistaModificarClientes extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonAceptar)
                     .addComponent(botonCancelar))
@@ -293,9 +323,7 @@ public class vistaModificarClientes extends javax.swing.JDialog {
         boolean esVacio = respuesta.length() == 0;
         if (!esVacio) {
             JOptionPane.showMessageDialog(this, respuesta, "Debe rellenar los siguientes campos", JOptionPane.INFORMATION_MESSAGE);
-            //remarcarVacios();
         } else {
-            //remarcarVacios();
             boolean rutValido = miControladorMC.verificarRut(getTextoRut());
             if (rutValido) {
                 if (miControladorMC.irVistaClientesP()) {
@@ -346,6 +374,10 @@ public class vistaModificarClientes extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAceptar;
     private javax.swing.JButton botonCancelar;
+    private javax.swing.JComboBox comboCiudad;
+    private javax.swing.JComboBox<String> comboComuna;
+    private javax.swing.JComboBox<String> comboRegion;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -361,14 +393,12 @@ public class vistaModificarClientes extends javax.swing.JDialog {
     private javax.swing.JLabel labelRut;
     private javax.swing.JLabel labelTelefono;
     private javax.swing.JTextField textoCel;
-    private javax.swing.JComboBox<String> textoComuna;
     private javax.swing.JTextField textoContacto;
     private javax.swing.JTextField textoCorreo;
     private javax.swing.JTextField textoDireccion;
     private javax.swing.JTextField textoGiro;
     private javax.swing.JTextArea textoObs;
     private javax.swing.JTextField textoRazon;
-    private javax.swing.JComboBox<String> textoRegion;
     private javax.swing.JTextField textoRut;
     private javax.swing.JTextField textoTelefono;
     // End of variables declaration//GEN-END:variables
@@ -381,9 +411,14 @@ public class vistaModificarClientes extends javax.swing.JDialog {
         return textoCel.getText();
     }
 
-    public String getTextoComuna() {
-        return textoComuna.getSelectedItem().toString();
+    public String getComboComuna() {
+        return comboComuna.getSelectedItem().toString();
     }
+    
+    public String getComboCiudad() {
+        return comboCiudad.getSelectedItem().toString();
+    }
+
 
     public String getTextoCorreo() {
         return textoCorreo.getText();
@@ -417,8 +452,8 @@ public class vistaModificarClientes extends javax.swing.JDialog {
         return textoTelefono.getText();
     }
 
-    public String getTextoRegion() {
-        return textoRegion.getSelectedItem().toString();
+    public String getComboRegion() {
+        return comboRegion.getSelectedItem().toString();
     }
 
     public void setRut(int rut){
@@ -429,8 +464,12 @@ public class vistaModificarClientes extends javax.swing.JDialog {
         this.textoCel.setText(textoCel);
     }
 
-    public void setTextoComuna(String textoComuna) {
-        this.textoComuna.setSelectedItem(textoComuna);
+    public void setComboComuna(String textoComuna) {
+        this.comboComuna.setSelectedItem(textoComuna);
+    }
+    
+    public void setComboCiudad(String textoCiudad) {
+        this.comboCiudad.setSelectedItem(textoCiudad);
     }
 
     public void setTextoCorreo(String textoCorreo) {
@@ -457,8 +496,8 @@ public class vistaModificarClientes extends javax.swing.JDialog {
         this.textoRazon.setText(textoRazon);
     }
 
-    public void setTextoRegion(String textoRegion) {
-        this.textoRegion.setSelectedItem(textoRegion);
+    public void setComboRegion(String textoRegion) {
+        this.comboRegion.setSelectedItem(textoRegion);
     }
 
     public void setTextoRut(String textoRut) {
@@ -468,73 +507,4 @@ public class vistaModificarClientes extends javax.swing.JDialog {
     public void setTextoTelefono(String textoTelefono) {
         this.textoTelefono.setText(textoTelefono);
     }
-
-//    private void remarcarVacios() {
-//        boolean vacio;
-//        vacio = (textoRut.getText().compareTo("") == 0)? true : false;
-//        setLabelRut(vacio);
-//        vacio = (textoContacto.getText().compareTo("") == 0)? true : false;
-//        setLabelNombres(vacio);
-//       vacio = (textoApPaterno.getText().compareTo("") == 0)? true : false;
-//        setLabelApPaterno(vacio);
-//        vacio = (textoApMaterno.getText().compareTo("") == 0)? true : false;
-//        setLabelApMaterno(vacio);
-//        vacio = (textoRazon.getText().compareTo("") == 0)? true : false;
-//        setLabelRazon(vacio);
-//        vacio = (textoGiro.getText().compareTo("") == 0)? true : false;
-//        setLabelGiro(vacio);
-//        vacio = (textoCorreo.getText().compareTo("") == 0)? true : false;
-//        setLabelCorreo(vacio);
-//        vacio = (textoDireccion.getText().compareTo("") == 0)? true : false;
-//        setLabelDireccion(vacio);    
-//    }
-
-//
-//    public void setLabelCorreo(boolean vacio) {
-//        if(vacio){
-//            labelCorreo.setText("<html>Correo<font color='red'> (*)</font></html>");
-//        }else{
-//            labelCorreo.setText("Correo");
-//        }
-//    }
-//
-//    public void setLabelDireccion(boolean vacio) {
-//        if(vacio){
-//            labelDireccion.setText("<html>Dirección<font color='red'> (*)</font></html>");
-//        }else{
-//            labelDireccion.setText("Dirección");
-//        }
-//    }
-//
-//    public void setLabelNombres(boolean vacio) {
-//        if(vacio){
-//            labelContacto.setText("<html>Nombres<font color='red'> (*)</font></html>");
-//        }else{
-//            labelContacto.setText("Nombres");
-//        }
-//    }
-//
-//    public void setLabelRazon(boolean vacio) {
-//        if(vacio){
-//            labelRazon.setText("<html>Razón<font color='red'> (*)</font></html>");
-//        }else{
-//            labelRazon.setText("Razón");
-//        }
-//    }
-//
-//    public void setLabelRut(boolean vacio) {
-//        if(vacio){
-//            labelRut.setText("<html>Rut<font color='red'> (*)</font></html>");
-//        }else{
-//            labelRut.setText("Rut");
-//        }
-//    }
-//
-//    public void setLabelGiro(boolean vacio) {
-//        if(vacio){
-//            labelGiro.setText("<html>Giro<font color='red'> (*)</font></html>");
-//        }else{
-//            labelGiro.setText("Giro");
-//        }
-//    }
 }

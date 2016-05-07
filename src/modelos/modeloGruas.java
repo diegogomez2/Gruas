@@ -243,9 +243,8 @@ public class modeloGruas {
         return "correcto";    
     }
 
-    public Object[][] obtenerDescGruas() {
+    public Object[] obtenerDescGruas() {
         int registros = 0;
-        
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
@@ -260,7 +259,7 @@ public class modeloGruas {
             System.out.println(e);
        }
         
-        Object[][] data = new String[registros][1];
+        Object[] data = new String[registros];
         
         try{
             PreparedStatement pstm = conn.prepareStatement("SELECT des_gru FROM Gruas");
@@ -268,7 +267,7 @@ public class modeloGruas {
             int i = 0;
             while(res.next()){
                 String estdes = res.getString("des_gru");
-                data[i][0] = estdes;
+                data[i] = estdes;
                 i++;
             }
             res.close();

@@ -10,6 +10,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
@@ -36,7 +37,7 @@ public class vistaIngresarOts extends javax.swing.JDialog {
     SimpleDateFormat formatClock = new SimpleDateFormat("HH:mm:ss");
     String id;
     
-    public vistaIngresarOts(java.awt.Frame parent, boolean modal, String[] data) throws ParseException {
+    public vistaIngresarOts(java.awt.Frame parent, boolean modal, String[] data, Object[] ciudades) throws ParseException {
         super(parent, modal);
         initComponents();
         diaInicio = data[0];
@@ -57,14 +58,19 @@ public class vistaIngresarOts extends javax.swing.JDialog {
         textoDireccion.setText(data[11]);
         textoTelefono.setText(data[12]);   
         id = data[13];
-        textoNeto.setText(valores[0]);
-        textoIva.setText(valores[1]);
-        textoBruto.setText(valores[2]);
+        textoNeto.setText(String.format("%,d", Integer.parseInt(valores[0])));
+        textoIva.setText(String.format("%,d", Integer.parseInt(valores[1])));
+        textoBruto.setText(String.format("%,d", Integer.parseInt(valores[2])));
         spinnerHoraSalida.setValue(formatClock.parse(horaInicio));
         spinnerHoraLlegada.setValue(formatClock.parse(horaFin));
         spinnerFinFaena.setValue(formatClock.parse(horaFin));
         textoFechaOt.setDate(new Date());
         horas = Integer.parseInt(valores[3]);
+        String[] listaRegiones = new String[ciudades.length];
+        for(int i = 0; i < ciudades.length; i++){
+            listaRegiones[i] = ciudades[i].toString();
+        }
+        comboCiudad.setModel(new DefaultComboBoxModel<String>(listaRegiones));
     }
 
     /**
@@ -88,7 +94,7 @@ public class vistaIngresarOts extends javax.swing.JDialog {
         jLabel4 = new javax.swing.JLabel();
         textoRutCliente = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<String>();
+        comboCiudad = new javax.swing.JComboBox<String>();
         textoTelefono = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -147,7 +153,7 @@ public class vistaIngresarOts extends javax.swing.JDialog {
 
         jLabel5.setText("Ciudad");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione un item" }));
+        comboCiudad.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione un item" }));
 
         jLabel6.setText("Teléfono");
 
@@ -364,7 +370,7 @@ public class vistaIngresarOts extends javax.swing.JDialog {
                                     .addComponent(jLabel4)
                                     .addComponent(textoRutCliente)
                                     .addComponent(jLabel5)
-                                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(comboCiudad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(textoTelefono)
                                     .addComponent(jLabel6)
                                     .addComponent(jLabel7)
@@ -424,7 +430,7 @@ public class vistaIngresarOts extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textoDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(comboFormaPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -545,10 +551,10 @@ public class vistaIngresarOts extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonCancelar;
     private javax.swing.JButton botonIngresar;
+    private javax.swing.JComboBox<String> comboCiudad;
     private javax.swing.JComboBox<String> comboCondPago;
     private javax.swing.JComboBox<String> comboFormaPago;
     private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

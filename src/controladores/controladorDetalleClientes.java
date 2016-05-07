@@ -26,9 +26,10 @@ class controladorDetalleClientes {
         vistaDC.setTextoTelefono(data[5]);
         vistaDC.setTextoCel(data[6]);
         vistaDC.setTextoDireccion(data[7]);
-        vistaDC.setTextoRegion(data[8]);
-        vistaDC.setTextoComuna(data[9]);
-        vistaDC.setTextoObs(data[10]);
+        vistaDC.setComboRegion(data[8]);
+        vistaDC.setComboCiudad(data[9]);
+        vistaDC.setComboComuna(data[10]);
+        vistaDC.setTextoObs(data[11]);
         vistaDC.setLocationRelativeTo(null);
         vistaDC.setVisible(true);
     }

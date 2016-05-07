@@ -141,7 +141,7 @@ public class vistaClientesP extends javax.swing.JPanel {
 
     private void botonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarActionPerformed
         controladores.controladorClientes miControlador = new controladores.controladorClientes();
-        String rut, nombres, apP;
+        String rut, nombres;
         boolean selected = tablaClientes.getSelectedRowCount() > 0;
         if(selected){
             int row = getFilaSeleccionada();

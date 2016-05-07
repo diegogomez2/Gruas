@@ -16,21 +16,15 @@ import vistas.vistaOtsP;
  */
 public class controladorOts {
     static vistas.vistaOtsP vistaOtsP;
-
-//    void mostrarVistaOT(String tipo, Object[][] data) {
-//        if(vistaOT != null) vistaOT.setVisible(false);
-//        vistaOT = new vistaOT(tipo, data);
-//        vistaOT.setVisible(true);    
-//    }
     
     JPanel mostrarTabControlOts(String tipo, Object[][] data) {
         vistaOtsP = new vistas.vistaOtsP(tipo, data);  
         return vistaOtsP;
     }
 
-    public void irVistaIngresarOT(String[] data) throws ParseException {
+    public void irVistaIngresarOT(String[] data, Object[] ciudades) throws ParseException {
         controladorPrincipal miControlador = new controladorPrincipal();
-        miControlador.crearControladorIngresarOT(data);
+        miControlador.crearControladorIngresarOT(data, ciudades);
     }
     
     public String getIdFactura(String id){
@@ -43,9 +37,11 @@ public class controladorOts {
     public void crearControladorPrincipal(JTabbedPane tabs){
         controladorPrincipal miControlador = new controladorPrincipal();
         tabs.remove(4);
-        //tabs.remove(4);
+        tabs.remove(4);
+        tabs.remove(4);
         tabs.insertTab("OTs", null, miControlador.crearControladorOtsP(), null, 4);
-        //tabs.insertTab("Facturas", null, miControlador.crearControladorFacturasP(), null, 5);
+        tabs.insertTab("A facturar", null, miControlador.crearControladorFacturasP(), null, 5);
+        tabs.insertTab("Facturadas", null, miControlador.crearControladorFacturadasP(), null, 6);
         tabs.setSelectedIndex(4);
     }
     

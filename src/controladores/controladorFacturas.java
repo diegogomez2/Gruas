@@ -5,9 +5,13 @@
  */
 package controladores;
 
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import modelos.modeloFacturas;
 import modelos.modeloOts;
 import vistas.vistaFacturasP;
 
@@ -16,7 +20,7 @@ import vistas.vistaFacturasP;
  * @author diego
  */
 public class controladorFacturas {
-    
+    DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
     static vistas.vistaFacturasP vistaFacturasP;
     
     JPanel mostrarTabControlFacturas(String tipo, Object[][] data) {
@@ -36,10 +40,12 @@ public class controladorFacturas {
         miControlador.crearControladorDetalleFacturas(id);
     }
     
-    public String archivarFacturas(String[] idOts){
-        modelos.modeloOts factura = new modeloOts();
+    public String archivarFacturas(String[] idOts, int neto, int iva, int total){
+        modelos.modeloFacturas factura = new modeloFacturas();
+        modelos.modeloOts ot = new modeloOts();
+        String id = factura.ingresarFacturada(formatDate.format(new Date()), neto, iva, total);
         for(int i = 0; i < idOts.length; i++){
-            factura.archivarFactura(idOts[i]);
+            ot.archivarFactura(idOts[i], id);
         }
         return "correcto";
     }

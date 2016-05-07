@@ -25,8 +25,8 @@ public class controladorIngresarOts {
     SimpleDateFormat formatClock = new SimpleDateFormat("HH:mm");
     SimpleDateFormat formatDay = new SimpleDateFormat("E");
     
-    void mostrarVistaIngresarOts(String[] data) throws ParseException {
-        vistaIO = new vistaIngresarOts(new javax.swing.JFrame(), true, data);
+    void mostrarVistaIngresarOts(String[] data, Object[] ciudades) throws ParseException {
+        vistaIO = new vistaIngresarOts(new javax.swing.JFrame(), true, data, ciudades);
         vistaIO.setLocationRelativeTo(null);
         vistaIO.setVisible(true);        
     }
@@ -132,12 +132,12 @@ public class controladorIngresarOts {
         }
         data = new String[]{Integer.toString((int)totalTarifa), String.valueOf((int)(totalTarifa * 0.19)),
             String.valueOf((int)(totalTarifa * 1.19)), Integer.toString(horasTotales)};
-        StringBuilder str = new StringBuilder(data[0]);
-        data[0] = addDots(str);
-        str = new StringBuilder(data[1]);
-        data[1] = addDots(str);
-        str = new StringBuilder(data[2]);
-        data[2] = addDots(str);
+//        StringBuilder str = new StringBuilder(data[0]);
+//        data[0] = addDots(str);
+//        str = new StringBuilder(data[1]);
+//        data[1] = addDots(str);
+//        str = new StringBuilder(data[2]);
+//        data[2] = addDots(str);
         //actualizarHorometro(horasTotales, desc);
         //
         return data;

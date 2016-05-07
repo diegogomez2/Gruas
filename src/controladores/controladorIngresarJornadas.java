@@ -17,7 +17,7 @@ public class controladorIngresarJornadas {
 
     static vistas.vistaIngresarJornadas vistaIJ;
     
-    void mostrarVistaIngresarJornadas(Object[][] clientes, Object[][] gruas, Object[][] empleados) {
+    void mostrarVistaIngresarJornadas(Object[] clientes, Object[] gruas, Object[] empleados) {
         vistaIJ = new vistaIngresarJornadas(new javax.swing.JFrame(), true, clientes, gruas, empleados);
         vistaIJ.setLocationRelativeTo(null);
         vistaIJ.setVisible(true);    

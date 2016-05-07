@@ -18,12 +18,11 @@ import java.sql.SQLException;
 public class modeloRegiones {
     static String login = "root";
     static String password = "205243";
-    static String url = "jdbc:mysql://localhost:3306/factgruas";
+    static String url = "jdbc:mysql://localhost:3306/fact_gruas";
     Connection conn = null;
     
     public Object[][] listarRegiones(){
         int registros = 0;
-        
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
@@ -58,7 +57,7 @@ public class modeloRegiones {
         return data;
     }
 
-    public Object[][] listaComunas(int region) {
+    public Object[] listaComunas(int region) {
         int registros = 0;
         
         try{
@@ -77,7 +76,7 @@ public class modeloRegiones {
             System.out.println(e);
        }
         
-        Object[][] data = new String[registros][1];
+        Object[] data = new String[registros];
         
         try{
             PreparedStatement pstm = conn.prepareStatement("SELECT nom_com FROM Comunas INNER JOIN regiones ON comunas.id_reg = regiones.id_reg where comunas.id_reg = ? ORDER BY nom_com");
@@ -86,7 +85,81 @@ public class modeloRegiones {
             int i = 0;
             while(res.next()){
                 String estnom = res.getString("nom_com");
-                data[i][0] = estnom;
+                data[i] = estnom;
+                i++;
+            }
+            res.close();
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+        return data;
+    }
+    
+    public Object[] listaCiudades(int region) {
+        int registros = 0;
+        
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Ciudades INNER JOIN"
+                    + " Regiones ON ciudades.id_reg = regiones.id_reg WHERE regiones.id_reg = ?");
+            pstm.setInt(1, region);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+       }catch(SQLException e){
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        
+        Object[] data = new String[registros];
+        
+        try{
+            PreparedStatement pstm = conn.prepareStatement("SELECT nom_ciud FROM Ciudades INNER JOIN regiones ON ciudades.id_reg = regiones.id_reg "
+                    + "where ciudades.id_reg = ? ORDER BY nom_ciud");
+            pstm.setInt(1, region);
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while(res.next()){
+                String estnom = res.getString("nom_ciud");
+                data[i] = estnom;
+                i++;
+            }
+            res.close();
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+        return data;
+    }
+    
+    public Object[] listaCiudades2() {
+        int registros = 0;
+        
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Ciudades");
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+       }catch(SQLException e){
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        
+        Object[] data = new String[registros];
+        
+        try{
+            PreparedStatement pstm = conn.prepareStatement("SELECT nom_ciud FROM Ciudades ORDER BY nom_ciud");
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while(res.next()){
+                String estnom = res.getString("nom_ciud");
+                data[i] = estnom;
                 i++;
             }
             res.close();

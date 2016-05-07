@@ -49,6 +49,7 @@ public class modeloEmpleados {
             res.close();
        }catch(SQLException e){
             System.out.println(e);
+            e.printStackTrace();
        }catch(ClassNotFoundException e){
             System.out.println(e);
        }
@@ -80,9 +81,8 @@ public class modeloEmpleados {
         return data;
     }
 
-    public Object[][] obtenerNombresEmpleados() {
+    public Object[] obtenerNombresEmpleados() {
         int registros = 0;
-        
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
@@ -97,7 +97,7 @@ public class modeloEmpleados {
             System.out.println(e);
        }
         
-        Object[][] data = new String[registros][3];
+        Object[] data = new String[registros];
         
         try{
             PreparedStatement pstm = conn.prepareStatement("SELECT nom_emp, apP_emp, apM_emp FROM empleados ORDER BY apP_emp");
@@ -107,7 +107,7 @@ public class modeloEmpleados {
                 String estnombres = res.getString("nom_emp");
                 String estapPaterno = res.getString("apP_emp");
                 String estapMaterno = res.getString("apM_emp");
-                data[i][0] = estnombres + " " + estapPaterno + " " + estapMaterno;
+                data[i] = estnombres + " " + estapPaterno + " " + estapMaterno;
                 i++;
             }
             res.close();

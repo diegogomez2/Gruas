@@ -15,7 +15,6 @@ import vistas.vistaIngresarClientes;
  */
 public class controladorIngresarClientes {
 
-    //String rut, nombre, direccion;
     static vistas.vistaIngresarClientes vistaIC;
 
     public void mostrarVistaIngresarClientes(Object[][] dataRegiones) {
@@ -29,8 +28,8 @@ public class controladorIngresarClientes {
         String[] rut_dv = vistaIC.getTextoRut().split("-");
         String[] data = {rut_dv[0], rut_dv[1], vistaIC.getTextoContacto(), vistaIC.getTextoRazon(), 
             vistaIC.getTextoGiro(), vistaIC.getTextoCorreo(), vistaIC.getTextoTelefono(), 
-            vistaIC.getTextoCel(), vistaIC.getTextoDireccion(), vistaIC.getTextoRegion(),
-            vistaIC.getTextoComuna(), vistaIC.getTextoObs()};
+            vistaIC.getTextoCel(), vistaIC.getTextoDireccion(), vistaIC.getComboRegion(),
+            vistaIC.getComboComuna(), vistaIC.getComboCiudad(), vistaIC.getTextoObs()};
         boolean flag = miControlador.ingresarCliente(data);
         return flag;
     }
@@ -84,26 +83,31 @@ public class controladorIngresarClientes {
         if (vistaIC.getTextoGiro().compareTo("") == 0) {
             respuesta += "-Giro.\n";
         }
-        if (vistaIC.getTextoCorreo().compareTo("") == 0) {
-            respuesta += "-Correo.\n";
-        }
+//        if (vistaIC.getTextoCorreo().compareTo("") == 0) {
+//            respuesta += "-Correo.\n";
+//        }
         if (vistaIC.getTextoDireccion().compareTo("") == 0) {
             respuesta += "-Dirección.\n";
         }
-        if (vistaIC.getTextoRegion().compareTo("") == 0) {
-            respuesta += "-Región.\n";
-        }
-        if (vistaIC.getTextoComuna().compareTo("") == 0) {
-            respuesta += "-Comuna.\n";
-        }
-        if(vistaIC.getTextoTelefono().compareTo("") == 0){
-            respuesta += "-Teléfono.\n";
-        }
+//        if (vistaIC.getTextoRegion().compareTo("") == 0) {
+//            respuesta += "-Región.\n";
+//        }
+//        if (vistaIC.getTextoComuna().compareTo("") == 0) {
+//            respuesta += "-Comuna.\n";
+//        }
+//        if(vistaIC.getTextoTelefono().compareTo("") == 0){
+//            respuesta += "-Teléfono.\n";
+//        }
         return respuesta;
     }
 
-    public Object[][] cargarComunas(int region) {
+    public Object[] cargarComunas(int region) {
         controladorPrincipal miControlador = new controladorPrincipal();
         return miControlador.cargarComunas(region);
+    }
+    
+    public Object[] cargarCiudades(int region) {
+        controladorPrincipal miControlador = new controladorPrincipal();
+        return miControlador.cargarCiudades(region);
     }
 }

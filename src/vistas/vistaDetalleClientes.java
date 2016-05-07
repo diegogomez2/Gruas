@@ -52,9 +52,11 @@ public class vistaDetalleClientes extends javax.swing.JDialog {
         labelDireccion = new javax.swing.JLabel();
         textoDireccion = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        textoRegion = new javax.swing.JComboBox<String>();
+        comboRegion = new javax.swing.JComboBox<String>();
         labelComuna = new javax.swing.JLabel();
-        textoComuna = new javax.swing.JComboBox<String>();
+        comboComuna = new javax.swing.JComboBox<String>();
+        labelCiudad = new javax.swing.JLabel();
+        comboCiudad = new javax.swing.JComboBox();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         textoObs = new javax.swing.JTextArea();
@@ -177,13 +179,18 @@ public class vistaDetalleClientes extends javax.swing.JDialog {
 
         jLabel2.setText("Región");
 
-        textoRegion.setEditable(true);
-        textoRegion.setEnabled(false);
+        comboRegion.setEditable(true);
+        comboRegion.setEnabled(false);
 
         labelComuna.setText("Comuna");
 
-        textoComuna.setEditable(true);
-        textoComuna.setEnabled(false);
+        comboComuna.setEditable(true);
+        comboComuna.setEnabled(false);
+
+        labelCiudad.setText("Ciudad");
+
+        comboCiudad.setEditable(true);
+        comboCiudad.setEnabled(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -193,14 +200,16 @@ public class vistaDetalleClientes extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(textoDireccion)
-                    .addComponent(textoRegion, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(comboRegion, 0, 336, Short.MAX_VALUE)
+                    .addComponent(comboComuna, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(labelDireccion)
                             .addComponent(jLabel2)
-                            .addComponent(labelComuna))
+                            .addComponent(labelComuna)
+                            .addComponent(labelCiudad))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(textoComuna, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(comboCiudad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -213,12 +222,16 @@ public class vistaDetalleClientes extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textoRegion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(comboRegion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(labelCiudad)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(comboCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelComuna)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textoComuna, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(comboComuna, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Observaciones"));
@@ -243,7 +256,7 @@ public class vistaDetalleClientes extends javax.swing.JDialog {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -276,13 +289,13 @@ public class vistaDetalleClientes extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(13, 13, 13)
                 .addComponent(botonCancelar)
                 .addContainerGap())
         );
@@ -339,6 +352,9 @@ public class vistaDetalleClientes extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonCancelar;
+    private javax.swing.JComboBox comboCiudad;
+    private javax.swing.JComboBox<String> comboComuna;
+    private javax.swing.JComboBox<String> comboRegion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
@@ -346,6 +362,7 @@ public class vistaDetalleClientes extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelCel;
+    private javax.swing.JLabel labelCiudad;
     private javax.swing.JLabel labelComuna;
     private javax.swing.JLabel labelContacto;
     private javax.swing.JLabel labelCorreo;
@@ -354,14 +371,12 @@ public class vistaDetalleClientes extends javax.swing.JDialog {
     private javax.swing.JLabel labelRut;
     private javax.swing.JLabel labelTelefono;
     private javax.swing.JTextField textoCel;
-    private javax.swing.JComboBox<String> textoComuna;
     private javax.swing.JTextField textoContacto;
     private javax.swing.JTextField textoCorreo;
     private javax.swing.JTextField textoDireccion;
     private javax.swing.JTextField textoGiro;
     private javax.swing.JTextArea textoObs;
     private javax.swing.JTextField textoRazon;
-    private javax.swing.JComboBox<String> textoRegion;
     private javax.swing.JTextField textoRut;
     private javax.swing.JTextField textoTelefono;
     // End of variables declaration//GEN-END:variables
@@ -371,9 +386,9 @@ public class vistaDetalleClientes extends javax.swing.JDialog {
         this.textoCel.setText(textoCel);
     }
 
-    public void setTextoComuna(String textoComuna) {
-        this.textoComuna.setSelectedItem(textoComuna);
-        ((JTextField)this.textoComuna.getEditor().getEditorComponent()).setDisabledTextColor(Color.black);
+    public void setComboComuna(String textoComuna) {
+        this.comboComuna.setSelectedItem(textoComuna);
+        ((JTextField)this.comboComuna.getEditor().getEditorComponent()).setDisabledTextColor(Color.black);
     }
 
     public void setTextoCorreo(String textoCorreo) {
@@ -400,9 +415,14 @@ public class vistaDetalleClientes extends javax.swing.JDialog {
         this.textoRazon.setText(textoRazon);
     }
 
-    public void setTextoRegion(String textoRegion) {
-        this.textoRegion.setSelectedItem(textoRegion);
-        ((JTextField)this.textoRegion.getEditor().getEditorComponent()).setDisabledTextColor(Color.black);
+    public void setComboRegion(String textoRegion) {
+        this.comboRegion.setSelectedItem(textoRegion);
+        ((JTextField)this.comboRegion.getEditor().getEditorComponent()).setDisabledTextColor(Color.black);
+    }
+    
+    public void setComboCiudad(String textoCiudad){
+        this.comboCiudad.setSelectedItem(textoCiudad);
+        ((JTextField)this.comboCiudad.getEditor().getEditorComponent()).setDisabledTextColor(Color.black);
     }
 
     public void setTextoRut(String textoRut) {

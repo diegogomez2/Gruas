@@ -22,7 +22,7 @@ public class modeloTonelajes {
     static String url = "jdbc:mysql://localhost:3306/fact_gruas";
     Connection conn = null;
     
-    public Object[][] listarTonelajes(){
+    public Object[] listarTonelajes(){
         int registros = 0;
         
         try{
@@ -39,7 +39,7 @@ public class modeloTonelajes {
             System.out.println(e);
        }
         
-        Object[][] data = new String[registros][1];
+        Object[] data = new String[registros];
         
         try{
             PreparedStatement pstm = conn.prepareStatement("SELECT pes_ton FROM Tonelajes ORDER BY pes_ton");
@@ -47,7 +47,7 @@ public class modeloTonelajes {
             int i = 0;
             while(res.next()){
                 String estpes = res.getString("pes_ton");
-                data[i][0] = estpes;
+                data[i] = estpes;
                 i++;
             }
             res.close();
