@@ -39,7 +39,6 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        botonIngresar = new javax.swing.JButton();
         botonCancelar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         textoDescripcion = new javax.swing.JTextField();
@@ -105,14 +104,7 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        botonIngresar.setText("Aceptar");
-        botonIngresar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonIngresarActionPerformed(evt);
-            }
-        });
-
-        botonCancelar.setText("Cancelar");
+        botonCancelar.setText("OK");
         botonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonCancelarActionPerformed(evt);
@@ -493,13 +485,12 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(290, 290, 290)
-                        .addComponent(botonIngresar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(botonCancelar))
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(371, 371, 371)
+                        .addComponent(botonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -509,9 +500,7 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(botonIngresar)
-                            .addComponent(botonCancelar)))
+                        .addComponent(botonCancelar))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -532,20 +521,8 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void botonIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonIngresarActionPerformed
-        controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
-        controladores.controladorIngresarGruas miControladorIG = new controladores.controladorIngresarGruas();
-        String respuesta = miControladorIG.camposVacios();
-        boolean esVacio = respuesta.length() == 0;
-        if(!esVacio){
-            JOptionPane.showMessageDialog(this, respuesta, "Debe rellenar los siguientes campos", JOptionPane.INFORMATION_MESSAGE);
-        }else{
-            if(miControladorIG.irVistaGruasP()) setVisible(false);
-        }
-    }//GEN-LAST:event_botonIngresarActionPerformed
-
     private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
-        this.setVisible(false);
+        dispose();
     }//GEN-LAST:event_botonCancelarActionPerformed
 
     /**
@@ -592,7 +569,6 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonCancelar;
-    private javax.swing.JButton botonIngresar;
     private javax.swing.JComboBox<String> comboMastil;
     private javax.swing.JComboBox<String> comboTipoCombustible;
     private javax.swing.JComboBox comboTipoNeumaticos;
@@ -696,7 +672,9 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
     }
 
     public void setTextoFechaBaja(String textoFechaBaja) throws ParseException {
-        this.textoFechaBaja.setDate(formatDate.parse(textoFechaBaja));
+        if(textoFechaBaja.compareTo("") != 0){
+            this.textoFechaBaja.setDate(formatDate.parse(textoFechaBaja));
+        }
     }
 
     public String getTextoFechaIngreso() {
@@ -707,7 +685,9 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
     }
 
     public void setTextoFechaIngreso(String textoFechaIngreso) throws ParseException {
-        this.textoFechaIngreso.setDate(formatDate.parse(textoFechaIngreso));
+        if(textoFechaIngreso.compareTo("") != 0){
+            this.textoFechaIngreso.setDate(formatDate.parse(""));
+        }
     }
 
     public String getTextoFechaRT() {
@@ -718,7 +698,9 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
     }
 
     public void setTextoFechaRT(String textoFechaRT) throws ParseException {
-        this.textoFechaRT.setDate(formatDate.parse(textoFechaRT));
+        if(textoFechaRT.compareTo("") != 0){
+            this.textoFechaRT.setDate(formatDate.parse(textoFechaRT));
+        }
     }
 
     public String getTextoFechaUM() {
@@ -729,7 +711,9 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
     }
 
     public void setTextoFechaUM(String textoFechaUM) throws ParseException {
-        this.textoFechaUM.setDate(formatDate.parse(textoFechaUM));
+        if(textoFechaUM.compareTo("") != 0){
+            this.textoFechaUM.setDate(formatDate.parse(textoFechaUM));
+        }
     }
 
     public String getTextoHorasPM() {

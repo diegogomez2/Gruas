@@ -13,13 +13,15 @@ import javax.swing.JOptionPane;
  */
 class controladorCambioClave {
 
-    void cambiarClave(String pwNueva) {
+    int cambiarClave(String pwNueva) {
         modelos.modeloUsuarios usuario = new modelos.modeloUsuarios();
         String respuesta = usuario.cambiarClave(pwNueva);
         if(respuesta.compareTo("correcto") == 0){
             JOptionPane.showMessageDialog(null, "Contraseña cambiada con éxito");
+            return 1;
         }else{
             System.out.println("error");
+            return 0;
         }
     }
     

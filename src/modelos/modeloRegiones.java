@@ -32,6 +32,7 @@ public class modeloRegiones {
             registros = res.getInt("total");
             res.close();
        }catch(SQLException e){
+            System.out.println("Error obtener regiones");
             System.out.println(e);
        }catch(ClassNotFoundException e){
             System.out.println(e);
@@ -46,12 +47,12 @@ public class modeloRegiones {
             while(res.next()){
                 String estid = res.getString("id_reg");
                 String estnom = res.getString("nom_reg");
-                data[i][0] = estid;
-                data[i][1] = estnom;
+                data[i] = new String[]{estid, estnom};
                 i++;
             }
             res.close();
         }catch(SQLException e){
+            System.out.println("Error obtener regiones");
             System.out.println(e);
         }
         return data;
@@ -71,6 +72,7 @@ public class modeloRegiones {
             registros = res.getInt("total");
             res.close();
        }catch(SQLException e){
+            System.out.println("Error listar comunas");
             System.out.println(e);
        }catch(ClassNotFoundException e){
             System.out.println(e);
@@ -90,6 +92,7 @@ public class modeloRegiones {
             }
             res.close();
         }catch(SQLException e){
+            System.out.println("Error listar comunas");
             System.out.println(e);
         }
         return data;
@@ -109,6 +112,7 @@ public class modeloRegiones {
             registros = res.getInt("total");
             res.close();
        }catch(SQLException e){
+            System.out.println("Error listar ciudades");
             System.out.println(e);
        }catch(ClassNotFoundException e){
             System.out.println(e);
@@ -129,6 +133,7 @@ public class modeloRegiones {
             }
             res.close();
         }catch(SQLException e){
+            System.out.println("Error listar ciudades");
             System.out.println(e);
         }
         return data;
@@ -146,6 +151,7 @@ public class modeloRegiones {
             registros = res.getInt("total");
             res.close();
        }catch(SQLException e){
+            System.out.println("Error listar ciudades 2");
             System.out.println(e);
        }catch(ClassNotFoundException e){
             System.out.println(e);
@@ -164,6 +170,7 @@ public class modeloRegiones {
             }
             res.close();
         }catch(SQLException e){
+            System.out.println("Error listar ciudades 2");
             System.out.println(e);
         }
         return data;

@@ -27,6 +27,7 @@ public class controladorIngresarOts {
     
     void mostrarVistaIngresarOts(String[] data, Object[] ciudades) throws ParseException {
         vistaIO = new vistaIngresarOts(new javax.swing.JFrame(), true, data, ciudades);
+        //setters
         vistaIO.setLocationRelativeTo(null);
         vistaIO.setVisible(true);        
     }

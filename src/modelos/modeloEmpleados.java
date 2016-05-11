@@ -48,8 +48,8 @@ public class modeloEmpleados {
             registros = res.getInt("total");
             res.close();
        }catch(SQLException e){
+            System.out.println("Error al listar empleados");
             System.out.println(e);
-            e.printStackTrace();
        }catch(ClassNotFoundException e){
             System.out.println(e);
        }
@@ -63,19 +63,17 @@ public class modeloEmpleados {
             int i = 0;
             while(res.next()){
                 String estrut = res.getString("rut_emp");
-                String estdigito = res.getString("dig_emp");
-                String estnombres = res.getString("nom_emp");
-                String estapPaterno = res.getString("apP_emp");
-                String estcargo = res.getString("car_emp");
+                String estdig = res.getString("dig_emp");
+                String estnom = res.getString("nom_emp");
+                String estapP = res.getString("apP_emp");
+                String estcar = res.getString("car_emp");
                 String esttel = res.getString("tel_emp");
-                data[i][0] = estrut + "-" + estdigito;
-                data[i][1] = estnombres + " " + estapPaterno;
-                data[i][2] = estcargo;
-                data[i][3] = esttel;
+                data[i] = new String[]{estrut + "-" + estdig, estnom + " " + estapP, estcar, esttel};
                 i++;
             }
             res.close();
         }catch(SQLException e){
+            System.out.println("Error al listar empleados");
             System.out.println(e);
         }
         return data;
@@ -112,6 +110,7 @@ public class modeloEmpleados {
             }
             res.close();
         }catch(SQLException e){
+            System.out.println("Error al obtener nombres empleados");
             System.out.println(e);
         }
         return data;
@@ -143,6 +142,7 @@ public class modeloEmpleados {
             pstm.execute();
             pstm.close();
         }catch(SQLException e){
+            System.out.println("Error al ingresar empleado");
             System.out.println(e);
             return "incorrecto";
         }catch(ClassNotFoundException e){
@@ -162,24 +162,25 @@ public class modeloEmpleados {
             ResultSet res = pstm.executeQuery();
             res.next();
             String estrut = res.getString("rut_emp");
-            String estdigito = res.getString("dig_emp");
-            String estnombres = res.getString("nom_emp");
-            String estapPaterno = res.getString("apP_emp");
-            String estapMaterno = res.getString("apM_emp");
+            String estdig = res.getString("dig_emp");
+            String estnom = res.getString("nom_emp");
+            String estapP = res.getString("apP_emp");
+            String estapM = res.getString("apM_emp");
             String estfnac = res.getString("fnac_emp");
             String esttel = res.getString("tel_emp");
-            String estcorreo = res.getString("cor_emp");
-            String estcargo = res.getString("car_emp");
+            String estcor = res.getString("cor_emp");
+            String estcar = res.getString("car_emp");
             String estsueldo = res.getString("sueldo_emp");
             String estafp = res.getString("afp_emp");
-            String estsalud = res.getString("sal_emp");
+            String estsal = res.getString("sal_emp");
             String estfin = res.getString("fin_emp");
             String estdir = res.getString("dir_emp");
-            String estregion = res.getString("reg_emp");
+            String estreg = res.getString("reg_emp");
             String estcom = res.getString("com_emp");
-            data = new String[]{estrut + "-" + estdigito , estnombres, estapPaterno, estapMaterno, estfnac
-                    , esttel, estcorreo, estcargo, estsueldo, estafp, estsalud, estfin, estdir, estregion, estcom};
+            data = new String[]{estrut + "-" + estdig , estnom, estapP, estapM, estfnac
+                    , esttel, estcor, estcar, estsueldo, estafp, estsal, estfin, estdir, estreg, estcom};
         }catch(SQLException e){
+            System.out.println("Error al obtener empleado por rut");
             System.out.println(e);
         }catch(ClassNotFoundException e){
             System.out.println(e);
@@ -197,6 +198,7 @@ public class modeloEmpleados {
             pstm.close();
             return "correcto";
         }catch(SQLException e){
+            System.out.println("Error al eliminar empleado");
             System.out.println(e);
             return "incorrecto";
         }catch(ClassNotFoundException e){
@@ -232,6 +234,7 @@ public class modeloEmpleados {
             pstm.executeUpdate();
             pstm.close();
         }catch(SQLException e){
+            System.out.println("Error al modificar empleado");
             System.out.println(e);
             return "incorrecto";
         }catch(ClassNotFoundException e){
@@ -243,7 +246,7 @@ public class modeloEmpleados {
 
     public String obtenerEmpleadoPorNombre(String textoOperador) {
         String data = null;
-        String[] nom = textoOperador.split(" ");
+        String[] nom = (textoOperador.trim()).split(" +");
         int size = nom.length;
         if(size < 3) return null;
         String apM = nom[size-1];
@@ -265,11 +268,11 @@ public class modeloEmpleados {
             String estrut = res.getString("rut_emp");
             data = estrut;
         }catch(SQLException e){
+            System.out.println("Error al obtener empleado por nombre");
             System.out.println(e);
         }catch(ClassNotFoundException e){
             System.out.println(e);
         }
         return data;
     }
-    
 }

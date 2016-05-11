@@ -138,10 +138,10 @@ public class controladorPrincipal {
         micontroladorEG.irVistaGruasP(patente);
     }
     
-    public void crearControladorModificarGruas(String patente, String descripcion) throws ParseException {
+    public void crearControladorModificarGruas(String patente) throws ParseException {
         controladorModificarGruas micontroladorMG;
         micontroladorMG = new controladorModificarGruas();
-        micontroladorMG.mostrarVistaModificarGrua(patente, descripcion);
+        micontroladorMG.mostrarVistaModificarGrua(patente);
     }
     
     void crearControladorDetalleGrua(String patente) throws ParseException {
@@ -265,6 +265,12 @@ public class controladorPrincipal {
         controladorDetalleFacturas micontroladorDF;
         micontroladorDF = new controladorDetalleFacturas();
         micontroladorDF.mostrarVistaDetalleFacturas(id);
+    }
+    
+    void crearControladorDetalleFacturadas(String id) throws ParseException {
+        controladorDetalleFacturadas micontroladorDF;
+        micontroladorDF = new controladorDetalleFacturadas();
+        micontroladorDF.mostrarVistaDetalleFacturadas(id);
     }
     
     public void crearControladorUsuarios() {
@@ -403,9 +409,9 @@ public class controladorPrincipal {
         micontroladorOT.mostrarVistaIngresarOts(data, ciudades);    
     }
     
-    public void cambiarClaveUsuario(String pwNueva) {
+    public int cambiarClaveUsuario(String pwNueva) {
         controladorCambioClave miControlador = new controladorCambioClave();
-        miControlador.cambiarClave(pwNueva);
+        return miControlador.cambiarClave(pwNueva);
     }
     
     boolean ingresarJornada(String[] data) {
@@ -440,6 +446,11 @@ public class controladorPrincipal {
                     + "", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
+    }
+    
+    public String ingresarNotaCredito(String id, String razon){
+        modelos.modeloFacturas factura = new modelos.modeloFacturas();
+        return factura.ingresarNotaCredito(id, razon);
     }
 
     public Object[] cargarComunas(int region) {
@@ -524,4 +535,12 @@ public class controladorPrincipal {
         String[] datos = ot.obtenerOtPorId(id);
         return datos;
     }
+    
+    public Object[][] obtenerOtPorIdFacturada(String id) {
+        modelos.modeloOts ot = new modelos.modeloOts();
+        Object[][] datos = ot.obtenerOtPorIdFacturada(id);
+        return datos;
+    }
+    
+    
 }

@@ -40,13 +40,22 @@ public class controladorFacturas {
         miControlador.crearControladorDetalleFacturas(id);
     }
     
-    public String archivarFacturas(String[] idOts, int neto, int iva, int total){
+    public String archivarFacturas(String[] idOts, int neto, int iva, int total, String tipo, String id_fac){
         modelos.modeloFacturas factura = new modeloFacturas();
+        String id;
         modelos.modeloOts ot = new modeloOts();
-        String id = factura.ingresarFacturada(formatDate.format(new Date()), neto, iva, total);
-        for(int i = 0; i < idOts.length; i++){
-            ot.archivarFactura(idOts[i], id);
+        if(tipo.compareTo("nota debito") == 0){
+            id = factura.ingresarND(formatDate.format(new Date()), neto, iva, total, id_fac);
+            for(int i = 0; i < idOts.length; i++){
+                ot.archivarFacturaND(idOts[i], id);
+            }
+        }else{
+            id = factura.ingresarFacturada(formatDate.format(new Date()), neto, iva, total, tipo);
+            for(int i = 0; i < idOts.length; i++){
+                ot.archivarFactura(idOts[i], id);
+            }
         }
-        return "correcto";
+        
+        return id;
     }
 }

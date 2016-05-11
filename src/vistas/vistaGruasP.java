@@ -155,9 +155,9 @@ public class vistaGruasP extends javax.swing.JPanel {
         if(selected){
             int row = getFilaSeleccionada();
             String patente = getPatenteFila(row);
-            String desc = getDescripcionFila(row);
+            //String desc = getDescripcionFila(row);
             try {
-                miControlador.irVistaModificarGruas(patente, desc);
+                miControlador.irVistaModificarGruas(patente);
             } catch (ParseException ex) {
                 Logger.getLogger(vistaGruasP.class.getName()).log(Level.SEVERE, null, ex);
             }

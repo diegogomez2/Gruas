@@ -19,7 +19,11 @@
           <Component id="jScrollPane1" alignment="0" pref="800" max="32767" attributes="0"/>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="32767" attributes="0"/>
-              <Component id="botonFacturar" min="-2" max="-2" attributes="0"/>
+              <Component id="botonNotaDeb" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="botonBoleta" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="botonFactura" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -29,7 +33,11 @@
           <Group type="102" alignment="0" attributes="0">
               <Component id="jScrollPane1" min="-2" pref="438" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="botonFacturar" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="botonFactura" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="botonBoleta" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="botonNotaDeb" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace min="0" pref="9" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -58,12 +66,28 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="botonFacturar">
+    <Component class="javax.swing.JButton" name="botonFactura">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Generar XML"/>
+        <Property name="text" type="java.lang.String" value="Generar factura"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonFacturarActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonFacturaActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="botonBoleta">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Generar Boleta"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonBoletaActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="botonNotaDeb">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Generar Nota d&#xe9;bito"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonNotaDebActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

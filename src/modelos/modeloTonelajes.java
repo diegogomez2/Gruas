@@ -52,6 +52,7 @@ public class modeloTonelajes {
             }
             res.close();
         }catch(SQLException e){
+            System.out.println("Error listar tonelajes");
             System.out.println(e);
         }
         return data;

@@ -45,7 +45,6 @@ public class vistaIngresarOts extends javax.swing.JDialog {
         diaFin = data[2];
         horaFin = data[3];
         ton = data[14];
-        //System.out.println(diaInicio+" "+horaInicio+"\n"+diaFin+" "+horaFin+" "+ton);
         controladores.controladorIngresarOts miControlador = new controladores.controladorIngresarOts();
         String[] valores = miControlador.calcularTarifa(diaInicio, diaFin, horaInicio, horaFin, ton);
         textoGrua.setText(data[4]);

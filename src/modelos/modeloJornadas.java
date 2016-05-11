@@ -58,6 +58,7 @@ public class modeloJornadas {
             registros = res.getInt("total");
             res.close();
        }catch(SQLException e){
+            System.out.println("Error al listar jornadas");
             System.out.println(e);
        }catch(ClassNotFoundException e){
             System.out.println(e);
@@ -81,19 +82,13 @@ public class modeloJornadas {
                 String estcli = res.getString("raz_cli");
                 String estgrua = res.getString("pat_gru");
                 String estop = res.getString("nom_emp") + " " + res.getString("apP_emp");
-                String estfreg = res.getString("freg_jor");
                 String estobs = res.getString("obs_jor");
-                data[i][0] = estid;
-                data[i][1] = estgrua;
-                data[i][2] = estcli;
-                data[i][3] = estop;
-                data[i][4] = estfsal;
-                data[i][5] = esthorsal;
-                data[i][6] = estobs;
+                data[i] = new String[]{estid, estgrua, estcli, estop, estfsal, esthorsal, estobs};
                 i++;
             }
             res.close();
         }catch(SQLException e){
+            System.out.println("Error al listar jornadas");
             System.out.println(e);
         }catch(Exception e){
             System.out.println(e);
@@ -101,41 +96,42 @@ public class modeloJornadas {
         return data;
     }
 
-    public String obtenerIdOt(String id){
-        int registros = 0;
-        try{
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM ots where id_jor = ?");
-            pstm.setString(1, id);
-            ResultSet res = pstm.executeQuery();
-            res.next();
-            registros = res.getInt("total");
-            res.close();
-       }catch(SQLException e){
-            System.out.println(e);
-       }catch(ClassNotFoundException e){
-            System.out.println(e);
-       }
-        if(registros == 0) return "null";
-        
-        String data = "null";
-        try{
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("SELECT id_ot From ots Where id_jor = ?");
-            pstm.setString(1, id);
-            ResultSet res = pstm.executeQuery();
-            res.next();
-            String estidot = res.getString("id_ot");
-            data = estidot;
-        }catch(SQLException e){
-            System.out.println(e);
-        }catch(ClassNotFoundException e){
-            System.out.println(e);
-        }
-        return data;
-    }
+//    public String obtenerIdOt(String id){
+//        int registros = 0;
+//        try{
+//            Class.forName("com.mysql.jdbc.Driver");
+//            conn = DriverManager.getConnection(url, login, password);
+//            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM ots where id_jor = ?");
+//            pstm.setString(1, id);
+//            ResultSet res = pstm.executeQuery();
+//            res.next();
+//            registros = res.getInt("total");
+//            res.close();
+//       }catch(SQLException e){
+//            System.out.println("Error al obtener id de ot");
+//            System.out.println(e);
+//       }catch(ClassNotFoundException e){
+//            System.out.println(e);
+//       }
+//        if(registros == 0) return "null";
+//        
+//        String data = "null";
+//        try{
+//            Class.forName("com.mysql.jdbc.Driver");
+//            conn = DriverManager.getConnection(url, login, password);
+//            PreparedStatement pstm = conn.prepareStatement("SELECT id_ot From ots Where id_jor = ?");
+//            pstm.setString(1, id);
+//            ResultSet res = pstm.executeQuery();
+//            res.next();
+//            String estidot = res.getString("id_ot");
+//            data = estidot;
+//        }catch(SQLException e){
+//            System.out.println(e);
+//        }catch(ClassNotFoundException e){
+//            System.out.println(e);
+//        }
+//        return data;
+//    }
     
     public String ingresarJornada(String[] data) {
         try{
@@ -157,6 +153,8 @@ public class modeloJornadas {
             pstm.execute();
             pstm.close();
         }catch(SQLException e){
+            System.out.println("Error ingresar jornada");
+            System.out.println(e);
             return "incorrecto";
         }catch(ClassNotFoundException e){
             System.out.println(e);
@@ -195,6 +193,7 @@ public class modeloJornadas {
             data = new String[]{estfsal, esthorsal, estfreg, esthorlleg, estdes, estnom, estobs
                     , estrutcli, estdigcli, estraz, estgir, estdir, esttel, id, estton};
         }catch(SQLException e){
+            System.out.println("Error obtener jornada por id");
             System.out.println(e);
         }catch(ClassNotFoundException e){
             System.out.println(e);
@@ -212,6 +211,7 @@ public class modeloJornadas {
             pstm.close();
             return "correcto";
         }catch(SQLException e){
+            System.out.println("Error eliminar jornada");
             System.out.println(e);
             return "incorrecto";
         }catch(ClassNotFoundException e){
@@ -239,6 +239,7 @@ public class modeloJornadas {
             pstm.executeUpdate();
             pstm.close();
         }catch(SQLException e){
+            System.out.println("Error modificar jornada");
             System.out.println(e);
             return "incorrecto";
         }catch(ClassNotFoundException e){
@@ -247,5 +248,4 @@ public class modeloJornadas {
         }
         return "correcto";
     }
-    
 }

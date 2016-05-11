@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -67,7 +68,9 @@ public class vistaFacturasP extends javax.swing.JPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaFacturas = new javax.swing.JTable();
-        botonFacturar = new javax.swing.JButton();
+        botonFactura = new javax.swing.JButton();
+        botonBoleta = new javax.swing.JButton();
+        botonNotaDeb = new javax.swing.JButton();
 
         tablaFacturas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -82,10 +85,24 @@ public class vistaFacturasP extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tablaFacturas);
 
-        botonFacturar.setText("Generar XML");
-        botonFacturar.addActionListener(new java.awt.event.ActionListener() {
+        botonFactura.setText("Generar factura");
+        botonFactura.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonFacturarActionPerformed(evt);
+                botonFacturaActionPerformed(evt);
+            }
+        });
+
+        botonBoleta.setText("Generar Boleta");
+        botonBoleta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonBoletaActionPerformed(evt);
+            }
+        });
+
+        botonNotaDeb.setText("Generar Nota débito");
+        botonNotaDeb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonNotaDebActionPerformed(evt);
             }
         });
 
@@ -96,7 +113,11 @@ public class vistaFacturasP extends javax.swing.JPanel {
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(botonFacturar)
+                .addComponent(botonNotaDeb)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botonBoleta)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botonFactura)
                 .addGap(18, 18, 18))
         );
         layout.setVerticalGroup(
@@ -104,12 +125,15 @@ public class vistaFacturasP extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(botonFacturar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botonFactura)
+                    .addComponent(botonBoleta)
+                    .addComponent(botonNotaDeb))
                 .addGap(0, 9, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void botonFacturarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonFacturarActionPerformed
+    private void botonFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonFacturaActionPerformed
         controladores.controladorCrearFactura miControlador = new controladores.controladorCrearFactura();
         controladores.controladorOts micontroladorOts = new controladores.controladorOts();
         int filas = tablaFacturas.getRowCount();
@@ -121,21 +145,66 @@ public class vistaFacturasP extends javax.swing.JPanel {
             iva += getIvaFact(i);
             total += getTotalFact(i);
         }
-        String respuesta = miControlador.crearDocXML(idOts, Integer.toString(neto), Integer.toString(iva),
-                Integer.toString(total));
-        if(respuesta.compareTo("correcto") == 0){
-            controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
-            if((micontroladorFacturas.archivarFacturas(idOts, neto, iva, total).compareTo("correcto") == 0)){
+        controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
+        String id = micontroladorFacturas.archivarFacturas(idOts, neto, iva, total, "factura", "0");
+            if((miControlador.crearFacXML(idOts, Integer.toString(neto), Integer.toString(iva),
+                Integer.toString(total), id).compareTo("correcto") == 0)){
                 JTabbedPane tabs = (JTabbedPane)this.getParent();
                 micontroladorOts.crearControladorPrincipal(tabs);
                 miControlador.crearControladorPrincipal(tabs);
             }
+    }//GEN-LAST:event_botonFacturaActionPerformed
+
+    private void botonBoletaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBoletaActionPerformed
+        controladores.controladorCrearFactura miControlador = new controladores.controladorCrearFactura();
+        controladores.controladorOts micontroladorOts = new controladores.controladorOts();
+        int filas = tablaFacturas.getRowCount();
+        String[] idOts = new String[filas];
+        int neto = 0, iva = 0, total = 0;
+        for(int i = 0; i < filas; i++){
+            idOts[i] = getIdFact(i);
+            neto += getNetoFact(i);
+            iva += getIvaFact(i);
+            total += getTotalFact(i);
         }
-    }//GEN-LAST:event_botonFacturarActionPerformed
+        controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
+        String id = micontroladorFacturas.archivarFacturas(idOts, neto, iva, total, "boleta", "0");
+            if((miControlador.crearBolXML(idOts, Integer.toString(neto), Integer.toString(iva),
+                Integer.toString(total), id).compareTo("correcto") == 0)){
+                JTabbedPane tabs = (JTabbedPane)this.getParent();
+                micontroladorOts.crearControladorPrincipal(tabs);
+                miControlador.crearControladorPrincipal(tabs);
+            }
+    }//GEN-LAST:event_botonBoletaActionPerformed
+
+    private void botonNotaDebActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNotaDebActionPerformed
+        controladores.controladorCrearFactura miControlador = new controladores.controladorCrearFactura();
+        controladores.controladorOts micontroladorOts = new controladores.controladorOts();
+        String id_fac = JOptionPane.showInputDialog("Id de factura: ");
+        int filas = tablaFacturas.getRowCount();
+        String[] idOts = new String[filas];
+        int neto = 0, iva = 0, total = 0;
+        for(int i = 0; i < filas; i++){
+            idOts[i] = getIdFact(i);
+            neto += getNetoFact(i);
+            iva += getIvaFact(i);
+            total += getTotalFact(i);
+        }
+        controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
+        String id = micontroladorFacturas.archivarFacturas(idOts, neto, iva, total, "nota debito", id_fac);
+            if((miControlador.crearNotaDebXML(idOts, Integer.toString(neto), Integer.toString(iva),
+                Integer.toString(total), id, id_fac).compareTo("correcto") == 0)){
+                JTabbedPane tabs = (JTabbedPane)this.getParent();
+                micontroladorOts.crearControladorPrincipal(tabs);
+                miControlador.crearControladorPrincipal(tabs);
+            }
+    }//GEN-LAST:event_botonNotaDebActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botonFacturar;
+    private javax.swing.JButton botonBoleta;
+    private javax.swing.JButton botonFactura;
+    private javax.swing.JButton botonNotaDeb;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaFacturas;
     // End of variables declaration//GEN-END:variables

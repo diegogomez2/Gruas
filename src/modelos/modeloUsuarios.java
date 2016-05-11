@@ -6,6 +6,7 @@
 package modelos;
 
 import controladores.controladorPrincipal;
+import java.net.ConnectException;
 import java.sql.*;
 import javax.swing.JOptionPane;
 
@@ -34,14 +35,14 @@ public class modeloUsuarios {
                 }
             }
             pstm.close();
-        }catch(SQLException e){
+        }
+        catch(SQLException e){
+            System.out.println("Error verificar login");
             System.out.println(e);
-            JOptionPane.showMessageDialog(null, e);
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "La conexión con la base de datos falló");
         }catch(ClassNotFoundException e){
-            JOptionPane.showMessageDialog(null, e);
             System.out.println(e);
-            System.out.println(url);
+            JOptionPane.showMessageDialog(null, "La conexión con la base de datos falló");
         }
         return "incorrecto";
     }
@@ -65,7 +66,6 @@ public class modeloUsuarios {
         }catch(ClassNotFoundException e){
             JOptionPane.showMessageDialog(null, e);
             System.out.println(e);
-            System.out.println(url);
         }
         return contraseña;
     }
@@ -82,11 +82,11 @@ public class modeloUsuarios {
             pstm.executeUpdate();
             pstm.close();
         }catch(SQLException e){
+            System.out.println("Error cambiar clave");
             System.out.println(e);
             return "incorrecto";
         }catch(ClassNotFoundException e){
             System.out.println(e);
-            System.out.println(url);
             return "incorrecto";
         }
         return "correcto";

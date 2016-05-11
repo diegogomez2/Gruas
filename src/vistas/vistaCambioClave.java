@@ -21,6 +21,7 @@ public class vistaCambioClave extends javax.swing.JDialog {
     
     public vistaCambioClave(String tipo, String data) {
         this.data = data;
+        this.setLocationRelativeTo(null);
         initComponents();
     }
 
@@ -141,12 +142,14 @@ public class vistaCambioClave extends javax.swing.JDialog {
         if(pwNueva.getText().compareTo(pwRep.getText()) != 0){
             JOptionPane.showMessageDialog(rootPane, "Las contraseñas no coinciden");
         }else{
-            System.out.println(data);
             if(pwAntigua.getText().compareTo(data) != 0){
                 JOptionPane.showMessageDialog(rootPane, "Contraseña inválida");
             }else{
                 controladores.controladorPrincipal miControlador = new controladorPrincipal();
-                miControlador.cambiarClaveUsuario(pwNueva.getText());
+                int resp = miControlador.cambiarClaveUsuario(pwNueva.getText());
+                if(resp == 1){
+                    this.dispose();
+                }
             }
         }
     }//GEN-LAST:event_botonAceptarActionPerformed

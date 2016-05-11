@@ -11,6 +11,8 @@ import java.awt.event.MouseEvent;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
@@ -43,9 +45,9 @@ public class vistaFacturadasP extends javax.swing.JPanel {
                 Point p = evt.getPoint();
                 int row = table.rowAtPoint(p);
                 if(evt.getClickCount() == 2){
-                    controladores.controladorFacturas miControlador = new controladores.controladorFacturas();
+                    controladores.controladorFacturadas miControlador = new controladores.controladorFacturadas();
                     try {
-                        miControlador.irVistaDetalleFacturas(tablaFacturadas.getValueAt(row, 0).toString());
+                        miControlador.irVistaDetalleFacturadas(tablaFacturadas.getValueAt(row, 0).toString());
                     } catch (ParseException ex) {
                         Logger.getLogger(vistaJornadasP.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -66,6 +68,8 @@ public class vistaFacturadasP extends javax.swing.JPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaFacturadas = new javax.swing.JTable();
+        botonGenerarNC = new javax.swing.JButton();
+        botonGuiaDesp = new javax.swing.JButton();
 
         tablaFacturadas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -80,23 +84,72 @@ public class vistaFacturadasP extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tablaFacturadas);
 
+        botonGenerarNC.setText("Generar nota de crédito");
+        botonGenerarNC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonGenerarNCActionPerformed(evt);
+            }
+        });
+
+        botonGuiaDesp.setText("Generar guía despacho");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(botonGuiaDesp)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botonGenerarNC)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 34, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botonGenerarNC)
+                    .addComponent(botonGuiaDesp))
+                .addGap(0, 11, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void botonGenerarNCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGenerarNCActionPerformed
+        String id;
+        controladores.controladorFacturadas miControlador = new controladores.controladorFacturadas();
+        controladores.controladorCrearFactura miControladorC = new controladores.controladorCrearFactura();
+        boolean selected = tablaFacturadas.getSelectedRowCount() > 0;
+        if(selected){
+            int row = getFilaSeleccionada();
+            id = getIdFila(row);
+            String razon = JOptionPane.showInputDialog("Razón: ");
+            String id_nc = miControlador.ingresarNotaCredito(id, razon);
+            String[] valores_nc = miControlador.obtenerValoresNC(id_nc);
+            String[] ots = miControlador.obtenerOtsPorIdNC(id);
+            if((miControladorC.crearNotaCredXML(id_nc, valores_nc, ots).compareTo("correcto") == 0)){
+                JTabbedPane tabs = (JTabbedPane)this.getParent();
+                miControlador.crearControladorPrincipal(tabs);
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una jornada para ser asignada");
+        }
+    }//GEN-LAST:event_botonGenerarNCActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonGenerarNC;
+    private javax.swing.JButton botonGuiaDesp;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaFacturadas;
     // End of variables declaration//GEN-END:variables
+    public int getFilaSeleccionada() {
+        return tablaFacturadas.getSelectedRow();
+    }
+    
+    public String getIdFila(int row){
+        return tablaFacturadas.getValueAt(row, 0).toString();
+    }
 }

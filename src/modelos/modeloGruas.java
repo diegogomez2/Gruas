@@ -44,6 +44,7 @@ public class modeloGruas {
             registros = res.getInt("total");
             res.close();
        }catch(SQLException e){
+            System.out.println("Error al listar gruas");
             System.out.println(e);
        }catch(ClassNotFoundException e){
             System.out.println(e);
@@ -62,15 +63,12 @@ public class modeloGruas {
                 String estmar = res.getString("mar_gru");
                 String estmodel = res.getString("mod_gru");
                 String estton = res.getString("ton_gru");
-                data[i][0] = estpat;
-                data[i][1] = estdes;
-                data[i][2] = estmar;
-                data[i][3] = estmodel;
-                data[i][4] = estton;
+                data[i] = new String[]{estpat, estdes, estmar, estmodel, estton};
                 i++;
             }
             res.close();
         }catch(SQLException e){
+            System.out.println("Error al listar gruas");
             System.out.println(e);
         }
         return data;
@@ -115,6 +113,7 @@ public class modeloGruas {
             pstm.execute();
             pstm.close();
         }catch(SQLException e){
+            System.out.println("Error al ingresar grua");
             System.out.println(e);
             return "incorrecto";
         }catch(ClassNotFoundException e){
@@ -137,6 +136,7 @@ public class modeloGruas {
             return "correcto";
         }catch(SQLException e){
             System.out.println(e);
+            System.out.println("Error al eliminar gruas");
             return "incorrecto";
         }catch(ClassNotFoundException e){
             System.out.println(e);
@@ -149,7 +149,9 @@ public class modeloGruas {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("SELECT * FROM gruas WHERE pat_gru = ?");
+            PreparedStatement pstm = conn.prepareStatement("SELECT *, coalesce(fin_gru,'') as fin,"
+                    + "coalesce(frt_gru,'') as frt, coalesce(fum_gru,'') as fum, coalesce(fba_gru,'') as fba"
+                    + " FROM gruas WHERE pat_gru = ?");
             pstm.setString(1, patente);
             ResultSet res = pstm.executeQuery();
             res.next();
@@ -164,7 +166,7 @@ public class modeloGruas {
             String estobs = res.getString("obs_gru");
             String estton = res.getString("ton_gru");
             String estkmh = res.getString("kmh_gru");
-            String estfechain = res.getString("fin_gru");
+            String estfechain = res.getString("fin");
             String estmarca = res.getString("mar_gru");
             String estmastil = res.getString("mas_gru");
             String estaltmastil = res.getString("altmas_gru");
@@ -176,16 +178,17 @@ public class modeloGruas {
             String estneumtras = res.getString("ntra_gru");
             String estnmotor = res.getString("nmo_gru");
             String estnserie = res.getString("nse_gru");
-            String estfechart = res.getString("frt_gru");
-            String estfechaum = res.getString("fum_gru");
+            String estfechart = res.getString("frt");
+            String estfechaum = res.getString("fum");
             String estfechakmhum = res.getString("kmhum_gru");
             String esthpm = res.getString("hpm_gru");
-            String estfechabaja = res.getString("fba_gru");
+            String estfechabaja = res.getString("fba");
             data = new String[]{estpat, estdesc , estmod, estpeso, esttiponeum, esttiponeum2, estnchasis,
                 esttipocombs, estobs, estton, estkmh, estfechain, estmarca, estmastil, estaltmastil, estancho,
                 estlargo, estlargounas, estaltlevante, estneumdel, estneumtras, estnmotor, estnserie, estfechart,
             estfechaum, estfechakmhum, esthpm, estfechabaja};
         }catch(SQLException e){
+            System.out.println("Error al obtener grua por patente");
             System.out.println(e);
         }catch(ClassNotFoundException e){
             System.out.println(e);
@@ -234,6 +237,7 @@ public class modeloGruas {
             pstm.executeUpdate();
             pstm.close();
         }catch(SQLException e){
+            System.out.println("Error al modificar grua");
             System.out.println(e);
             return "incorrecto";
         }catch(ClassNotFoundException e){
@@ -254,6 +258,7 @@ public class modeloGruas {
             registros = res.getInt("total");
             res.close();
        }catch(SQLException e){
+            System.out.println("Error al obtener descripcion gruas");
             System.out.println(e);
        }catch(ClassNotFoundException e){
             System.out.println(e);
@@ -262,7 +267,7 @@ public class modeloGruas {
         Object[] data = new String[registros];
         
         try{
-            PreparedStatement pstm = conn.prepareStatement("SELECT des_gru FROM Gruas");
+            PreparedStatement pstm = conn.prepareStatement("SELECT coalesce(des_gru,'') as des_gru FROM Gruas");
             ResultSet res = pstm.executeQuery();
             int i = 0;
             while(res.next()){
@@ -272,6 +277,7 @@ public class modeloGruas {
             }
             res.close();
         }catch(SQLException e){
+            System.out.println("Error obtener descripcion gruas");
             System.out.println(e);
         }
         return data;  
@@ -289,6 +295,7 @@ public class modeloGruas {
             String estpat = res.getString("pat_gru");
             data = estpat;
         }catch(SQLException e){
+            System.out.println("Error obtener gruas por descripcion");
             System.out.println(e);
         }catch(ClassNotFoundException e){
             System.out.println(e);
@@ -305,6 +312,7 @@ public class modeloGruas {
             pstm.setString(2, desc);
             pstm.executeUpdate();
         }catch(SQLException e){
+            System.out.println("Error al actualizar horometro gruas");
             System.out.println(e);
         }catch(ClassNotFoundException e){
             System.out.println(e);

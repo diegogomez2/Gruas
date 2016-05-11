@@ -5,6 +5,15 @@
  */
 package vistas;
 
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author diego
@@ -14,9 +23,39 @@ public class vistaDetalleFacturadas extends javax.swing.JDialog {
     /**
      * Creates new form vistaDetalleFacturadas
      */
-    public vistaDetalleFacturadas(java.awt.Frame parent, boolean modal) {
+    DefaultTableModel datos;
+
+    public vistaDetalleFacturadas(java.awt.Frame parent, boolean modal, Object[][] data) {
         super(parent, modal);
         initComponents();
+        final int rows = 5;
+        String[] columNames = {"Código OT", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
+            "Neto", "IVA", "Total"};
+        datos = new DefaultTableModel(data, columNames){
+            @Override
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }
+        };
+        tablaOts.setModel(datos);
+        
+        if(tablaOts.getRowCount() > 0) tablaOts.setRowSelectionInterval(0, 0);
+        tablaOts.addMouseListener(new MouseAdapter(){
+            public void mousePressed(MouseEvent evt){
+                JTable table = (JTable)evt.getSource();
+                Point p = evt.getPoint();
+                int row = table.rowAtPoint(p);
+                if(evt.getClickCount() == 2){
+                    controladores.controladorOts miControlador = new controladores.controladorOts();
+                    try {
+                        miControlador.irVistaDetalleOts(tablaOts.getValueAt(row, 0).toString());
+                    } catch (ParseException ex) {
+                        Logger.getLogger(vistaJornadasP.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }); 
+        
     }
 
     /**
@@ -29,11 +68,11 @@ public class vistaDetalleFacturadas extends javax.swing.JDialog {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaOts = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaOts.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -44,7 +83,7 @@ public class vistaDetalleFacturadas extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaOts);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -90,20 +129,12 @@ public class vistaDetalleFacturadas extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                vistaDetalleFacturadas dialog = new vistaDetalleFacturadas(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tablaOts;
     // End of variables declaration//GEN-END:variables
 }

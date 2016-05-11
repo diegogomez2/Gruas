@@ -33,8 +33,8 @@ public class modeloClientes {
             registros = res.getInt("total");
             res.close();
        }catch(SQLException e){
+            System.out.println("Error al listar clientes");
             System.out.println(e);
-            e.printStackTrace();
        }catch(ClassNotFoundException e){
             System.out.println(e);
        }
@@ -48,16 +48,12 @@ public class modeloClientes {
             int i = 0;
             while(res.next()){
                 String estrut = res.getString("rut_cli");
-                String estdigito = res.getString("dig_cli");
-                String estrazon = res.getString("raz_cli");
-                String estdireccion = res.getString("dir_cli");
-                String esttelefono = res.getString("tel_cli");
+                String estdig = res.getString("dig_cli");
+                String estraz = res.getString("raz_cli");
+                String estdir = res.getString("dir_cli");
+                String esttel = res.getString("tel_cli");
                 String estcon = res.getString("con_cli");
-                data[i][0] = estrut + "-" + estdigito;
-                data[i][1] = estrazon;
-                data[i][2] = esttelefono;
-                data[i][3] = estdireccion;
-                data[i][4] = estcon;
+                data[i] = new String[]{estrut + "-" + estdig, estraz, esttel, estdir, estcon};
                 i++;
             }
             res.close();
@@ -90,6 +86,7 @@ public class modeloClientes {
             pstm.execute();
             pstm.close();
         }catch(SQLException e){
+            System.out.println("Error al ingresar cliente");
             System.out.println(e);
             return "incorrecto";
         }catch(ClassNotFoundException e){
@@ -109,6 +106,7 @@ public class modeloClientes {
             pstm.close();
             return "correcto";
         }catch(SQLException e){
+            System.out.println("Error al eliminar cliente");
             System.out.println(e);
             return "incorrecto";
         }catch(ClassNotFoundException e){
@@ -142,6 +140,7 @@ public class modeloClientes {
             data = new String[]{estrut + "-" + estdig , estcon, estraz, estgir, estcor,
                 esttel, estcel, estdir, estreg, estciu, estcom, estobs};
         }catch(SQLException e){
+            System.out.println("Error al obtener cliente por rut");
             System.out.println(e);
         }catch(ClassNotFoundException e){
             System.out.println(e);
@@ -173,6 +172,7 @@ public class modeloClientes {
             pstm.executeUpdate();
             pstm.close();
         }catch(SQLException e){
+            System.out.println("Error al modificar cliente");
             System.out.println(e);
             return "incorrecto";
         }catch(ClassNotFoundException e){
@@ -184,7 +184,6 @@ public class modeloClientes {
 
     public Object[] obtenerRazonClientes() {
         int registros = 0;
-        
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
@@ -194,6 +193,7 @@ public class modeloClientes {
             registros = res.getInt("total");
             res.close();
        }catch(SQLException e){
+            System.out.println("Error al obtener razon cliente");
             System.out.println(e);
        }catch(ClassNotFoundException e){
             System.out.println(e);
@@ -229,6 +229,7 @@ public class modeloClientes {
             String estrut = res.getString("rut_cli");
             data = estrut;
         }catch(SQLException e){
+            System.out.println("Error al obtener cliente por razon");
             System.out.println(e);
         }catch(ClassNotFoundException e){
             System.out.println(e);

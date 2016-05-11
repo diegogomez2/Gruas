@@ -17,7 +17,7 @@ public class controladorModificarGruas {
 
     static vistas.vistaModificarGruas vistaMG;
     
-    void mostrarVistaModificarGrua(String patente, String descripcion) throws ParseException {
+    void mostrarVistaModificarGrua(String patente) throws ParseException {
         controladorPrincipal miControlador = new controladorPrincipal();
         String data[] = miControlador.obtenerGruaPorPatente(patente);
         vistaMG = new vistaModificarGruas(new javax.swing.JFrame(), true);

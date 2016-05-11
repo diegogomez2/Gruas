@@ -28,9 +28,9 @@ public class controladorGruas {
         miControlador.crearControladorEliminarGruas(patente);
     }
 
-    public void irVistaModificarGruas(String patente, String descripcion) throws ParseException {
+    public void irVistaModificarGruas(String patente) throws ParseException {
         controladorPrincipal miControlador = new controladorPrincipal();
-        miControlador.crearControladorModificarGruas(patente, descripcion);
+        miControlador.crearControladorModificarGruas(patente);
     }
 
     public void irVistaDetalleGrua(String patente) throws ParseException {
