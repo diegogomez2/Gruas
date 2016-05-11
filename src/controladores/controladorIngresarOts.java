@@ -44,7 +44,8 @@ public class controladorIngresarOts {
         String[] data = {vistaIO.getTextoContacto(), vistaIO.getTextoFechaOt(), vistaIO.getComboFormaPago(),
             vistaIO.getComboCondPago(), vistaIO.getTextoDespachado(), id, vistaIO.getTextoCodigo(),
             removeDots(vistaIO.getTextoNeto()), removeDots(vistaIO.getTextoIva()), 
-            removeDots(vistaIO.getTextoBruto()), vistaIO.getSpinnerFinFaena(), Integer.toString(horas)};
+            removeDots(vistaIO.getTextoBruto()), vistaIO.getSpinnerFinFaena(), Integer.toString(horas), vistaIO.getSpinnerHoraSalida(),
+        vistaIO.getSpinnerHoraLlegada()};
         boolean flag = miControlador.ingresarOt(data);
         return flag;
     } 

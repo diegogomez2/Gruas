@@ -45,7 +45,7 @@ public class modeloOts {
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("update jornadas set cont_ot = ?, fec_ot = ?, pag_ot = ?,"
                     + "cond_ot = ?, desp_ot = ?, cod_ot = ?, neto_ot = ?, iva_ot = ?, total_ot = ?, "
-                    + "horfin_ot=?, hortot_ot=? where"
+                    + "horfin_ot=?, hortot_ot=?, horsal_jor=?, horlleg_jor=? where"
                     + " id_jor = ?");
             pstm.setString(1, data[0]);
             pstm.setString(2, data[1]);
@@ -58,7 +58,9 @@ public class modeloOts {
             pstm.setInt(9, Integer.parseInt(data[9]));
             pstm.setString(10, data[10]);
             pstm.setInt(11, Integer.parseInt(data[11]));
-            pstm.setInt(12, Integer.parseInt(data[5]));
+            pstm.setString(12, data[12]);
+            pstm.setString(13, data[13]);
+            pstm.setInt(14, Integer.parseInt(data[5]));
             pstm.execute();
             pstm.close();
         }catch(SQLException e){
