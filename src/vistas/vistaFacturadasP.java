@@ -128,7 +128,7 @@ public class vistaFacturadasP extends javax.swing.JPanel {
             String razon = JOptionPane.showInputDialog("Razón: ");
             String id_nc = miControlador.ingresarNotaCredito(id, razon);
             String[] valores_nc = miControlador.obtenerValoresNC(id_nc);
-            String[] ots = miControlador.obtenerOtsPorIdNC(id);
+            String[][] ots = miControlador.obtenerOtsPorIdNC(id);
             if((miControladorC.crearNotaCredXML(id_nc, valores_nc, ots).compareTo("correcto") == 0)){
                 JTabbedPane tabs = (JTabbedPane)this.getParent();
                 miControlador.crearControladorPrincipal(tabs);

@@ -362,7 +362,7 @@ public class controladorCrearFactura {
         }
     }
     
-    public String crearNotaCredXML(String id_nc, String[] valores_nc, String[] ots_nc){
+    public String crearNotaCredXML(String id_nc, String[] valores_nc, String[][] ots_nc){
         
         String fecha = formatDate.format(new Date());
         
@@ -437,7 +437,7 @@ public class controladorCrearFactura {
             emisor.appendChild(ciuEmisor);
             
             modelos.modeloOts ots = new modelos.modeloOts();
-            String[] data = ots.obtenerFacturaPorId(ots_nc[0]);
+            String[] data = ots.obtenerFacturaPorId(ots_nc[0][0]);
             
             Element receptor = doc.createElement("Receptor");
             encabezado.appendChild(receptor);
@@ -485,7 +485,7 @@ public class controladorCrearFactura {
             encabezado.appendChild(detalle);
             
             for(int i = 0; i < ots_nc.length; i++){
-                data = ots.obtenerFacturaPorId(ots_nc[i]);
+                data = ots.obtenerFacturaPorId(ots_nc[i][0]);
                 
                 Element numLin = doc.createElement("NroLinDet");
                 numLin.appendChild(doc.createTextNode(Integer.toString(i+1)));

@@ -48,16 +48,8 @@ public class vistaPrincipal extends javax.swing.JFrame {
         vistaPrincipal = new javax.swing.JTabbedPane();
         MenuPrincipal = new javax.swing.JMenuBar();
         MenuArchivo = new javax.swing.JMenu();
-        MenuUsuarios = new javax.swing.JMenu();
-        MenuCambioClave = new javax.swing.JMenuItem();
-        MenuControlUsuarios = new javax.swing.JMenuItem();
-        MenuAgenda = new javax.swing.JMenu();
-        MenuJornadaDiaria = new javax.swing.JMenuItem();
-        MenuGestionAgendas = new javax.swing.JMenuItem();
-        MenuCaja = new javax.swing.JMenu();
         MenuCobranza = new javax.swing.JMenu();
         MenuFacturacion = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
         MenuMantenciones = new javax.swing.JMenu();
         MenuAyuda = new javax.swing.JMenu();
 
@@ -67,50 +59,12 @@ public class vistaPrincipal extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(800, 600));
 
         MenuArchivo.setText("Archivo");
-
-        MenuUsuarios.setText("Usuarios");
-
-        MenuCambioClave.setText("Cambio de clave");
-        MenuCambioClave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuCambioClaveActionPerformed(evt);
-            }
-        });
-        MenuUsuarios.add(MenuCambioClave);
-
-        MenuControlUsuarios.setText("Control de usuarios");
-        MenuUsuarios.add(MenuControlUsuarios);
-
-        MenuArchivo.add(MenuUsuarios);
-
-        MenuAgenda.setText("Agenda");
-
-        MenuJornadaDiaria.setText("Jornada diaria");
-        MenuAgenda.add(MenuJornadaDiaria);
-
-        MenuGestionAgendas.setText("Gestión de agendas");
-        MenuAgenda.add(MenuGestionAgendas);
-
-        MenuArchivo.add(MenuAgenda);
-
         MenuPrincipal.add(MenuArchivo);
-
-        MenuCaja.setText("Caja");
-        MenuPrincipal.add(MenuCaja);
 
         MenuCobranza.setText("Cobranza");
         MenuPrincipal.add(MenuCobranza);
 
         MenuFacturacion.setText("Facturación");
-
-        jMenuItem1.setText("OT");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        MenuFacturacion.add(jMenuItem1);
-
         MenuPrincipal.add(MenuFacturacion);
 
         MenuMantenciones.setText("Mantenciones");
@@ -134,17 +88,6 @@ public class vistaPrincipal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        this.setVisible(false);
-        controladores.controladorPrincipal miControlador = new controladorPrincipal();
-        miControlador.crearControladorOtsP();
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-
-    private void MenuCambioClaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuCambioClaveActionPerformed
-        controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
-        miControlador.crearControladorUsuarios();
-    }//GEN-LAST:event_MenuCambioClaveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -182,20 +125,12 @@ public class vistaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu MenuAgenda;
     private javax.swing.JMenu MenuArchivo;
     private javax.swing.JMenu MenuAyuda;
-    private javax.swing.JMenu MenuCaja;
-    private javax.swing.JMenuItem MenuCambioClave;
     private javax.swing.JMenu MenuCobranza;
-    private javax.swing.JMenuItem MenuControlUsuarios;
     private javax.swing.JMenu MenuFacturacion;
-    private javax.swing.JMenuItem MenuGestionAgendas;
-    private javax.swing.JMenuItem MenuJornadaDiaria;
     private javax.swing.JMenu MenuMantenciones;
     private javax.swing.JMenuBar MenuPrincipal;
-    private javax.swing.JMenu MenuUsuarios;
-    private javax.swing.JMenuItem jMenuItem1;
     public javax.swing.JTabbedPane vistaPrincipal;
     // End of variables declaration//GEN-END:variables
 

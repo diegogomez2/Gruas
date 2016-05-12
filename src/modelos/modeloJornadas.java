@@ -68,9 +68,10 @@ public class modeloJornadas {
         
         try{
             PreparedStatement pstm = conn.prepareStatement("SELECT id_jor, fsal_jor, horsal_jor, raz_cli,"
-                    + "pat_gru, nom_emp, apP_emp, freg_jor, obs_jor FROM Jornadas INNER JOIN"
+                    + "des_gru, nom_emp, apP_emp, freg_jor, obs_jor FROM Jornadas INNER JOIN"
                     + " clientes ON clientes.rut_cli = jornadas.rut_cli INNER JOIN empleados ON empleados.rut_emp "
-                    + "= jornadas.rut_emp Where cod_ot = -1 ORDER BY id_jor");
+                    + "= jornadas.rut_emp INNER JOIN gruas ON gruas.pat_gru = jornadas.pat_gru Where "
+                    + "cod_ot = -1 ORDER BY id_jor");
             ResultSet res = pstm.executeQuery();
             int i = 0;
             while(res.next()){
@@ -80,7 +81,7 @@ public class modeloJornadas {
                 java.util.Date fecha = formatDate.parse(estfsal);
                 estfsal = newFormat.format(fecha);
                 String estcli = res.getString("raz_cli");
-                String estgrua = res.getString("pat_gru");
+                String estgrua = res.getString("des_gru");
                 String estop = res.getString("nom_emp") + " " + res.getString("apP_emp");
                 String estobs = res.getString("obs_jor");
                 data[i] = new String[]{estid, estgrua, estcli, estop, estfsal, esthorsal, estobs};

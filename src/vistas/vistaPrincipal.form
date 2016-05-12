@@ -8,50 +8,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Archivo"/>
           </Properties>
-          <SubComponents>
-            <Menu class="javax.swing.JMenu" name="MenuUsuarios">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Usuarios"/>
-              </Properties>
-              <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="MenuCambioClave">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Cambio de clave"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MenuCambioClaveActionPerformed"/>
-                  </Events>
-                </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="MenuControlUsuarios">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Control de usuarios"/>
-                  </Properties>
-                </MenuItem>
-              </SubComponents>
-            </Menu>
-            <Menu class="javax.swing.JMenu" name="MenuAgenda">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Agenda"/>
-              </Properties>
-              <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="MenuJornadaDiaria">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Jornada diaria"/>
-                  </Properties>
-                </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="MenuGestionAgendas">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Gesti&#xf3;n de agendas"/>
-                  </Properties>
-                </MenuItem>
-              </SubComponents>
-            </Menu>
-          </SubComponents>
-        </Menu>
-        <Menu class="javax.swing.JMenu" name="MenuCaja">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Caja"/>
-          </Properties>
         </Menu>
         <Menu class="javax.swing.JMenu" name="MenuCobranza">
           <Properties>
@@ -62,16 +18,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Facturaci&#xf3;n"/>
           </Properties>
-          <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="OT"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
-              </Events>
-            </MenuItem>
-          </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="MenuMantenciones">
           <Properties>

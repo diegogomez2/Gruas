@@ -160,22 +160,44 @@ public class modeloFacturas {
         return data;
     }
     
-    public String[] obtenerOtsPorIdNC(String id) {
-        String[] data = new String[]{};
+    public String[][] obtenerOtsPorIdNC(String id) {
+        int registros = 0;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM notacredito INNER"
+                    + " JOIN facturas ON notacredito.id_fac = facturas.id_fac INNER JOIN jornadas ON "
+                    + "jornadas.id_fac = facturas.id_fac WHERE id_nc = ?");
+            pstm.setString(1, id);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+       }catch(SQLException e){
+            System.out.println("Error obtener ot por id nc");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        String[][] data = new String[registros][4];
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("SELECT cod_ot, neto_ot, iva_ot, total_ot FROM "
                     + "jornadas INNER JOIN facturas ON jornadas.id_fac = facturas.id_fac INNER JOIN "
-                    + "notacredito ON notacredito.id_nc = facturas.id_nc WHERE id_nc = ?");
+                    + "notacredito ON notacredito.id_fac = facturas.id_fac WHERE id_nc = ?");
             pstm.setString(1, id);
             ResultSet res = pstm.executeQuery();
-            res.next();
-            String estcod = res.getString("cod_ot");
-            String estnet = res.getString("neto_ot");
-            String estiva = res.getString("iva_ot");
-            String esttot = res.getString("tot_ot");
-            data = new String[]{estcod, estnet, estiva, esttot};
+            int i = 0;
+            while(res.next()){
+                String estcod = res.getString("cod_ot");
+                String estnet = res.getString("neto_ot");
+                String estiva = res.getString("iva_ot");
+                String esttot = res.getString("tot_ot");
+                data[i] = new String[]{estcod, estnet, estiva, esttot};
+                i++;
+            }
+            
         }catch(SQLException e){
             System.out.println("Error obtener ots por id nc");
             System.out.println(e);
@@ -190,7 +212,7 @@ public class modeloFacturas {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("SELECT id_fac, neto_fac, iva_fac, total_fac FROM "
+            PreparedStatement pstm = conn.prepareStatement("SELECT facturas.id_fac, neto_fac, iva_fac, tot_fac FROM "
                     + "facturas INNER JOIN notacredito ON facturas.id_fac = notacredito.id_fac "
                     + "WHERE id_nc = ?");
             pstm.setString(1, id);
@@ -202,7 +224,7 @@ public class modeloFacturas {
             String esttot = res.getString("tot_fac");
             data = new String[]{estfac, estnet, estiva, esttot};
         }catch(SQLException e){
-            System.out.println("Error obtener ots por id nc");
+            System.out.println("Error obtener valores ots por id nc");
             System.out.println(e);
         }catch(ClassNotFoundException e){
             System.out.println(e);
@@ -216,11 +238,11 @@ public class modeloFacturas {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("insert into notacredito (fec_nc, raz_fac, id_fac)"
+            PreparedStatement pstm = conn.prepareStatement("insert into notacredito (fec_nc, raz_nc, id_fac)"
                     + " values (?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
             pstm.setString(1, fecha);
-            pstm.setString(2, id);
-            pstm.setString(3, razon);
+            pstm.setString(2, razon);
+            pstm.setInt(3, Integer.parseInt(id));
             pstm.execute();
             ResultSet res = pstm.getGeneratedKeys();
             id_nc = res.getString(1);

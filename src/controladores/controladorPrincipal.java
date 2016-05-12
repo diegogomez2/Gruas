@@ -73,7 +73,7 @@ public class controladorPrincipal {
         tabs.removeAll();
         tabs.addTab("Clientes", crearControladorClientesP());
         tabs.addTab("Grúas", crearControladorGruasP());
-        tabs.addTab("Empleados", crearControladorEmpleadosP());
+        tabs.addTab("Trabajadores", crearControladorEmpleadosP());
         tabs.addTab("Jornada Diaria", crearControladorJornadaP());
         tabs.setSelectedIndex(i);
     }
