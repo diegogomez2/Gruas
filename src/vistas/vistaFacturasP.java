@@ -71,6 +71,7 @@ public class vistaFacturasP extends javax.swing.JPanel {
         botonFactura = new javax.swing.JButton();
         botonBoleta = new javax.swing.JButton();
         botonNotaDeb = new javax.swing.JButton();
+        botonFacEx = new javax.swing.JButton();
 
         tablaFacturas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -106,6 +107,13 @@ public class vistaFacturasP extends javax.swing.JPanel {
             }
         });
 
+        botonFacEx.setText("Generar factura ex.");
+        botonFacEx.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonFacExActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -113,6 +121,8 @@ public class vistaFacturasP extends javax.swing.JPanel {
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(botonFacEx)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(botonNotaDeb)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(botonBoleta)
@@ -128,7 +138,8 @@ public class vistaFacturasP extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonFactura)
                     .addComponent(botonBoleta)
-                    .addComponent(botonNotaDeb))
+                    .addComponent(botonNotaDeb)
+                    .addComponent(botonFacEx))
                 .addGap(0, 9, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -200,9 +211,32 @@ public class vistaFacturasP extends javax.swing.JPanel {
             }
     }//GEN-LAST:event_botonNotaDebActionPerformed
 
+    private void botonFacExActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonFacExActionPerformed
+        controladores.controladorCrearFactura miControlador = new controladores.controladorCrearFactura();
+        controladores.controladorOts micontroladorOts = new controladores.controladorOts();
+        int filas = tablaFacturas.getRowCount();
+        String[] idOts = new String[filas];
+        int neto = 0, iva = 0, total = 0;
+        for(int i = 0; i < filas; i++){
+            idOts[i] = getIdFact(i);
+            neto += getNetoFact(i);
+            iva += getIvaFact(i);
+            total += getTotalFact(i);
+        }
+        controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
+        String id = micontroladorFacturas.archivarFacturas(idOts, neto, iva, total, "factura ex", "0");
+            if((miControlador.crearFacExXML(idOts, Integer.toString(neto), Integer.toString(iva),
+                Integer.toString(total), id).compareTo("correcto") == 0)){
+                JTabbedPane tabs = (JTabbedPane)this.getParent();
+                micontroladorOts.crearControladorPrincipal(tabs);
+                miControlador.crearControladorPrincipal(tabs);
+            }
+    }//GEN-LAST:event_botonFacExActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonBoleta;
+    private javax.swing.JButton botonFacEx;
     private javax.swing.JButton botonFactura;
     private javax.swing.JButton botonNotaDeb;
     private javax.swing.JScrollPane jScrollPane1;

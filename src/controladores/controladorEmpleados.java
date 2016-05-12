@@ -29,7 +29,7 @@ public class controladorEmpleados {
     public void crearControladorPrincipal(JTabbedPane tabs) {
         controladorPrincipal miControlador = new controladorPrincipal();
         tabs.remove(2);
-        tabs.insertTab("Empleados", null, miControlador.crearControladorEmpleadosP(), null, 2);
+        tabs.insertTab("Trabajadores", null, miControlador.crearControladorEmpleadosP(), null, 2);
         tabs.setSelectedIndex(2);   
     }
 

@@ -19,6 +19,8 @@
           <Component id="jScrollPane1" alignment="0" pref="800" max="32767" attributes="0"/>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="32767" attributes="0"/>
+              <Component id="botonFacEx" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="botonNotaDeb" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="botonBoleta" min="-2" max="-2" attributes="0"/>
@@ -37,6 +39,7 @@
                   <Component id="botonFactura" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="botonBoleta" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="botonNotaDeb" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="botonFacEx" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="0" pref="9" max="32767" attributes="0"/>
           </Group>
@@ -88,6 +91,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonNotaDebActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="botonFacEx">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Generar factura ex."/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonFacExActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

@@ -45,12 +45,21 @@ public class controladorFacturas {
         String id;
         modelos.modeloOts ot = new modeloOts();
         if(tipo.compareTo("nota debito") == 0){
-            id = factura.ingresarND(formatDate.format(new Date()), neto, iva, total, id_fac);
+            String folio = factura.folioND();
+            id = factura.ingresarND(formatDate.format(new Date()), neto, iva, total, id_fac, folio);
             for(int i = 0; i < idOts.length; i++){
                 ot.archivarFacturaND(idOts[i], id);
             }
         }else{
-            id = factura.ingresarFacturada(formatDate.format(new Date()), neto, iva, total, tipo);
+            String folio = "";
+            if(tipo.compareTo("factura") == 0){
+                folio = factura.folioFac();
+            }else if(tipo.compareTo("boleta") == 0){
+                folio = factura.folioBol();
+            }else{
+                folio = factura.folioFacEx();
+            }
+            id = factura.ingresarFacturada(formatDate.format(new Date()), neto, iva, total, tipo, folio);
             for(int i = 0; i < idOts.length; i++){
                 ot.archivarFactura(idOts[i], id);
             }

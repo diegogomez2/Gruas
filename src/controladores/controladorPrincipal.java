@@ -450,7 +450,8 @@ public class controladorPrincipal {
     
     public String ingresarNotaCredito(String id, String razon){
         modelos.modeloFacturas factura = new modelos.modeloFacturas();
-        return factura.ingresarNotaCredito(id, razon);
+        String folio = factura.folioNC();
+        return factura.ingresarNotaCredito(id, razon, folio);
     }
 
     public Object[] cargarComunas(int region) {

@@ -29,19 +29,20 @@ public class modeloFacturas {
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
     DateFormat newFormat = new SimpleDateFormat("dd-MM-yyyy");
     
-    public String ingresarFacturada(String fec, int valorNeto, int valorIva, int valorTotal, String tipo){        
+    public String ingresarFacturada(String fec, int valorNeto, int valorIva, int valorTotal, String tipo, String folio){        
         String id = "";
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("insert into facturas (fec_fac, neto_fac,"
-                    + "iva_fac, tot_fac, tipo_fac)"
-                    + " values (?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+                    + "iva_fac, tot_fac, tipo_fac, fol_fac)"
+                    + " values (?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
             pstm.setString(1, fec);
             pstm.setInt(2, valorNeto);
             pstm.setInt(3, valorIva);
             pstm.setInt(4, valorTotal);
             pstm.setString(5, tipo);
+            pstm.setInt(6, Integer.parseInt(folio));
             pstm.execute();
             ResultSet res = pstm.getGeneratedKeys();
             res.next();
@@ -160,7 +161,7 @@ public class modeloFacturas {
         return data;
     }
     
-    public String[][] obtenerOtsPorIdNC(String id) {
+    public String[] obtenerOtsPorIdNC(String id) {
         int registros = 0;
         try{
             Class.forName("com.mysql.jdbc.Driver");
@@ -179,11 +180,11 @@ public class modeloFacturas {
        }catch(ClassNotFoundException e){
             System.out.println(e);
        }
-        String[][] data = new String[registros][4];
+        String[] data = new String[registros];
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("SELECT cod_ot, neto_ot, iva_ot, total_ot FROM "
+            PreparedStatement pstm = conn.prepareStatement("SELECT cod_ot FROM "
                     + "jornadas INNER JOIN facturas ON jornadas.id_fac = facturas.id_fac INNER JOIN "
                     + "notacredito ON notacredito.id_fac = facturas.id_fac WHERE id_nc = ?");
             pstm.setString(1, id);
@@ -191,15 +192,55 @@ public class modeloFacturas {
             int i = 0;
             while(res.next()){
                 String estcod = res.getString("cod_ot");
-                String estnet = res.getString("neto_ot");
-                String estiva = res.getString("iva_ot");
-                String esttot = res.getString("tot_ot");
-                data[i] = new String[]{estcod, estnet, estiva, esttot};
+                data[i] = estcod;
                 i++;
             }
             
         }catch(SQLException e){
             System.out.println("Error obtener ots por id nc");
+            System.out.println(e);
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+        }
+        return data;
+    }
+    
+    //OBTIENE LOS CODIGOS POR LA ID DE LA FACTURA
+    public String[] obtenerOtsPorIdFacturada(String id) {
+        int registros = 0;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM"
+                    + " jornadas WHERE id_fac = ?");
+            pstm.setString(1, id);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+       }catch(SQLException e){
+            System.out.println("Error obtener ot por id fact");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        String[] data = new String[registros];
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT cod_ot FROM "
+                    + "jornadas WHERE id_fac = ?");
+            pstm.setString(1, id);
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while(res.next()){
+                String estcod = res.getString("cod_ot");
+                data[i] = estcod;
+                i++;
+            }
+            
+        }catch(SQLException e){
+            System.out.println("Error obtener ots por id fac");
             System.out.println(e);
         }catch(ClassNotFoundException e){
             System.out.println(e);
@@ -232,21 +273,22 @@ public class modeloFacturas {
         return data;
     }
     
-    public String ingresarNotaCredito(String id, String razon){    
+    public String ingresarNotaCredito(String id, String razon, String folio){    
         String fecha = formatDate.format(new Date());
         String id_nc;
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("insert into notacredito (fec_nc, raz_nc, id_fac)"
-                    + " values (?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+            PreparedStatement pstm = conn.prepareStatement("insert into notacredito (fec_nc, raz_nc, id_fac, fol_nc)"
+                    + " values (?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
             pstm.setString(1, fecha);
             pstm.setString(2, razon);
             pstm.setInt(3, Integer.parseInt(id));
+            pstm.setInt(4, Integer.parseInt(folio));
             pstm.execute();
             ResultSet res = pstm.getGeneratedKeys();
-            id_nc = res.getString(1);
             res.next();
+            id_nc = res.getString(1);
             pstm.close();
         }catch(SQLException e){
             System.out.println("Error ingresar nota credito");
@@ -259,19 +301,20 @@ public class modeloFacturas {
         return id_nc;
     }
     
-    public String ingresarND(String fec, int valorNeto, int valorIva, int valorTotal, String id_fac){        
+    public String ingresarND(String fec, int valorNeto, int valorIva, int valorTotal, String id_fac, String folio){        
         String id = "";
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("insert into notadebito (fec_nd, neto_nd,"
-                    + "iva_nd, tot_nd, id_fac)"
-                    + " values (?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+                    + "iva_nd, tot_nd, id_fac, fol_nd)"
+                    + " values (?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
             pstm.setString(1, fec);
             pstm.setInt(2, valorNeto);
             pstm.setInt(3, valorIva);
             pstm.setInt(4, valorTotal);
             pstm.setString(5, id_fac);
+            pstm.setInt(6, Integer.parseInt(folio));
             pstm.execute();
             ResultSet res = pstm.getGeneratedKeys();
             res.next();
@@ -286,5 +329,247 @@ public class modeloFacturas {
             return "incorrecto";
         }
         return id;
+    }
+    
+    public String folioFac(){
+        String fol = "";
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT fol_fac from folios WHERE id_fol = 1 "
+                    + "FOR UPDATE"); 
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            String estfol = res.getString("fol_fac");
+            fol = estfol;
+            pstm = conn.prepareStatement("UPDATE folios SET fol_fac = fol_fac + 1 WHERE id_fol = 1");
+            pstm.executeUpdate();
+            pstm.close();
+        }catch(SQLException e){
+            System.out.println("Error obtener folio fac");
+            System.out.println(e);
+            return "incorrecto";
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+            return "incorrecto";
+        }
+        return fol;
+    }
+    
+    public String folioFacEx(){
+        String fol = "";
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT fol_facex from folios WHERE id_fol = 1 "
+                    + "FOR UPDATE");
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            String estfol = res.getString("fol_facex");
+            fol = estfol;
+            pstm = conn.prepareStatement("UPDATE folios SET fol_facex = fol_facex + 1 WHERE id_fol = 1");
+            pstm.executeUpdate();
+            pstm.close();
+        }catch(SQLException e){
+            System.out.println("Error obtener folio facex");
+            System.out.println(e);
+            return "incorrecto";
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+            return "incorrecto";
+        }
+        return fol;
+    }
+    
+    public String folioBol(){
+        String fol = "";
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT fol_bol from folios WHERE id_fol = 1 "
+                    + "FOR UPDATE");
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            String estfol = res.getString("fol_bol");
+            fol = estfol;
+            pstm = conn.prepareStatement("UPDATE folios SET fol_bol = fol_bol + 1 WHERE id_fol = 1");
+            pstm.executeUpdate();
+            pstm.close();
+        }catch(SQLException e){
+            System.out.println("Error folio bol");
+            System.out.println(e);
+            return "incorrecto";
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+            return "incorrecto";
+        }
+        return fol;
+    }
+    
+    public String folioND(){
+        String fol = "";
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT fol_nd from folios WHERE id_fol = 1 "
+                    + "FOR UPDATE");
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            String estfol = res.getString("fol_nd");
+            fol = estfol;
+            pstm = conn.prepareStatement("UPDATE folios SET fol_nd = fol_nd + 1 WHERE id_fol = 1");
+            pstm.executeUpdate();
+            pstm.close();
+        }catch(SQLException e){
+            System.out.println("Error folio nd");
+            System.out.println(e);
+            return "incorrecto";
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+            return "incorrecto";
+        }
+        return fol;
+    }
+    
+    public String folioNC(){
+        String fol = "";
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT fol_nc from folios WHERE id_fol = 1 "
+                    + "FOR UPDATE");
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            String estfol = res.getString("fol_nc");
+            fol = estfol;
+            pstm = conn.prepareStatement("UPDATE folios SET fol_nc = fol_nc + 1 WHERE id_fol = 1");
+            pstm.executeUpdate();
+            pstm.close();
+        }catch(SQLException e){
+            System.out.println("Error folio nc");
+            System.out.println(e);
+            return "incorrecto";
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+            return "incorrecto";
+        }
+        return fol;
+    }
+    
+    public String folioGuiaDesp(){
+        String fol = "";
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT fol_gd from folios WHERE id_fol = 1 "
+                    + "FOR UPDATE");
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            String estfol = res.getString("fol_gd");
+            fol = estfol;
+            pstm = conn.prepareStatement("UPDATE folios SET fol_gd = fol_gd + 1 WHERE id_fol = 1");
+            pstm.executeUpdate();
+            pstm.close();
+        }catch(SQLException e){
+            System.out.println("Error folio fd");
+            System.out.println(e);
+            return "incorrecto";
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+            return "incorrecto";
+        }
+        return fol;
+    }
+    
+    public String obtenerFolioFac(String id){
+        String fol = "";
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT fol_fac from facturas WHERE id_fac = ? ");
+            pstm.setString(1, id);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            String estfol = res.getString("fol_fac");
+            fol = estfol;
+            pstm.close();
+        }catch(SQLException e){
+            System.out.println("Error obtener folio fac");
+            System.out.println(e);
+            return "incorrecto";
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+            return "incorrecto";
+        }
+        return fol;
+    }
+    
+    public String obtenerFolioNC(String id){
+        String fol = "";
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT fol_nc from notacredito WHERE id_nc = ? ");
+            pstm.setString(1, id);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            String estfol = res.getString("fol_nc");
+            fol = estfol;
+            pstm.close();
+        }catch(SQLException e){
+            System.out.println("Error obtener folio nc");
+            System.out.println(e);
+            return "incorrecto";
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+            return "incorrecto";
+        }
+        return fol;
+    }
+    
+    public String obtenerFolioND(String id){
+        String fol = "";
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT fol_nd from notadebito WHERE id_nd = ? ");
+            pstm.setString(1, id);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            String estfol = res.getString("fol_nd");
+            fol = estfol;
+            pstm.close();
+        }catch(SQLException e){
+            System.out.println("Error obtener folio nd");
+            System.out.println(e);
+            return "incorrecto";
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+            return "incorrecto";
+        }
+        return fol;
+    }
+    
+    public String obtenerFechaFac(String id){
+        String fec = "";
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT fec_fac from facturas WHERE id_fac = ? ");
+            pstm.setString(1, id);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            String estfec = res.getString("fec_fac");
+            fec = estfec;
+            pstm.close();
+        }catch(SQLException e){
+            System.out.println("Error obtener fecha fac");
+            System.out.println(e);
+            return "incorrecto";
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+            return "incorrecto";
+        }
+        return fec;
     }
 }

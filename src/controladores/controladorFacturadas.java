@@ -32,9 +32,9 @@ public class controladorFacturadas {
         return miControlador.ingresarNotaCredito(id, razon);
     }
     
-    public String[][] obtenerOtsPorIdNC(String id){
+    public String[] obtenerOtsPorIdNC(String id){
         modelos.modeloFacturas nc = new modelos.modeloFacturas();
-        String[][] data;
+        String[] data;
         data = nc.obtenerOtsPorIdNC(id);
         return data;
     }
@@ -45,6 +45,14 @@ public class controladorFacturadas {
         valores = nc.obtenerValoresNC(id);
         return valores;
     }
+    
+    public String[] obtenerOtsPorIdFacturada(String id){
+        modelos.modeloFacturas nc = new modelos.modeloFacturas();
+        String[] data;
+        data = nc.obtenerOtsPorIdFacturada(id);
+        return data;
+    }
+    
     public void crearControladorPrincipal(JTabbedPane tabs){
         controladorPrincipal miControlador = new controladorPrincipal();
         tabs.remove(6);

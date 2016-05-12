@@ -317,7 +317,7 @@ public class modeloOts {
                 String estraz = res.getString("raz_cli");
                 String estgir = res.getString("gir_cli");
                 String estdir = res.getString("dir_cli");
-                String estreg = res.getString("ciu_cli");
+                String estciu = res.getString("ciu_cli");
                 String estcom = res.getString("com_cli");
                 String esttot = res.getString("total_ot");
                 String estnet = res.getString("neto_ot");
@@ -325,7 +325,7 @@ public class modeloOts {
                 String estcodot = res.getString("cod_ot");
                 String estfact = res.getString("fact_ot");
                 String esthor = res.getString("hortot_ot");
-                data = new String[]{estrut, estraz, estgir, estdir, estreg, estcom, esttot, estnet,
+                data = new String[]{estrut, estraz, estgir, estdir, estciu, estcom, esttot, estnet,
                 estiva, estfact, estcodot, esthor};
                 i++;
             }
