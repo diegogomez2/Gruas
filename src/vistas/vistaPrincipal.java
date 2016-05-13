@@ -48,30 +48,24 @@ public class vistaPrincipal extends javax.swing.JFrame {
         vistaPrincipal = new javax.swing.JTabbedPane();
         MenuPrincipal = new javax.swing.JMenuBar();
         MenuArchivo = new javax.swing.JMenu();
-        MenuCobranza = new javax.swing.JMenu();
-        MenuFacturacion = new javax.swing.JMenu();
-        MenuMantenciones = new javax.swing.JMenu();
-        MenuAyuda = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu Principal");
-        setMinimumSize(new java.awt.Dimension(800, 600));
+        setMinimumSize(new java.awt.Dimension(900, 700));
         setPreferredSize(new java.awt.Dimension(800, 600));
 
         MenuArchivo.setText("Archivo");
+
+        jMenuItem1.setText("Cambiar contraseña");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        MenuArchivo.add(jMenuItem1);
+
         MenuPrincipal.add(MenuArchivo);
-
-        MenuCobranza.setText("Cobranza");
-        MenuPrincipal.add(MenuCobranza);
-
-        MenuFacturacion.setText("Facturación");
-        MenuPrincipal.add(MenuFacturacion);
-
-        MenuMantenciones.setText("Mantenciones");
-        MenuPrincipal.add(MenuMantenciones);
-
-        MenuAyuda.setText("Ayuda");
-        MenuPrincipal.add(MenuAyuda);
 
         setJMenuBar(MenuPrincipal);
 
@@ -79,15 +73,20 @@ public class vistaPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(vistaPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 548, Short.MAX_VALUE)
+            .addComponent(vistaPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 874, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(vistaPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
+            .addComponent(vistaPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
+        miControlador.crearControladorUsuarios();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -126,11 +125,8 @@ public class vistaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu MenuArchivo;
-    private javax.swing.JMenu MenuAyuda;
-    private javax.swing.JMenu MenuCobranza;
-    private javax.swing.JMenu MenuFacturacion;
-    private javax.swing.JMenu MenuMantenciones;
     private javax.swing.JMenuBar MenuPrincipal;
+    private javax.swing.JMenuItem jMenuItem1;
     public javax.swing.JTabbedPane vistaPrincipal;
     // End of variables declaration//GEN-END:variables
 
