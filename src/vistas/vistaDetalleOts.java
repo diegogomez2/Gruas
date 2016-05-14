@@ -99,6 +99,7 @@ public class vistaDetalleOts extends javax.swing.JDialog {
         textoCodigo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Detalle orden de trabajo");
 
         labelSeñores.setText("Señores");
 

@@ -71,6 +71,7 @@ public class vistaDetalleFacturadas extends javax.swing.JDialog {
         tablaOts = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Detalle factura");
 
         tablaOts.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

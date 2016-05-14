@@ -110,6 +110,7 @@ public class vistaModificarGruas extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Modificar grúa");
 
         botonIngresar.setText("Aceptar");
         botonIngresar.addActionListener(new java.awt.event.ActionListener() {

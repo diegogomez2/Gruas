@@ -97,6 +97,7 @@ public class vistaDetalleFacturas extends javax.swing.JDialog {
         textoCodigo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Detalle ot2");
 
         labelSeñores.setText("Señores");
 

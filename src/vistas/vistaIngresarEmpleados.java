@@ -104,7 +104,7 @@ public class vistaIngresarEmpleados extends javax.swing.JDialog {
         labelApMaterno = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Ingresar Empleado");
+        setTitle("Ingresar trabajador");
         setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos sueldos"));

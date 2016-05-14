@@ -141,7 +141,7 @@ public class vistaIngresarOts extends javax.swing.JDialog {
         botonCalcular = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Ingresar Orden de trabajo");
+        setTitle("Ingresar orden de trabajo");
 
         labelSeñores.setText("Señores");
 
@@ -358,9 +358,7 @@ public class vistaIngresarOts extends javax.swing.JDialog {
                         .addComponent(jLabel20)
                         .addGap(409, 409, 409)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel22)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel22)
                             .addComponent(textoObs)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)

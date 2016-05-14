@@ -103,6 +103,7 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
         textoFechaBaja = new org.jdesktop.swingx.JXDatePicker();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Detalle grúa");
 
         botonCancelar.setText("OK");
         botonCancelar.addActionListener(new java.awt.event.ActionListener() {

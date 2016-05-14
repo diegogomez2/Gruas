@@ -85,7 +85,7 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
         textoOperador = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Ingresar Jornada de Trabajo");
+        setTitle("Ingresar jornada de trabajo");
         setResizable(false);
 
         labelFechaSalida.setText("Fecha de salida");

@@ -85,21 +85,21 @@ public class vistaEmpleadosP extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tablaEmpleados);
 
-        botonModificar.setText("Modificar empleado");
+        botonModificar.setText("Modificar trabajador");
         botonModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonModificarActionPerformed(evt);
             }
         });
 
-        botonEliminar.setText("Eliminar empleado");
+        botonEliminar.setText("Eliminar trabajador");
         botonEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonEliminarActionPerformed(evt);
             }
         });
 
-        botonAgregar.setText("Agregar empleado");
+        botonAgregar.setText("Agregar trabajador");
         botonAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonAgregarActionPerformed(evt);

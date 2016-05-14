@@ -82,7 +82,7 @@
     </Container>
     <Component class="javax.swing.JButton" name="botonModificar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Modificar empleado"/>
+        <Property name="text" type="java.lang.String" value="Modificar trabajador"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonModificarActionPerformed"/>
@@ -90,7 +90,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="botonEliminar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Eliminar empleado"/>
+        <Property name="text" type="java.lang.String" value="Eliminar trabajador"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonEliminarActionPerformed"/>
@@ -98,7 +98,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="botonAgregar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Agregar empleado"/>
+        <Property name="text" type="java.lang.String" value="Agregar trabajador"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonAgregarActionPerformed"/>

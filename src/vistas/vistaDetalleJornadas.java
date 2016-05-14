@@ -64,6 +64,7 @@ public class vistaDetalleJornadas extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Detalle jornada");
+        setMaximumSize(new java.awt.Dimension(602, 313));
 
         labelFechaSalida.setText("Fecha de salida");
 

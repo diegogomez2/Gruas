@@ -106,7 +106,7 @@ public class vistaModificarEmpleados extends javax.swing.JDialog {
         textoCorreo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Modificar empleado");
+        setTitle("Modificar trabajador");
         setLocationByPlatform(true);
         setResizable(false);
 

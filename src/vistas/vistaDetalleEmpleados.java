@@ -77,7 +77,7 @@ public class vistaDetalleEmpleados extends javax.swing.JDialog {
         textoNombres = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Detalle empleado");
+        setTitle("Detalle trabajador");
         setLocationByPlatform(true);
         setResizable(false);
 

@@ -105,6 +105,7 @@ public class vistaIngresarClientes extends javax.swing.JDialog {
         botonCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Ingresar cliente");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Informacion"));
 

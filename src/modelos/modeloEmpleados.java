@@ -253,8 +253,9 @@ public class modeloEmpleados {
         String apP = nom[size-2];
         String nombres = "";
         for(int i = 0; i < size - 2; i++){
-            nombres += nom[i];
+            nombres += nom[i] + " ";
         }
+        nombres = nombres.trim();
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);

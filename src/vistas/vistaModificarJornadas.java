@@ -80,6 +80,7 @@ public class vistaModificarJornadas extends javax.swing.JDialog {
         textoEmpleado = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Modificar jornada de trabajo");
 
         labelFechaSalida.setText("Fecha de salida");
 

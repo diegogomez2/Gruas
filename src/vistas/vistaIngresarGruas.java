@@ -109,7 +109,7 @@ public class vistaIngresarGruas extends javax.swing.JDialog {
         textoFechaUM = new org.jdesktop.swingx.JXDatePicker();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Ingresar Grúa");
+        setTitle("Ingresar grúa");
         setResizable(false);
 
         botonIngresar.setText("Aceptar");

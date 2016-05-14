@@ -366,7 +366,7 @@ public class controladorPrincipal {
     boolean ingresarEmpleado(String[] data) {
         modelos.modeloEmpleados empleado = new modelos.modeloEmpleados();
         if(empleado.ingresarEmpleados(data).compareTo("correcto") == 0){
-            JOptionPane.showMessageDialog(miVistaL, "Empleado ingresado con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(miVistaL, "Trabajador ingresado con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
             return true;
         }else{
             JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al ingresar los datos.\n Compruebe que el rut sea correcto",
@@ -378,10 +378,10 @@ public class controladorPrincipal {
     boolean eliminarEmpleados(String data) {
         modelos.modeloEmpleados empleado = new modelos.modeloEmpleados();
         if(empleado.eliminarEmpleado(data).compareTo("correcto") == 0){
-            JOptionPane.showMessageDialog(miVistaL, "Empleado eliminado con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(miVistaL, "Trabajador eliminado con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
             return true;
         }else{
-            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al eliminar el empleado seleccionado", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al eliminar el trabajador seleccionado", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }
@@ -389,10 +389,10 @@ public class controladorPrincipal {
     boolean modificarEmpleado(String[] data, int rut) {
         modelos.modeloEmpleados empleado = new modelos.modeloEmpleados();
         if(empleado.modificarEmpleado(data, rut).compareTo("correcto") == 0){
-            JOptionPane.showMessageDialog(miVistaL, "Empleado modificado con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(miVistaL, "Trabajador modificado con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
             return true;
         }else{
-            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al modificar el empleado selecionado", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al modificar el trabajador selecionado", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }
