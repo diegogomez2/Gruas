@@ -34,6 +34,7 @@ public class vistaPrincipal extends javax.swing.JFrame {
         vistaPrincipal.addTab("OTs", miControlador.crearControladorOtsP());
         vistaPrincipal.addTab("A Facturar", miControlador.crearControladorFacturasP());
         vistaPrincipal.addTab("Facturadas", miControlador.crearControladorFacturadasP());
+        vistaPrincipal.addTab("Histórico", miControlador.crearControladorHistoricoP());
     }
 
     /**

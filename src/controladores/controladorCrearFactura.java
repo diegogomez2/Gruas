@@ -1088,7 +1088,9 @@ public class controladorCrearFactura {
     public void crearControladorPrincipal(JTabbedPane tabs) {
         controladorPrincipal miControlador = new controladorPrincipal();
         tabs.remove(5);
+        tabs.remove(6);
         tabs.insertTab("A facturar", null, miControlador.crearControladorFacturasP(), null, 5);
+        tabs.insertTab("Histórico Ots", null, miControlador.crearControladorHistoricoP(), null, 7);
         tabs.setSelectedIndex(5);
     }
 }

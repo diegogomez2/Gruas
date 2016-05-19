@@ -53,8 +53,13 @@ public class controladorIngresarJornadas {
     public boolean irVistaJornadasP() throws ParseException {
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
         String rut_cli = miControlador.obtenerClientePorRazon(vistaIJ.getTextoCliente());
-        String rut_emp = miControlador.obtenerEmpleadoPorNombre(vistaIJ.getTextoOperador());
-        String pat_gru = miControlador.obtenerGruaPorDesc(vistaIJ.getTextoGrua());
+        String rut_emp = "", pat_gru = "";
+        if(vistaIJ.getTextoOperador().compareTo("") != 0){
+            rut_emp = miControlador.obtenerEmpleadoPorNombre(vistaIJ.getTextoOperador());
+        }
+        if(vistaIJ.getTextoGrua().compareTo("") != 0){
+            pat_gru = miControlador.obtenerGruaPorDesc(vistaIJ.getTextoGrua());
+        }
         Date fecha1 = formatDate.parse(vistaIJ.getTextoFechaSalida());
         Date fecha2 = formatDate.parse(vistaIJ.getTextoFechaRegreso());
         if(fecha2.before(fecha1)){

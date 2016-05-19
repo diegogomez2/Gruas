@@ -30,32 +30,33 @@ public class vistaJornadasP extends javax.swing.JPanel {
     /**
      * Creates new form vistaJornadaP
      */
-
     int horas = 0;
     DefaultTableModel datos;
-    
+
     public vistaJornadasP(String tipo, Object[][] data) {
         initComponents();
         final int rows = 5;
         String[] columNames = {"Código", "Grúa", "Cliente", "Operador", "Fecha de salida", "Hora",
             "Observaciones"};
-        datos = new DefaultTableModel(data, columNames){
+        datos = new DefaultTableModel(data, columNames) {
             @Override
-            public boolean isCellEditable(int row, int column){
+            public boolean isCellEditable(int row, int column) {
                 return false;
             }
-            
+
         };
         tablaJornadas.setModel(datos);
         tablaJornadas.setAutoCreateRowSorter(true);
-        if(tablaJornadas.getRowCount() > 0) tablaJornadas.setRowSelectionInterval(0, 0);
+        if (tablaJornadas.getRowCount() > 0) {
+            tablaJornadas.setRowSelectionInterval(0, 0);
+        }
         tablaJornadas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tablaJornadas.addMouseListener(new MouseAdapter(){
-            public void mousePressed(MouseEvent evt){
-                JTable table = (JTable)evt.getSource();
+        tablaJornadas.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
+                JTable table = (JTable) evt.getSource();
                 Point p = evt.getPoint();
                 int row = table.rowAtPoint(p);
-                if(evt.getClickCount() == 2){
+                if (evt.getClickCount() == 2) {
                     controladores.controladorJornadas miControlador = new controladores.controladorJornadas();
                     try {
                         miControlador.irVistaDetalleJornada(tablaJornadas.getValueAt(row, 0).toString());
@@ -64,7 +65,7 @@ public class vistaJornadasP extends javax.swing.JPanel {
                     }
                 }
             }
-        });   
+        });
     }
 
     /**
@@ -183,7 +184,7 @@ public class vistaJornadasP extends javax.swing.JPanel {
     private void botonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarActionPerformed
         controladores.controladorJornadas miControlador = new controladores.controladorJornadas();
         miControlador.irVistaIngresarJornadas();
-        JTabbedPane tabs = (JTabbedPane)this.getParent();
+        JTabbedPane tabs = (JTabbedPane) this.getParent();
         miControlador.crearControladorPrincipal(tabs);
     }//GEN-LAST:event_botonAgregarActionPerformed
 
@@ -191,15 +192,17 @@ public class vistaJornadasP extends javax.swing.JPanel {
         controladores.controladorJornadas miControlador = new controladores.controladorJornadas();
         String id;
         boolean selected = tablaJornadas.getSelectedRowCount() > 0;
-        if(selected){
+        if (selected) {
             int row = getFilaSeleccionada();
             id = getIdFila(row);
             int dialogResult = JOptionPane.showOptionDialog(null, "Esta seguro que desea eliminar la jornada: \n "
-            + "Código: " + id, "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, 0);
-            if(dialogResult == JOptionPane.YES_OPTION)  miControlador.eliminarJormadas(id);
-            JTabbedPane tabs = (JTabbedPane)this.getParent();
+                    + "Código: " + id, "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, 0);
+            if (dialogResult == JOptionPane.YES_OPTION) {
+                miControlador.eliminarJormadas(id);
+            }
+            JTabbedPane tabs = (JTabbedPane) this.getParent();
             miControlador.crearControladorPrincipal(tabs);
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una jornada para ser eliminada");
         }
     }//GEN-LAST:event_botonEliminarActionPerformed
@@ -210,19 +213,26 @@ public class vistaJornadasP extends javax.swing.JPanel {
         controladores.controladorOts miControladorOt = new controladores.controladorOts();
         //controladores.controladorGruas micontroladorGruas = new controladores.controladorGruas();
         boolean selected = tablaJornadas.getSelectedRowCount() > 0;
-        if(selected){
+        if (selected) {
             int row = getFilaSeleccionada();
             id = getIdFila(row);
-            try {
-                miControlador.irVistaIngresarOts(id);
-            } catch (ParseException ex) {
-                Logger.getLogger(vistaJornadasP.class.getName()).log(Level.SEVERE, null, ex);
-            }
-                JTabbedPane tabs = (JTabbedPane)this.getParent();
+            String grua = getGruaFila(row);
+            String trab = getTrabFila(row);
+            trab = trab.trim();
+            if (trab.compareTo("") != 0 && grua.compareTo("") != 0) {
+                try {
+                    miControlador.irVistaIngresarOts(id);
+                } catch (ParseException ex) {
+                    Logger.getLogger(vistaJornadasP.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                JTabbedPane tabs = (JTabbedPane) this.getParent();
                 miControladorOt.crearControladorPrincipal(tabs);
                 miControlador.crearControladorPrincipal(tabs);
                 //micontroladorGruas.agregarHoras(getGruaFila(row));
-        }else{
+            } else {
+                JOptionPane.showMessageDialog(null, "Debe llenar los datos faltantes para asignar una OT a esta jornada");
+            }
+        } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una jornada para ser asignada");
         }
     }//GEN-LAST:event_botonAsignarActionPerformed
@@ -230,7 +240,7 @@ public class vistaJornadasP extends javax.swing.JPanel {
     private void botonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarActionPerformed
         controladores.controladorJornadas miControlador = new controladores.controladorJornadas();
         boolean selected = tablaJornadas.getSelectedRowCount() > 0;
-        if(selected){
+        if (selected) {
             int row = getFilaSeleccionada();
             String id = getIdFila(row);
             try {
@@ -238,9 +248,10 @@ public class vistaJornadasP extends javax.swing.JPanel {
             } catch (ParseException ex) {
                 Logger.getLogger(vistaJornadasP.class.getName()).log(Level.SEVERE, null, ex);
             }
-            JTabbedPane tabs = (JTabbedPane)this.getParent();
+            JTabbedPane tabs = (JTabbedPane) this.getParent();
             miControlador.crearControladorPrincipal(tabs);
-        }else{
+
+        } else {
             JOptionPane.showMessageDialog(tablaJornadas, "Debe seleccionar una jornada para ser modificada");
         }
     }//GEN-LAST:event_botonModificarActionPerformed
@@ -269,23 +280,27 @@ public class vistaJornadasP extends javax.swing.JPanel {
     public int getFilaSeleccionada() {
         return tablaJornadas.getSelectedRow();
     }
-    
-    public String getIdFila(int row){
+
+    public String getIdFila(int row) {
         return tablaJornadas.getValueAt(row, 0).toString();
     }
-    
-    public String getGruaFila(int row){
+
+    public String getGruaFila(int row) {
         return tablaJornadas.getValueAt(row, 1).toString();
     }
-    
-    public void setHoras(int horas){
+
+    public void setHoras(int horas) {
         this.horas = horas;
     }
-    
-    public void filtrar(String query){
+
+    public void filtrar(String query) {
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<DefaultTableModel>(datos);
         tablaJornadas.setRowSorter(sorter);
-        sorter.setRowFilter(RowFilter.regexFilter("(?i)"+query));
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + query));
     }
-    
+
+    public String getTrabFila(int row) {
+        return tablaJornadas.getValueAt(row, 3).toString();
+    }
+
 }

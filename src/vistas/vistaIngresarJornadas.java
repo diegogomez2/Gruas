@@ -37,8 +37,7 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
     SimpleDateFormat formatClock = new SimpleDateFormat("HH:mm");
     DateFormat formatDia = new SimpleDateFormat("EEE");
     TextAutoCompleter listaGruas;
-    
-    
+
     public vistaIngresarJornadas(java.awt.Frame parent, boolean modal, Object[] clientes,
             Object[] gruas, Object[] empleados) {
         super(parent, modal);
@@ -48,13 +47,13 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
         TextAutoCompleter listaClientes = new TextAutoCompleter(textoCliente);
         listaGruas = new TextAutoCompleter(textoGrua);
         TextAutoCompleter listaEmpleados = new TextAutoCompleter(textoOperador);
-        for(int i = 0; i < clientes.length; i++){
+        for (int i = 0; i < clientes.length; i++) {
             listaClientes.addItem(clientes[i].toString());
         }
-        for(int i = 0; i < gruas.length; i++){
+        for (int i = 0; i < gruas.length; i++) {
             listaGruas.addItem(gruas[i].toString());
         }
-        for(int i = 0; i < empleados.length; i++){
+        for (int i = 0; i < empleados.length; i++) {
             listaEmpleados.addItem(empleados[i].toString());
         }
     }
@@ -280,7 +279,7 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
     }//GEN-LAST:event_botonCancelarActionPerformed
 
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
-        JFrame tabs = (JFrame)this.getParent();
+        JFrame tabs = (JFrame) this.getParent();
         controladores.controladorIngresarJornadas miControladorIJ = new controladores.controladorIngresarJornadas();
         String respuesta = miControladorIJ.camposVacios();
         boolean esVacio = respuesta.length() == 0;
@@ -290,9 +289,9 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
             try {
                 if (miControladorIJ.irVistaJornadasP()) {
                     setVisible(false);
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(this, "Se generó un error al ingresar la jornada\n"
-                            + "Por favor compruebe que el cliente, grúa y empleados sean correctos", "Error" , JOptionPane.INFORMATION_MESSAGE);
+                            + "Por favor compruebe que el cliente, grúa y empleados sean correctos", "Error", JOptionPane.INFORMATION_MESSAGE);
                 }
             } catch (ParseException ex) {
                 Logger.getLogger(vistaIngresarJornadas.class.getName()).log(Level.SEVERE, null, ex);
@@ -311,10 +310,9 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
         modelos.modeloGruas grua = new modelos.modeloGruas();
         Object[] gruas = grua.obtenerDescGruasDisp(getTextoFechaSalida(), getTextoHoraSalida(),
                 getTextoFechaRegreso(), getTextoHoraRegreso());
-        for(int i = 0; i < gruas.length; i++){
+        for (int i = 0; i < gruas.length; i++) {
             listaGruas.addItem(gruas[i].toString());
         }
-        System.out.println("HOLA");
     }//GEN-LAST:event_textoFechaSalidaInputMethodTextChanged
 
     private void textoFechaSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoFechaSalidaActionPerformed
@@ -322,10 +320,9 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
         modelos.modeloGruas grua = new modelos.modeloGruas();
         Object[] gruas = grua.obtenerDescGruasDisp(getTextoFechaSalida(), getTextoHoraSalida(),
                 getTextoFechaRegreso(), getTextoHoraRegreso());
-        for(int i = 0; i < gruas.length; i++){
+        for (int i = 0; i < gruas.length; i++) {
             listaGruas.addItem(gruas[i].toString());
         }
-        System.out.println("HOLA");
     }//GEN-LAST:event_textoFechaSalidaActionPerformed
 
     /**
@@ -390,41 +387,53 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
 
     public String getTextoFechaRegreso() {
         Date fecha = textoFechaRegreso.getDate();
-        if(fecha == null) return "";
+        if (fecha == null) {
+            return "";
+        }
         String dateString = formatDate.format(textoFechaRegreso.getDate());
         return dateString;
     }
-    
-    public String getDiaSalida(){
+
+    public String getDiaSalida() {
         Date fecha = textoFechaSalida.getDate();
-        if(fecha == null) return "";
+        if (fecha == null) {
+            return "";
+        }
         String dia = formatDia.format(textoFechaSalida.getDate());
         return dia;
     }
-    
-    public String getDiaRegreso(){
+
+    public String getDiaRegreso() {
         Date fecha = textoFechaRegreso.getDate();
-        if(fecha == null) return "";
+        if (fecha == null) {
+            return "";
+        }
         String dia = formatDia.format(textoFechaRegreso.getDate());
         return dia;
     }
 
     public String getTextoFechaSalida() {
         Date fecha = textoFechaSalida.getDate();
-        if(fecha == null) return "";
+        if (fecha == null) {
+            return "";
+        }
         String dateString = formatDate.format(textoFechaSalida.getDate());
-        return dateString;    
+        return dateString;
     }
 
     public String getTextoHoraRegreso() {
         String hora = formatClock.format(textoHoraRegreso.getValue());
-        if(hora == null) return "";
+        if (hora == null) {
+            return "";
+        }
         return hora;
     }
 
     public String getTextoHoraSalida() {
         String hora = formatClock.format(textoHoraSalida.getValue());
-        if(hora == null) return "";
+        if (hora == null) {
+            return "";
+        }
         return hora;
     }
 
@@ -443,12 +452,12 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
     public String getTextoOperador() {
         return textoOperador.getText();
     }
-    
-    public String getTextoObsCliente(){
+
+    public String getTextoObsCliente() {
         return textoObsCliente.getText();
     }
-    
-    public void setTextoObsCliente(String textoObsCliente){
+
+    public void setTextoObsCliente(String textoObsCliente) {
         this.textoObsCliente.setText(textoObsCliente);
     }
 }

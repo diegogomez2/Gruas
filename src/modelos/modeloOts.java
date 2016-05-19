@@ -136,6 +136,68 @@ public class modeloOts {
         return data;
     }
     
+    public Object[][] listarHistoricos(){
+        int registros = 0;
+        
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM jornadas where not cod_ot = -1 and fact_ot >= 2");
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+       }catch(SQLException e){
+            System.out.println("Error listar ot");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        
+        Object[][] data = new String[registros][11];
+        
+        try{
+            PreparedStatement pstm = conn.prepareStatement("SELECT id_jor, fec_ot, raz_cli, gir_cli, dir_cli,"
+                    + "ciu_cli, com_cli, pat_gru, nom_emp, apP_emp, obs_jor, cod_ot, total_ot, neto_ot, "
+                    + "iva_ot, fact_ot FROM Jornadas INNER JOIN"
+                    + " clientes ON clientes.rut_cli = jornadas.rut_cli INNER JOIN empleados ON empleados.rut_emp "
+                    + "= jornadas.rut_emp Where not cod_ot = -1 and fact_ot >= 2 ORDER BY cod_ot, fact_ot");
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while(res.next()){
+                String estfec = res.getString("fec_ot");
+                java.util.Date fecha = formatDate.parse(estfec);
+                estfec = newFormat.format(fecha);
+                String estraz = res.getString("raz_cli");
+                String estgir = res.getString("gir_cli");
+                String estdir = res.getString("dir_cli");
+                String estciu = res.getString("ciu_cli");
+                String estcom = res.getString("com_cli");
+                String esttot = res.getString("total_ot");
+                String estnet = res.getString("neto_ot");
+                String estiva = res.getString("iva_ot");
+                String estcodot = res.getString("cod_ot");
+                String estfact = res.getString("fact_ot");
+                String estfact2;
+                if(estfact.compareTo("0") == 0){
+                    estfact2 = "Disponible";
+                }else{
+                    estfact2 = "Facturada";
+                }
+                data[i] = new String[]{estcodot, estraz, estgir, estdir, estciu, estcom, estfec, estnet,
+                estiva, esttot, estfact2};
+                i++;
+            }
+            res.close();
+        }catch(SQLException e){
+            System.out.println("Error listar ots");
+            System.out.println(e);
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        return data;
+    }
+    
     public String[] obtenerOtPorId(String id){
         String[] data = new String[]{};
         try{

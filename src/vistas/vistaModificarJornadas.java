@@ -10,6 +10,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
@@ -237,11 +239,15 @@ public class vistaModificarJornadas extends javax.swing.JDialog {
         if (!esVacio) {
             JOptionPane.showMessageDialog(this, respuesta, "Debe rellenar los siguientes campos", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            if (miControladorMJ.irVistaJornadasP()) {
-                setVisible(false);
-            }else{
-                JOptionPane.showMessageDialog(this, "Se generó un error al ingresar la jornada\n"
-                    + "Por favor compruebe que el cliente, grúa y empleados sean correctos", "Error" , JOptionPane.INFORMATION_MESSAGE);
+            try {
+                if (miControladorMJ.irVistaJornadasP()) {
+                    setVisible(false);
+                }else{
+                    JOptionPane.showMessageDialog(this, "Se generó un error al ingresar la jornada\n"
+                            + "Por favor compruebe que el cliente, grúa y empleados sean correctos", "Error" , JOptionPane.INFORMATION_MESSAGE);
+                }
+            } catch (ParseException ex) {
+                Logger.getLogger(vistaModificarJornadas.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_botonAceptarActionPerformed
@@ -312,7 +318,7 @@ public class vistaModificarJornadas extends javax.swing.JDialog {
     }
 
     public void setTextoOperador(String comboOperador) {
-        this.textoEmpleado.setText(comboOperador);
+        this.textoEmpleado.setText(comboOperador.trim());
     }
 
     public void setTextoFechaRegreso(String textoFechaRegreso) throws ParseException {

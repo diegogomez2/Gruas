@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -68,9 +69,10 @@ public class modeloJornadas {
         
         try{
             PreparedStatement pstm = conn.prepareStatement("SELECT id_jor, fsal_jor, horsal_jor, raz_cli,"
-                    + "des_gru, nom_emp, apP_emp, freg_jor, obs_jor FROM Jornadas INNER JOIN"
-                    + " clientes ON clientes.rut_cli = jornadas.rut_cli INNER JOIN empleados ON empleados.rut_emp "
-                    + "= jornadas.rut_emp INNER JOIN gruas ON gruas.pat_gru = jornadas.pat_gru Where "
+                    + "coalesce(des_gru,'') as des_gru, coalesce(nom_emp,'') as nom_emp, coalesce(apP_emp,'') "
+                    + "as apP_emp, freg_jor, obs_jor FROM Jornadas INNER JOIN"
+                    + " clientes ON clientes.rut_cli = jornadas.rut_cli LEFT JOIN empleados ON empleados.rut_emp "
+                    + "= jornadas.rut_emp LEFT JOIN gruas ON gruas.pat_gru = jornadas.pat_gru Where "
                     + "cod_ot = -1 ORDER BY id_jor");
             ResultSet res = pstm.executeQuery();
             int i = 0;
@@ -143,9 +145,17 @@ public class modeloJornadas {
                     + "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             pstm.setString(1, data[0]);
             pstm.setString(2, data[1]);
-            pstm.setString(3, data[2]);
+            if(data[2].compareTo("") == 0){
+                pstm.setNull(3, Types.VARCHAR);
+            }else{
+                pstm.setString(3, data[2]);
+            }
             pstm.setInt(4, Integer.parseInt(data[3]));
-            pstm.setInt(5, Integer.parseInt(data[4]));
+            if(data[4].compareTo("") == 0){
+                pstm.setNull(5, Types.INTEGER);
+            }else{
+                pstm.setInt(5, Integer.parseInt(data[4]));
+            }
             pstm.setString(6, data[5]);
             pstm.setString(7, data[6]);
             pstm.setString(8, data[7]);
@@ -170,10 +180,11 @@ public class modeloJornadas {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("SELECT fsal_jor, horsal_jor, freg_jor, horlleg_jor,"
-                    + "des_gru, raz_cli, nom_emp, apP_emp, apM_emp, freg_jor, obs_jor, clientes.rut_cli, clientes.dig_cli,"
+                    + "coalesce(des_gru,'') as des_gru, raz_cli, coalesce(nom_emp,'') as nom_emp, "
+                    + "coalesce(apP_emp,'') as apP_emp, coalesce(apM_emp,'') as apM_emp, freg_jor, obs_jor, clientes.rut_cli, clientes.dig_cli,"
                     + "gir_cli, dir_cli, tel_cli, ton_gru, ciu_cli FROM jornadas INNER JOIN clientes ON "
-                    + "jornadas.rut_cli = clientes.rut_cli INNER JOIN gruas ON gruas.pat_gru = jornadas.pat_gru "
-                    + "INNER JOIN empleados ON empleados.rut_emp = jornadas.rut_emp WHERE id_jor = ?");
+                    + "jornadas.rut_cli = clientes.rut_cli LEFT JOIN gruas ON gruas.pat_gru = jornadas.pat_gru "
+                    + "LEFT JOIN empleados ON empleados.rut_emp = jornadas.rut_emp WHERE id_jor = ?");
             pstm.setString(1, id);
             ResultSet res = pstm.executeQuery();
             res.next();
@@ -231,9 +242,18 @@ public class modeloJornadas {
                     + " WHERE id_jor=?");
             pstm.setString(1, data[0]);
             pstm.setString(2, data[1]);
-            pstm.setString(3, data[2]);
+            if(data[2].compareTo("") == 0){
+                pstm.setNull(3, Types.VARCHAR);
+            }else{
+                pstm.setString(3, data[2]);
+            }
             pstm.setString(4, data[3]);
-            pstm.setString(5, data[4]);
+            if(data[4].compareTo("") == 0){
+                pstm.setNull(5, Types.VARCHAR);
+            }else{
+                pstm.setString(5, data[4]);
+                
+            }
             pstm.setString(6, data[5]);
             pstm.setString(7, data[6]);
             pstm.setString(8, data[7]);

@@ -55,12 +55,12 @@ public class controladorIngresarOts {
         if (vistaIO.getTextoCodigo().compareTo("") == 0) {
             respuesta += "-Código de OT.\n";
         }
-        if (vistaIO.getTextoContacto().compareTo("") == 0) {
-            respuesta += "-Contacto.\n";
-        }
-        if (vistaIO.getTextoDespachado().compareTo("") == 0) {
-            respuesta += "-Despachado por.\n";
-        }
+//        if (vistaIO.getTextoContacto().compareTo("") == 0) {
+//            respuesta += "-Contacto.\n";
+//        }
+//        if (vistaIO.getTextoDespachado().compareTo("") == 0) {
+//            respuesta += "-Despachado por.\n";
+//        }
         if (vistaIO.getTextoObs().compareTo("") == 0) {
             respuesta += "-Observaciones.\n";
         }

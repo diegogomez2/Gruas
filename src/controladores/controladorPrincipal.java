@@ -263,6 +263,15 @@ public class controladorPrincipal {
         return micontroladorFacturadas.mostrarTabControlFacturadasP(tipo, data);    
     }
     
+    public JPanel crearControladorHistoricoP() {
+        modelos.modeloOts ots;
+        ots = new modelos.modeloOts();
+        Object[][] data;
+        data = ots.listarHistoricos();
+        micontroladorFacturadas = new controladorFacturadas();
+        return micontroladorFacturadas.mostrarTabControlFacturadasP(tipo, data);    
+    }
+    
     void crearControladorDetalleFacturas(String id) throws ParseException {
         controladorDetalleFacturas micontroladorDF;
         micontroladorDF = new controladorDetalleFacturas();

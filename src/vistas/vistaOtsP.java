@@ -58,7 +58,7 @@ public class vistaOtsP extends javax.swing.JPanel {
 //};
 jScrollPane1.setViewportView(tablaOts);
         final int rows = 5;
-        String[] columNames = {"Código OT", "Razon", "Giro", "Dirección", "Región", "Comuna", "Fecha",
+        String[] columNames = {"Código OT", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
             "Neto", "IVA", "Total", "Estado"};
         datos = new DefaultTableModel(data, columNames) {
             @Override

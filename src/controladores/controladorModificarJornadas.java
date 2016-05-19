@@ -5,7 +5,11 @@
  */
 package controladores;
 
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
 import vistas.vistaModificarJornadas;
 
 /**
@@ -14,6 +18,8 @@ import vistas.vistaModificarJornadas;
  */
 public class controladorModificarJornadas {
     static vistas.vistaModificarJornadas vistaMJ;
+    DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+    DateFormat newFormat = new SimpleDateFormat("dd-MM-yyyy");
     
     public void mostrarVistaModificarJornadas(String id, Object[] clientes, Object[] gruas, Object[] empleados) throws ParseException{
         controladorPrincipal miControlador = new controladorPrincipal();
@@ -52,13 +58,23 @@ public class controladorModificarJornadas {
         return respuesta;
     }
     
-    public boolean irVistaJornadasP() {
+    public boolean irVistaJornadasP() throws ParseException {
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
         String rut_cli = miControlador.obtenerClientePorRazon(vistaMJ.getTextoCliente());
-        String rut_emp = miControlador.obtenerEmpleadoPorNombre(vistaMJ.getTextoOperador());
-        String pat_gru = miControlador.obtenerGruaPorDesc(vistaMJ.getTextoGrua());
+        String rut_emp = "", pat_gru = "";
+        if(vistaMJ.getTextoOperador().compareTo("") != 0){
+            rut_emp = miControlador.obtenerEmpleadoPorNombre(vistaMJ.getTextoOperador());
+        }
+        if(vistaMJ.getTextoGrua().compareTo("") != 0){
+            pat_gru = miControlador.obtenerGruaPorDesc(vistaMJ.getTextoGrua());  
+        }
         if(rut_cli == null | rut_emp == null | pat_gru == null){
             return false;
+        }
+        Date fecha1 = formatDate.parse(vistaMJ.getTextoFechaSalida());
+        Date fecha2 = formatDate.parse(vistaMJ.getTextoFechaRegreso());
+        if(fecha2.before(fecha1)){
+            JOptionPane.showMessageDialog(vistaMJ, "La fecha de llegada debe ser posterior a la fecha de salida", "Error", JOptionPane.INFORMATION_MESSAGE);
         }
         String[] data = {vistaMJ.getTextoFechaSalida(), vistaMJ.getTextoHoraSalida(), pat_gru, rut_cli, 
             rut_emp, vistaMJ.getTextoFechaRegreso(), vistaMJ.getTextoHoraRegreso(), vistaMJ.getTextoObs(),
