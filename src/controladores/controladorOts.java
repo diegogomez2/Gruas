@@ -13,8 +13,7 @@ import vistas.vistaOtsP;
 /**
  *
  * @author Diego
- */
-public class controladorOts {
+ */public class controladorOts {
     static vistas.vistaOtsP vistaOtsP;
     
     JPanel mostrarTabControlOts(String tipo, Object[][] data) {
@@ -39,9 +38,11 @@ public class controladorOts {
         tabs.remove(4);
         tabs.remove(4);
         tabs.remove(4);
+        tabs.remove(4);
         tabs.insertTab("OTs", null, miControlador.crearControladorOtsP(), null, 4);
         tabs.insertTab("A facturar", null, miControlador.crearControladorFacturasP(), null, 5);
         tabs.insertTab("Facturadas", null, miControlador.crearControladorFacturadasP(), null, 6);
+        tabs.insertTab("Histórico", null, miControlador.crearControladorHistoricoP(), null, 7);
         tabs.setSelectedIndex(4);
     }
     
@@ -49,6 +50,13 @@ public class controladorOts {
         String respuesta = "";
         modelos.modeloOts ots = new modelos.modeloOts();
         respuesta = ots.ingresarFactura(idOt);
+        return respuesta;
+    }
+    
+    public String anularFactura(String idOt){
+        String respuesta = "";
+        modelos.modeloOts ots = new modelos.modeloOts();
+        respuesta = ots.anularFactura(idOt);
         return respuesta;
     }
     

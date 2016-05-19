@@ -27,7 +27,7 @@ public class vistaHistoricoOt extends javax.swing.JPanel {
     public vistaHistoricoOt(String tipo, Object[][] data) {
         initComponents();
          String[] columNames = {"Código OT", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
-             "Neto", "IVA", "Total"};
+             "Neto", "IVA", "Total", "Estado"};
         DefaultTableModel datos = new DefaultTableModel(data, columNames){
             @Override
             public boolean isCellEditable(int row, int column){

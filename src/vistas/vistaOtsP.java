@@ -115,6 +115,7 @@ jScrollPane1.setViewportView(tablaOts);
         botonFacturar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         textoFiltro = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         tablaOts.getTableHeader().setReorderingAllowed(false);
         tablaOts.setModel(new javax.swing.table.DefaultTableModel(
@@ -145,6 +146,13 @@ jScrollPane1.setViewportView(tablaOts);
             }
         });
 
+        jButton1.setText("Anular OT");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -153,7 +161,10 @@ jScrollPane1.setViewportView(tablaOts);
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(578, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botonFacturar, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botonFacturar))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -170,7 +181,9 @@ jScrollPane1.setViewportView(tablaOts);
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 399, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(botonFacturar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botonFacturar)
+                    .addComponent(jButton1))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -205,9 +218,32 @@ jScrollPane1.setViewportView(tablaOts);
         filtroPorRazon(query);
     }//GEN-LAST:event_textoFiltroKeyReleased
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String id;
+        String idOt;
+        controladores.controladorOts miControlador = new controladores.controladorOts();
+        controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
+        boolean selected = tablaOts.getSelectedRowCount() > 0;
+        if (selected) {
+            int row = getFilaSeleccionada();
+            id = getIdFila(row);
+            idOt = getIdOt(row);
+
+                miControlador.anularFactura(idOt);
+                JTabbedPane tabs = (JTabbedPane) this.getParent();
+                micontroladorFacturas.crearControladorPrincipal(tabs);
+                miControlador.crearControladorPrincipal(tabs);
+                //JOptionPane.showMessageDialog(null, "Orden de trabajo facturada con éxito");
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una orden de trabajo para ser anulada");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonFacturar;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaOts;

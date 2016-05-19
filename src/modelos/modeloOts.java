@@ -181,6 +181,8 @@ public class modeloOts {
                 String estfact2;
                 if(estfact.compareTo("0") == 0){
                     estfact2 = "Disponible";
+                }else if(estfact.compareTo("4") == 0){
+                    estfact2 = "Nula";
                 }else{
                     estfact2 = "Facturada";
                 }
@@ -359,6 +361,25 @@ public class modeloOts {
             pstm.close();
         }catch(SQLException e){
             System.out.println("Error ingresar factura");
+            System.out.println(e);
+            return "incorrecto";
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+            return "incorrecto";
+        }
+        return "correcto";
+    }
+    
+    public String anularFactura(String idOt){
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("update jornadas set fact_ot = 4 where cod_ot = ?");
+            pstm.setString(1, idOt);
+            pstm.execute();
+            pstm.close();
+        }catch(SQLException e){
+            System.out.println("Error anular factura");
             System.out.println(e);
             return "incorrecto";
         }catch(ClassNotFoundException e){

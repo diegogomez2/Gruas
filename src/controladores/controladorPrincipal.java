@@ -37,6 +37,7 @@ public class controladorPrincipal {
     static controladorOts micontroladorOts;
     static controladorFacturas micontroladorFacturas;
     static controladorFacturadas micontroladorFacturadas;
+    static controladorHistorico micontroladorHistorico;
     static controladorUsuarios micontroladorUsuarios;
     static controladorDetalleClientes micontroladorDC;
     static vistaLogin miVistaL;
@@ -268,8 +269,8 @@ public class controladorPrincipal {
         ots = new modelos.modeloOts();
         Object[][] data;
         data = ots.listarHistoricos();
-        micontroladorFacturadas = new controladorFacturadas();
-        return micontroladorFacturadas.mostrarTabControlFacturadasP(tipo, data);    
+        micontroladorHistorico = new controladorHistorico();
+        return micontroladorHistorico.mostrarTabControlHistorico(tipo, data);    
     }
     
     void crearControladorDetalleFacturas(String id) throws ParseException {
