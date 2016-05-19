@@ -735,7 +735,7 @@ public class vistaIngresarGruas extends javax.swing.JDialog {
     }
 
     public String getComboTipoNeumaticos() {
-        return comboTipoNeumaticos2.getSelectedItem().toString();
+        return comboTipoNeumaticos.getSelectedItem().toString();
     }
 
     public String getComboToneladas() {

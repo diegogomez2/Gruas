@@ -87,6 +87,7 @@ public class vistaClientesP extends javax.swing.JPanel {
             }
         ));
         tablaClientes.setToolTipText("");
+        tablaClientes.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tablaClientes);
 
         botonAgregarCliente.setText("Agregar Cliente");

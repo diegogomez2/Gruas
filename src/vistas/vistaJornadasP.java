@@ -44,8 +44,10 @@ public class vistaJornadasP extends javax.swing.JPanel {
             public boolean isCellEditable(int row, int column){
                 return false;
             }
+            
         };
         tablaJornadas.setModel(datos);
+        tablaJornadas.setAutoCreateRowSorter(true);
         if(tablaJornadas.getRowCount() > 0) tablaJornadas.setRowSelectionInterval(0, 0);
         tablaJornadas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tablaJornadas.addMouseListener(new MouseAdapter(){
@@ -62,7 +64,7 @@ public class vistaJornadasP extends javax.swing.JPanel {
                     }
                 }
             }
-        });    
+        });   
     }
 
     /**
@@ -94,6 +96,7 @@ public class vistaJornadasP extends javax.swing.JPanel {
 
             }
         ));
+        tablaJornadas.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tablaJornadas);
 
         botonModificar.setText("Modificar Jornada");
@@ -284,4 +287,5 @@ public class vistaJornadasP extends javax.swing.JPanel {
         tablaJornadas.setRowSorter(sorter);
         sorter.setRowFilter(RowFilter.regexFilter("(?i)"+query));
     }
+    
 }

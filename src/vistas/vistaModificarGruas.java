@@ -10,6 +10,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
@@ -30,9 +31,14 @@ public class vistaModificarGruas extends javax.swing.JDialog {
     String patente;
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
     
-    public vistaModificarGruas(java.awt.Frame parent, boolean modal) {
+    public vistaModificarGruas(java.awt.Frame parent, boolean modal, Object[] tonelajes) {
         super(parent, modal);
         initComponents();
+        String[] listarTonelajes = new String[tonelajes.length];
+        for(int i = 0; i < tonelajes.length; i++){
+            listarTonelajes[i] = tonelajes[i].toString();
+        }
+        comboToneladas.setModel(new DefaultComboBoxModel<String>(listarTonelajes));
     }
 
     /**
@@ -72,7 +78,6 @@ public class vistaModificarGruas extends javax.swing.JDialog {
         labelToneladas = new javax.swing.JLabel();
         labelAncho = new javax.swing.JLabel();
         textoAncho = new javax.swing.JTextField();
-        textoToneladas = new javax.swing.JTextField();
         textoKMHUM = new javax.swing.JTextField();
         labelNeumaticosDelanteros = new javax.swing.JLabel();
         labelLargo = new javax.swing.JLabel();
@@ -82,6 +87,7 @@ public class vistaModificarGruas extends javax.swing.JDialog {
         labelKMH = new javax.swing.JLabel();
         labelKMHUM = new javax.swing.JLabel();
         textoLargo = new javax.swing.JTextField();
+        comboToneladas = new javax.swing.JComboBox();
         jPanel5 = new javax.swing.JPanel();
         textoHorasPM = new javax.swing.JTextField();
         labelPesoGrua = new javax.swing.JLabel();
@@ -102,12 +108,12 @@ public class vistaModificarGruas extends javax.swing.JDialog {
         fechas = new javax.swing.JPanel();
         labelFechaUM = new javax.swing.JLabel();
         labelFechaRT = new javax.swing.JLabel();
+        labelFechaBaja = new javax.swing.JLabel();
         labelFechaIngreso = new javax.swing.JLabel();
         textoFechaIngreso = new org.jdesktop.swingx.JXDatePicker();
         textoFechaRT = new org.jdesktop.swingx.JXDatePicker();
         textoFechaUM = new org.jdesktop.swingx.JXDatePicker();
         textoFechaBaja = new org.jdesktop.swingx.JXDatePicker();
-        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Modificar grúa");
@@ -221,7 +227,7 @@ public class vistaModificarGruas extends javax.swing.JDialog {
 
         panelTipoNeumaticos.setBorder(javax.swing.BorderFactory.createTitledBorder("Tipo Neumáticos"));
 
-        comboTipoNeumaticos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tubular" }));
+        comboTipoNeumaticos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tubular", "Sólido" }));
 
         comboTipoNeumaticos2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Simple", "Doble" }));
 
@@ -254,12 +260,22 @@ public class vistaModificarGruas extends javax.swing.JDialog {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+            .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(textoToneladas)
-                    .addComponent(textoKMH, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(textoKMH)
+                    .addComponent(textoNeumaticosDelanteros, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(labelAncho)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelLargo)
+                            .addComponent(textoLargo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(panelTipoNeumaticos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textoKMHUM)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(textoAncho, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(labelToneladas)
@@ -267,17 +283,7 @@ public class vistaModificarGruas extends javax.swing.JDialog {
                             .addComponent(labelKMHUM)
                             .addComponent(labelKMH))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(textoNeumaticosDelanteros)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(labelAncho)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelLargo)
-                            .addComponent(textoLargo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(panelTipoNeumaticos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(textoKMHUM, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(comboToneladas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -287,9 +293,9 @@ public class vistaModificarGruas extends javax.swing.JDialog {
                 .addComponent(panelTipoNeumaticos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelToneladas)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(comboToneladas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textoToneladas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(11, 11, 11)
                 .addComponent(labelKMH)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(textoKMH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -318,7 +324,7 @@ public class vistaModificarGruas extends javax.swing.JDialog {
 
         labelAlturaMastil.setText("Altura Mástil (cm)");
 
-        comboTipoCombustible.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Diesel" }));
+        comboTipoCombustible.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Diesel", "Gas" }));
 
         labelNeumaticosTraseros.setText("Neumáticos traseros");
 
@@ -418,9 +424,9 @@ public class vistaModificarGruas extends javax.swing.JDialog {
 
         labelFechaRT.setText("Fecha revisión técnica");
 
-        labelFechaIngreso.setText("Fecha ingreso");
+        labelFechaBaja.setText("Fecha baja");
 
-        jLabel1.setText("Fecha baja");
+        labelFechaIngreso.setText("Fecha ingreso");
 
         javax.swing.GroupLayout fechasLayout = new javax.swing.GroupLayout(fechas);
         fechas.setLayout(fechasLayout);
@@ -441,10 +447,11 @@ public class vistaModificarGruas extends javax.swing.JDialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, fechasLayout.createSequentialGroup()
                         .addComponent(textoFechaUM, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, fechasLayout.createSequentialGroup()
+                        .addComponent(textoFechaBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
                     .addGroup(fechasLayout.createSequentialGroup()
-                        .addGroup(fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textoFechaBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))
+                        .addComponent(labelFechaBaja)
                         .addContainerGap())))
         );
         fechasLayout.setVerticalGroup(
@@ -453,19 +460,19 @@ public class vistaModificarGruas extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelFechaIngreso)
-                    .addComponent(jLabel1))
+                    .addComponent(labelFechaUM))
                 .addGap(5, 5, 5)
                 .addGroup(fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textoFechaIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textoFechaBaja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textoFechaUM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelFechaRT)
-                    .addComponent(labelFechaUM))
+                    .addComponent(labelFechaBaja))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textoFechaRT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textoFechaUM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textoFechaBaja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 26, Short.MAX_VALUE))
         );
 
@@ -588,14 +595,6 @@ public class vistaModificarGruas extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                vistaModificarGruas dialog = new vistaModificarGruas(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
             }
         });
     }
@@ -607,8 +606,8 @@ public class vistaModificarGruas extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> comboTipoCombustible;
     private javax.swing.JComboBox comboTipoNeumaticos;
     private javax.swing.JComboBox<String> comboTipoNeumaticos2;
+    private javax.swing.JComboBox comboToneladas;
     private javax.swing.JPanel fechas;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -619,6 +618,7 @@ public class vistaModificarGruas extends javax.swing.JDialog {
     private javax.swing.JLabel labelAlturaMastil;
     private javax.swing.JLabel labelAncho;
     private javax.swing.JLabel labelDescripcion;
+    private javax.swing.JLabel labelFechaBaja;
     private javax.swing.JLabel labelFechaIngreso;
     private javax.swing.JLabel labelFechaRT;
     private javax.swing.JLabel labelFechaUM;
@@ -664,7 +664,6 @@ public class vistaModificarGruas extends javax.swing.JDialog {
     private javax.swing.JTextArea textoObs;
     private javax.swing.JTextField textoPatente;
     private javax.swing.JTextField textoPesoGrua;
-    private javax.swing.JTextField textoToneladas;
     // End of variables declaration//GEN-END:variables
 
     public String getTextoAlturaLevante() {
@@ -880,12 +879,12 @@ public class vistaModificarGruas extends javax.swing.JDialog {
         this.comboTipoNeumaticos.setSelectedItem(textoTipoNeumaticos);
     }
 
-    public String getTextoToneladas() {
-        return textoToneladas.getText();
+    public String getComboToneladas() {
+        return comboToneladas.getSelectedItem().toString();
     }
 
     public void setTextoToneladas(String textoToneladas) {
-        this.textoToneladas.setText(textoToneladas);
+        this.comboToneladas.setSelectedItem(textoToneladas);
     }
 
     public String getComboMastil() {

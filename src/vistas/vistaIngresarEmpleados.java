@@ -363,7 +363,10 @@ public class vistaIngresarEmpleados extends javax.swing.JDialog {
         if(!esVacio){
             JOptionPane.showMessageDialog(this, respuesta, "Debe rellenar los siguientes campos", JOptionPane.INFORMATION_MESSAGE);
         }else{
-            if(miControladorIE.irVistaEmpleadosP()) setVisible(false);
+            boolean rutValido = miControladorIE.verificarRut(getTextoRut());
+            if(rutValido){
+                if(miControladorIE.irVistaEmpleadosP()) setVisible(false);
+            }
         }
     }//GEN-LAST:event_botonAceptarActionPerformed
 

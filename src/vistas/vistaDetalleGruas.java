@@ -93,14 +93,14 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
         textoAlturaLevante = new javax.swing.JTextField();
         labelAlturaLevante = new javax.swing.JLabel();
         fechas = new javax.swing.JPanel();
-        labelFechaBaja = new javax.swing.JLabel();
-        labelFechaUM = new javax.swing.JLabel();
-        labelFechaRT = new javax.swing.JLabel();
         labelFechaIngreso = new javax.swing.JLabel();
+        labelFechaUM2 = new javax.swing.JLabel();
+        labelFechaRT = new javax.swing.JLabel();
+        labelFechaUM = new javax.swing.JLabel();
         textoFechaIngreso = new org.jdesktop.swingx.JXDatePicker();
-        textoFechaRT = new org.jdesktop.swingx.JXDatePicker();
         textoFechaUM = new org.jdesktop.swingx.JXDatePicker();
         textoFechaBaja = new org.jdesktop.swingx.JXDatePicker();
+        textoFechaRT = new org.jdesktop.swingx.JXDatePicker();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Detalle grúa");
@@ -201,15 +201,13 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
 
         labelAncho.setText("Ancho (cm)");
 
-        labelNeumaticosDelanteros.setText("Neumáticos delanteros");
+        labelNeumaticosDelanteros.setText("Medidas neumáticos delanteros");
 
         labelLargo.setText("Largo (cm)");
 
         panelTipoNeumaticos.setBorder(javax.swing.BorderFactory.createTitledBorder("Tipo Neumáticos"));
 
-        comboTipoNeumaticos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        comboTipoNeumaticos2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboTipoNeumaticos2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Simple", "Doble" }));
 
         javax.swing.GroupLayout panelTipoNeumaticosLayout = new javax.swing.GroupLayout(panelTipoNeumaticos);
         panelTipoNeumaticos.setLayout(panelTipoNeumaticosLayout);
@@ -304,11 +302,11 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
 
         labelAlturaMastil.setText("Altura Mástil (cm)");
 
-        comboTipoCombustible.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboTipoCombustible.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Diesel", "Gas" }));
 
-        labelNeumaticosTraseros.setText("Neumáticos traseros");
+        labelNeumaticosTraseros.setText("Medidas neumáticos traseros");
 
-        comboMastil.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboMastil.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Simple" }));
 
         labelHorasPM.setText("Horas próxima mantención");
 
@@ -325,15 +323,6 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelAlturaMastil)
-                            .addComponent(labelTipoCombustible)
-                            .addComponent(labelMastil))
-                        .addGap(172, 172, 172))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addComponent(labelNeumaticosTraseros)
-                        .addGap(157, 157, 157))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(jPanel5Layout.createSequentialGroup()
@@ -353,13 +342,20 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
                             .addComponent(comboMastil, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(comboTipoCombustible, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(labelNeumaticosTraseros)
+                        .addGap(157, 157, 157))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(labelHorasPM)
                             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(textoHorasPM, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
                                 .addComponent(labelPesoGrua, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(textoNeumaticosTraseros, javax.swing.GroupLayout.Alignment.LEADING)))
+                                .addComponent(textoNeumaticosTraseros, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addComponent(labelTipoCombustible)
+                            .addComponent(labelMastil)
+                            .addComponent(labelAlturaMastil))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel5Layout.setVerticalGroup(
@@ -400,13 +396,13 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
                 .addGap(87, 87, 87))
         );
 
-        labelFechaBaja.setText("Fecha de baja");
+        labelFechaIngreso.setText("Fecha de ingreso");
 
-        labelFechaUM.setText("Fecha ultima mantencion");
+        labelFechaUM2.setText("Fecha de baja");
 
         labelFechaRT.setText("Fecha revisión técnica");
 
-        labelFechaIngreso.setText("Fecha ingreso");
+        labelFechaUM.setText("Fecha última mantención");
 
         javax.swing.GroupLayout fechasLayout = new javax.swing.GroupLayout(fechas);
         fechas.setLayout(fechasLayout);
@@ -414,19 +410,20 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
             fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(fechasLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(labelFechaRT)
-                    .addGroup(fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(textoFechaUM, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
-                        .addComponent(labelFechaBaja, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(textoFechaIngreso, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(labelFechaIngreso)
+                    .addComponent(textoFechaIngreso, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+                    .addComponent(textoFechaRT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(textoFechaBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelFechaIngreso)
-                    .addComponent(textoFechaRT, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelFechaUM))
-                .addGap(27, 27, 27))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(textoFechaUM, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(textoFechaBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(labelFechaUM, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(labelFechaUM2)))
+                .addContainerGap())
         );
         fechasLayout.setVerticalGroup(
             fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -435,12 +432,12 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
                 .addGroup(fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(fechasLayout.createSequentialGroup()
                         .addGroup(fechasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(labelFechaIngreso)
-                            .addComponent(labelFechaBaja))
+                            .addComponent(labelFechaUM)
+                            .addComponent(labelFechaIngreso))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textoFechaRT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(textoFechaUM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(14, 14, 14)
-                        .addComponent(labelFechaUM)
+                        .addComponent(labelFechaUM2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(textoFechaBaja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(fechasLayout.createSequentialGroup()
@@ -448,8 +445,9 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
                         .addComponent(textoFechaIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
                         .addComponent(labelFechaRT)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(textoFechaUM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(textoFechaRT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -504,7 +502,7 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
                         .addComponent(botonCancelar))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 15, Short.MAX_VALUE)))
                 .addGap(18, 18, 18))
         );
 
@@ -585,10 +583,10 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
     private javax.swing.JLabel labelAlturaMastil;
     private javax.swing.JLabel labelAncho;
     private javax.swing.JLabel labelDescripcion;
-    private javax.swing.JLabel labelFechaBaja;
     private javax.swing.JLabel labelFechaIngreso;
     private javax.swing.JLabel labelFechaRT;
     private javax.swing.JLabel labelFechaUM;
+    private javax.swing.JLabel labelFechaUM2;
     private javax.swing.JLabel labelHorasPM;
     private javax.swing.JLabel labelKMH;
     private javax.swing.JLabel labelKMHUM;
@@ -687,7 +685,7 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
 
     public void setTextoFechaIngreso(String textoFechaIngreso) throws ParseException {
         if(textoFechaIngreso.compareTo("") != 0){
-            this.textoFechaIngreso.setDate(formatDate.parse(""));
+            this.textoFechaIngreso.setDate(formatDate.parse(textoFechaIngreso));
         }
     }
 

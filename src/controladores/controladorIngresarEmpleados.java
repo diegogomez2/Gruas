@@ -5,6 +5,7 @@
  */
 package controladores;
 
+import javax.swing.JOptionPane;
 import vistas.vistaIngresarEmpleados;
 
 /**
@@ -31,6 +32,42 @@ public class controladorIngresarEmpleados {
             vistaIE.getComboComuna()};
         boolean flag = miControlador.ingresarEmpleado(data);
         return flag;    
+    }
+    
+    public boolean verificarRut(String rut) {
+        if (rut.compareTo("") != 0) {
+            String[] rut_dv = rut.split("-");
+            if (rut_dv.length == 2) {
+                try {
+                    int num = Integer.parseInt(rut_dv[0]);
+                    char dv = rut_dv[1].charAt(0);
+                    if (validarRut(num, dv)) {
+                        return true;
+                    } else {
+                        JOptionPane.showMessageDialog(vistaIE, "Rut incorrecto");
+                        return false;
+                    }
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            } else {
+                JOptionPane.showMessageDialog(vistaIE, "Rut incorrecto");
+                return false;
+            }
+        } else {
+            JOptionPane.showMessageDialog(vistaIE, "Rut incorrecto");
+            return false;
+        }
+        JOptionPane.showMessageDialog(vistaIE, "Rut incorrecto");
+        return false;
+    }
+    
+    public static boolean validarRut(int rut, char dv) {
+        int m = 0, s = 1;
+        for (; rut != 0; rut /= 10) {
+            s = (s + rut % 10 * (9 - m++ % 6)) % 11;
+        }
+        return dv == (char) (s != 0 ? s + 47 : 107);
     }
 
     public String camposVacios() {

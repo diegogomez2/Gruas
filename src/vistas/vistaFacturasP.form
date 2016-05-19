@@ -18,7 +18,9 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="jScrollPane1" alignment="0" pref="800" max="32767" attributes="0"/>
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="248" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="botonQuitar" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
               <Component id="botonFacEx" linkSize="2" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="botonNotaDeb" linkSize="2" min="-2" max="-2" attributes="0"/>
@@ -40,6 +42,7 @@
                   <Component id="botonBoleta" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="botonNotaDeb" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="botonFacEx" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="botonQuitar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -56,7 +59,7 @@
       <SubComponents>
         <Component class="javax.swing.JTable" name="tablaFacturas">
           <Properties>
-            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor" postCode="tablaFacturas.getTableHeader().setReorderingAllowed(false);">
               <Table columnCount="0" rowCount="4"/>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -99,6 +102,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonFacExActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="botonQuitar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Quitar"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonQuitarActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

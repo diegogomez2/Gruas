@@ -83,6 +83,7 @@ public class vistaEmpleadosP extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaEmpleados.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tablaEmpleados);
 
         botonModificar.setText("Modificar trabajador");

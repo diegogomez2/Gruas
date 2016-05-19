@@ -82,6 +82,7 @@ public class vistaFacturadasP extends javax.swing.JPanel {
 
             }
         ));
+        tablaFacturadas.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tablaFacturadas);
 
         botonGenerarNC.setText("Generar nota de crédito");

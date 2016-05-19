@@ -68,7 +68,7 @@ public class controladorCrearFactura {
             folio.appendChild(doc.createTextNode(fol_fac));
             id.appendChild(folio);
             
-            Element fecEmision = doc.createElement("FchEmision");
+            Element fecEmision = doc.createElement("FchEmis");
             fecEmision.appendChild(doc.createTextNode(fecha));
             id.appendChild(fecEmision);
             
@@ -243,7 +243,7 @@ public class controladorCrearFactura {
             folio.appendChild(doc.createTextNode(fol_facex));
             id.appendChild(folio);
             
-            Element fecEmision = doc.createElement("FchEmision");
+            Element fecEmision = doc.createElement("FchEmis");
             fecEmision.appendChild(doc.createTextNode(fecha));
             id.appendChild(fecEmision);
             
@@ -414,7 +414,7 @@ public class controladorCrearFactura {
             folio.appendChild(doc.createTextNode(fol_nc));
             id.appendChild(folio);
             
-            Element fecEmision = doc.createElement("FchEmision");
+            Element fecEmision = doc.createElement("FchEmis");
             fecEmision.appendChild(doc.createTextNode(fecha));
             id.appendChild(fecEmision);
             
@@ -624,7 +624,7 @@ public class controladorCrearFactura {
             folio.appendChild(doc.createTextNode(fol_nd));
             id.appendChild(folio);
             
-            Element fecEmision = doc.createElement("FchEmision");
+            Element fecEmision = doc.createElement("FchEmis");
             fecEmision.appendChild(doc.createTextNode(fecha));
             id.appendChild(fecEmision);
             
@@ -798,7 +798,7 @@ public class controladorCrearFactura {
             folio.appendChild(doc.createTextNode(fol_bol));
             id.appendChild(folio);
             
-            Element fecEmision = doc.createElement("FchEmision");
+            Element fecEmision = doc.createElement("FchEmis");
             fecEmision.appendChild(doc.createTextNode(fecha));
             id.appendChild(fecEmision);
             
@@ -963,7 +963,7 @@ public class controladorCrearFactura {
             folio.appendChild(doc.createTextNode(num_fol));
             id.appendChild(folio);
             
-            Element fecEmision = doc.createElement("FchEmision");
+            Element fecEmision = doc.createElement("FchEmis");
             fecEmision.appendChild(doc.createTextNode(fecha));
             id.appendChild(fecEmision);
             

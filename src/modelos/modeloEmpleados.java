@@ -148,6 +148,9 @@ public class modeloEmpleados {
         }catch(ClassNotFoundException e){
             System.out.println(e);
             return "incorrecto";
+        }catch(NumberFormatException e){
+            System.out.println("El sueldo debe ser un valor numérico");
+            return "incorrecto";
         }
         return "correcto";
     }

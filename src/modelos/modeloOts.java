@@ -116,8 +116,14 @@ public class modeloOts {
                 String estiva = res.getString("iva_ot");
                 String estcodot = res.getString("cod_ot");
                 String estfact = res.getString("fact_ot");
+                String estfact2;
+                if(estfact.compareTo("0") == 0){
+                    estfact2 = "Disponible";
+                }else{
+                    estfact2 = "Facturada";
+                }
                 data[i] = new String[]{estcodot, estraz, estgir, estdir, estciu, estcom, estfec, estnet,
-                estiva, esttot, estfact};
+                estiva, esttot, estfact2};
                 i++;
             }
             res.close();
@@ -291,6 +297,25 @@ public class modeloOts {
             pstm.close();
         }catch(SQLException e){
             System.out.println("Error ingresar factura");
+            System.out.println(e);
+            return "incorrecto";
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+            return "incorrecto";
+        }
+        return "correcto";
+    }
+    
+    public String quitarFactura(String idOt){
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("update jornadas set fact_ot = 0 where cod_ot = ?");
+            pstm.setString(1, idOt);
+            pstm.execute();
+            pstm.close();
+        }catch(SQLException e){
+            System.out.println("Error quitar factura");
             System.out.println(e);
             return "incorrecto";
         }catch(ClassNotFoundException e){
@@ -577,5 +602,30 @@ public class modeloOts {
             System.out.println(e);
         }
         return data;
+    }
+    
+    public String obtenerCodigoOt(String cod){
+        int registros = 0;
+        
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM jornadas where cod_ot = ?");
+            pstm.setString(1, cod);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+       }catch(SQLException e){
+            System.out.println("Error obtener cod ot");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        if(registros == 0){
+            return "correcto";
+        }else{
+            return "incorrecto";
+        }
     }
 }

@@ -30,22 +30,24 @@ public class vistaFacturasP extends javax.swing.JPanel {
         initComponents();
         //final int rows = 5;
         String[] columNames = {"Código OT", "Razon", "Giro", "Dirección", "Región", "Comuna", "Fecha",
-             "Neto", "IVA", "Total"};
-        DefaultTableModel datos = new DefaultTableModel(data, columNames){
+            "Neto", "IVA", "Total"};
+        DefaultTableModel datos = new DefaultTableModel(data, columNames) {
             @Override
-            public boolean isCellEditable(int row, int column){
+            public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
         tablaFacturas.setModel(datos);
-        if(tablaFacturas.getRowCount() > 0) tablaFacturas.setRowSelectionInterval(0, 0);
+        if (tablaFacturas.getRowCount() > 0) {
+            tablaFacturas.setRowSelectionInterval(0, 0);
+        }
         tablaFacturas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tablaFacturas.addMouseListener(new MouseAdapter(){
-            public void mousePressed(MouseEvent evt){
-                JTable table = (JTable)evt.getSource();
+        tablaFacturas.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
+                JTable table = (JTable) evt.getSource();
                 Point p = evt.getPoint();
                 int row = table.rowAtPoint(p);
-                if(evt.getClickCount() == 2){
+                if (evt.getClickCount() == 2) {
                     controladores.controladorFacturas miControlador = new controladores.controladorFacturas();
                     try {
                         miControlador.irVistaDetalleFacturas(tablaFacturas.getValueAt(row, 0).toString());
@@ -54,7 +56,7 @@ public class vistaFacturasP extends javax.swing.JPanel {
                     }
                 }
             }
-        }); 
+        });
     }
 
     /**
@@ -72,6 +74,7 @@ public class vistaFacturasP extends javax.swing.JPanel {
         botonBoleta = new javax.swing.JButton();
         botonNotaDeb = new javax.swing.JButton();
         botonFacEx = new javax.swing.JButton();
+        botonQuitar = new javax.swing.JButton();
 
         tablaFacturas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -84,6 +87,7 @@ public class vistaFacturasP extends javax.swing.JPanel {
 
             }
         ));
+        tablaFacturas.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tablaFacturas);
 
         botonFactura.setText("Generar factura");
@@ -114,13 +118,22 @@ public class vistaFacturasP extends javax.swing.JPanel {
             }
         });
 
+        botonQuitar.setText("Quitar");
+        botonQuitar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonQuitarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(248, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(botonQuitar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(botonFacEx)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(botonNotaDeb)
@@ -142,7 +155,8 @@ public class vistaFacturasP extends javax.swing.JPanel {
                     .addComponent(botonFactura)
                     .addComponent(botonBoleta)
                     .addComponent(botonNotaDeb)
-                    .addComponent(botonFacEx))
+                    .addComponent(botonFacEx)
+                    .addComponent(botonQuitar))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -150,23 +164,28 @@ public class vistaFacturasP extends javax.swing.JPanel {
     private void botonFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonFacturaActionPerformed
         controladores.controladorCrearFactura miControlador = new controladores.controladorCrearFactura();
         controladores.controladorOts micontroladorOts = new controladores.controladorOts();
-        int filas = tablaFacturas.getRowCount();
-        String[] idOts = new String[filas];
-        int neto = 0, iva = 0, total = 0;
-        for(int i = 0; i < filas; i++){
-            idOts[i] = getIdFact(i);
-            neto += getNetoFact(i);
-            iva += getIvaFact(i);
-            total += getTotalFact(i);
-        }
-        controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
-        String id = micontroladorFacturas.archivarFacturas(idOts, neto, iva, total, "factura", "0");
-            if((miControlador.crearFacXML(idOts, Integer.toString(neto), Integer.toString(iva),
-                Integer.toString(total), id).compareTo("correcto") == 0)){
-                JTabbedPane tabs = (JTabbedPane)this.getParent();
+        String flag = verificarRazon();
+        if (flag.compareTo("correcto") == 0) {
+            int filas = tablaFacturas.getRowCount();
+            String[] idOts = new String[filas];
+            int neto = 0, iva = 0, total = 0;
+            for (int i = 0; i < filas; i++) {
+                idOts[i] = getIdFact(i);
+                neto += getNetoFact(i);
+                iva += getIvaFact(i);
+                total += getTotalFact(i);
+            }
+            controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
+            String id = micontroladorFacturas.archivarFacturas(idOts, neto, iva, total, "factura", "0");
+            if ((miControlador.crearFacXML(idOts, Integer.toString(neto), Integer.toString(iva),
+                    Integer.toString(total), id).compareTo("correcto") == 0)) {
+                JTabbedPane tabs = (JTabbedPane) this.getParent();
                 micontroladorOts.crearControladorPrincipal(tabs);
                 miControlador.crearControladorPrincipal(tabs);
             }
+        } else {
+            JOptionPane.showMessageDialog(null, "No se puede crear una factura para clientes distintos");
+        }
     }//GEN-LAST:event_botonFacturaActionPerformed
 
     private void botonBoletaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBoletaActionPerformed
@@ -175,7 +194,7 @@ public class vistaFacturasP extends javax.swing.JPanel {
         int filas = tablaFacturas.getRowCount();
         String[] idOts = new String[filas];
         int neto = 0, iva = 0, total = 0;
-        for(int i = 0; i < filas; i++){
+        for (int i = 0; i < filas; i++) {
             idOts[i] = getIdFact(i);
             neto += getNetoFact(i);
             iva += getIvaFact(i);
@@ -183,12 +202,12 @@ public class vistaFacturasP extends javax.swing.JPanel {
         }
         controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
         String id = micontroladorFacturas.archivarFacturas(idOts, neto, iva, total, "boleta", "0");
-            if((miControlador.crearBolXML(idOts, Integer.toString(neto), Integer.toString(iva),
-                Integer.toString(total), id).compareTo("correcto") == 0)){
-                JTabbedPane tabs = (JTabbedPane)this.getParent();
-                micontroladorOts.crearControladorPrincipal(tabs);
-                miControlador.crearControladorPrincipal(tabs);
-            }
+        if ((miControlador.crearBolXML(idOts, Integer.toString(neto), Integer.toString(iva),
+                Integer.toString(total), id).compareTo("correcto") == 0)) {
+            JTabbedPane tabs = (JTabbedPane) this.getParent();
+            micontroladorOts.crearControladorPrincipal(tabs);
+            miControlador.crearControladorPrincipal(tabs);
+        }
     }//GEN-LAST:event_botonBoletaActionPerformed
 
     private void botonNotaDebActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNotaDebActionPerformed
@@ -198,7 +217,7 @@ public class vistaFacturasP extends javax.swing.JPanel {
         int filas = tablaFacturas.getRowCount();
         String[] idOts = new String[filas];
         int neto = 0, iva = 0, total = 0;
-        for(int i = 0; i < filas; i++){
+        for (int i = 0; i < filas; i++) {
             idOts[i] = getIdFact(i);
             neto += getNetoFact(i);
             iva += getIvaFact(i);
@@ -206,12 +225,12 @@ public class vistaFacturasP extends javax.swing.JPanel {
         }
         controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
         String id = micontroladorFacturas.archivarFacturas(idOts, neto, iva, total, "nota debito", id_fac);
-            if((miControlador.crearNotaDebXML(idOts, Integer.toString(neto), Integer.toString(iva),
-                Integer.toString(total), id, id_fac).compareTo("correcto") == 0)){
-                JTabbedPane tabs = (JTabbedPane)this.getParent();
-                micontroladorOts.crearControladorPrincipal(tabs);
-                miControlador.crearControladorPrincipal(tabs);
-            }
+        if ((miControlador.crearNotaDebXML(idOts, Integer.toString(neto), Integer.toString(iva),
+                Integer.toString(total), id, id_fac).compareTo("correcto") == 0)) {
+            JTabbedPane tabs = (JTabbedPane) this.getParent();
+            micontroladorOts.crearControladorPrincipal(tabs);
+            miControlador.crearControladorPrincipal(tabs);
+        }
     }//GEN-LAST:event_botonNotaDebActionPerformed
 
     private void botonFacExActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonFacExActionPerformed
@@ -220,7 +239,7 @@ public class vistaFacturasP extends javax.swing.JPanel {
         int filas = tablaFacturas.getRowCount();
         String[] idOts = new String[filas];
         int neto = 0, iva = 0, total = 0;
-        for(int i = 0; i < filas; i++){
+        for (int i = 0; i < filas; i++) {
             idOts[i] = getIdFact(i);
             neto += getNetoFact(i);
             iva += getIvaFact(i);
@@ -228,13 +247,33 @@ public class vistaFacturasP extends javax.swing.JPanel {
         }
         controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
         String id = micontroladorFacturas.archivarFacturas(idOts, neto, iva, total, "factura ex", "0");
-            if((miControlador.crearFacExXML(idOts, Integer.toString(neto), Integer.toString(iva),
-                Integer.toString(total), id).compareTo("correcto") == 0)){
-                JTabbedPane tabs = (JTabbedPane)this.getParent();
-                micontroladorOts.crearControladorPrincipal(tabs);
-                miControlador.crearControladorPrincipal(tabs);
-            }
+        if ((miControlador.crearFacExXML(idOts, Integer.toString(neto), Integer.toString(iva),
+                Integer.toString(total), id).compareTo("correcto") == 0)) {
+            JTabbedPane tabs = (JTabbedPane) this.getParent();
+            micontroladorOts.crearControladorPrincipal(tabs);
+            miControlador.crearControladorPrincipal(tabs);
+        }
     }//GEN-LAST:event_botonFacExActionPerformed
+
+    private void botonQuitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonQuitarActionPerformed
+        String id;
+        String idOt;
+        controladores.controladorOts miControlador = new controladores.controladorOts();
+        controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
+        boolean selected = tablaFacturas.getSelectedRowCount() > 0;
+        if (selected) {
+            int row = getFilaSeleccionada();
+            id = getIdFila(row);
+            idOt = getIdOt(row);
+            miControlador.quitarFactura(idOt);
+            JTabbedPane tabs = (JTabbedPane) this.getParent();
+            micontroladorFacturas.crearControladorPrincipal(tabs);
+            //JOptionPane.showMessageDialog(null, "Orden de trabajo facturada con éxito");
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una orden de trabajo quitar");
+        }
+    }//GEN-LAST:event_botonQuitarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -242,25 +281,52 @@ public class vistaFacturasP extends javax.swing.JPanel {
     private javax.swing.JButton botonFacEx;
     private javax.swing.JButton botonFactura;
     private javax.swing.JButton botonNotaDeb;
+    private javax.swing.JButton botonQuitar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaFacturas;
     // End of variables declaration//GEN-END:variables
-    
-    public String getIdFact(int row){
+
+    public String getIdFact(int row) {
         return tablaFacturas.getValueAt(row, 0).toString();
     }
-    
-    public int getNetoFact(int row){
+
+    public int getNetoFact(int row) {
         return Integer.parseInt(tablaFacturas.getValueAt(row, 7).toString());
     }
-    
-    public int getIvaFact(int row){
+
+    public int getIvaFact(int row) {
         return Integer.parseInt(tablaFacturas.getValueAt(row, 8).toString());
     }
-    
-    public int getTotalFact(int row){
+
+    public int getTotalFact(int row) {
         return Integer.parseInt(tablaFacturas.getValueAt(row, 9).toString());
     }
+
+    public String verificarRazon() {
+        String razon = getRazonFila(0);
+        System.out.println(razon);
+        for (int i = 1; i < tablaFacturas.getRowCount(); i++) {
+            System.out.println(getRazonFila(i));
+            if (razon.compareTo(getRazonFila(i)) != 0) {
+                return "incorrecto";
+            }
+        }
+        return "correcto";
+    }
+
+    public String getRazonFila(int row) {
+        return tablaFacturas.getValueAt(row, 1).toString();
+    }
+
+    public int getFilaSeleccionada() {
+        return tablaFacturas.getSelectedRow();
+    }
+
+    public String getIdFila(int row) {
+        return tablaFacturas.getValueAt(row, 0).toString();
+    }
+
+    public String getIdOt(int row) {
+        return tablaFacturas.getValueAt(row, 0).toString();
+    }
 }
-
-

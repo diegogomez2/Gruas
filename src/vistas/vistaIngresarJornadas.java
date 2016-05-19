@@ -7,8 +7,11 @@ package vistas;
 
 import com.mxrck.autocompleter.TextAutoCompleter;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -18,6 +21,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.SpinnerDateModel;
+import modelos.modeloClientes;
 import org.jdesktop.swingx.JXDatePicker;
 
 /**
@@ -32,6 +36,7 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
     SimpleDateFormat formatClock = new SimpleDateFormat("HH:mm");
     DateFormat formatDia = new SimpleDateFormat("EEE");
+    TextAutoCompleter listaGruas;
     
     
     public vistaIngresarJornadas(java.awt.Frame parent, boolean modal, Object[] clientes,
@@ -41,7 +46,7 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
         textoFechaSalida.setDate(new Date());
         controladores.controladorIngresarJornadas miControlador = new controladores.controladorIngresarJornadas();
         TextAutoCompleter listaClientes = new TextAutoCompleter(textoCliente);
-        TextAutoCompleter listaGruas = new TextAutoCompleter(textoGrua);
+        listaGruas = new TextAutoCompleter(textoGrua);
         TextAutoCompleter listaEmpleados = new TextAutoCompleter(textoOperador);
         for(int i = 0; i < clientes.length; i++){
             listaClientes.addItem(clientes[i].toString());
@@ -83,12 +88,28 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
         textoCliente = new javax.swing.JTextField();
         textoGrua = new javax.swing.JTextField();
         textoOperador = new javax.swing.JTextField();
+        labelObsCliente = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        textoObsCliente = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Ingresar jornada de trabajo");
         setResizable(false);
 
         labelFechaSalida.setText("Fecha de salida");
+
+        textoFechaSalida.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                textoFechaSalidaInputMethodTextChanged(evt);
+            }
+        });
+        textoFechaSalida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textoFechaSalidaActionPerformed(evt);
+            }
+        });
 
         labelHoraSalida.setText("Hora de salida");
 
@@ -131,49 +152,63 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
         });
 
         textoCliente.setNextFocusableComponent(textoOperador);
+        textoCliente.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                textoClienteFocusLost(evt);
+            }
+        });
 
         textoGrua.setNextFocusableComponent(textoCliente);
+
+        labelObsCliente.setText("Observaciones cliente");
+
+        textoObsCliente.setColumns(20);
+        textoObsCliente.setRows(5);
+        jScrollPane1.setViewportView(textoObsCliente);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(botonAceptar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botonCancelar))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(321, 321, 321)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelObsCliente)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(43, 43, 43)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(textoHoraRegreso)
                             .addComponent(textoFechaRegreso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(scrollpan, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(labelOperador)
                                     .addComponent(labelObs)
                                     .addComponent(labelFechaRegreso)
-                                    .addComponent(labelHoraRegreso))
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(botonAceptar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botonCancelar)))
+                                    .addComponent(labelHoraRegreso)
+                                    .addComponent(textoOperador, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(labelHoraSalida)
                         .addComponent(labelGrua)
                         .addComponent(labelCliente)
-                        .addComponent(labelOperador)
                         .addComponent(labelFechaSalida)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(textoGrua)
-                            .addComponent(textoHoraSalida)
-                            .addComponent(textoFechaSalida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(textoCliente)
-                            .addComponent(textoOperador, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addContainerGap(313, Short.MAX_VALUE)))
+                        .addComponent(textoFechaSalida, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
+                        .addComponent(textoHoraSalida, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
+                        .addComponent(textoGrua, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
+                        .addComponent(textoCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE))
+                    .addContainerGap(348, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -187,16 +222,26 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(textoHoraRegreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(labelOperador)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(textoOperador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelObs)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollpan, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 35, Short.MAX_VALUE)
+                        .addComponent(labelObsCliente)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(scrollpan))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonCancelar)
                     .addComponent(botonAceptar))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(labelFechaSalida)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -211,13 +256,9 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
                     .addComponent(textoGrua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(labelCliente)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                     .addComponent(textoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(labelOperador)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(textoOperador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(65, Short.MAX_VALUE)))
+                    .addGap(210, 210, 210)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -246,14 +287,46 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
         if (!esVacio) {
             JOptionPane.showMessageDialog(this, respuesta, "Debe rellenar los siguientes campos", JOptionPane.INFORMATION_MESSAGE);
         } else {
+            try {
                 if (miControladorIJ.irVistaJornadasP()) {
                     setVisible(false);
                 }else{
                     JOptionPane.showMessageDialog(this, "Se generó un error al ingresar la jornada\n"
                             + "Por favor compruebe que el cliente, grúa y empleados sean correctos", "Error" , JOptionPane.INFORMATION_MESSAGE);
                 }
+            } catch (ParseException ex) {
+                Logger.getLogger(vistaIngresarJornadas.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_botonAceptarActionPerformed
+
+    private void textoClienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textoClienteFocusLost
+        modelos.modeloClientes cliente = new modeloClientes();
+        String obs = cliente.obtenerObsPorRazon(textoCliente.getText());
+        setTextoObsCliente(obs);
+    }//GEN-LAST:event_textoClienteFocusLost
+
+    private void textoFechaSalidaInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_textoFechaSalidaInputMethodTextChanged
+        listaGruas.removeAll();
+        modelos.modeloGruas grua = new modelos.modeloGruas();
+        Object[] gruas = grua.obtenerDescGruasDisp(getTextoFechaSalida(), getTextoHoraSalida(),
+                getTextoFechaRegreso(), getTextoHoraRegreso());
+        for(int i = 0; i < gruas.length; i++){
+            listaGruas.addItem(gruas[i].toString());
+        }
+        System.out.println("HOLA");
+    }//GEN-LAST:event_textoFechaSalidaInputMethodTextChanged
+
+    private void textoFechaSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoFechaSalidaActionPerformed
+        listaGruas.removeAll();
+        modelos.modeloGruas grua = new modelos.modeloGruas();
+        Object[] gruas = grua.obtenerDescGruasDisp(getTextoFechaSalida(), getTextoHoraSalida(),
+                getTextoFechaRegreso(), getTextoHoraRegreso());
+        for(int i = 0; i < gruas.length; i++){
+            listaGruas.addItem(gruas[i].toString());
+        }
+        System.out.println("HOLA");
+    }//GEN-LAST:event_textoFechaSalidaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -293,6 +366,7 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
     private javax.swing.JButton botonAceptar;
     private javax.swing.JButton botonCancelar;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelCliente;
     private javax.swing.JLabel labelFechaRegreso;
     private javax.swing.JLabel labelFechaSalida;
@@ -300,6 +374,7 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
     private javax.swing.JLabel labelHoraRegreso;
     private javax.swing.JLabel labelHoraSalida;
     private javax.swing.JLabel labelObs;
+    private javax.swing.JLabel labelObsCliente;
     private javax.swing.JLabel labelOperador;
     private javax.swing.JScrollPane scrollpan;
     private javax.swing.JTextField textoCliente;
@@ -309,6 +384,7 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
     private javax.swing.JSpinner textoHoraRegreso;
     private javax.swing.JSpinner textoHoraSalida;
     private javax.swing.JTextArea textoObs;
+    private javax.swing.JTextArea textoObsCliente;
     private javax.swing.JTextField textoOperador;
     // End of variables declaration//GEN-END:variables
 
@@ -366,5 +442,13 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
 
     public String getTextoOperador() {
         return textoOperador.getText();
+    }
+    
+    public String getTextoObsCliente(){
+        return textoObsCliente.getText();
+    }
+    
+    public void setTextoObsCliente(String textoObsCliente){
+        this.textoObsCliente.setText(textoObsCliente);
     }
 }

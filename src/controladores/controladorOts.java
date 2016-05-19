@@ -52,6 +52,13 @@ public class controladorOts {
         return respuesta;
     }
     
+    public String quitarFactura(String idOt){
+        String respuesta = "";
+        modelos.modeloOts ots = new modelos.modeloOts();
+        respuesta = ots.quitarFactura(idOt);
+        return respuesta;
+    }
+    
     public void irVistaDetalleOts(String id) throws ParseException{
         controladorPrincipal miControlador = new controladorPrincipal();
         miControlador.crearControladorDetalleOts(id);

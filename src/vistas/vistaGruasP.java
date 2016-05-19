@@ -85,6 +85,7 @@ public class vistaGruasP extends javax.swing.JPanel {
                 "Patente", "Descripción", "Marca", "Modelo"
             }
         ));
+        tablaGruas.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tablaGruas);
 
         botonEliminar.setText("Eliminar grúa");

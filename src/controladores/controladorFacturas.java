@@ -30,7 +30,9 @@ public class controladorFacturas {
     
     public void crearControladorPrincipal(JTabbedPane tabs){
         controladorPrincipal miControlador = new controladorPrincipal();
-        tabs.remove(5);
+        tabs.remove(4);
+        tabs.remove(4);
+        tabs.insertTab("OTs", null, miControlador.crearControladorOtsP(), null, 4);
         tabs.insertTab("A Facturar", null, miControlador.crearControladorFacturasP(), null, 5);
         tabs.setSelectedIndex(5);
     }

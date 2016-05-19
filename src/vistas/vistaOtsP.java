@@ -5,6 +5,7 @@
  */
 package vistas;
 
+import java.awt.Color;
 import java.util.regex.PatternSyntaxException;
 import javax.swing.RowFilter;
 import java.awt.Point;
@@ -20,6 +21,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import org.jdesktop.swingx.sort.TableSortController;
@@ -34,26 +36,48 @@ public class vistaOtsP extends javax.swing.JPanel {
      * Creates new form vistaOtsP
      */
     DefaultTableModel datos;
+
     public vistaOtsP(String tipo, Object[][] data) {
         initComponents();
+        Object[] columnNames = {"Código OT", "Razon", "Giro", "Dirección", "Región", "Comuna", "Fecha",
+            "Neto", "IVA", "Total", "Estado"};
+
+
+//JTable table = new JTable(data, columnNames) {
+//    @Override
+//    public java.awt.Component prepareRenderer(TableCellRenderer renderer, int row, int col) {
+//        java.awt.Component comp = super.prepareRenderer(renderer, row, col);
+//        Object value = getModel().getValueAt(row, 0);
+//        if (value.equals("222")) {
+//            comp.setBackground(Color.lightGray);
+//        }  else {
+//           comp.setBackground(Color.white);
+//        }
+//        return comp;
+//    }
+//};
+jScrollPane1.setViewportView(tablaOts);
         final int rows = 5;
         String[] columNames = {"Código OT", "Razon", "Giro", "Dirección", "Región", "Comuna", "Fecha",
-            "Neto", "IVA", "Total"};
-        datos = new DefaultTableModel(data, columNames){
+            "Neto", "IVA", "Total", "Estado"};
+        datos = new DefaultTableModel(data, columNames) {
             @Override
-            public boolean isCellEditable(int row, int column){
+            public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
+
         tablaOts.setModel(datos);
-        
-        if(tablaOts.getRowCount() > 0) tablaOts.setRowSelectionInterval(0, 0);
-        tablaOts.addMouseListener(new MouseAdapter(){
-            public void mousePressed(MouseEvent evt){
-                JTable table = (JTable)evt.getSource();
+
+        if (tablaOts.getRowCount() > 0) {
+            tablaOts.setRowSelectionInterval(0, 0);
+        }
+        tablaOts.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
+                JTable table = (JTable) evt.getSource();
                 Point p = evt.getPoint();
                 int row = table.rowAtPoint(p);
-                if(evt.getClickCount() == 2){
+                if (evt.getClickCount() == 2) {
                     controladores.controladorOts miControlador = new controladores.controladorOts();
                     try {
                         miControlador.irVistaDetalleOts(tablaOts.getValueAt(row, 0).toString());
@@ -62,7 +86,7 @@ public class vistaOtsP extends javax.swing.JPanel {
                     }
                 }
             }
-        }); 
+        });
     }
 
     /**
@@ -75,11 +99,24 @@ public class vistaOtsP extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaOts = new javax.swing.JTable();
+        tablaOts = new javax.swing.JTable(){
+            @Override
+            public java.awt.Component prepareRenderer(TableCellRenderer renderer, int row, int col) {
+                java.awt.Component comp = super.prepareRenderer(renderer, row, col);
+                Object value = getModel().getValueAt(row, 10);
+                if (value.equals("Facturada")) {
+                    comp.setBackground(Color.lightGray);
+                }  else {
+                    comp.setBackground(Color.white);
+                }
+                return comp;
+            }
+        };
         botonFacturar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         textoFiltro = new javax.swing.JTextField();
 
+        tablaOts.getTableHeader().setReorderingAllowed(false);
         tablaOts.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -144,20 +181,21 @@ public class vistaOtsP extends javax.swing.JPanel {
         controladores.controladorOts miControlador = new controladores.controladorOts();
         controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
         boolean selected = tablaOts.getSelectedRowCount() > 0;
-        if(selected){
+        if (selected) {
             int row = getFilaSeleccionada();
             id = getIdFila(row);
             idOt = getIdOt(row);
-            if(miControlador.getIdFactura(idOt).compareTo("1") == 0){
+            if (miControlador.getIdFactura(idOt).compareTo("1") == 0) {
                 JOptionPane.showMessageDialog(null, "Esta orden de trabajo ya ha sido facturada");
-            }else{
+            } else {
                 miControlador.ingresarFactura(idOt);
-                JTabbedPane tabs = (JTabbedPane)this.getParent();
+                JTabbedPane tabs = (JTabbedPane) this.getParent();
                 micontroladorFacturas.crearControladorPrincipal(tabs);
                 miControlador.crearControladorPrincipal(tabs);
                 //JOptionPane.showMessageDialog(null, "Orden de trabajo facturada con éxito");
+
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una orden de trabajo para ser facturada");
         }
     }//GEN-LAST:event_botonFacturarActionPerformed
@@ -175,7 +213,7 @@ public class vistaOtsP extends javax.swing.JPanel {
     private javax.swing.JTable tablaOts;
     private javax.swing.JTextField textoFiltro;
     // End of variables declaration//GEN-END:variables
-    
+
     public JTable getTablaOts() {
         return tablaOts;
     }
@@ -183,18 +221,19 @@ public class vistaOtsP extends javax.swing.JPanel {
     public int getFilaSeleccionada() {
         return tablaOts.getSelectedRow();
     }
-    
-    public String getIdFila(int row){
+
+    public String getIdFila(int row) {
         return tablaOts.getValueAt(row, 0).toString();
     }
-    
-    public String getIdOt(int row){
+
+    public String getIdOt(int row) {
         return tablaOts.getValueAt(row, 0).toString();
     }
-    
-    public void filtroPorRazon(String query){
+
+    public void filtroPorRazon(String query) {
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<DefaultTableModel>(datos);
         tablaOts.setRowSorter(sorter);
         sorter.setRowFilter(RowFilter.regexFilter(query));
     }
+
 }

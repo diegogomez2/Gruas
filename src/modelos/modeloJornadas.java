@@ -171,7 +171,7 @@ public class modeloJornadas {
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("SELECT fsal_jor, horsal_jor, freg_jor, horlleg_jor,"
                     + "des_gru, raz_cli, nom_emp, apP_emp, apM_emp, freg_jor, obs_jor, clientes.rut_cli, clientes.dig_cli,"
-                    + "gir_cli, dir_cli, tel_cli, ton_gru FROM jornadas INNER JOIN clientes ON "
+                    + "gir_cli, dir_cli, tel_cli, ton_gru, ciu_cli FROM jornadas INNER JOIN clientes ON "
                     + "jornadas.rut_cli = clientes.rut_cli INNER JOIN gruas ON gruas.pat_gru = jornadas.pat_gru "
                     + "INNER JOIN empleados ON empleados.rut_emp = jornadas.rut_emp WHERE id_jor = ?");
             pstm.setString(1, id);
@@ -191,8 +191,9 @@ public class modeloJornadas {
             String estdir = res.getString("dir_cli");
             String esttel = res.getString("tel_cli");
             String estton = res.getString("ton_gru");
+            String estciu = res.getString("ciu_cli");
             data = new String[]{estfsal, esthorsal, estfreg, esthorlleg, estdes, estnom, estobs
-                    , estrutcli, estdigcli, estraz, estgir, estdir, esttel, id, estton};
+                    , estrutcli, estdigcli, estraz, estgir, estdir, esttel, id, estton, estciu};
         }catch(SQLException e){
             System.out.println("Error obtener jornada por id");
             System.out.println(e);

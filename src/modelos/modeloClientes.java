@@ -238,5 +238,25 @@ public class modeloClientes {
         }
         return data;
     }
+    
+    public String obtenerObsPorRazon(String razon){
+        String data = "";
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT obs_cli FROM clientes WHERE raz_cli = ?");
+            pstm.setString(1, razon);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            String estobs = res.getString("obs_cli");
+            data = estobs;
+        }catch(SQLException e){
+            System.out.println("Error al obtener obs por razon");
+            System.out.println(e);
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+        }
+        return data;
+    }
    
 }

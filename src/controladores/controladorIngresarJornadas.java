@@ -5,6 +5,11 @@
  */
 package controladores;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
 import javax.swing.JTabbedPane;
 import vistas.vistaIngresarJornadas;
@@ -16,6 +21,8 @@ import vistas.vistaIngresarJornadas;
 public class controladorIngresarJornadas {
 
     static vistas.vistaIngresarJornadas vistaIJ;
+    DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+    DateFormat newFormat = new SimpleDateFormat("dd-MM-yyyy");
     
     void mostrarVistaIngresarJornadas(Object[] clientes, Object[] gruas, Object[] empleados) {
         vistaIJ = new vistaIngresarJornadas(new javax.swing.JFrame(), true, clientes, gruas, empleados);
@@ -26,7 +33,7 @@ public class controladorIngresarJornadas {
     public String camposVacios() {
         String respuesta = "";
         if (vistaIJ.getTextoFechaSalida().compareTo("") == 0) {
-            respuesta += "-Fecha de alida.\n";
+            respuesta += "-Fecha de salida.\n";
         }
         if (vistaIJ.getTextoHoraSalida().compareTo("") == 0) {
             respuesta += "-Hora de salida.\n";
@@ -43,11 +50,16 @@ public class controladorIngresarJornadas {
         return respuesta;
     }
 
-    public boolean irVistaJornadasP() {
+    public boolean irVistaJornadasP() throws ParseException {
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
         String rut_cli = miControlador.obtenerClientePorRazon(vistaIJ.getTextoCliente());
         String rut_emp = miControlador.obtenerEmpleadoPorNombre(vistaIJ.getTextoOperador());
         String pat_gru = miControlador.obtenerGruaPorDesc(vistaIJ.getTextoGrua());
+        Date fecha1 = formatDate.parse(vistaIJ.getTextoFechaSalida());
+        Date fecha2 = formatDate.parse(vistaIJ.getTextoFechaRegreso());
+        if(fecha2.before(fecha1)){
+            JOptionPane.showMessageDialog(vistaIJ, "La fecha de llegada debe ser posterior a la fecha de salida", "Error", JOptionPane.INFORMATION_MESSAGE);
+        }
         if(rut_cli == null | rut_emp == null | pat_gru == null){
             return false;
         }

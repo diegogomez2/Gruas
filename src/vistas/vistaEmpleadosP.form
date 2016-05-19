@@ -77,6 +77,9 @@
               </Table>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tablaEmpleados.getTableHeader().setReorderingAllowed(false);"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

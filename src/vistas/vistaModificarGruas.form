@@ -282,21 +282,10 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
+                      <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="textoToneladas" alignment="1" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="textoKMH" alignment="0" max="32767" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="textoAncho" alignment="0" min="-2" pref="92" max="-2" attributes="0"/>
-                                      <Component id="labelToneladas" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="labelNeumaticosDelanteros" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="labelKMHUM" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="labelKMH" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              </Group>
                               <Component id="textoNeumaticosDelanteros" alignment="1" max="32767" attributes="0"/>
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="labelAncho" min="-2" max="-2" attributes="0"/>
@@ -311,6 +300,17 @@
                                   <Component id="panelTipoNeumaticos" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Component id="textoKMHUM" alignment="0" max="32767" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="textoAncho" alignment="0" min="-2" pref="92" max="-2" attributes="0"/>
+                                      <Component id="labelToneladas" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="labelNeumaticosDelanteros" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="labelKMHUM" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="labelKMH" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              </Group>
+                              <Component id="comboToneladas" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -323,9 +323,9 @@
                           <Component id="panelTipoNeumaticos" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="labelToneladas" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="comboToneladas" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="textoToneladas" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                           <Component id="labelKMH" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="textoKMH" min="-2" max="-2" attributes="0"/>
@@ -368,8 +368,6 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="textoAncho">
-                </Component>
-                <Component class="javax.swing.JTextField" name="textoToneladas">
                 </Component>
                 <Component class="javax.swing.JTextField" name="textoKMHUM">
                 </Component>
@@ -421,8 +419,9 @@
                     <Component class="javax.swing.JComboBox" name="comboTipoNeumaticos">
                       <Properties>
                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                          <StringArray count="1">
+                          <StringArray count="2">
                             <StringItem index="0" value="Tubular"/>
+                            <StringItem index="1" value="S&#xf3;lido"/>
                           </StringArray>
                         </Property>
                       </Properties>
@@ -453,6 +452,13 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="textoLargo">
+                </Component>
+                <Component class="javax.swing.JComboBox" name="comboToneladas">
+                  <Properties>
+                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                      <StringArray count="0"/>
+                    </Property>
+                  </Properties>
                 </Component>
               </SubComponents>
             </Container>
@@ -584,8 +590,9 @@
                 <Component class="javax.swing.JComboBox" name="comboTipoCombustible">
                   <Properties>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="1">
+                      <StringArray count="2">
                         <StringItem index="0" value="Diesel"/>
+                        <StringItem index="1" value="Gas"/>
                       </StringArray>
                     </Property>
                   </Properties>
@@ -661,11 +668,12 @@
                                   <Component id="textoFechaUM" min="-2" pref="210" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="textoFechaBaja" min="-2" pref="210" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                              </Group>
                               <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="textoFechaBaja" alignment="0" min="-2" pref="210" max="-2" attributes="0"/>
-                                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="labelFechaBaja" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -678,22 +686,22 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="labelFechaIngreso" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="labelFechaUM" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="textoFechaIngreso" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="textoFechaBaja" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="textoFechaUM" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="labelFechaRT" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="labelFechaUM" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="labelFechaBaja" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="textoFechaRT" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="textoFechaUM" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="textoFechaBaja" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="0" pref="26" max="32767" attributes="0"/>
                       </Group>
@@ -711,6 +719,11 @@
                     <Property name="text" type="java.lang.String" value="Fecha revisi&#xf3;n t&#xe9;cnica"/>
                   </Properties>
                 </Component>
+                <Component class="javax.swing.JLabel" name="labelFechaBaja">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Fecha baja"/>
+                  </Properties>
+                </Component>
                 <Component class="javax.swing.JLabel" name="labelFechaIngreso">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Fecha ingreso"/>
@@ -723,11 +736,6 @@
                 <Component class="org.jdesktop.swingx.JXDatePicker" name="textoFechaUM">
                 </Component>
                 <Component class="org.jdesktop.swingx.JXDatePicker" name="textoFechaBaja">
-                </Component>
-                <Component class="javax.swing.JLabel" name="jLabel1">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Fecha baja"/>
-                  </Properties>
                 </Component>
               </SubComponents>
             </Container>

@@ -9,6 +9,7 @@ import java.sql.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import javafx.animation.KeyValue;
 
 /**
  *
@@ -23,6 +24,7 @@ public class modeloGruas {
     
     public java.sql.Date toSqlDate(String data){
         java.util.Date parsed = null;
+        if (data.compareTo("") == 0) return null;
         try{
             parsed = formatDate.parse(data);
         }catch(ParseException e){
@@ -79,37 +81,69 @@ public class modeloGruas {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("insert into gruas (pat_gru, des_gru, mod_gru,"
-                    + "pes_gru, tneum_gru, tneum2_gru, ncha_gru, tcom_gru, obs_gru, ton_gru, kmh_gru,"
+                    + "pes_gru, tneum_gru, tneum2_gru, ncha_gru, tcom_gru, obs_gru, ton_gru, horo_gru,"
                     + "fin_gru, mar_gru, mas_gru, altmas_gru, anc_gru, lar_gru, larU_gru, altlev_gru,"
                     + "ndel_gru, ntra_gru, nmo_gru, nse_gru, frt_gru, fum_gru, kmhum_gru)"
                     + " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             pstm.setString(1, data[0]); //patente
             pstm.setString(2, data[1]); //descripcion
             pstm.setString(3, data[2]); //modelo
-            pstm.setString(4, data[3]); //Peso grua
+            if(data[3].compareTo("") == 0){
+                pstm.setNull(4, Types.INTEGER);
+            }else{
+                pstm.setInt(4, Integer.parseInt(data[3])); //peso
+            }
             pstm.setString(5, data[4]); //tipo neum
             pstm.setString(6, data[5]); //tipo neum2
             pstm.setString(7, data[6]); //nchasis
             pstm.setString(8, data[7]); //tipo combs
             pstm.setString(9, data[8]); //obs
             pstm.setFloat(10, Float.parseFloat(data[9])); //ton
-            pstm.setString(11, data[10]); //kmh
+            if(data[10].compareTo("") == 0){
+                pstm.setInt(11, 0);
+            }else{
+                pstm.setInt(11, Integer.parseInt(data[10])); //horometro (KMH)
+            }
             pstm.setDate(12, toSqlDate(data[11])); //fechain
             pstm.setString(13, data[12]);   //marca
             pstm.setString(14, data[13]);   //mastil
-            pstm.setInt(15, Integer.parseInt(data[14]));   //altmastil
-            pstm.setInt(16, Integer.parseInt(data[15]));   //ancho
-            pstm.setInt(17, Integer.parseInt(data[16]));   //largo
-            pstm.setInt(18, Integer.parseInt(data[17])); //largo unas
-            pstm.setInt(19, Integer.parseInt(data[18]));    //alt levante
+            if(data[14].compareTo("") == 0){
+                pstm.setNull(15, Types.INTEGER);
+            }else{
+                pstm.setInt(15, Integer.parseInt(data[14])); //altmast
+            }
+            if(data[15].compareTo("") == 0){
+                pstm.setNull(16, Types.INTEGER);
+            }else{
+                pstm.setInt(16, Integer.parseInt(data[15])); //ancho
+            }   
+            if(data[16].compareTo("") == 0){
+                pstm.setNull(17, Types.INTEGER);
+            }else{
+                pstm.setInt(17, Integer.parseInt(data[16])); //largo
+            }
+            if(data[17].compareTo("") == 0){
+                pstm.setNull(18, Types.INTEGER);
+            }else{
+                pstm.setInt(18, Integer.parseInt(data[17])); //largo unas
+            }
+            if(data[18].compareTo("") == 0){
+                pstm.setNull(19, Types.INTEGER);
+            }else{
+                pstm.setInt(19, Integer.parseInt(data[18])); //alt levante
+            }
             pstm.setString(20, data[19]); //neum del
             pstm.setString(21, data[20]);   //neum tras
             pstm.setString(22, data[21]);   //nmotor
             pstm.setString(23, data[22]);   //nserie
             pstm.setDate(24, toSqlDate(data[23])); //fecharev
             pstm.setDate(25,toSqlDate(data[24])); //fechaum
-            pstm.setInt(26, Integer.parseInt(data[25])); //kmhum
-            pstm.setInt(27, Integer.parseInt(data[26])); //horaspm
+            if(data[25].compareTo("") == 0){
+                pstm.setNull(26, Types.INTEGER);
+            }else{
+                pstm.setInt(26, Integer.parseInt(data[25])); //kmhum
+            }
+            //pstm.setInt(27, Integer.parseInt(data[26])); //horaspm
             pstm.execute();
             pstm.close();
         }catch(SQLException e){
@@ -119,8 +153,12 @@ public class modeloGruas {
         }catch(ClassNotFoundException e){
             System.out.println(e);
             return "incorrecto";
+        }catch(NumberFormatException e){
+            System.out.println("e");
+            return "numero incorrecto";
         }catch(Exception e){
             System.out.println(e);
+            System.out.println("ERROR ING");
         }
         return "correcto";
     }
@@ -165,7 +203,7 @@ public class modeloGruas {
             String esttipocombs = res.getString("tcom_gru");
             String estobs = res.getString("obs_gru");
             String estton = res.getString("ton_gru");
-            String estkmh = res.getString("kmh_gru");
+            String estkmh = res.getString("horo_gru");
             String estfechain = res.getString("fin");
             String estmarca = res.getString("mar_gru");
             String estmastil = res.getString("mas_gru");
@@ -200,7 +238,7 @@ public class modeloGruas {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("update gruas set pat_gru=?, de_grus=?, mod_gru=?,"
+            PreparedStatement pstm = conn.prepareStatement("update gruas set pat_gru=?, des_gru=?, mod_gru=?,"
                     + "pes_gru=?, tneum_gru=?, tneum2_gru=?, ncha_gru=?, tcom_gru=?, obs_gru=?, ton_gru=?,"
                     + "kmh_gru=?, fin_gru=?, mar_gru=?, mas_gru=?, altmas_gru=?, anc_gru=?, lar_gru=?, "
                     + "larU_gru=?, altlev_gru=?, ndel_gru=?, ntra_gru=?, nmo_gru=?, nse_gru=?, frt_gru=?, "
@@ -219,19 +257,55 @@ public class modeloGruas {
             pstm.setDate(12, toSqlDate(data[11]));
             pstm.setString(13, data[12]);
             pstm.setString(14, data[13]);
-            pstm.setInt(15, Integer.parseInt(data[14]));
-            pstm.setInt(16, Integer.parseInt(data[15]));
-            pstm.setInt(17, Integer.parseInt(data[16]));
-            pstm.setInt(18, Integer.parseInt(data[17]));
-            pstm.setInt(19, Integer.parseInt(data[18]));
-            pstm.setInt(20, Integer.parseInt(data[19]));
-            pstm.setInt(21, Integer.parseInt(data[20]));
+            if(data[14].compareTo("") == 0){
+                pstm.setNull(15, Types.INTEGER);
+            }else{
+                pstm.setInt(15, Integer.parseInt(data[14]));
+            }
+            if(data[15].compareTo("") == 0){
+                pstm.setNull(16, Types.INTEGER);
+            }else{
+                pstm.setInt(16, Integer.parseInt(data[15]));
+            }
+            if(data[16].compareTo("") == 0){
+                pstm.setNull(17, Types.INTEGER);
+            }else{
+                pstm.setInt(17, Integer.parseInt(data[16]));
+            }
+            if(data[17].compareTo("") == 0){
+                pstm.setNull(18, Types.INTEGER);
+            }else{
+                pstm.setInt(18, Integer.parseInt(data[17]));
+            }
+            if(data[18].compareTo("") == 0){
+                pstm.setNull(19, Types.INTEGER);
+            }else{
+                pstm.setInt(19, Integer.parseInt(data[18]));
+            }
+            if(data[19].compareTo("") == 0){
+                pstm.setNull(20, Types.INTEGER);
+            }else{
+                pstm.setInt(20, Integer.parseInt(data[19]));
+            }
+            if(data[20].compareTo("") == 0){
+                pstm.setNull(21, Types.INTEGER);
+            }else{
+                pstm.setInt(21, Integer.parseInt(data[20]));
+            }
             pstm.setString(22, data[21]);
             pstm.setString(23, data[22]);
             pstm.setDate(24, toSqlDate(data[23])); //fecharev
             pstm.setDate(25,toSqlDate(data[24])); //fechaum
-            pstm.setInt(26, Integer.parseInt(data[25])); //kmhum
-            pstm.setInt(27, Integer.parseInt(data[26])); //horaspm
+            if(data[125].compareTo("") == 0){
+                pstm.setNull(26, Types.INTEGER);
+            }else{
+                pstm.setInt(26, Integer.parseInt(data[25]));
+            } //kmhum
+            if(data[26].compareTo("") == 0){
+                pstm.setNull(27, Types.INTEGER);
+            }else{
+                pstm.setInt(27, Integer.parseInt(data[26]));
+            } //horaspm
             pstm.setDate(28, toSqlDate(data[27]));
             pstm.setString(29, patente);
             pstm.executeUpdate();
@@ -317,5 +391,53 @@ public class modeloGruas {
         }catch(ClassNotFoundException e){
             System.out.println(e);
         }
+    }
+    
+    public Object[] obtenerDescGruasDisp(String fechSal, String horaSal, String fechReg, String horaReg) {
+        int registros = 0;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Gruas where "
+                    + "pat_gru not in (SELECT pat_gru from jornadas where fsal_jor > ? AND freg_jor < ? AND "
+                    + "horsal_jor > ? AND horlleg_jor < ?)");
+            pstm.setString(1, fechSal);
+            pstm.setString(2, fechReg);
+            pstm.setString(3, horaSal);
+            pstm.setString(4, horaReg);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+       }catch(SQLException e){
+            System.out.println("Error al obtener descripcion gruas disp");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        
+        Object[] data = new String[registros];
+        
+        try{
+            PreparedStatement pstm = conn.prepareStatement("SELECT coalesce(des_gru,'') as des_gru FROM Gruas where "
+                    + "pat_gru not in (SELECT pat_gru from jornadas where fsal_jor > ? AND freg_jor < ? AND "
+                    + "horsal_jor > ? AND horlleg_jor < ?)");
+            pstm.setString(1, fechSal);
+            pstm.setString(2, fechReg);
+            pstm.setString(3, horaSal);
+            pstm.setString(4, horaReg);
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while(res.next()){
+                String estdes = res.getString("des_gru");
+                data[i] = estdes;
+                i++;
+            }
+            res.close();
+        }catch(SQLException e){
+            System.out.println("Error obtener descripcion gruas disp");
+            System.out.println(e);
+        }
+        return data;  
     }
 }

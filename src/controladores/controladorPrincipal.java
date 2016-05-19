@@ -141,7 +141,9 @@ public class controladorPrincipal {
     public void crearControladorModificarGruas(String patente) throws ParseException {
         controladorModificarGruas micontroladorMG;
         micontroladorMG = new controladorModificarGruas();
-        micontroladorMG.mostrarVistaModificarGrua(patente);
+        modelos.modeloTonelajes tonelajes = new modeloTonelajes();
+        Object[] dataTonelajes = tonelajes.listarTonelajes();
+        micontroladorMG.mostrarVistaModificarGrua(patente, dataTonelajes);
     }
     
     void crearControladorDetalleGrua(String patente) throws ParseException {
@@ -325,12 +327,17 @@ public class controladorPrincipal {
     
     public boolean ingresarGrua(String[] data){
         modelos.modeloGruas grua = new modelos.modeloGruas();
-        if(grua.ingresarGrua(data).compareTo("correcto") == 0){
+        String respuesta = grua.ingresarGrua(data);
+        if(respuesta.compareTo("correcto") == 0){
             JOptionPane.showMessageDialog(miVistaL, "Grua ingresada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
             return true;
+        }else if(respuesta.compareTo("incorrecto") == 0){
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al ingresar los datos\n" 
+                    + "Verifique que la patente no exista previamente en la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
         }else{
             JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al ingresar los datos\n" 
-                    + "verifique que la patente no exista previamente en la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+                    + "Verifique que los valores corresponden a números", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }
@@ -365,11 +372,16 @@ public class controladorPrincipal {
     
     boolean ingresarEmpleado(String[] data) {
         modelos.modeloEmpleados empleado = new modelos.modeloEmpleados();
-        if(empleado.ingresarEmpleados(data).compareTo("correcto") == 0){
+        String respuesta = empleado.ingresarEmpleados(data);
+        if(respuesta.compareTo("correcto") == 0){
             JOptionPane.showMessageDialog(miVistaL, "Trabajador ingresado con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
             return true;
-        }else{
+        }else if(respuesta.compareTo("rut incorrecto") == 0){
             JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al ingresar los datos.\n Compruebe que el rut sea correcto",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al ingresar los datos.\n El sueldo debe ser un número",
                     "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -438,6 +450,10 @@ public class controladorPrincipal {
     
     public boolean ingresarOt(String[] data){
         modelos.modeloOts ot = new modelos.modeloOts();
+        if(ot.obtenerCodigoOt(data[6]).compareTo("incorrecto") == 0){
+            JOptionPane.showMessageDialog(miVistaL, "Código de ot duplicado ", "Error", JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }
         if(ot.ingresarOt(data).compareTo("correcto") == 0){
             JOptionPane.showMessageDialog(miVistaL, "Orden de trabajo ingresada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
             return true;

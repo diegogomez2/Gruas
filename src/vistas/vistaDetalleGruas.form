@@ -68,7 +68,7 @@
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="15" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -363,7 +363,7 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="labelNeumaticosDelanteros">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Neum&#xe1;ticos delanteros"/>
+                    <Property name="text" type="java.lang.String" value="Medidas neum&#xe1;ticos delanteros"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="labelLargo">
@@ -409,23 +409,16 @@
                     <Component class="javax.swing.JComboBox" name="comboTipoNeumaticos">
                       <Properties>
                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                          <StringArray count="4">
-                            <StringItem index="0" value="Item 1"/>
-                            <StringItem index="1" value="Item 2"/>
-                            <StringItem index="2" value="Item 3"/>
-                            <StringItem index="3" value="Item 4"/>
-                          </StringArray>
+                          <StringArray count="0"/>
                         </Property>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JComboBox" name="comboTipoNeumaticos2">
                       <Properties>
                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                          <StringArray count="4">
-                            <StringItem index="0" value="Item 1"/>
-                            <StringItem index="1" value="Item 2"/>
-                            <StringItem index="2" value="Item 3"/>
-                            <StringItem index="3" value="Item 4"/>
+                          <StringArray count="2">
+                            <StringItem index="0" value="Simple"/>
+                            <StringItem index="1" value="Doble"/>
                           </StringArray>
                         </Property>
                       </Properties>
@@ -454,21 +447,9 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
+                      <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="labelAlturaMastil" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="labelTipoCombustible" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="labelMastil" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="172" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="labelNeumaticosTraseros" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="157" max="-2" attributes="0"/>
-                              </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                       <Group type="102" alignment="1" attributes="0">
@@ -495,7 +476,12 @@
                                   </Group>
                                   <EmptySpace max="32767" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="0" attributes="0">
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  <Component id="labelNeumaticosTraseros" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="157" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="labelHorasPM" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
@@ -503,6 +489,9 @@
                                           <Component id="labelPesoGrua" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="textoNeumaticosTraseros" alignment="0" max="32767" attributes="0"/>
                                       </Group>
+                                      <Component id="labelTipoCombustible" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="labelMastil" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="labelAlturaMastil" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
@@ -577,11 +566,9 @@
                 <Component class="javax.swing.JComboBox" name="comboTipoCombustible">
                   <Properties>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="4">
-                        <StringItem index="0" value="Item 1"/>
-                        <StringItem index="1" value="Item 2"/>
-                        <StringItem index="2" value="Item 3"/>
-                        <StringItem index="3" value="Item 4"/>
+                      <StringArray count="2">
+                        <StringItem index="0" value="Diesel"/>
+                        <StringItem index="1" value="Gas"/>
                       </StringArray>
                     </Property>
                   </Properties>
@@ -593,17 +580,14 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="labelNeumaticosTraseros">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Neum&#xe1;ticos traseros"/>
+                    <Property name="text" type="java.lang.String" value="Medidas neum&#xe1;ticos traseros"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JComboBox" name="comboMastil">
                   <Properties>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="4">
-                        <StringItem index="0" value="Item 1"/>
-                        <StringItem index="1" value="Item 2"/>
-                        <StringItem index="2" value="Item 3"/>
-                        <StringItem index="3" value="Item 4"/>
+                      <StringArray count="1">
+                        <StringItem index="0" value="Simple"/>
                       </StringArray>
                     </Property>
                   </Properties>
@@ -644,39 +628,41 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="labelFechaRT" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="textoFechaUM" alignment="0" pref="210" max="32767" attributes="0"/>
-                                  <Component id="labelFechaBaja" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="textoFechaIngreso" alignment="0" max="32767" attributes="0"/>
-                              </Group>
+                              <Component id="labelFechaIngreso" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="textoFechaIngreso" alignment="0" pref="210" max="32767" attributes="0"/>
+                              <Component id="textoFechaRT" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="textoFechaBaja" alignment="0" min="-2" pref="194" max="-2" attributes="0"/>
-                              <Component id="labelFechaIngreso" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="textoFechaRT" alignment="0" min="-2" pref="194" max="-2" attributes="0"/>
-                              <Component id="labelFechaUM" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                                  <Component id="textoFechaUM" alignment="1" min="-2" pref="210" max="-2" attributes="0"/>
+                                  <Component id="textoFechaBaja" alignment="0" min="-2" pref="211" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="labelFechaUM" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="labelFechaUM2" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="labelFechaUM" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="labelFechaIngreso" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="labelFechaBaja" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="textoFechaRT" min="-2" max="-2" attributes="0"/>
+                                  <Component id="textoFechaUM" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                                  <Component id="labelFechaUM" min="-2" max="-2" attributes="0"/>
+                                  <Component id="labelFechaUM2" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="textoFechaBaja" min="-2" max="-2" attributes="0"/>
                               </Group>
@@ -685,23 +671,24 @@
                                   <Component id="textoFechaIngreso" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                                   <Component id="labelFechaRT" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="textoFechaUM" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="textoFechaRT" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JLabel" name="labelFechaBaja">
+                <Component class="javax.swing.JLabel" name="labelFechaIngreso">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Fecha de baja"/>
+                    <Property name="text" type="java.lang.String" value="Fecha de ingreso"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="labelFechaUM">
+                <Component class="javax.swing.JLabel" name="labelFechaUM2">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Fecha ultima mantencion"/>
+                    <Property name="text" type="java.lang.String" value="Fecha de baja"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="labelFechaRT">
@@ -709,18 +696,18 @@
                     <Property name="text" type="java.lang.String" value="Fecha revisi&#xf3;n t&#xe9;cnica"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="labelFechaIngreso">
+                <Component class="javax.swing.JLabel" name="labelFechaUM">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Fecha ingreso"/>
+                    <Property name="text" type="java.lang.String" value="Fecha &#xfa;ltima mantenci&#xf3;n"/>
                   </Properties>
                 </Component>
                 <Component class="org.jdesktop.swingx.JXDatePicker" name="textoFechaIngreso">
                 </Component>
-                <Component class="org.jdesktop.swingx.JXDatePicker" name="textoFechaRT">
-                </Component>
                 <Component class="org.jdesktop.swingx.JXDatePicker" name="textoFechaUM">
                 </Component>
                 <Component class="org.jdesktop.swingx.JXDatePicker" name="textoFechaBaja">
+                </Component>
+                <Component class="org.jdesktop.swingx.JXDatePicker" name="textoFechaRT">
                 </Component>
               </SubComponents>
             </Container>
