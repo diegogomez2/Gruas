@@ -32,13 +32,14 @@ public class vistaModificarJornadas extends javax.swing.JDialog {
     DateFormat formatClock = new SimpleDateFormat("HH:mm");
     DateFormat formateDateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     DateFormat formatDia = new SimpleDateFormat("EEE");
+    TextAutoCompleter listaGruas;
     
     public vistaModificarJornadas(java.awt.Frame parent, boolean modal, Object[] clientes,
             Object[] gruas, Object[] empleados) {
         super(parent, modal);
         initComponents();
         TextAutoCompleter listaClientes = new TextAutoCompleter(textoCliente);
-        TextAutoCompleter listaGruas = new TextAutoCompleter(textoGrua);
+        listaGruas = new TextAutoCompleter(textoGrua);
         TextAutoCompleter listaEmpleados = new TextAutoCompleter(textoEmpleado);
         for(int i = 0; i < clientes.length; i++){
             listaClientes.addItem(clientes[i].toString());
@@ -85,6 +86,12 @@ public class vistaModificarJornadas extends javax.swing.JDialog {
         setTitle("Modificar jornada de trabajo");
 
         labelFechaSalida.setText("Fecha de salida");
+
+        textoFechaSalida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textoFechaSalidaActionPerformed(evt);
+            }
+        });
 
         labelHoraSalida.setText("Hora de salida");
 
@@ -251,6 +258,16 @@ public class vistaModificarJornadas extends javax.swing.JDialog {
             }
         }
     }//GEN-LAST:event_botonAceptarActionPerformed
+
+    private void textoFechaSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoFechaSalidaActionPerformed
+        listaGruas.removeAll();
+        modelos.modeloGruas grua = new modelos.modeloGruas();
+        Object[] gruas = grua.obtenerDescGruasDisp(getTextoFechaSalida(), getTextoHoraSalida(),
+                getTextoFechaRegreso(), getTextoHoraRegreso());
+        for (int i = 0; i < gruas.length; i++) {
+            listaGruas.addItem(gruas[i].toString());
+        }
+    }//GEN-LAST:event_textoFechaSalidaActionPerformed
 
     /**
      * @param args the command line arguments

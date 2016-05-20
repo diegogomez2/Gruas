@@ -145,6 +145,9 @@
           </Properties>
         </Component>
         <Component class="org.jdesktop.swingx.JXDatePicker" name="textoFechaSalida">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textoFechaSalidaActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="labelHoraSalida">
           <Properties>

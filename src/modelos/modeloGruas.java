@@ -399,12 +399,13 @@ public class modeloGruas {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Gruas where "
-                    + "pat_gru not in (SELECT pat_gru from jornadas where fsal_jor > ? AND freg_jor < ? AND "
-                    + "horsal_jor > ? AND horlleg_jor < ?)");
+                    + "pat_gru not in (SELECT pat_gru from jornadas where fsal_jor <= ? AND freg_jor >= "
+                    + "? and pat_gru is not null UNION distinct SELECT pat_gru from jornadas where "
+                    + "fsal_jor <= ? AND freg_jor >= ? and pat_gru IS NOT NULL)");
             pstm.setString(1, fechSal);
-            pstm.setString(2, fechReg);
-            pstm.setString(3, horaSal);
-            pstm.setString(4, horaReg);
+            pstm.setString(2, fechSal);
+            pstm.setString(3, fechReg);
+            pstm.setString(4, fechReg);
             ResultSet res = pstm.executeQuery();
             res.next();
             registros = res.getInt("total");
@@ -420,12 +421,14 @@ public class modeloGruas {
         
         try{
             PreparedStatement pstm = conn.prepareStatement("SELECT coalesce(des_gru,'') as des_gru FROM Gruas where "
-                    + "pat_gru not in (SELECT pat_gru from jornadas where fsal_jor > ? AND freg_jor < ? AND "
-                    + "horsal_jor > ? AND horlleg_jor < ?)");
+                    + "pat_gru not in (SELECT pat_gru from jornadas where fsal_jor <= ? AND freg_jor >= "
+                    + "? and pat_gru is not null UNION distinct SELECT pat_gru from jornadas where "
+                    + "fsal_jor <= ? AND freg_jor >= ? and pat_gru IS NOT NULL)");
             pstm.setString(1, fechSal);
-            pstm.setString(2, fechReg);
-            pstm.setString(3, horaSal);
-            pstm.setString(4, horaReg);
+            pstm.setString(2, fechSal);
+            pstm.setString(3, fechReg);
+            pstm.setString(4, fechReg);
+            System.out.println(pstm);
             ResultSet res = pstm.executeQuery();
             int i = 0;
             while(res.next()){

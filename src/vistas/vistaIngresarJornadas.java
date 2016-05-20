@@ -306,13 +306,14 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
     }//GEN-LAST:event_textoClienteFocusLost
 
     private void textoFechaSalidaInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_textoFechaSalidaInputMethodTextChanged
-        listaGruas.removeAll();
-        modelos.modeloGruas grua = new modelos.modeloGruas();
-        Object[] gruas = grua.obtenerDescGruasDisp(getTextoFechaSalida(), getTextoHoraSalida(),
-                getTextoFechaRegreso(), getTextoHoraRegreso());
-        for (int i = 0; i < gruas.length; i++) {
-            listaGruas.addItem(gruas[i].toString());
-        }
+//        System.out.println("g");
+//        listaGruas.removeAll();
+//        modelos.modeloGruas grua = new modelos.modeloGruas();
+//        Object[] gruas = grua.obtenerDescGruasDisp(getTextoFechaSalida(), getTextoHoraSalida(),
+//                getTextoFechaRegreso(), getTextoHoraRegreso());
+//        for (int i = 0; i < gruas.length; i++) {
+//            listaGruas.addItem(gruas[i].toString());
+//        }
     }//GEN-LAST:event_textoFechaSalidaInputMethodTextChanged
 
     private void textoFechaSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoFechaSalidaActionPerformed
