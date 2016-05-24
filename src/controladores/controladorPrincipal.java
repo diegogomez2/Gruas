@@ -40,6 +40,7 @@ public class controladorPrincipal {
     static controladorHistorico micontroladorHistorico;
     static controladorUsuarios micontroladorUsuarios;
     static controladorDetalleClientes micontroladorDC;
+    static controladorTarifas micontroladorTarifas;
     static vistaLogin miVistaL;
     static vistaPrincipal mivistaP;
     static vistas.vistaJornadasP mivistaJP;
@@ -294,6 +295,35 @@ public class controladorPrincipal {
         micontroladorUsuarios.mostrarVistaCambioClave(tipo, data);
     }
     
+    public void crearControladorTarifas() {
+        modelos.modeloTarifas tarifas;
+        tarifas = new modelos.modeloTarifas();
+        Object[][] data;
+        data = tarifas.listarTarifas();
+        micontroladorTarifas = new controladorTarifas();
+        micontroladorTarifas.mostrarVistaTarifas(tipo, data);
+    }
+    
+    public void crearControladorAgregarTarifa() {
+        modelos.modeloTonelajes tonelajes;
+        tonelajes = new modelos.modeloTonelajes();
+        Object[] data;
+        data = tonelajes.listarTonelajes();
+        controladorAgregarTarifa micontrolador = new controladorAgregarTarifa();
+        micontrolador.mostrarVistaAgregarTarifa(data);
+    }
+    
+//    public boolean agregarTarifa(String dia, String ton, String horaInicio, String horaFin, String tar){
+//        modelos.modeloTarifas tarifa = new modelos.modeloTarifas();
+//        if(tarifa.agregarTarifa(dia, ton, horaInicio, horaFin, tar)){
+//            JOptionPane.showMessageDialog(miVistaL, "Tarifa agregada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+//            return true;
+//        }else{
+//            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al ingresar los datos", "Error", JOptionPane.ERROR_MESSAGE);
+//            return false;
+//        }
+//    }
+    
     //Funciones
     public boolean ingresarCliente(String[] data){
         modelos.modeloClientes cliente = new modelos.modeloClientes();
@@ -365,11 +395,16 @@ public class controladorPrincipal {
     
     boolean modificarGrua(String[] data, String patente) {
         modelos.modeloGruas grua = new modelos.modeloGruas();
-        if(grua.modificarGrua(data, patente).compareTo("correcto") == 0){
+        String respuesta = grua.modificarGrua(data, patente);
+        if(respuesta.compareTo("correcto") == 0){
             JOptionPane.showMessageDialog(miVistaL, "Grúa modificada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
             return true;
-        }else{
+        }else if(respuesta.compareTo("incorrecto") == 0){
             JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al modificar la grúa selecionada", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al ingresar los datos\n" 
+                    + "Verifique que los valores corresponden a números", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }

@@ -50,11 +50,13 @@ public class vistaPrincipal extends javax.swing.JFrame {
         MenuPrincipal = new javax.swing.JMenuBar();
         MenuArchivo = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        menuTarifas = new javax.swing.JMenuItem();
+        menuAgregarTarifa = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu Principal");
         setMinimumSize(new java.awt.Dimension(900, 700));
-        setPreferredSize(new java.awt.Dimension(800, 600));
 
         MenuArchivo.setText("Archivo");
 
@@ -67,6 +69,26 @@ public class vistaPrincipal extends javax.swing.JFrame {
         MenuArchivo.add(jMenuItem1);
 
         MenuPrincipal.add(MenuArchivo);
+
+        jMenu1.setText("Tarifas");
+
+        menuTarifas.setText("Ver tarifas");
+        menuTarifas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuTarifasActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuTarifas);
+
+        menuAgregarTarifa.setText("Agregar Tarifa");
+        menuAgregarTarifa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuAgregarTarifaActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuAgregarTarifa);
+
+        MenuPrincipal.add(jMenu1);
 
         setJMenuBar(MenuPrincipal);
 
@@ -88,6 +110,16 @@ public class vistaPrincipal extends javax.swing.JFrame {
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
         miControlador.crearControladorUsuarios();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void menuTarifasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTarifasActionPerformed
+        controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
+        miControlador.crearControladorTarifas();
+    }//GEN-LAST:event_menuTarifasActionPerformed
+
+    private void menuAgregarTarifaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAgregarTarifaActionPerformed
+        controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
+        miControlador.crearControladorAgregarTarifa();
+    }//GEN-LAST:event_menuAgregarTarifaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -127,7 +159,10 @@ public class vistaPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu MenuArchivo;
     private javax.swing.JMenuBar MenuPrincipal;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem menuAgregarTarifa;
+    private javax.swing.JMenuItem menuTarifas;
     public javax.swing.JTabbedPane vistaPrincipal;
     // End of variables declaration//GEN-END:variables
 

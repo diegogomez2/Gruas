@@ -23,6 +23,7 @@ public class controladorIngresarJornadas {
     static vistas.vistaIngresarJornadas vistaIJ;
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
     DateFormat newFormat = new SimpleDateFormat("dd-MM-yyyy");
+    DateFormat dt = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     
     void mostrarVistaIngresarJornadas(Object[] clientes, Object[] gruas, Object[] empleados) {
         vistaIJ = new vistaIngresarJornadas(new javax.swing.JFrame(), true, clientes, gruas, empleados);
@@ -62,6 +63,10 @@ public class controladorIngresarJornadas {
         }
         Date fecha1 = formatDate.parse(vistaIJ.getTextoFechaSalida());
         Date fecha2 = formatDate.parse(vistaIJ.getTextoFechaRegreso());
+        //Date fhsal = dt.parse(vistaIJ.getTextoFechaSalida() + vistaIJ.getTextoHoraSalida());
+        //Date fhreg = dt.parse(vistaIJ.getTextoFechaRegreso()+ vistaIJ.getTextoHoraRegreso());
+        String fhsal = vistaIJ.getTextoFechaSalida() + " " + vistaIJ.getTextoHoraSalida();
+        String fhreg = vistaIJ.getTextoFechaRegreso() + " " + vistaIJ.getTextoHoraRegreso();
         if(fecha2.before(fecha1)){
             JOptionPane.showMessageDialog(vistaIJ, "La fecha de llegada debe ser posterior a la fecha de salida", "Error", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -70,7 +75,7 @@ public class controladorIngresarJornadas {
         }
         String[] data = {vistaIJ.getTextoFechaSalida(), vistaIJ.getTextoHoraSalida(), pat_gru, rut_cli, 
             rut_emp, vistaIJ.getTextoFechaRegreso(), vistaIJ.getTextoHoraRegreso(), vistaIJ.getTextoObs(),
-            vistaIJ.getDiaSalida(), vistaIJ.getDiaRegreso()};
+            vistaIJ.getDiaSalida(), vistaIJ.getDiaRegreso(), fhsal, fhreg};
         boolean flag = miControlador.ingresarJornada(data);
         return flag;
     }    

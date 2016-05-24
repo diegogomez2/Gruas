@@ -30,7 +30,7 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+          <Component id="jPanel1" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -53,6 +53,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="labelObsCliente" min="-2" max="-2" attributes="0"/>
                               <Component id="jScrollPane1" min="-2" pref="268" max="-2" attributes="0"/>
+                              <Component id="textoCliente" alignment="0" min="-2" pref="268" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -85,7 +86,6 @@
                           <Component id="textoFechaSalida" pref="268" max="32767" attributes="0"/>
                           <Component id="textoHoraSalida" alignment="0" pref="268" max="32767" attributes="0"/>
                           <Component id="textoGrua" alignment="0" pref="268" max="32767" attributes="0"/>
-                          <Component id="textoCliente" alignment="0" pref="268" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace pref="348" max="32767" attributes="0"/>
                   </Group>
@@ -110,16 +110,17 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="labelObs" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace min="0" pref="35" max="32767" attributes="0"/>
+                          <Component id="textoCliente" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="labelObsCliente" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jScrollPane1" min="-2" pref="124" max="-2" attributes="0"/>
                       </Group>
                       <Component id="scrollpan" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="botonCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="botonAceptar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -142,9 +143,7 @@
                       <Component id="textoGrua" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="labelCliente" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="13" max="32767" attributes="0"/>
-                      <Component id="textoCliente" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="210" max="-2" attributes="0"/>
+                      <EmptySpace pref="232" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -259,8 +258,14 @@
               <ComponentRef name="textoCliente"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="textoGruaFocusGained"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="textoOperador">
+          <Events>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="textoOperadorFocusGained"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="labelObsCliente">
           <Properties>

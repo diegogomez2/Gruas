@@ -35,6 +35,7 @@ public class vistaHistoricoOt extends javax.swing.JPanel {
             }
         };
         tablaHistorico.setModel(datos);
+        tablaHistorico.setAutoCreateRowSorter(true);
         if(tablaHistorico.getRowCount() > 0) tablaHistorico.setRowSelectionInterval(0, 0);
         tablaHistorico.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tablaHistorico.addMouseListener(new MouseAdapter(){

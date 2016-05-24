@@ -37,6 +37,7 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
     SimpleDateFormat formatClock = new SimpleDateFormat("HH:mm");
     DateFormat formatDia = new SimpleDateFormat("EEE");
     TextAutoCompleter listaGruas;
+    TextAutoCompleter listaEmpleados;
 
     public vistaIngresarJornadas(java.awt.Frame parent, boolean modal, Object[] clientes,
             Object[] gruas, Object[] empleados) {
@@ -46,7 +47,7 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
         controladores.controladorIngresarJornadas miControlador = new controladores.controladorIngresarJornadas();
         TextAutoCompleter listaClientes = new TextAutoCompleter(textoCliente);
         listaGruas = new TextAutoCompleter(textoGrua);
-        TextAutoCompleter listaEmpleados = new TextAutoCompleter(textoOperador);
+        listaEmpleados = new TextAutoCompleter(textoOperador);
         for (int i = 0; i < clientes.length; i++) {
             listaClientes.addItem(clientes[i].toString());
         }
@@ -158,6 +159,17 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
         });
 
         textoGrua.setNextFocusableComponent(textoCliente);
+        textoGrua.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                textoGruaFocusGained(evt);
+            }
+        });
+
+        textoOperador.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                textoOperadorFocusGained(evt);
+            }
+        });
 
         labelObsCliente.setText("Observaciones cliente");
 
@@ -180,7 +192,8 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(labelObsCliente)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(textoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(43, 43, 43)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(textoHoraRegreso)
@@ -205,8 +218,7 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
                         .addComponent(labelFechaSalida)
                         .addComponent(textoFechaSalida, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
                         .addComponent(textoHoraSalida, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
-                        .addComponent(textoGrua, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
-                        .addComponent(textoCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE))
+                        .addComponent(textoGrua, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE))
                     .addContainerGap(348, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
@@ -227,14 +239,15 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelObs)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 35, Short.MAX_VALUE)
+                        .addComponent(textoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(labelObsCliente)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(scrollpan))
-                .addGap(18, 18, 18)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonCancelar)
                     .addComponent(botonAceptar))
@@ -255,9 +268,7 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
                     .addComponent(textoGrua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(labelCliente)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
-                    .addComponent(textoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(210, 210, 210)))
+                    .addContainerGap(232, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -317,14 +328,34 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
     }//GEN-LAST:event_textoFechaSalidaInputMethodTextChanged
 
     private void textoFechaSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoFechaSalidaActionPerformed
+//        listaGruas.removeAll();
+//        modelos.modeloGruas grua = new modelos.modeloGruas();
+//        Object[] gruas = grua.obtenerDescGruasDisp(getTextoFechaSalida() + " " + getTextoHoraSalida(),
+//                getTextoFechaRegreso() + " " + getTextoHoraRegreso());
+//        for (int i = 0; i < gruas.length; i++) {
+//            listaGruas.addItem(gruas[i].toString());
+//        }
+    }//GEN-LAST:event_textoFechaSalidaActionPerformed
+
+    private void textoGruaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textoGruaFocusGained
         listaGruas.removeAll();
         modelos.modeloGruas grua = new modelos.modeloGruas();
-        Object[] gruas = grua.obtenerDescGruasDisp(getTextoFechaSalida(), getTextoHoraSalida(),
-                getTextoFechaRegreso(), getTextoHoraRegreso());
+        Object[] gruas = grua.obtenerDescGruasDisp(getTextoFechaSalida() + " " + getTextoHoraSalida(),
+                getTextoFechaRegreso() + " " + getTextoHoraRegreso());
         for (int i = 0; i < gruas.length; i++) {
             listaGruas.addItem(gruas[i].toString());
         }
-    }//GEN-LAST:event_textoFechaSalidaActionPerformed
+    }//GEN-LAST:event_textoGruaFocusGained
+
+    private void textoOperadorFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textoOperadorFocusGained
+        listaEmpleados.removeAll();
+        modelos.modeloEmpleados empleados = new modelos.modeloEmpleados();
+        Object[] emp = empleados.obtenerNomEmpDisp(getTextoFechaSalida() + " " + getTextoHoraSalida(),
+                getTextoFechaRegreso() + " " + getTextoHoraRegreso());
+        for (int i = 0; i < emp.length; i++) {
+            listaEmpleados.addItem(emp[i].toString());
+        }
+    }//GEN-LAST:event_textoOperadorFocusGained
 
     /**
      * @param args the command line arguments

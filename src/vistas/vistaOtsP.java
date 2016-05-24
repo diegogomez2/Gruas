@@ -68,7 +68,7 @@ jScrollPane1.setViewportView(tablaOts);
         };
 
         tablaOts.setModel(datos);
-
+        tablaOts.setAutoCreateRowSorter(true);
         if (tablaOts.getRowCount() > 0) {
             tablaOts.setRowSelectionInterval(0, 0);
         }

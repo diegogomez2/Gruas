@@ -141,8 +141,9 @@ public class modeloJornadas {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("insert into jornadas (fsal_jor, horsal_jor,"
-                    + " pat_gru, rut_cli, rut_emp, freg_jor, horlleg_jor, obs_jor, diasal_jor, dialleg_jor) "
-                    + "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    + " pat_gru, rut_cli, rut_emp, freg_jor, horlleg_jor, obs_jor, diasal_jor, dialleg_jor, fhsal_jor,"
+                    + "fhreg_jor) "
+                    + "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             pstm.setString(1, data[0]);
             pstm.setString(2, data[1]);
             if(data[2].compareTo("") == 0){
@@ -161,6 +162,8 @@ public class modeloJornadas {
             pstm.setString(8, data[7]);
             pstm.setString(9, data[8]);
             pstm.setString(10, data[9]);
+            pstm.setString(11, data[10]);
+            pstm.setString(12, data[11]);
             pstm.execute();
             pstm.close();
         }catch(SQLException e){

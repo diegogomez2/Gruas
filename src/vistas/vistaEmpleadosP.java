@@ -37,6 +37,7 @@ public class vistaEmpleadosP extends javax.swing.JPanel {
             }
         };
         tablaEmpleados.setModel(datos);
+        tablaEmpleados.setAutoCreateRowSorter(true);
         if(tablaEmpleados.getRowCount() > 0) tablaEmpleados.setRowSelectionInterval(0, 0);
         tablaEmpleados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tablaEmpleados.addMouseListener(new MouseAdapter(){

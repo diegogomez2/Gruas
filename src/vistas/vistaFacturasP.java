@@ -38,6 +38,7 @@ public class vistaFacturasP extends javax.swing.JPanel {
             }
         };
         tablaFacturas.setModel(datos);
+        tablaFacturas.setAutoCreateRowSorter(true);
         if (tablaFacturas.getRowCount() > 0) {
             tablaFacturas.setRowSelectionInterval(0, 0);
         }

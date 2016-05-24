@@ -154,7 +154,7 @@ public class modeloGruas {
             System.out.println(e);
             return "incorrecto";
         }catch(NumberFormatException e){
-            System.out.println("e");
+            System.out.println(e);
             return "numero incorrecto";
         }catch(Exception e){
             System.out.println(e);
@@ -247,10 +247,22 @@ public class modeloGruas {
             pstm.setString(2, data[1]);
             pstm.setString(3, data[2]);
             pstm.setInt(4, Integer.parseInt(data[3]));
-            pstm.setString(5, data[4]);
-            pstm.setString(6, data[5]);
+            if(data[4].compareTo("") == 0){
+                pstm.setNull(5, Types.VARCHAR);
+            }else{
+                pstm.setString(5, data[4]);  
+            }
+            if(data[5].compareTo("") == 0){
+                pstm.setNull(6, Types.VARCHAR);
+            }else{
+                pstm.setString(6, data[5]);
+            }
             pstm.setString(7, data[6]);
-            pstm.setString(8, data[7]);
+            if(data[7].compareTo("") == 0){
+                pstm.setNull(8, Types.VARCHAR);
+            }else{
+                pstm.setString(8, data[7]);  
+            }
             pstm.setString(9, data[8]);
             pstm.setFloat(10, Float.parseFloat(data[9]));
             pstm.setString(11, data[10]);
@@ -296,7 +308,7 @@ public class modeloGruas {
             pstm.setString(23, data[22]);
             pstm.setDate(24, toSqlDate(data[23])); //fecharev
             pstm.setDate(25,toSqlDate(data[24])); //fechaum
-            if(data[125].compareTo("") == 0){
+            if(data[25].compareTo("") == 0){
                 pstm.setNull(26, Types.INTEGER);
             }else{
                 pstm.setInt(26, Integer.parseInt(data[25]));
@@ -317,6 +329,9 @@ public class modeloGruas {
         }catch(ClassNotFoundException e){
             System.out.println(e);
             return "incorrecto";
+        }catch(NumberFormatException e){
+            System.out.println(e);
+            return "numero incorrecto";
         }
         return "correcto";    
     }
@@ -393,19 +408,17 @@ public class modeloGruas {
         }
     }
     
-    public Object[] obtenerDescGruasDisp(String fechSal, String horaSal, String fechReg, String horaReg) {
+    public Object[] obtenerDescGruasDisp(String fhsal, String fhreg) {
+        //String fechSal, String horaSal, String fechReg, String horaReg
         int registros = 0;
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Gruas where "
-                    + "pat_gru not in (SELECT pat_gru from jornadas where fsal_jor <= ? AND freg_jor >= "
-                    + "? and pat_gru is not null UNION distinct SELECT pat_gru from jornadas where "
-                    + "fsal_jor <= ? AND freg_jor >= ? and pat_gru IS NOT NULL)");
-            pstm.setString(1, fechSal);
-            pstm.setString(2, fechSal);
-            pstm.setString(3, fechReg);
-            pstm.setString(4, fechReg);
+                    + "pat_gru not in (SELECT pat_gru from jornadas where "
+                    + "( ? <= fhreg_jor and ? >= fhsal_jor and pat_gru is not null))");
+            pstm.setString(1, fhsal);
+            pstm.setString(2, fhreg);
             ResultSet res = pstm.executeQuery();
             res.next();
             registros = res.getInt("total");
@@ -420,15 +433,12 @@ public class modeloGruas {
         Object[] data = new String[registros];
         
         try{
-            PreparedStatement pstm = conn.prepareStatement("SELECT coalesce(des_gru,'') as des_gru FROM Gruas where "
-                    + "pat_gru not in (SELECT pat_gru from jornadas where fsal_jor <= ? AND freg_jor >= "
-                    + "? and pat_gru is not null UNION distinct SELECT pat_gru from jornadas where "
-                    + "fsal_jor <= ? AND freg_jor >= ? and pat_gru IS NOT NULL)");
-            pstm.setString(1, fechSal);
-            pstm.setString(2, fechSal);
-            pstm.setString(3, fechReg);
-            pstm.setString(4, fechReg);
-            System.out.println(pstm);
+            PreparedStatement pstm = conn.prepareStatement("SELECT coalesce(des_gru,'') as des_gru "
+                    + "FROM Gruas where pat_gru not in (SELECT pat_gru from jornadas where "
+                    + "(?  <= fhreg_jor and ? >= fhsal_jor and pat_gru is not null))");
+            pstm.setString(1, fhsal);
+            pstm.setString(2, fhreg);
+            //System.out.println(pstm);
             ResultSet res = pstm.executeQuery();
             int i = 0;
             while(res.next()){

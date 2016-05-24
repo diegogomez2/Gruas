@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import static modelos.modeloGruas.url;
 
 /**
  *
@@ -278,5 +279,53 @@ public class modeloEmpleados {
             System.out.println(e);
         }
         return data;
+    }
+    
+    public Object[] obtenerNomEmpDisp(String fhsal, String fhreg) {
+        //String fechSal, String horaSal, String fechReg, String horaReg
+        int registros = 0;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Empleados where "
+                    + "rut_emp not in (SELECT rut_emp from jornadas where "
+                    + "( ? <= fhreg_jor and ? >= fhsal_jor and rut_emp is not null))");
+            pstm.setString(1, fhsal);
+            pstm.setString(2, fhreg);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+       }catch(SQLException e){
+            System.out.println("Error al obtener rut emp disp count");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        
+        Object[] data = new String[registros];
+        
+        try{
+            PreparedStatement pstm = conn.prepareStatement("SELECT coalesce(nom_emp,'') as nom_emp, "
+                    + "coalesce(apP_emp,'') as apP_emp, coalesce(apM_emp,'') as apM_emp "
+                    + "FROM Empleados where rut_emp not in (SELECT rut_emp from jornadas where "
+                    + "(?  <= fhreg_jor and ? >= fhsal_jor and rut_emp is not null))");
+            pstm.setString(1, fhsal);
+            pstm.setString(2, fhreg);
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while(res.next()){
+                String estnom = res.getString("nom_emp");
+                String estapp = res.getString("apP_emp");
+                String estapm = res.getString("apM_emp");
+                data[i] = estnom + " " + " " + estapp + " " + estapm;
+                i++;
+            }
+            res.close();
+        }catch(SQLException e){
+            System.out.println("Error obtener rut emp disp");
+            System.out.println(e);
+        }
+        return data;  
     }
 }

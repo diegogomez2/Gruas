@@ -872,6 +872,9 @@ public class vistaModificarGruas extends javax.swing.JDialog {
     }
 
     public String getComboTipoNeumaticos() {
+        if(comboTipoNeumaticos.getSelectedItem() == null){
+            return "";
+        }
         return comboTipoNeumaticos.getSelectedItem().toString();
     }
 
@@ -888,6 +891,9 @@ public class vistaModificarGruas extends javax.swing.JDialog {
     }
 
     public String getComboMastil() {
+        if(comboMastil.getSelectedItem() == null){
+            return "";
+        }
         return comboMastil.getSelectedItem().toString();
     }
 
@@ -896,6 +902,9 @@ public class vistaModificarGruas extends javax.swing.JDialog {
     }
 
     public String getComboTipoCombustible() {
+        if(comboTipoCombustible.getSelectedItem() == null){
+            return "";
+        }
         return comboTipoCombustible.getSelectedItem().toString();
     }
 
@@ -904,6 +913,9 @@ public class vistaModificarGruas extends javax.swing.JDialog {
     }
 
     public String getComboTipoNeumaticos2() {
+        if(comboTipoNeumaticos2.getSelectedItem() == null){
+            return "";
+        }
         return comboTipoNeumaticos2.getSelectedItem().toString();
     }
 

@@ -37,6 +37,7 @@ public class vistaFacturadasP extends javax.swing.JPanel {
             }
         };
         tablaFacturadas.setModel(datos);
+        tablaFacturadas.setAutoCreateRowSorter(true);
         if(tablaFacturadas.getRowCount() > 0) tablaFacturadas.setRowSelectionInterval(0, 0);
         tablaFacturadas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tablaFacturadas.addMouseListener(new MouseAdapter(){
