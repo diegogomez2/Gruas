@@ -109,7 +109,7 @@
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="textoFechaIn" alignment="0" pref="137" max="32767" attributes="0"/>
+                                  <Component id="textoFechaIn" alignment="0" max="32767" attributes="0"/>
                                   <Component id="labelCargo" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="comboCargo" alignment="0" max="32767" attributes="0"/>
                                   <Component id="labelAFP" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -169,10 +169,18 @@
             <Component class="javax.swing.JComboBox" name="comboCargo">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="3">
-                    <StringItem index="0" value="Jefe"/>
-                    <StringItem index="1" value="Operador"/>
-                    <StringItem index="2" value="Empleado"/>
+                  <StringArray count="11">
+                    <StringItem index="0" value="Jefe(a) de administraci&#xf3;n y finanzas"/>
+                    <StringItem index="1" value="Jefe de operaciones"/>
+                    <StringItem index="2" value="Gerente general"/>
+                    <StringItem index="3" value="Gerente de administraci&#xf3;n"/>
+                    <StringItem index="4" value="Supervisor"/>
+                    <StringItem index="5" value="Administrativo"/>
+                    <StringItem index="6" value="Mec&#xe1;nico"/>
+                    <StringItem index="7" value="Ayud. mec&#xe1;nico"/>
+                    <StringItem index="8" value="Jefe de Mantenciones"/>
+                    <StringItem index="9" value="Operador Senior"/>
+                    <StringItem index="10" value="Operador"/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -192,11 +200,13 @@
             <Component class="javax.swing.JComboBox" name="comboAFP">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="4">
-                    <StringItem index="0" value="Item 1"/>
-                    <StringItem index="1" value="Item 2"/>
-                    <StringItem index="2" value="Item 3"/>
-                    <StringItem index="3" value="Item 4"/>
+                  <StringArray count="6">
+                    <StringItem index="0" value="CUPRUM"/>
+                    <StringItem index="1" value="HABITAT"/>
+                    <StringItem index="2" value="CAPITAL"/>
+                    <StringItem index="3" value="PLANVITAL"/>
+                    <StringItem index="4" value="PROVIDA"/>
+                    <StringItem index="5" value="MODELO"/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -209,11 +219,9 @@
             <Component class="javax.swing.JComboBox" name="comboSalud">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="4">
-                    <StringItem index="0" value="Item 1"/>
-                    <StringItem index="1" value="Item 2"/>
-                    <StringItem index="2" value="Item 3"/>
-                    <StringItem index="3" value="Item 4"/>
+                  <StringArray count="2">
+                    <StringItem index="0" value="Fonasa"/>
+                    <StringItem index="1" value="Isapre"/>
                   </StringArray>
                 </Property>
               </Properties>

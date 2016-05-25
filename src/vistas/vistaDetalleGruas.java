@@ -207,6 +207,8 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
 
         panelTipoNeumaticos.setBorder(javax.swing.BorderFactory.createTitledBorder("Tipo Neumáticos"));
 
+        comboTipoNeumaticos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tubular", "Sólido" }));
+
         comboTipoNeumaticos2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Simple", "Doble" }));
 
         javax.swing.GroupLayout panelTipoNeumaticosLayout = new javax.swing.GroupLayout(panelTipoNeumaticos);

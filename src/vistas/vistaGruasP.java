@@ -38,6 +38,7 @@ public class vistaGruasP extends javax.swing.JPanel {
             }
         };
         tablaGruas.setModel(datos);
+        tablaGruas.setAutoCreateRowSorter(true);
         if(tablaGruas.getRowCount() > 0) tablaGruas.setRowSelectionInterval(0, 0);
         tablaGruas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tablaGruas.addMouseListener(new MouseAdapter(){

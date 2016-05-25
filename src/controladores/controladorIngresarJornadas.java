@@ -57,9 +57,11 @@ public class controladorIngresarJornadas {
         String rut_emp = "", pat_gru = "";
         if(vistaIJ.getTextoOperador().compareTo("") != 0){
             rut_emp = miControlador.obtenerEmpleadoPorNombre(vistaIJ.getTextoOperador());
+            
         }
         if(vistaIJ.getTextoGrua().compareTo("") != 0){
             pat_gru = miControlador.obtenerGruaPorDesc(vistaIJ.getTextoGrua());
+            
         }
         Date fecha1 = formatDate.parse(vistaIJ.getTextoFechaSalida());
         Date fecha2 = formatDate.parse(vistaIJ.getTextoFechaRegreso());
@@ -69,6 +71,7 @@ public class controladorIngresarJornadas {
         String fhreg = vistaIJ.getTextoFechaRegreso() + " " + vistaIJ.getTextoHoraRegreso();
         if(fecha2.before(fecha1)){
             JOptionPane.showMessageDialog(vistaIJ, "La fecha de llegada debe ser posterior a la fecha de salida", "Error", JOptionPane.INFORMATION_MESSAGE);
+            return false;
         }
         if(rut_cli == null | rut_emp == null | pat_gru == null){
             return false;

@@ -161,7 +161,8 @@ public class modeloEmpleados {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("SELECT * FROM empleados WHERE rut_emp = ?");
+            PreparedStatement pstm = conn.prepareStatement("SELECT *, coalesce(fnac_emp,'') as fnac"
+                    + " FROM empleados WHERE rut_emp = ?");
             pstm.setString(1, rut);
             ResultSet res = pstm.executeQuery();
             res.next();
@@ -170,7 +171,7 @@ public class modeloEmpleados {
             String estnom = res.getString("nom_emp");
             String estapP = res.getString("apP_emp");
             String estapM = res.getString("apM_emp");
-            String estfnac = res.getString("fnac_emp");
+            String estfnac = res.getString("fnac");
             String esttel = res.getString("tel_emp");
             String estcor = res.getString("cor_emp");
             String estcar = res.getString("car_emp");
@@ -289,7 +290,7 @@ public class modeloEmpleados {
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Empleados where "
                     + "rut_emp not in (SELECT rut_emp from jornadas where "
-                    + "( ? <= fhreg_jor and ? >= fhsal_jor and rut_emp is not null))");
+                    + "( subtime(?, '01:00') <= fhreg_jor and addtime(?, '01:00') >= fhsal_jor and rut_emp is not null))");
             pstm.setString(1, fhsal);
             pstm.setString(2, fhreg);
             ResultSet res = pstm.executeQuery();
@@ -309,7 +310,7 @@ public class modeloEmpleados {
             PreparedStatement pstm = conn.prepareStatement("SELECT coalesce(nom_emp,'') as nom_emp, "
                     + "coalesce(apP_emp,'') as apP_emp, coalesce(apM_emp,'') as apM_emp "
                     + "FROM Empleados where rut_emp not in (SELECT rut_emp from jornadas where "
-                    + "(?  <= fhreg_jor and ? >= fhsal_jor and rut_emp is not null))");
+                    + "( subtime(?, '01:00')  <= fhreg_jor and addtime(?, '01:00') >= fhsal_jor and rut_emp is not null))");
             pstm.setString(1, fhsal);
             pstm.setString(2, fhreg);
             ResultSet res = pstm.executeQuery();
@@ -327,5 +328,57 @@ public class modeloEmpleados {
             System.out.println(e);
         }
         return data;  
+    }
+    
+    public int checkEmpDisp(String fhsal, String fhreg, String rut) {
+        //String fechSal, String horaSal, String fechReg, String horaReg
+        int registros = 0;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(*) as total from jornadas where "
+                    + "( subtime(?, '01:00') <= fhreg_jor and addtime(?, '01:00') >= fhsal_jor and rut_emp = ?)");
+            pstm.setString(1, fhsal);
+            pstm.setString(2, fhreg);
+            pstm.setString(3, rut);
+            System.out.println(pstm);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+       }catch(SQLException e){
+            System.out.println("Error al obtener rut emp disp count");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        return registros;
+    }
+    
+    public int checkEmpDispId(String fhsal, String fhreg, String rut, String id) {
+        //String fechSal, String horaSal, String fechReg, String horaReg
+        int registros = 0;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(*) as total from jornadas where "
+                    + "( subtime(?, '01:00') <= fhreg_jor and addtime(?, '01:00') >= fhsal_jor and rut_emp = ?"
+                    + "and id_jor <> ?)");
+            pstm.setString(1, fhsal);
+            pstm.setString(2, fhreg);
+            pstm.setString(3, rut);
+            pstm.setString(4, id);
+            System.out.println(pstm);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+       }catch(SQLException e){
+            System.out.println("Error al obtener rut emp disp count");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        return registros;
     }
 }

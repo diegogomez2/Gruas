@@ -64,9 +64,19 @@ public class controladorModificarJornadas {
         String rut_emp = "", pat_gru = "";
         if(vistaMJ.getTextoOperador().compareTo("") != 0){
             rut_emp = miControlador.obtenerEmpleadoPorNombre(vistaMJ.getTextoOperador());
+            if(miControlador.checkEmpDispId(rut_emp, vistaMJ.getTextoFechaSalida(), 
+                vistaMJ.getTextoHoraSalida(), vistaMJ.getTextoFechaRegreso(), vistaMJ.getTextoHoraRegreso(),
+                vistaMJ.getId()) > 0){
+            return false;
+            }
         }
         if(vistaMJ.getTextoGrua().compareTo("") != 0){
             pat_gru = miControlador.obtenerGruaPorDesc(vistaMJ.getTextoGrua());  
+            if(miControlador.checkGruaDispId(pat_gru, vistaMJ.getTextoFechaSalida(), 
+                vistaMJ.getTextoHoraSalida(), vistaMJ.getTextoFechaRegreso(), vistaMJ.getTextoHoraRegreso(),
+                vistaMJ.getId()) > 0){
+                return false;
+            }
         }
         if(rut_cli == null | rut_emp == null | pat_gru == null){
             return false;
@@ -75,6 +85,7 @@ public class controladorModificarJornadas {
         Date fecha2 = formatDate.parse(vistaMJ.getTextoFechaRegreso());
         if(fecha2.before(fecha1)){
             JOptionPane.showMessageDialog(vistaMJ, "La fecha de llegada debe ser posterior a la fecha de salida", "Error", JOptionPane.INFORMATION_MESSAGE);
+            return false;
         }
         String[] data = {vistaMJ.getTextoFechaSalida(), vistaMJ.getTextoHoraSalida(), pat_gru, rut_cli, 
             rut_emp, vistaMJ.getTextoFechaRegreso(), vistaMJ.getTextoHoraRegreso(), vistaMJ.getTextoObs(),

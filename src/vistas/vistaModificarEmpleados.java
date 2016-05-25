@@ -50,13 +50,16 @@ public class vistaModificarEmpleados extends javax.swing.JDialog {
     public void cargarComunas(Object[][] regiones){
         controladores.controladorModificarClientes miControlador = new controladorModificarClientes();
         int index = comboRegion.getSelectedIndex();
-        int region = Integer.parseInt(regiones[index][0].toString());
-        Object[] comunas = miControlador.cargarComunas(region);
-        String[] listaComunas = new String[comunas.length];
-        for(int i = 0; i < comunas.length; i++){
-            listaComunas[i] = comunas[i].toString();
+        if(index != -1){
+            System.out.println(regiones.length);
+            int region = Integer.parseInt(regiones[index][0].toString());
+            Object[] comunas = miControlador.cargarComunas(region);
+            String[] listaComunas = new String[comunas.length];
+            for(int i = 0; i < comunas.length; i++){
+                listaComunas[i] = comunas[i].toString();
+            }
+            comboComuna.setModel(new DefaultComboBoxModel<String>(listaComunas));
         }
-        comboComuna.setModel(new DefaultComboBoxModel<String>(listaComunas));
     }
 
     /**
@@ -115,17 +118,17 @@ public class vistaModificarEmpleados extends javax.swing.JDialog {
 
         labelCargo.setText("Cargo");
 
-        comboCargo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Jefe", "Operador", "Empleado" }));
+        comboCargo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Jefe(a) de administración y finanzas", "Jefe de operaciones", "Gerente general", "Gerente de administración", "Supervisor", "Administrativo", "Mecánico", "Ayud. mecánico", "Jefe de Mantenciones", "Operador Senior", "Operador" }));
 
         labelSueldo.setText("Sueldo");
 
         labelAFP.setText("AFP");
 
-        comboAFP.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboAFP.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "CUPRUM", "HABITAT", "CAPITAL", "PLANVITAL", "PROVIDA", "MODELO" }));
 
         jLabel3.setText("Salud");
 
-        comboSalud.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboSalud.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Fonasa", "Isapre" }));
 
         jLabel4.setText("Fecha de ingreso");
 
@@ -141,7 +144,7 @@ public class vistaModificarEmpleados extends javax.swing.JDialog {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(textoFechaIn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
+                            .addComponent(textoFechaIn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(labelCargo, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(comboCargo, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(labelAFP, javax.swing.GroupLayout.Alignment.LEADING)
@@ -470,7 +473,11 @@ public class vistaModificarEmpleados extends javax.swing.JDialog {
     }
 
     public void setComboAFP(String comboAFP) {
-        this.comboAFP.setSelectedItem(comboAFP);
+        if(comboAFP.compareTo("SIN INFO") == 0){
+            this.comboAFP.setSelectedIndex(-1);
+        }else{
+            this.comboAFP.setSelectedItem(comboAFP);
+        }
     }
 
     public void setComboCargo(String comboCargo) {
@@ -482,7 +489,11 @@ public class vistaModificarEmpleados extends javax.swing.JDialog {
     }
 
     public void setComboSalud(String comboSalud) {
-        this.comboSalud.setSelectedItem(comboSalud);
+        if(comboSalud.compareTo("SIN INFO") == 0){
+            this.comboSalud.setSelectedIndex(-1);
+        }else{
+            this.comboSalud.setSelectedItem(comboSalud);
+        }
     }
 
     public void setTextoApMaterno(String textoApMaterno) {
@@ -506,7 +517,9 @@ public class vistaModificarEmpleados extends javax.swing.JDialog {
     }
 
     public void setTextoFechaNac(String textoFechaNac) throws ParseException {
-        this.textoFechaNac.setDate(formatDate.parse(textoFechaNac));
+        if(textoFechaNac.compareTo("") != 0){
+            this.textoFechaNac.setDate(formatDate.parse(textoFechaNac));
+        }
     }
 
     public void setTextoNombres(String textoNombres) {
@@ -538,22 +551,37 @@ public class vistaModificarEmpleados extends javax.swing.JDialog {
     }
 
     public String getComboAFP() {
+        if(comboAFP.getSelectedItem() == null){
+            return "";
+        }
         return comboAFP.getSelectedItem().toString();
     }
 
     public String getComboCargo() {
+        if(comboCargo.getSelectedItem() == null){
+            return "";
+        }
         return comboCargo.getSelectedItem().toString();
     }
 
     public String getComboComuna() {
+        if(comboComuna.getSelectedItem() == null){
+            return "";
+        }
         return comboComuna.getSelectedItem().toString();
     }
 
     public String getComboRegion() {
+        if(comboRegion.getSelectedItem() == null){
+            return "";
+        }
         return comboRegion.getSelectedItem().toString();
     }
 
     public String getComboSalud() {
+        if(comboSalud.getSelectedItem() == null){
+            return "";
+        }
         return comboSalud.getSelectedItem().toString();
     }
 

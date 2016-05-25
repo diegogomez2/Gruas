@@ -112,7 +112,7 @@ public class vistaIngresarEmpleados extends javax.swing.JDialog {
 
         labelCargo.setText("Cargo");
 
-        comboCargo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboCargo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Jefe(a) de administración y finanzas", "Jefe de operaciones", "Gerente general", "Gerente de administración", "Supervisor", "Administrativo", "Mecánico", "Ayud. mecánico", "Jefe de Mantenciones", "Operador Senior", "Operador" }));
 
         labelSueldo.setText("Sueldo");
 
@@ -122,7 +122,7 @@ public class vistaIngresarEmpleados extends javax.swing.JDialog {
 
         labelSalud.setText("Salud");
 
-        comboSalud.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboSalud.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Fonasa", "Isapre" }));
 
         labelFechaIngreso.setText("Fecha de ingreso");
 
@@ -138,7 +138,7 @@ public class vistaIngresarEmpleados extends javax.swing.JDialog {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(textoFechaIn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
+                            .addComponent(textoFechaIn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(labelCargo, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(comboCargo, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(labelAFP, javax.swing.GroupLayout.Alignment.LEADING)

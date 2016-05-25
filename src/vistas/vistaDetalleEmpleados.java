@@ -87,7 +87,7 @@ public class vistaDetalleEmpleados extends javax.swing.JDialog {
         labelCargo.setText("Cargo");
 
         comboCargo.setEditable(true);
-        comboCargo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboCargo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Jefe(a) de administración y finanzas", "Jefe de operaciones", "Gerente general", "Gerente de administración", "Supervisor", "Administrativo", "Mecánico", "Ayud. mecánico", "Jefe de Mantenciones", "Operador Senior", "Operador" }));
         comboCargo.setEnabled(false);
 
         labelSueldo.setText("Sueldo");
@@ -98,13 +98,13 @@ public class vistaDetalleEmpleados extends javax.swing.JDialog {
         labelAFP.setText("AFP");
 
         comboAFP.setEditable(true);
-        comboAFP.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboAFP.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "CUPRUM", "HABITAT", "CAPITAL", "PLANVITAL", "PROVIDA", "MODELO" }));
         comboAFP.setEnabled(false);
 
         labelSalud.setText("Salud");
 
         comboSalud.setEditable(true);
-        comboSalud.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboSalud.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Fonasa", "Isapre" }));
         comboSalud.setEnabled(false);
 
         labelFechaIn.setText("Fecha de ingreso");
@@ -123,7 +123,7 @@ public class vistaDetalleEmpleados extends javax.swing.JDialog {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(textoFechaIn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
+                            .addComponent(textoFechaIn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(labelCargo, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(comboCargo, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(labelAFP, javax.swing.GroupLayout.Alignment.LEADING)
@@ -496,7 +496,9 @@ public class vistaDetalleEmpleados extends javax.swing.JDialog {
     }
 
     public void setTextoFechaNac(String textoFechaNac) throws ParseException {
-        this.textoFechaNac.setDate(formatDate.parse(textoFechaNac));
+        if(textoFechaNac.compareTo("") != 0){
+            this.textoFechaNac.setDate(formatDate.parse(textoFechaNac));
+        }
     }
 
     public void setTextoNombres(String textoNombres) {

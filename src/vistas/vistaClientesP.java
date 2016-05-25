@@ -42,6 +42,7 @@ public class vistaClientesP extends javax.swing.JPanel {
             }
         };
         tablaClientes.setModel(datos);
+        tablaClientes.setAutoCreateRowSorter(true);
         if(tablaClientes.getRowCount() > 0) tablaClientes.setRowSelectionInterval(0, 0);
         tablaClientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tablaClientes.addMouseListener(new MouseAdapter(){

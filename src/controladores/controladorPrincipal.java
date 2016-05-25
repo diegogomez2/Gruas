@@ -493,6 +493,46 @@ public class controladorPrincipal {
         }
     }
     
+    public int checkGruaDisp(String pat, String fsal, String hsal, String freg, String hreg){
+        modelos.modeloGruas grua = new modelos.modeloGruas();
+        if(grua.checkGruaDisp(fsal+" "+hsal, freg+" "+hreg, pat) == 0){
+            return 0;
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Esta grúa no esta disponible en la fecha especificada", "Error", JOptionPane.ERROR_MESSAGE);
+            return 1;
+        }
+    }
+    
+    public int checkGruaDispId(String pat, String fsal, String hsal, String freg, String hreg, String id){
+        modelos.modeloGruas grua = new modelos.modeloGruas();
+        if(grua.checkGruaDispId(fsal+" "+hsal, freg+" "+hreg, pat, id) == 0){
+            return 0;
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Esta grúa no esta disponible en la fecha especificada", "Error", JOptionPane.ERROR_MESSAGE);
+            return 1;
+        }
+    }
+    
+    public int checkEmpDisp(String rut, String fsal, String hsal, String freg, String hreg){
+        modelos.modeloEmpleados empleado = new modelos.modeloEmpleados();
+        if(empleado.checkEmpDisp(fsal+" "+hsal, freg+" "+hreg, rut) == 0){
+            return 0;
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Este empleado no esta disponible en la fecha especificada", "Error", JOptionPane.ERROR_MESSAGE);
+            return 1;
+        }
+    }
+    
+    public int checkEmpDispId(String rut, String fsal, String hsal, String freg, String hreg, String id){
+        modelos.modeloEmpleados empleado = new modelos.modeloEmpleados();
+        if(empleado.checkEmpDispId(fsal+" "+hsal, freg+" "+hreg, rut, id) == 0){
+            return 0;
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Este empleado no esta disponible en la fecha especificada", "Error", JOptionPane.ERROR_MESSAGE);
+            return 1;
+        }
+    }
+    
     public boolean ingresarOt(String[] data){
         modelos.modeloOts ot = new modelos.modeloOts();
         if(ot.obtenerCodigoOt(data[6]).compareTo("incorrecto") == 0){
