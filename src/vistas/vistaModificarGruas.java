@@ -328,7 +328,7 @@ public class vistaModificarGruas extends javax.swing.JDialog {
 
         labelNeumaticosTraseros.setText("Neumáticos traseros");
 
-        comboMastil.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Doble" }));
+        comboMastil.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Simple", "Doble" }));
 
         labelHorasPM.setText("Horas próxima mantención");
 

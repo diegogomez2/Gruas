@@ -328,7 +328,7 @@ public class vistaIngresarGruas extends javax.swing.JDialog {
 
         labelNeumaticosTraseros.setText("Medida Neumáticos traseros");
 
-        comboMastil.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Doble" }));
+        comboMastil.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Simple", "Doble" }));
 
         labelLargoUnas.setText("Largo Uñas (cm)");
 

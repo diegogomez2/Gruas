@@ -15,7 +15,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -26,11 +28,13 @@ public class vistaFacturadasP extends javax.swing.JPanel {
     /**
      * Creates new form vistaFacturadasP
      */
+    DefaultTableModel datos;
+    
     public vistaFacturadasP(String tipo, Object[][] data) {
         initComponents();
          String[] columNames = {"Código Fact", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
              "Neto", "IVA", "Total"};
-        DefaultTableModel datos = new DefaultTableModel(data, columNames){
+        datos = new DefaultTableModel(data, columNames){
             @Override
             public boolean isCellEditable(int row, int column){
                 return false;
@@ -71,6 +75,9 @@ public class vistaFacturadasP extends javax.swing.JPanel {
         tablaFacturadas = new javax.swing.JTable();
         botonGenerarNC = new javax.swing.JButton();
         botonGuiaDesp = new javax.swing.JButton();
+        textoFiltro = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        botonActualizar = new javax.swing.JButton();
 
         tablaFacturadas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -100,16 +107,40 @@ public class vistaFacturadasP extends javax.swing.JPanel {
             }
         });
 
+        textoFiltro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                textoFiltroKeyReleased(evt);
+            }
+        });
+
+        jLabel1.setText("Filtro");
+
+        botonActualizar.setText("Actualizar");
+        botonActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonActualizarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(botonGuiaDesp)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(botonGenerarNC)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(botonActualizar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textoFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(botonGuiaDesp)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botonGenerarNC)))
                 .addContainerGap())
         );
 
@@ -118,7 +149,13 @@ public class vistaFacturadasP extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(textoFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(botonActualizar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonGenerarNC)
@@ -169,12 +206,26 @@ public class vistaFacturadasP extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_botonGuiaDespActionPerformed
 
+    private void textoFiltroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoFiltroKeyReleased
+        String query = textoFiltro.getText();
+        filtrar(query);
+    }//GEN-LAST:event_textoFiltroKeyReleased
+
+    private void botonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarActionPerformed
+        controladores.controladorFacturadas miControlador = new controladores.controladorFacturadas();
+        JTabbedPane tabs = (JTabbedPane)this.getParent();
+        miControlador.crearControladorPrincipal(tabs);
+    }//GEN-LAST:event_botonActualizarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonActualizar;
     private javax.swing.JButton botonGenerarNC;
     private javax.swing.JButton botonGuiaDesp;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaFacturadas;
+    private javax.swing.JTextField textoFiltro;
     // End of variables declaration//GEN-END:variables
     public int getFilaSeleccionada() {
         return tablaFacturadas.getSelectedRow();
@@ -182,5 +233,11 @@ public class vistaFacturadasP extends javax.swing.JPanel {
     
     public String getIdFila(int row){
         return tablaFacturadas.getValueAt(row, 0).toString();
+    }
+    
+    public void filtrar(String query) {
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<DefaultTableModel>(datos);
+        tablaFacturadas.setRowSorter(sorter);
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + query));
     }
 }

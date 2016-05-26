@@ -33,7 +33,7 @@ public class controladorFacturas {
         tabs.remove(4);
         tabs.remove(4);
         tabs.insertTab("OTs", null, miControlador.crearControladorOtsP(), null, 4);
-        tabs.insertTab("A Facturar", null, miControlador.crearControladorFacturasP(), null, 5);
+        tabs.insertTab("A facturar", null, miControlador.crearControladorFacturasP(), null, 5);
         tabs.setSelectedIndex(5);
     }
     

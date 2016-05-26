@@ -11,9 +11,12 @@ import java.awt.event.MouseEvent;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -24,11 +27,12 @@ public class vistaHistoricoOt extends javax.swing.JPanel {
     /**
      * Creates new form vistaHistoricoOt
      */
+    DefaultTableModel datos;
     public vistaHistoricoOt(String tipo, Object[][] data) {
         initComponents();
          String[] columNames = {"Código OT", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
              "Neto", "IVA", "Total", "Estado"};
-        DefaultTableModel datos = new DefaultTableModel(data, columNames){
+        datos = new DefaultTableModel(data, columNames){
             @Override
             public boolean isCellEditable(int row, int column){
                 return false;
@@ -66,6 +70,9 @@ public class vistaHistoricoOt extends javax.swing.JPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaHistorico = new javax.swing.JTable();
+        textoFiltro = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        botonActualizar = new javax.swing.JButton();
 
         tablaHistorico.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -80,21 +87,80 @@ public class vistaHistoricoOt extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tablaHistorico);
 
+        textoFiltro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textoFiltroActionPerformed(evt);
+            }
+        });
+        textoFiltro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                textoFiltroKeyReleased(evt);
+            }
+        });
+
+        jLabel1.setText("Filtro");
+
+        botonActualizar.setText("Actualizar");
+        botonActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonActualizarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(botonActualizar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(textoFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(textoFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(botonActualizar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void textoFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoFiltroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textoFiltroActionPerformed
+
+    private void textoFiltroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoFiltroKeyReleased
+        String query = textoFiltro.getText();
+        filtrar(query);
+    }//GEN-LAST:event_textoFiltroKeyReleased
+
+    private void botonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarActionPerformed
+        controladores.controladorHistorico miControlador = new controladores.controladorHistorico();
+        JTabbedPane tabs = (JTabbedPane)this.getParent();
+        miControlador.crearControladorPrincipal(tabs);
+    }//GEN-LAST:event_botonActualizarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonActualizar;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaHistorico;
+    private javax.swing.JTextField textoFiltro;
     // End of variables declaration//GEN-END:variables
+    
+    public void filtrar(String query) {
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<DefaultTableModel>(datos);
+        tablaHistorico.setRowSorter(sorter);
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + query));
+    }
 }

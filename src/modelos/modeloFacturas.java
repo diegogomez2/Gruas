@@ -23,6 +23,8 @@ import static modelos.modeloClientes.url;
 
 public class modeloFacturas {
     static String login = "root";
+//    static String password = "gruas_205243";
+//    static String url = "jdbc:mysql://10.20.224.100:3306/fact_gruas";
     static String password = "205243";
     static String url = "jdbc:mysql://localhost:3306/fact_gruas";
     Connection conn = null;

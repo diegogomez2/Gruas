@@ -30,9 +30,9 @@ public class vistaPrincipal extends javax.swing.JFrame {
         vistaPrincipal.addTab("Clientes", miControlador.crearControladorClientesP());
         vistaPrincipal.addTab("Grúas", miControlador.crearControladorGruasP());
         vistaPrincipal.addTab("Trabajadores", miControlador.crearControladorEmpleadosP());
-        vistaPrincipal.addTab("Jornada Diaria", miControlador.crearControladorJornadaP());
+        vistaPrincipal.addTab("Jornada diaria", miControlador.crearControladorJornadaP());
         vistaPrincipal.addTab("OTs", miControlador.crearControladorOtsP());
-        vistaPrincipal.addTab("A Facturar", miControlador.crearControladorFacturasP());
+        vistaPrincipal.addTab("A facturar", miControlador.crearControladorFacturasP());
         vistaPrincipal.addTab("Facturadas", miControlador.crearControladorFacturadasP());
         vistaPrincipal.addTab("Histórico", miControlador.crearControladorHistoricoP());
     }
@@ -100,7 +100,9 @@ public class vistaPrincipal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(vistaPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(vistaPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE))
         );
 
         pack();

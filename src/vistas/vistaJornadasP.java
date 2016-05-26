@@ -85,6 +85,7 @@ public class vistaJornadasP extends javax.swing.JPanel {
         botonAsignar = new javax.swing.JButton();
         textoFiltro = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        botonActualizar = new javax.swing.JButton();
 
         tablaJornadas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -128,6 +129,11 @@ public class vistaJornadasP extends javax.swing.JPanel {
             }
         });
 
+        textoFiltro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textoFiltroActionPerformed(evt);
+            }
+        });
         textoFiltro.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 textoFiltroKeyReleased(evt);
@@ -135,6 +141,13 @@ public class vistaJornadasP extends javax.swing.JPanel {
         });
 
         jLabel1.setText("Filtro");
+
+        botonActualizar.setText("Actualizar");
+        botonActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonActualizarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -145,7 +158,8 @@ public class vistaJornadasP extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(botonActualizar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(textoFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -168,9 +182,10 @@ public class vistaJornadasP extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textoFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(botonActualizar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 436, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonModificar)
@@ -261,8 +276,19 @@ public class vistaJornadasP extends javax.swing.JPanel {
         filtrar(query);
     }//GEN-LAST:event_textoFiltroKeyReleased
 
+    private void textoFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoFiltroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textoFiltroActionPerformed
+
+    private void botonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarActionPerformed
+        controladores.controladorJornadas miControlador = new controladores.controladorJornadas();
+        JTabbedPane tabs = (JTabbedPane)this.getParent();
+        miControlador.crearControladorPrincipal(tabs);
+    }//GEN-LAST:event_botonActualizarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonActualizar;
     private javax.swing.JButton botonAgregar;
     private javax.swing.JButton botonAsignar;
     private javax.swing.JButton botonEliminar;
