@@ -181,27 +181,31 @@ public class vistaFacturasP extends javax.swing.JPanel {
     private void botonFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonFacturaActionPerformed
         controladores.controladorCrearFactura miControlador = new controladores.controladorCrearFactura();
         controladores.controladorOts micontroladorOts = new controladores.controladorOts();
-        String flag = verificarRazon();
-        if (flag.compareTo("correcto") == 0) {
-            int filas = tablaFacturas.getRowCount();
-            String[] idOts = new String[filas];
-            int neto = 0, iva = 0, total = 0;
-            for (int i = 0; i < filas; i++) {
-                idOts[i] = getIdFact(i);
-                neto += getNetoFact(i);
-                iva += getIvaFact(i);
-                total += getTotalFact(i);
+        int filas = tablaFacturas.getRowCount();
+        if(filas > 0){
+            String flag = verificarRazon();
+            if (flag.compareTo("correcto") == 0) {
+                String[] idOts = new String[filas];
+                int neto = 0, iva = 0, total = 0;
+                for (int i = 0; i < filas; i++) {
+                    idOts[i] = getIdFact(i);
+                    neto += getNetoFact(i);
+                    iva += getIvaFact(i);
+                    total += getTotalFact(i);
+                }
+                controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
+                String id = micontroladorFacturas.archivarFacturas(idOts, neto, iva, total, "factura", "0");
+                if ((miControlador.crearFacXML(idOts, Integer.toString(neto), Integer.toString(iva),
+                        Integer.toString(total), id).compareTo("correcto") == 0)) {
+                    JTabbedPane tabs = (JTabbedPane) this.getParent();
+                    micontroladorOts.crearControladorPrincipal(tabs);
+                    miControlador.crearControladorPrincipal(tabs);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No se puede generar una factura para clientes distintos");
             }
-            controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
-            String id = micontroladorFacturas.archivarFacturas(idOts, neto, iva, total, "factura", "0");
-            if ((miControlador.crearFacXML(idOts, Integer.toString(neto), Integer.toString(iva),
-                    Integer.toString(total), id).compareTo("correcto") == 0)) {
-                JTabbedPane tabs = (JTabbedPane) this.getParent();
-                micontroladorOts.crearControladorPrincipal(tabs);
-                miControlador.crearControladorPrincipal(tabs);
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "No se puede crear una factura para clientes distintos");
+        }else{
+            JOptionPane.showMessageDialog(null, "No hay ots para generar una factura");
         }
     }//GEN-LAST:event_botonFacturaActionPerformed
 
@@ -209,44 +213,62 @@ public class vistaFacturasP extends javax.swing.JPanel {
         controladores.controladorCrearFactura miControlador = new controladores.controladorCrearFactura();
         controladores.controladorOts micontroladorOts = new controladores.controladorOts();
         int filas = tablaFacturas.getRowCount();
-        String[] idOts = new String[filas];
-        int neto = 0, iva = 0, total = 0;
-        for (int i = 0; i < filas; i++) {
-            idOts[i] = getIdFact(i);
-            neto += getNetoFact(i);
-            iva += getIvaFact(i);
-            total += getTotalFact(i);
-        }
-        controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
-        String id = micontroladorFacturas.archivarFacturas(idOts, neto, iva, total, "boleta", "0");
-        if ((miControlador.crearBolXML(idOts, Integer.toString(neto), Integer.toString(iva),
-                Integer.toString(total), id).compareTo("correcto") == 0)) {
-            JTabbedPane tabs = (JTabbedPane) this.getParent();
-            micontroladorOts.crearControladorPrincipal(tabs);
-            miControlador.crearControladorPrincipal(tabs);
+        if(filas > 0){
+            String flag = verificarRazon();
+            if(flag.compareTo("correcto") == 0){
+                String[] idOts = new String[filas];
+                int neto = 0, iva = 0, total = 0;
+                for (int i = 0; i < filas; i++) {
+                    idOts[i] = getIdFact(i);
+                    neto += getNetoFact(i);
+                    iva += getIvaFact(i);
+                    total += getTotalFact(i);
+                }
+                controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
+                String id = micontroladorFacturas.archivarFacturas(idOts, neto, iva, total, "boleta", "0");
+                if ((miControlador.crearBolXML(idOts, Integer.toString(neto), Integer.toString(iva),
+                        Integer.toString(total), id).compareTo("correcto") == 0)) {
+                    JTabbedPane tabs = (JTabbedPane) this.getParent();
+                    micontroladorOts.crearControladorPrincipal(tabs);
+                    miControlador.crearControladorPrincipal(tabs);
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "No se puede generar una boleta para clientes distintos");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "No hay ots para generar una boleta");
         }
     }//GEN-LAST:event_botonBoletaActionPerformed
 
     private void botonNotaDebActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNotaDebActionPerformed
         controladores.controladorCrearFactura miControlador = new controladores.controladorCrearFactura();
         controladores.controladorOts micontroladorOts = new controladores.controladorOts();
-        String id_fac = JOptionPane.showInputDialog("Id de factura: ");
         int filas = tablaFacturas.getRowCount();
-        String[] idOts = new String[filas];
-        int neto = 0, iva = 0, total = 0;
-        for (int i = 0; i < filas; i++) {
-            idOts[i] = getIdFact(i);
-            neto += getNetoFact(i);
-            iva += getIvaFact(i);
-            total += getTotalFact(i);
-        }
-        controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
-        String id = micontroladorFacturas.archivarFacturas(idOts, neto, iva, total, "nota debito", id_fac);
-        if ((miControlador.crearNotaDebXML(idOts, Integer.toString(neto), Integer.toString(iva),
-                Integer.toString(total), id, id_fac).compareTo("correcto") == 0)) {
-            JTabbedPane tabs = (JTabbedPane) this.getParent();
-            micontroladorOts.crearControladorPrincipal(tabs);
-            miControlador.crearControladorPrincipal(tabs);
+        if(filas > 0){
+            String flag = verificarRazon();
+            if(flag.compareTo("correcto") == 0){
+                String id_fac = JOptionPane.showInputDialog("Id de factura: ");
+                String[] idOts = new String[filas];
+                int neto = 0, iva = 0, total = 0;
+                for (int i = 0; i < filas; i++) {
+                    idOts[i] = getIdFact(i);
+                    neto += getNetoFact(i);
+                    iva += getIvaFact(i);
+                    total += getTotalFact(i);
+                }
+                controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
+                String id = micontroladorFacturas.archivarFacturas(idOts, neto, iva, total, "nota debito", id_fac);
+                if ((miControlador.crearNotaDebXML(idOts, Integer.toString(neto), Integer.toString(iva),
+                        Integer.toString(total), id, id_fac).compareTo("correcto") == 0)) {
+                    JTabbedPane tabs = (JTabbedPane) this.getParent();
+                    micontroladorOts.crearControladorPrincipal(tabs);
+                    miControlador.crearControladorPrincipal(tabs);
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "No se puede generar una nota de débito para clientes distintos");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "No hay ots para generar una nota de débito");
         }
     }//GEN-LAST:event_botonNotaDebActionPerformed
 
@@ -254,21 +276,30 @@ public class vistaFacturasP extends javax.swing.JPanel {
         controladores.controladorCrearFactura miControlador = new controladores.controladorCrearFactura();
         controladores.controladorOts micontroladorOts = new controladores.controladorOts();
         int filas = tablaFacturas.getRowCount();
-        String[] idOts = new String[filas];
-        int neto = 0, iva = 0, total = 0;
-        for (int i = 0; i < filas; i++) {
-            idOts[i] = getIdFact(i);
-            neto += getNetoFact(i);
-            iva += getIvaFact(i);
-            total += getTotalFact(i);
-        }
-        controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
-        String id = micontroladorFacturas.archivarFacturas(idOts, neto, iva, total, "factura ex", "0");
-        if ((miControlador.crearFacExXML(idOts, Integer.toString(neto), Integer.toString(iva),
-                Integer.toString(total), id).compareTo("correcto") == 0)) {
-            JTabbedPane tabs = (JTabbedPane) this.getParent();
-            micontroladorOts.crearControladorPrincipal(tabs);
-            miControlador.crearControladorPrincipal(tabs);
+        if(filas > 0){
+            String flag = verificarRazon();
+            if(flag.compareTo("correcto") == 0){
+                String[] idOts = new String[filas];
+                int neto = 0, iva = 0, total = 0;
+                for (int i = 0; i < filas; i++) {
+                    idOts[i] = getIdFact(i);
+                    neto += getNetoFact(i);
+                    iva += getIvaFact(i);
+                    total += getTotalFact(i);
+                }
+                controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
+                String id = micontroladorFacturas.archivarFacturas(idOts, neto, iva, total, "factura ex", "0");
+                if ((miControlador.crearFacExXML(idOts, Integer.toString(neto), Integer.toString(iva),
+                        Integer.toString(total), id).compareTo("correcto") == 0)) {
+                    JTabbedPane tabs = (JTabbedPane) this.getParent();
+                    micontroladorOts.crearControladorPrincipal(tabs);
+                    miControlador.crearControladorPrincipal(tabs);
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "No se puede generar una factura exenta para clientes distintos");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "No hay ots para generar una factura exenta");
         }
     }//GEN-LAST:event_botonFacExActionPerformed
 
