@@ -33,6 +33,7 @@ public class controladorModificarJornadas {
         vistaMJ.setTextoOperador(data[5]);
         vistaMJ.setTextoObs(data[6]);
         vistaMJ.setTextoCliente(data[9]);
+        vistaMJ.setTextoObsCliente(data[16]);
         vistaMJ.setId(id);
         vistaMJ.setLocationRelativeTo(null);
         vistaMJ.setVisible(true);
@@ -60,18 +61,18 @@ public class controladorModificarJornadas {
     
     public boolean irVistaJornadasP() throws ParseException {
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
-        String rut_cli = miControlador.obtenerClientePorRazon(vistaMJ.getTextoCliente());
+        String rut_cli = miControlador.obtenerClientePorRazon(vistaMJ.getComboCliente());
         String rut_emp = "", pat_gru = "";
-        if(vistaMJ.getTextoOperador().compareTo("") != 0){
-            rut_emp = miControlador.obtenerEmpleadoPorNombre(vistaMJ.getTextoOperador());
+        if(vistaMJ.getComboOperador().compareTo("") != 0){
+            rut_emp = miControlador.obtenerEmpleadoPorNombre(vistaMJ.getComboOperador());
             if(miControlador.checkEmpDispId(rut_emp, vistaMJ.getTextoFechaSalida(), 
                 vistaMJ.getTextoHoraSalida(), vistaMJ.getTextoFechaRegreso(), vistaMJ.getTextoHoraRegreso(),
                 vistaMJ.getId()) > 0){
             return false;
             }
         }
-        if(vistaMJ.getTextoGrua().compareTo("") != 0){
-            pat_gru = miControlador.obtenerGruaPorDesc(vistaMJ.getTextoGrua());  
+        if(vistaMJ.getComboGrua().compareTo("") != 0){
+            pat_gru = miControlador.obtenerGruaPorDesc(vistaMJ.getComboGrua());  
             if(miControlador.checkGruaDispId(pat_gru, vistaMJ.getTextoFechaSalida(), 
                 vistaMJ.getTextoHoraSalida(), vistaMJ.getTextoFechaRegreso(), vistaMJ.getTextoHoraRegreso(),
                 vistaMJ.getId()) > 0){

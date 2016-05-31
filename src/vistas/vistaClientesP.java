@@ -188,13 +188,13 @@ public class vistaClientesP extends javax.swing.JPanel {
             int row = getFilaSeleccionada();
             rut = getRutFila(row);
             nombres = getNombresFila(row);
-            int dialogResult = JOptionPane.showOptionDialog(tablaClientes, "Esta seguro que desea eliminar el cliente: \n "
+            int dialogResult = JOptionPane.showOptionDialog(null, "Esta seguro que desea eliminar el cliente: \n "
             + rut + "\n" + nombres, "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, 0);
             if(dialogResult == JOptionPane.YES_OPTION)  miControlador.eliminarClientes(rut);
             JTabbedPane tabs = (JTabbedPane)this.getParent();
             miControlador.crearControladorPrincipal(tabs);
         }else{
-            JOptionPane.showMessageDialog(tablaClientes, "Debe seleccionar un cliente para ser eliminado");
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un cliente para ser eliminado");
         }
     }//GEN-LAST:event_botonEliminarActionPerformed
 
@@ -210,7 +210,7 @@ public class vistaClientesP extends javax.swing.JPanel {
             JTabbedPane tabs = (JTabbedPane)this.getParent();
             miControlador.crearControladorPrincipal(tabs);
         }else{
-            JOptionPane.showMessageDialog(tablaClientes, "Debe seleccionar un cliente para ser modificado");
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un cliente para ser modificado");
         }
     }//GEN-LAST:event_botonModificarActionPerformed
 

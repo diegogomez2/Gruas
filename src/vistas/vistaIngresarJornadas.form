@@ -50,25 +50,28 @@
                           <Component id="botonCancelar" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="labelObsCliente" min="-2" max="-2" attributes="0"/>
-                              <Component id="jScrollPane1" min="-2" pref="268" max="-2" attributes="0"/>
-                              <Component id="textoCliente" alignment="0" min="-2" pref="268" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="comboGruas" alignment="0" pref="268" max="32767" attributes="0"/>
+                              <Component id="labelObsCliente" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jScrollPane1" alignment="0" pref="268" max="32767" attributes="0"/>
+                              <Component id="comboClientes" pref="268" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                          <EmptySpace pref="27" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="textoHoraRegreso" max="32767" attributes="0"/>
-                              <Component id="textoFechaRegreso" alignment="0" max="32767" attributes="0"/>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="textoHoraRegreso" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="textoFechaRegreso" alignment="1" pref="311" max="32767" attributes="0"/>
+                                  <Component id="comboOperadores" alignment="1" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="scrollpan" min="-2" pref="287" max="-2" attributes="0"/>
-                                      <Component id="labelOperador" min="-2" max="-2" attributes="0"/>
-                                      <Component id="labelObs" min="-2" max="-2" attributes="0"/>
-                                      <Component id="labelFechaRegreso" min="-2" max="-2" attributes="0"/>
-                                      <Component id="labelHoraRegreso" min="-2" max="-2" attributes="0"/>
-                                      <Component id="textoOperador" alignment="0" min="-2" pref="295" max="-2" attributes="0"/>
+                                      <Component id="scrollpan" min="-2" pref="303" max="-2" attributes="0"/>
+                                      <Component id="labelFechaRegreso" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="labelHoraRegreso" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="labelOperador" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="labelObs" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
+                                  <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -85,7 +88,6 @@
                           <Component id="labelFechaSalida" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="textoFechaSalida" pref="268" max="32767" attributes="0"/>
                           <Component id="textoHoraSalida" alignment="0" pref="268" max="32767" attributes="0"/>
-                          <Component id="textoGrua" alignment="0" pref="268" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace pref="348" max="32767" attributes="0"/>
                   </Group>
@@ -103,16 +105,19 @@
                   <Component id="labelHoraRegreso" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="textoHoraRegreso" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                   <Component id="labelOperador" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="textoOperador" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="comboGruas" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="comboOperadores" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   <Component id="labelObs" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="textoCliente" min="-2" max="-2" attributes="0"/>
+                          <Component id="comboClientes" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="labelObsCliente" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -139,9 +144,7 @@
                       <Component id="textoHoraSalida" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="labelGrua" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="textoGrua" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                       <Component id="labelCliente" min="-2" max="-2" attributes="0"/>
                       <EmptySpace pref="232" max="32767" attributes="0"/>
                   </Group>
@@ -156,10 +159,6 @@
           </Properties>
         </Component>
         <Component class="org.jdesktop.swingx.JXDatePicker" name="textoFechaSalida">
-          <Events>
-            <EventHandler event="inputMethodTextChanged" listener="java.awt.event.InputMethodListener" parameters="java.awt.event.InputMethodEvent" handler="textoFechaSalidaInputMethodTextChanged"/>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textoFechaSalidaActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="labelHoraSalida">
           <Properties>
@@ -242,31 +241,6 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonAceptarActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="textoCliente">
-          <Properties>
-            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-              <ComponentRef name="textoOperador"/>
-            </Property>
-          </Properties>
-          <Events>
-            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="textoClienteFocusLost"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JTextField" name="textoGrua">
-          <Properties>
-            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-              <ComponentRef name="textoCliente"/>
-            </Property>
-          </Properties>
-          <Events>
-            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="textoGruaFocusGained"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JTextField" name="textoOperador">
-          <Events>
-            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="textoOperadorFocusGained"/>
-          </Events>
-        </Component>
         <Component class="javax.swing.JLabel" name="labelObsCliente">
           <Properties>
             <Property name="text" type="java.lang.String" value="Observaciones cliente"/>
@@ -287,6 +261,36 @@
             </Component>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JComboBox" name="comboGruas">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="0"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="comboGruasFocusGained"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="comboClientes">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="0"/>
+            </Property>
+            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[28, 20]"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="comboClientesMouseReleased"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="comboOperadores">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="0"/>
+            </Property>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>

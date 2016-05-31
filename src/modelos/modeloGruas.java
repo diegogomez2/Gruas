@@ -438,7 +438,8 @@ public class modeloGruas {
         try{
             PreparedStatement pstm = conn.prepareStatement("SELECT coalesce(des_gru,'') as des_gru "
                     + "FROM Gruas where pat_gru not in (SELECT pat_gru from jornadas where "
-                    + "(subtime(?, '01:00')  <= fhreg_jor and addtime(?, '01:00') >= fhsal_jor and pat_gru is not null))");
+                    + "(subtime(?, '01:00')  <= fhreg_jor and addtime(?, '01:00') >= fhsal_jor and pat_gru is not null))"
+                    + " order by des_gru");
             pstm.setString(1, fhsal);
             pstm.setString(2, fhreg);
             //System.out.println(pstm);

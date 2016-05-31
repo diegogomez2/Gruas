@@ -313,16 +313,20 @@ public class controladorPrincipal {
         micontrolador.mostrarVistaAgregarTarifa(data);
     }
     
-//    public boolean agregarTarifa(String dia, String ton, String horaInicio, String horaFin, String tar){
-//        modelos.modeloTarifas tarifa = new modelos.modeloTarifas();
-//        if(tarifa.agregarTarifa(dia, ton, horaInicio, horaFin, tar)){
-//            JOptionPane.showMessageDialog(miVistaL, "Tarifa agregada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
-//            return true;
-//        }else{
-//            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al ingresar los datos", "Error", JOptionPane.ERROR_MESSAGE);
-//            return false;
-//        }
-//    }
+    public boolean agregarTarifa(String dia, String ton, String horaInicio, String horaFin, String tar){
+        modelos.modeloTarifas tarifa = new modelos.modeloTarifas();
+        String res = tarifa.agregarTarifa(dia, ton, horaInicio, horaFin, tar);
+        if(res.compareTo("correcto") == 0){
+            JOptionPane.showMessageDialog(miVistaL, "Tarifa agregada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        }else if(res.compareTo("duplicado") == 0){
+            JOptionPane.showMessageDialog(miVistaL, "Esta tarifa ya está en el sistema", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al ingresar los datos", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
     
     //Funciones
     public boolean ingresarCliente(String[] data){

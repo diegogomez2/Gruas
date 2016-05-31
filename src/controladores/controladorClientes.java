@@ -38,9 +38,7 @@ public class controladorClientes {
     }
 
     public JPanel mostrarTabControlClientes(String tipo, Object[][] data) {
-        //if(vistaClientes != null) vistaClientes.setVisible(false);
         vistaClientesP = new vistaClientesP(tipo, data);
-        //vistaClientes.setVisible(true);   
         return vistaClientesP;
     }
 

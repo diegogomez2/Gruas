@@ -72,6 +72,7 @@ jScrollPane1.setViewportView(tablaOts);
         if (tablaOts.getRowCount() > 0) {
             tablaOts.setRowSelectionInterval(0, 0);
         }
+        tablaOts.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tablaOts.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent evt) {
                 JTable table = (JTable) evt.getSource();

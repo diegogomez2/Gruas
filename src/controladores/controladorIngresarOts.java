@@ -82,6 +82,21 @@ public class controladorIngresarOts {
         
         long diff = fecha2.getTime() - fecha.getTime();
         long difDias = diff/(60*60*1000*24);
+        if(difDias == 0){
+            Date horaIn = formatClock.parse(horaInicio);
+            Date horaF = formatClock.parse(horaFin);
+            long diff2 = horaF.getTime() - horaIn.getTime();
+            long minutes = (diff2 / (1000 * 60)) % 60;
+            long hours = (diff2 / (1000 * 60 * 60)) % 24;
+            if((hours == 3 && minutes == 0) || (hours < 3)){
+                data = ots.getMaxTarifa(diaInicio, horaInicio, getIdDia(day1), ton);
+                tarifa = Integer.parseInt(data[0]);
+                long totalTarifa = tarifa * 3;
+                data = new String[]{Integer.toString((int)totalTarifa), String.valueOf((int)(totalTarifa * 0.19)),
+            String.valueOf((int)(totalTarifa * 1.19)), Integer.toString(3)};
+            return data;
+            }
+        }
         String[] horas= new String[2*((int)difDias+1)];
         horas[0] = horaInicio;
         horas[2*((int)difDias+1)-1] = horaFin;

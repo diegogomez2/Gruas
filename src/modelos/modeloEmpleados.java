@@ -312,7 +312,8 @@ public class modeloEmpleados {
             PreparedStatement pstm = conn.prepareStatement("SELECT coalesce(nom_emp,'') as nom_emp, "
                     + "coalesce(apP_emp,'') as apP_emp, coalesce(apM_emp,'') as apM_emp "
                     + "FROM Empleados where rut_emp not in (SELECT rut_emp from jornadas where "
-                    + "( subtime(?, '01:00')  <= fhreg_jor and addtime(?, '01:00') >= fhsal_jor and rut_emp is not null))");
+                    + "( subtime(?, '01:00')  <= fhreg_jor and addtime(?, '01:00') >= fhsal_jor and rut_emp is not null))"
+                    + " order by nom_emp");
             pstm.setString(1, fhsal);
             pstm.setString(2, fhreg);
             ResultSet res = pstm.executeQuery();

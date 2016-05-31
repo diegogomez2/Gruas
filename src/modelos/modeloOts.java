@@ -278,6 +278,29 @@ public class modeloOts {
         return data;
     }
     
+    public String[] getMaxTarifa(String diaInicio, String horaInicio, String day, String ton){
+        String data[] = new String[]{};
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT MAX(prec_tar) as prec_tar FROM tarifas INNER JOIN"
+                    + " tonelajes ON tonelajes.id_ton = tarifas.id_ton INNER JOIN dias ON dias.id_dia = tarifas.id_dia"
+                    + " WHERE pes_ton = ? AND dias.id_dia = ?");
+            pstm.setString(1, ton);
+            pstm.setString(2, day);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            String estprec = res.getString("prec_tar");
+            data = new String[]{estprec};
+        }catch(SQLException e){
+            System.out.println("Error obtener tarifa");
+            System.out.println(e);
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+        }
+        return data;
+    }
+    
     public Object[][] listarFacturas(){
         int registros = 0;
         

@@ -162,9 +162,12 @@ public class vistaAgregarTarifa extends javax.swing.JDialog {
     }//GEN-LAST:event_botonCancelarActionPerformed
 
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
-//        controladores.controladorPrincipal miControlador = new controladorPrincipal();
-//        miControlador.agregarTarifa(getComboDia(), getComboTonelaje(), getTextoHoraInicio(), getTextoHoraFin(),
-//                getTextoTarifa());
+        controladores.controladorPrincipal miControlador = new controladorPrincipal();
+        boolean resp = miControlador.agregarTarifa(getComboDia(), getComboTonelaje(), getTextoHoraInicio(), getTextoHoraFin(),
+                getTextoTarifa());
+        if(resp){
+            dispose();
+        }
     }//GEN-LAST:event_botonAceptarActionPerformed
 
     /**
@@ -217,7 +220,7 @@ public class vistaAgregarTarifa extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     public String getComboDia() {
-        return comboDia.getSelectedItem().toString();
+        return Integer.toString(comboDia.getSelectedIndex()+1);
     }
 
     public String getComboTonelaje() {

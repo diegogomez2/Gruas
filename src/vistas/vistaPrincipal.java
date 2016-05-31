@@ -24,8 +24,6 @@ public class vistaPrincipal extends javax.swing.JFrame {
     public vistaPrincipal() {
         initComponents();
         setLocationRelativeTo(null);
-        //vistaClientesP tabClientes = new vistaClientesP();
-        //vistaPrincipal.addTab("Clientes", tabClientes);
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
         vistaPrincipal.addTab("Clientes", miControlador.crearControladorClientesP());
         vistaPrincipal.addTab("Grúas", miControlador.crearControladorGruasP());

@@ -6,15 +6,28 @@
 package vistas;
 
 import com.mxrck.autocompleter.TextAutoCompleter;
+import java.awt.EventQueue;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.Stack;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
 import modelos.modeloClientes;
 
@@ -33,28 +46,65 @@ public class vistaModificarJornadas extends javax.swing.JDialog {
     DateFormat formatClock = new SimpleDateFormat("HH:mm");
     DateFormat formateDateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     DateFormat formatDia = new SimpleDateFormat("EEE");
-    TextAutoCompleter listaGruas;
-    TextAutoCompleter listaEmpleados;
+//    TextAutoCompleter listaGruas;
+//    TextAutoCompleter listaEmpleados;
+    Vector<String> vectorClientes = new Stack<String>();
+    Vector<String> vectorGruas = new Stack<String>();
+    Vector<String> vectorEmpleados = new Stack<String>();
+    JTextField textoClientes = new JTextField();
+    JTextField textoOperadores = new JTextField();
+    JTextField textoGruas = new JTextField();
+    private boolean hide_flag = false;
     
     public vistaModificarJornadas(java.awt.Frame parent, boolean modal, Object[] clientes,
             Object[] gruas, Object[] empleados) {
         super(parent, modal);
         initComponents();
-        TextAutoCompleter listaClientes = new TextAutoCompleter(textoCliente);
-        listaGruas = new TextAutoCompleter(textoGrua);
-        listaEmpleados = new TextAutoCompleter(textoEmpleado);
-        for(int i = 0; i < clientes.length; i++){
-            listaClientes.addItem(clientes[i].toString());
-        }
-        for(int i = 0; i < gruas.length; i++){
-            listaGruas.addItem(gruas[i].toString());
-        }
-        for(int i = 0; i < empleados.length; i++){
-            listaEmpleados.addItem(empleados[i].toString());
-        }
-        
+//        TextAutoCompleter listaClientes = new TextAutoCompleter(textoCliente);
+//        listaGruas = new TextAutoCompleter(textoGrua);
+//        listaEmpleados = new TextAutoCompleter(textoEmpleado);
+//        for(int i = 0; i < clientes.length; i++){
+//            listaClientes.addItem(clientes[i].toString());
+//        }
+//        for(int i = 0; i < gruas.length; i++){
+//            listaGruas.addItem(gruas[i].toString());
+//        }
+//        for(int i = 0; i < empleados.length; i++){
+//            listaEmpleados.addItem(empleados[i].toString());
+//        }
+        textoClientes = (JTextField)comboClientes.getEditor().getEditorComponent();
+        textoGruas = (JTextField)comboGruas.getEditor().getEditorComponent();
+        textoOperadores = (JTextField)comboOperadores.getEditor().getEditorComponent();
         modelos.modeloClientes cliente = new modeloClientes();
-        String obs = cliente.obtenerObsPorRazon(textoCliente.getText());
+        textoGruas.addFocusListener(new FocusListener(){
+                @Override
+                public void focusGained(FocusEvent e){
+                    modelos.modeloGruas grua = new modelos.modeloGruas();
+                    Object[] gruas = grua.obtenerDescGruasDisp(getTextoFechaSalida() + " " + getTextoHoraSalida(),
+                getTextoFechaRegreso() + " " + getTextoHoraRegreso());
+                    autosuggestGruas(gruas);
+                }
+
+            @Override
+            public void focusLost(FocusEvent fe) {
+            }
+            });
+        textoOperadores.addFocusListener(new FocusListener(){
+            @Override
+            public void focusGained(FocusEvent e){
+        modelos.modeloEmpleados empleado = new modelos.modeloEmpleados();
+        Object[] empleados = empleado.obtenerNomEmpDisp(getTextoFechaSalida() + " " + getTextoHoraSalida(),
+                getTextoFechaRegreso() + " " + getTextoHoraRegreso());
+        autosuggestOperadores(empleados);
+            }
+            @Override
+            public void focusLost(FocusEvent fe) {
+            }
+        });
+        autosuggestClientes(clientes);
+        autosuggestGruas(gruas);
+        autosuggestOperadores(empleados);
+        String obs = cliente.obtenerObsPorRazon(getComboCliente());
         setTextoObsCliente(obs);
     }
 
@@ -84,23 +134,17 @@ public class vistaModificarJornadas extends javax.swing.JDialog {
         textoObs = new javax.swing.JTextArea();
         botonCancelar = new javax.swing.JButton();
         botonAceptar = new javax.swing.JButton();
-        textoCliente = new javax.swing.JTextField();
-        textoGrua = new javax.swing.JTextField();
-        textoEmpleado = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         textoObsCliente = new javax.swing.JTextArea();
         labelObsCliente = new javax.swing.JLabel();
+        comboOperadores = new javax.swing.JComboBox();
+        comboGruas = new javax.swing.JComboBox();
+        comboClientes = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Modificar jornada de trabajo");
 
         labelFechaSalida.setText("Fecha de salida");
-
-        textoFechaSalida.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textoFechaSalidaActionPerformed(evt);
-            }
-        });
 
         labelHoraSalida.setText("Hora de salida");
 
@@ -115,12 +159,6 @@ public class vistaModificarJornadas extends javax.swing.JDialog {
         labelOperador.setText("Operador");
 
         labelFechaRegreso.setText("Fecha de regreso");
-
-        textoFechaRegreso.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textoFechaRegresoActionPerformed(evt);
-            }
-        });
 
         labelHoraRegreso.setText("Hora de regreso");
 
@@ -148,24 +186,6 @@ public class vistaModificarJornadas extends javax.swing.JDialog {
             }
         });
 
-        textoCliente.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                textoClienteFocusLost(evt);
-            }
-        });
-
-        textoGrua.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                textoGruaFocusGained(evt);
-            }
-        });
-
-        textoEmpleado.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                textoEmpleadoFocusGained(evt);
-            }
-        });
-
         textoObsCliente.setColumns(20);
         textoObsCliente.setRows(5);
         jScrollPane1.setViewportView(textoObsCliente);
@@ -178,26 +198,30 @@ public class vistaModificarJornadas extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(labelObsCliente)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
+                    .addComponent(comboGruas, 0, 274, Short.MAX_VALUE)
+                    .addComponent(comboClientes, 0, 274, Short.MAX_VALUE))
                 .addGap(37, 37, 37)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(textoHoraRegreso)
                     .addComponent(textoFechaRegreso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(botonAceptar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(botonCancelar))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(scrollpan, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(labelOperador)
-                                .addComponent(labelObs)
-                                .addComponent(labelFechaRegreso)
-                                .addComponent(labelHoraRegreso)
-                                .addComponent(textoEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(scrollpan, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
+                                    .addComponent(labelOperador)
+                                    .addComponent(labelObs)
+                                    .addComponent(labelFechaRegreso)
+                                    .addComponent(labelHoraRegreso))
+                                .addGap(8, 8, 8))
+                            .addComponent(comboOperadores, javax.swing.GroupLayout.Alignment.LEADING, 0, 295, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -209,9 +233,7 @@ public class vistaModificarJornadas extends javax.swing.JDialog {
                         .addComponent(labelCliente)
                         .addComponent(labelFechaSalida)
                         .addComponent(textoFechaSalida, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
-                        .addComponent(textoHoraSalida)
-                        .addComponent(textoGrua)
-                        .addComponent(textoCliente))
+                        .addComponent(textoHoraSalida))
                     .addContainerGap(342, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
@@ -228,14 +250,19 @@ public class vistaModificarJornadas extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelOperador)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textoEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(labelObs)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scrollpan)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(comboOperadores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboGruas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addComponent(labelObs)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(scrollpan))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 30, Short.MAX_VALUE)
+                        .addComponent(comboClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(labelObsCliente)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -256,13 +283,9 @@ public class vistaModificarJornadas extends javax.swing.JDialog {
                     .addComponent(textoHoraSalida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(labelGrua)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(textoGrua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGap(37, 37, 37)
                     .addComponent(labelCliente)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(textoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(182, Short.MAX_VALUE)))
+                    .addContainerGap(227, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -278,26 +301,6 @@ public class vistaModificarJornadas extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void textoEmpleadoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textoEmpleadoFocusGained
-        listaEmpleados.removeAll();
-        modelos.modeloEmpleados empleados = new modelos.modeloEmpleados();
-        Object[] emp = empleados.obtenerNomEmpDisp(getTextoFechaSalida() + " " + getTextoHoraSalida(),
-            getTextoFechaRegreso() + " " + getTextoHoraRegreso());
-        for (int i = 0; i < emp.length; i++) {
-            listaEmpleados.addItem(emp[i].toString());
-        }
-    }//GEN-LAST:event_textoEmpleadoFocusGained
-
-    private void textoGruaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textoGruaFocusGained
-        listaGruas.removeAll();
-        modelos.modeloGruas grua = new modelos.modeloGruas();
-        Object[] gruas = grua.obtenerDescGruasDisp(getTextoFechaSalida() + " " + getTextoHoraSalida(),
-            getTextoFechaRegreso() + " " + getTextoHoraRegreso());
-        for (int i = 0; i < gruas.length; i++) {
-            listaGruas.addItem(gruas[i].toString());
-        }
-    }//GEN-LAST:event_textoGruaFocusGained
 
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
         JFrame tabs = (JFrame)this.getParent();
@@ -324,32 +327,6 @@ public class vistaModificarJornadas extends javax.swing.JDialog {
     private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
         dispose();
     }//GEN-LAST:event_botonCancelarActionPerformed
-
-    private void textoFechaRegresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoFechaRegresoActionPerformed
-        //        listaGruas.removeAll();
-        //        modelos.modeloGruas grua = new modelos.modeloGruas();
-        //        Object[] gruas = grua.obtenerDescGruasDisp(getTextoFechaSalida() + " " + getTextoHoraSalida(),
-            //                getTextoFechaRegreso() + " " + getTextoHoraRegreso());
-        //        for (int i = 0; i < gruas.length; i++) {
-            //            listaGruas.addItem(gruas[i].toString());
-            //        }
-    }//GEN-LAST:event_textoFechaRegresoActionPerformed
-
-    private void textoFechaSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoFechaSalidaActionPerformed
-        //        listaGruas.removeAll();
-        //        modelos.modeloGruas grua = new modelos.modeloGruas();
-        //        Object[] gruas = grua.obtenerDescGruasDisp(getTextoFechaSalida() + " " + getTextoHoraSalida(),
-            //                getTextoFechaRegreso() + " " + getTextoHoraRegreso());
-        //        for (int i = 0; i < gruas.length; i++) {
-            //            listaGruas.addItem(gruas[i].toString());
-            //        }
-    }//GEN-LAST:event_textoFechaSalidaActionPerformed
-
-    private void textoClienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textoClienteFocusLost
-        modelos.modeloClientes cliente = new modeloClientes();
-        String obs = cliente.obtenerObsPorRazon(textoCliente.getText());
-        setTextoObsCliente(obs);
-    }//GEN-LAST:event_textoClienteFocusLost
 
     /**
      * @param args the command line arguments
@@ -388,6 +365,9 @@ public class vistaModificarJornadas extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAceptar;
     private javax.swing.JButton botonCancelar;
+    private javax.swing.JComboBox comboClientes;
+    private javax.swing.JComboBox comboGruas;
+    private javax.swing.JComboBox comboOperadores;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelCliente;
@@ -400,11 +380,8 @@ public class vistaModificarJornadas extends javax.swing.JDialog {
     private javax.swing.JLabel labelObsCliente;
     private javax.swing.JLabel labelOperador;
     private javax.swing.JScrollPane scrollpan;
-    private javax.swing.JTextField textoCliente;
-    private javax.swing.JTextField textoEmpleado;
     private org.jdesktop.swingx.JXDatePicker textoFechaRegreso;
     private org.jdesktop.swingx.JXDatePicker textoFechaSalida;
-    private javax.swing.JTextField textoGrua;
     private javax.swing.JSpinner textoHoraRegreso;
     private javax.swing.JSpinner textoHoraSalida;
     private javax.swing.JTextArea textoObs;
@@ -412,15 +389,15 @@ public class vistaModificarJornadas extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     public void setTextoCliente(String comboCliente) {
-        this.textoCliente.setText(comboCliente);
+        this.comboClientes.setSelectedItem(comboCliente);
     }
 
     public void setTextoGrua(String comboGrua) {
-        this.textoGrua.setText(comboGrua);
+        this.comboGruas.setSelectedItem(comboGrua);
     }
 
     public void setTextoOperador(String comboOperador) {
-        this.textoEmpleado.setText(comboOperador.trim());
+        this.comboOperadores.setSelectedItem(comboOperador.trim());
     }
 
     public void setTextoFechaRegreso(String textoFechaRegreso) throws ParseException {
@@ -491,16 +468,16 @@ public class vistaModificarJornadas extends javax.swing.JDialog {
         return textoObs.getText();
     }
 
-    public String getTextoCliente() {
-        return textoCliente.getText();
+    public String getComboCliente() {
+        return comboClientes.getSelectedItem().toString();
     }
 
-    public String getTextoGrua() {
-        return textoGrua.getText();
+    public String getComboGrua() {
+        return comboGruas.getSelectedItem().toString();
     }
 
-    public String getTextoOperador() {
-        return textoEmpleado.getText();
+    public String getComboOperador() {
+        return comboOperadores.getSelectedItem().toString();
     }
     
     public String getId(){
@@ -509,5 +486,249 @@ public class vistaModificarJornadas extends javax.swing.JDialog {
     
     public void setTextoObsCliente(String textoObsCliente) {
         this.textoObsCliente.setText(textoObsCliente);
+    }
+    
+    private void setModel(DefaultComboBoxModel mdl, String str, JComboBox combo, JTextField texto){
+        combo.setModel(mdl);
+        texto.setText(str);
+    }
+    
+    private DefaultComboBoxModel getSuggestedModel(List<String> list, String tx){
+        DefaultComboBoxModel m = new DefaultComboBoxModel();
+        for (String s : list){
+            if(s.toLowerCase().contains(tx.toLowerCase())){
+                m.addElement(s);
+            }
+        }
+        return m;
+    }
+    
+    public void autosuggestClientes(Object[] data){
+            comboClientes.removeAllItems();
+            if(comboClientes.getItemCount() == 0){
+                for (Object data1 : data) {
+                    comboClientes.addItem(data1);
+                    vectorClientes.addElement((String) data1);
+                    comboClientes.addItemListener(new ItemListener() {
+
+                        @Override
+                        public void itemStateChanged(ItemEvent ie) {
+                            if(ie.getStateChange() == ItemEvent.SELECTED){
+                                comboClientes.getSelectedIndex();
+                            }
+                        }
+                    });
+                }
+            }else{
+                comboClientes.addItem("Error");
+            }
+
+        comboClientes.setEditable(true);
+        textoClientes.addKeyListener(new KeyAdapter(){
+            public void keyTyped(KeyEvent e){
+                EventQueue.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        String text = textoClientes.getText();
+                        if(text.length() == 0){
+                            comboClientes.hidePopup();
+                            setModel(new DefaultComboBoxModel(vectorClientes), "", comboClientes, textoClientes);
+                        }else{
+                            DefaultComboBoxModel m = getSuggestedModel(vectorClientes, text);
+                            if(m.getSize() == 0){
+                                comboClientes.hidePopup();
+                            }else{
+                                setModel(m, text, comboClientes, textoClientes);
+                                comboClientes.showPopup();
+                            }
+                        }
+                    }
+                });
+            }
+            
+            @Override
+            public void keyPressed(KeyEvent e){
+                String text = textoClientes.getText();
+                int code = e.getKeyCode();
+                if(code == KeyEvent.VK_ENTER){
+                    for (int i = 0; i < vectorClientes.size(); i++) {
+                        String str = (String)vectorClientes.elementAt(i);
+                        if(str.toLowerCase().contains(text.toLowerCase())){
+                            textoClientes.setText(str);
+                            modelos.modeloClientes cliente = new modeloClientes();
+                            String obs = cliente.obtenerObsPorRazon(comboClientes.getSelectedItem().toString());
+                            setTextoObsCliente(obs);
+                            return;
+                        }
+                    }
+                }else if(code == KeyEvent.VK_ESCAPE){
+                    hide_flag = true;
+                }else if(code == KeyEvent.VK_RIGHT){
+                    for (int i = 0; i < vectorClientes.size(); i++) {
+                        String str = (String)vectorClientes.elementAt(i);
+                        if(str.toLowerCase().contains(text.toLowerCase())){
+                            textoClientes.setText(str);
+                            modelos.modeloClientes cliente = new modeloClientes();
+                            String obs = cliente.obtenerObsPorRazon(comboClientes.getSelectedItem().toString());
+                            setTextoObsCliente(obs);
+                            return;
+                        }
+                    }
+                }
+            }
+            
+//            public void mousePressed(MouseEvent e){
+//                String text = textoClientes.getText();
+//                int code = e.getButton();
+//                if(code == MouseEvent.BUTTON1){
+//                    modelos.modeloClientes cliente = new modeloClientes();
+//                            String obs = cliente.obtenerObsPorRazon(comboClientes.getSelectedItem().toString());
+//                            setTextoObsCliente(obs);
+//                }
+//            }
+        });
+    }
+    
+    public void autosuggestGruas(Object[] data){
+            comboGruas.removeAllItems();
+            vectorGruas.removeAllElements();
+            if(comboGruas.getItemCount() == 0){
+                for (int j = 0; j < data.length; j++) {
+                    comboGruas.addItem(data[j]);
+                    vectorGruas.addElement((String)data[j]);
+                    comboGruas.addItemListener(new ItemListener() {
+
+                        @Override
+                        public void itemStateChanged(ItemEvent ie) {
+                            if(ie.getStateChange() == ItemEvent.SELECTED){
+                                comboGruas.getSelectedIndex();
+                            }
+                        }
+                    });
+
+                }
+            }else{
+                comboGruas.addItem("Error");
+            }
+
+        comboGruas.setEditable(true);
+        textoGruas.addKeyListener(new KeyAdapter(){
+            public void keyTyped(KeyEvent e){
+                EventQueue.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        String text = textoGruas.getText();
+                        if(text.length() == 0){
+                            comboGruas.hidePopup();
+                            setModel(new DefaultComboBoxModel(vectorGruas), "", comboGruas, textoGruas);
+                        }else{
+                            DefaultComboBoxModel m = getSuggestedModel(vectorGruas, text);
+                            if(m.getSize() == 0){
+                                comboGruas.hidePopup();
+                            }else{
+                                setModel(m, text, comboGruas, textoGruas);
+                                comboGruas.showPopup();
+                            }
+                        }
+                    }
+                });
+            }
+            
+            @Override
+            public void keyPressed(KeyEvent e){
+                String text = textoGruas.getText();
+                int code = e.getKeyCode();
+                if(code == KeyEvent.VK_ENTER){
+                    for (int i = 0; i < vectorGruas.size(); i++) {
+                        String str = (String)vectorGruas.elementAt(i);
+                        if(str.toLowerCase().contains(text.toLowerCase())){
+                            textoGruas.setText(str);
+                            return;
+                        }
+                    }
+                }else if(code == KeyEvent.VK_ESCAPE){
+                    hide_flag = true;
+                }else if(code == KeyEvent.VK_RIGHT){
+                    for (int i = 0; i < vectorGruas.size(); i++) {
+                        String str = (String)vectorGruas.elementAt(i);
+                        if(str.toLowerCase().contains(text.toLowerCase())){
+                            textoGruas.setText(str);
+                            return;
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    public void autosuggestOperadores(Object[] data){
+            comboOperadores.removeAllItems();
+            vectorEmpleados.removeAllElements();
+            if(comboOperadores.getItemCount() == 0){
+                for (Object data1 : data) {
+                    comboOperadores.addItem(data1);
+                    vectorEmpleados.addElement((String) data1);
+                    comboOperadores.addItemListener(new ItemListener() {
+
+                        @Override
+                        public void itemStateChanged(ItemEvent ie) {
+                            if(ie.getStateChange() == ItemEvent.SELECTED){
+                                comboOperadores.getSelectedIndex();
+                            }
+                        }
+                    });
+                }
+            }else{
+                comboOperadores.addItem("Error");
+            }
+
+        comboOperadores.setEditable(true);
+        textoOperadores.addKeyListener(new KeyAdapter(){
+            public void keyTyped(KeyEvent e){
+                EventQueue.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        String text = textoOperadores.getText();
+                        if(text.length() == 0){
+                            comboOperadores.hidePopup();
+                            setModel(new DefaultComboBoxModel(vectorEmpleados), "", comboOperadores, textoOperadores);
+                        }else{
+                            DefaultComboBoxModel m = getSuggestedModel(vectorEmpleados, text);
+                            if(m.getSize() == 0){
+                                comboOperadores.hidePopup();
+                            }else{
+                                setModel(m, text, comboOperadores, textoOperadores);
+                                comboOperadores.showPopup();
+                            }
+                        }
+                    }
+                });
+            }
+            
+            @Override
+            public void keyPressed(KeyEvent e){
+                String text = textoOperadores.getText();
+                int code = e.getKeyCode();
+                if(code == KeyEvent.VK_ENTER){
+                    for (int i = 0; i < vectorEmpleados.size(); i++) {
+                        String str = (String)vectorEmpleados.elementAt(i);
+                        if(str.toLowerCase().contains(text.toLowerCase())){
+                            textoOperadores.setText(str);
+                            return;
+                        }
+                    }
+                }else if(code == KeyEvent.VK_ESCAPE){
+                    hide_flag = true;
+                }else if(code == KeyEvent.VK_RIGHT){
+                    for (int i = 0; i < vectorEmpleados.size(); i++) {
+                        String str = (String)vectorEmpleados.elementAt(i);
+                        if(str.toLowerCase().contains(text.toLowerCase())){
+                            textoOperadores.setText(str);
+                            return;
+                        }
+                    }
+                }
+            }
+        });
     }
 }

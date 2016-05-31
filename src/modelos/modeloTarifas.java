@@ -47,7 +47,7 @@ public class modeloTarifas {
             PreparedStatement pstm = conn.prepareStatement("SELECT pes_ton, tarifas.id_dia, hin_hor, "
                     + "hfin_hor, prec_tar  FROM tarifas INNER JOIN dias ON tarifas.id_dia = dias.id_dia "
                     + "INNER JOIN horarios ON horarios.id_hor = tarifas.id_hor inner join tonelajes ON "
-                    + "tonelajes.id_ton = tarifas.id_ton ORDER BY id_tar");
+                    + "tonelajes.id_ton = tarifas.id_ton ORDER BY tonelajes.id_ton");
             ResultSet res = pstm.executeQuery();
             int i = 0;
             while(res.next()){
@@ -74,30 +74,79 @@ public class modeloTarifas {
         return data;
     }
     
-    public String agregarTarifa(String[] data){
+    public String agregarTarifa(String dia, String ton, String hin, String hfin, String prec){
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("insert into tarifas (rut_cli, dig_cli,"
-                    + "con_cli, raz_cli, gir_cli, cor_cli, tel_cli, cel_cli, dir_cli, reg_cli, ciu_cli,"
-                    + "com_cli, obs_cli) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            pstm.setInt(1, Integer.parseInt(data[0]));
-            pstm.setString(2, data[1]);
-            pstm.setString(3, data[2]);
-            pstm.setString(4, data[3]);
-            pstm.setString(5, data[4]);
-            pstm.setString(6, data[5]);
-            pstm.setString(7, data[6]);
-            pstm.setString(8, data[7]);
-            pstm.setString(9, data[8]);
-            pstm.setString(10, data[9]);
-            pstm.setString(11, data[10]);
-            pstm.setString(12, data[11]);
-            pstm.setString(13, data[12]);
-            pstm.execute();
+            PreparedStatement pstm = conn.prepareStatement("SELECT Count(*) as total from horarios where hin_hor = ?"
+                    + "and hfin_hor = ?");
+            pstm.setString(1, hin);
+            pstm.setString(2, hfin);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            int registros = res.getInt("total");
             pstm.close();
+            res.close();
+            //GET TON
+            pstm = conn.prepareStatement("SELECT id_ton from tonelajes where pes_ton = ?");
+            pstm.setString(1, ton);
+            res = pstm.executeQuery();
+            res.next();
+            String pes = res.getString("id_ton");
+            String id = "";
+            pstm.close();
+            res.close();
+            
+            if(registros > 0){
+                //GET HOR
+                pstm = conn.prepareStatement("SELECT id_hor from horarios where hin_hor = ? and hfin_hor = ?");
+                pstm.setString(1, hin);
+                pstm.setString(2, hfin);
+                res = pstm.executeQuery();
+                res.next();
+                id = res.getString("id_hor");
+                pstm.close();
+                res.close();
+                                
+            }else{
+                pstm = conn.prepareStatement("INSERT INTO horarios (hin_hor, hfin_hor) values (?, ?)", 
+                        PreparedStatement.RETURN_GENERATED_KEYS);
+                pstm.setString(1, hin);
+                pstm.setString(2, hfin);
+                pstm.execute();
+                res = pstm.getGeneratedKeys();
+                res.next();
+                id = res.getString(1);
+                pstm.close();
+                res.close();
+            }
+            //CHECK
+            pstm = conn.prepareStatement("SELECT COUNT(*) as total from tarifas where id_ton = ? and id_dia = ? "
+                    + "AND id_hor = ? AND prec_tar = ?");
+            pstm.setString(1, pes);
+            pstm.setString(2, dia);
+            pstm.setString(3, id);
+            pstm.setString(4, prec);
+            res = pstm.executeQuery();
+            res.next();
+            int flag = res.getInt("total");
+            
+            if(flag > 0){
+                return "duplicado";
+            }else{
+                    //INSERT
+                pstm = conn.prepareStatement("INSERT INTO tarifas (id_ton, id_dia, id_hor, prec_tar) values "
+                         + "(?, ?, ?, ?)");
+                pstm.setString(1, pes);
+                pstm.setString(2, dia);
+                pstm.setString(3, id);
+                pstm.setString(4, prec);
+                pstm.execute();
+                pstm.close(); 
+            }
+            
         }catch(SQLException e){
-            System.out.println("Error al ingresar cliente");
+            System.out.println("Error al ingresar tarifa");
             System.out.println(e);
             return "incorrecto";
         }catch(ClassNotFoundException e){

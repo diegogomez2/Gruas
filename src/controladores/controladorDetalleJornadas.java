@@ -27,6 +27,7 @@ public void mostrarVistaDetalleJornadas(String id) throws ParseException{
         vistaDJ.setTextoOperador(data[5]);
         vistaDJ.setTextoObs(data[6]);
         vistaDJ.setTextoCliente(data[9]);
+        vistaDJ.setTextoObsCliente(data[16]);
         vistaDJ.setLocationRelativeTo(null);
         vistaDJ.setVisible(true);
     }

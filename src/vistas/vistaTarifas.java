@@ -64,6 +64,11 @@ public class vistaTarifas extends javax.swing.JDialog {
         });
 
         botonAgregar.setText("Agregar tarifa");
+        botonAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAgregarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -97,6 +102,11 @@ public class vistaTarifas extends javax.swing.JDialog {
     private void botonOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonOKActionPerformed
         this.dispose();
     }//GEN-LAST:event_botonOKActionPerformed
+
+    private void botonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarActionPerformed
+        controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
+        miControlador.crearControladorAgregarTarifa();
+    }//GEN-LAST:event_botonAgregarActionPerformed
 
     /**
      * @param args the command line arguments
