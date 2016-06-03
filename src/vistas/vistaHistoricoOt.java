@@ -85,6 +85,7 @@ public class vistaHistoricoOt extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaHistorico.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tablaHistorico);
 
         textoFiltro.addActionListener(new java.awt.event.ActionListener() {

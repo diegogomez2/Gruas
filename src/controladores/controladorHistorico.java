@@ -21,9 +21,9 @@ public class controladorHistorico {
         return vistaHistoricoP;
     }
     
-    public void irVistaDetalleHistorico(String id) throws ParseException{
+    public void irVistaDetalleHistorico(String id, String tipo) throws ParseException{
         controladorPrincipal miControlador = new controladorPrincipal();
-        miControlador.crearControladorDetalleFacturadas(id);
+        miControlador.crearControladorDetalleFacturadas(id, tipo);
     }
     
 

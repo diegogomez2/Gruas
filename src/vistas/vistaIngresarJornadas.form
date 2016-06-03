@@ -61,7 +61,7 @@
                               <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="textoHoraRegreso" alignment="1" max="32767" attributes="0"/>
                                   <Component id="textoFechaRegreso" alignment="1" pref="311" max="32767" attributes="0"/>
-                                  <Component id="comboOperadores" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="comboOperadores" alignment="1" pref="28" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -193,6 +193,9 @@
           </Properties>
         </Component>
         <Component class="org.jdesktop.swingx.JXDatePicker" name="textoFechaRegreso">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new org.jdesktop.swingx.JXDatePicker()"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="labelHoraRegreso">
           <Properties>

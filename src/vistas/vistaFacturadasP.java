@@ -32,8 +32,8 @@ public class vistaFacturadasP extends javax.swing.JPanel {
     
     public vistaFacturadasP(String tipo, Object[][] data) {
         initComponents();
-         String[] columNames = {"Código Fact", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
-             "Neto", "IVA", "Total"};
+         String[] columNames = {"N°Folio", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
+             "Neto", "IVA", "Total", "Tipo"};
         datos = new DefaultTableModel(data, columNames){
             @Override
             public boolean isCellEditable(int row, int column){
@@ -52,7 +52,8 @@ public class vistaFacturadasP extends javax.swing.JPanel {
                 if(evt.getClickCount() == 2){
                     controladores.controladorFacturadas miControlador = new controladores.controladorFacturadas();
                     try {
-                        miControlador.irVistaDetalleFacturadas(tablaFacturadas.getValueAt(row, 0).toString());
+                        miControlador.irVistaDetalleFacturadas(tablaFacturadas.getValueAt(row, 0).toString(),
+                                tablaFacturadas.getValueAt(row, 10).toString());
                     } catch (ParseException ex) {
                         Logger.getLogger(vistaJornadasP.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -165,22 +166,27 @@ public class vistaFacturadasP extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonGenerarNCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGenerarNCActionPerformed
-        String id;
+        String id, tipo;
         controladores.controladorFacturadas miControlador = new controladores.controladorFacturadas();
         controladores.controladorCrearFactura miControladorC = new controladores.controladorCrearFactura();
         boolean selected = tablaFacturadas.getSelectedRowCount() > 0;
         if(selected){
             int row = getFilaSeleccionada();
             id = getIdFila(row);
-            String razon = JOptionPane.showInputDialog("Razón: ");
-            if(razon != null){
-               String id_nc = miControlador.ingresarNotaCredito(id, razon);
-                String[] valores_nc = miControlador.obtenerValoresNC(id_nc);
-                String[] ots = miControlador.obtenerOtsPorIdNC(id_nc);
-                if((miControladorC.crearNotaCredXML(id_nc, valores_nc, ots, razon, id).compareTo("correcto") == 0)){
-                    JTabbedPane tabs = (JTabbedPane)this.getParent();
-                    miControlador.crearControladorPrincipal(tabs);
-                } 
+            tipo = getTipoFila(row);
+            if(tipo.compareTo("notacredito") == 0 || tipo.compareTo("notadebito") == 0){
+                JOptionPane.showMessageDialog(null, "No se puede generar una nota de crédito para una " + tipo);
+            }else{
+                String razon = JOptionPane.showInputDialog("Razón: ");
+                if(razon != null){
+                   String id_nc = miControlador.ingresarNotaCredito(id, razon, tipo);
+                    String[] valores_nc = miControlador.obtenerValoresNC(id_nc);
+                    String[] ots = miControlador.obtenerOtsPorIdNC(id_nc);
+                    if((miControladorC.crearNotaCredXML(id_nc, valores_nc, ots, razon, id).compareTo("correcto") == 0)){
+                        JTabbedPane tabs = (JTabbedPane)this.getParent();
+                        miControlador.crearControladorPrincipal(tabs);
+                    } 
+                }
             }
         }else{
             JOptionPane.showMessageDialog(null, "Debe seleccionar una factura para generar una nota de crédito");
@@ -233,6 +239,10 @@ public class vistaFacturadasP extends javax.swing.JPanel {
     
     public String getIdFila(int row){
         return tablaFacturadas.getValueAt(row, 0).toString();
+    }
+    
+    public String getTipoFila(int row){
+        return tablaFacturadas.getValueAt(row, 10).toString();
     }
     
     public void filtrar(String query) {

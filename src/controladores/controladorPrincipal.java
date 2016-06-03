@@ -280,10 +280,10 @@ public class controladorPrincipal {
         micontroladorDF.mostrarVistaDetalleFacturas(id);
     }
     
-    void crearControladorDetalleFacturadas(String id) throws ParseException {
+    void crearControladorDetalleFacturadas(String id, String tipo) throws ParseException {
         controladorDetalleFacturadas micontroladorDF;
         micontroladorDF = new controladorDetalleFacturadas();
-        micontroladorDF.mostrarVistaDetalleFacturadas(id);
+        micontroladorDF.mostrarVistaDetalleFacturadas(id, tipo);
     }
     
     public void crearControladorUsuarios() {
@@ -553,10 +553,10 @@ public class controladorPrincipal {
         }
     }
     
-    public String ingresarNotaCredito(String id, String razon){
+    public String ingresarNotaCredito(String id, String razon, String tipo){
         modelos.modeloFacturas factura = new modelos.modeloFacturas();
         String folio = factura.folioNC();
-        return factura.ingresarNotaCredito(id, razon, folio);
+        return factura.ingresarNotaCredito(id, razon, folio, tipo);
     }
 
     public Object[] cargarComunas(int region) {
@@ -642,9 +642,21 @@ public class controladorPrincipal {
         return datos;
     }
     
-    public Object[][] obtenerOtPorIdFacturada(String id) {
+    public Object[][] obtenerOtPorIdFacturada(String id, String tipo) {
         modelos.modeloOts ot = new modelos.modeloOts();
-        Object[][] datos = ot.obtenerOtPorIdFacturada(id);
+        Object[][] datos;
+        switch(tipo){
+            case("notadebito"):
+                datos = ot.obtenerOtPorIdFacturadaND(id);
+                break;
+            case("notacredito"):
+                datos = ot.obtenerOtPorIdFacturadaNC(id);
+                break;
+            default:
+                datos = ot.obtenerOtPorIdFacturada(id, tipo);
+                break;
+        }
+        
         return datos;
     }
     

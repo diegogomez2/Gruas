@@ -22,14 +22,14 @@ public class controladorFacturadas {
         return vistaFacturadasP;
     }
     
-    public void irVistaDetalleFacturadas(String id) throws ParseException{
+    public void irVistaDetalleFacturadas(String id, String tipo) throws ParseException{
         controladorPrincipal miControlador = new controladorPrincipal();
-        miControlador.crearControladorDetalleFacturadas(id);
+        miControlador.crearControladorDetalleFacturadas(id, tipo);
     }
     
-    public String ingresarNotaCredito(String id, String razon){
+    public String ingresarNotaCredito(String id, String razon, String tipo){
         controladorPrincipal miControlador = new controladorPrincipal();
-        return miControlador.ingresarNotaCredito(id, razon);
+        return miControlador.ingresarNotaCredito(id, razon, tipo);
     }
     
     public String[] obtenerOtsPorIdNC(String id){

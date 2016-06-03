@@ -11,9 +11,11 @@ import java.awt.event.MouseEvent;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
@@ -194,7 +196,7 @@ public class vistaFacturasP extends javax.swing.JPanel {
                     total += getTotalFact(i);
                 }
                 controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
-                String id = micontroladorFacturas.archivarFacturas(idOts, neto, iva, total, "factura", "0");
+                String id = micontroladorFacturas.archivarFacturas(idOts, neto, iva, total, "factura", "0", "0");
                 if ((miControlador.crearFacXML(idOts, Integer.toString(neto), Integer.toString(iva),
                         Integer.toString(total), id).compareTo("correcto") == 0)) {
                     JTabbedPane tabs = (JTabbedPane) this.getParent();
@@ -225,7 +227,7 @@ public class vistaFacturasP extends javax.swing.JPanel {
                     total += getTotalFact(i);
                 }
                 controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
-                String id = micontroladorFacturas.archivarFacturas(idOts, neto, iva, total, "boleta", "0");
+                String id = micontroladorFacturas.archivarFacturas(idOts, neto, iva, total, "boleta", "0", "0");
                 if ((miControlador.crearBolXML(idOts, Integer.toString(neto), Integer.toString(iva),
                         Integer.toString(total), id).compareTo("correcto") == 0)) {
                     JTabbedPane tabs = (JTabbedPane) this.getParent();
@@ -246,23 +248,36 @@ public class vistaFacturasP extends javax.swing.JPanel {
         int filas = tablaFacturas.getRowCount();
         if(filas > 0){
             String flag = verificarRazon();
+            JTextField idfac = new JTextField();
+            JComboBox combo = new JComboBox(new String[]{"Factura", "Boleta", "Factura exenta"});
+            Object[] message = {
+                "Folio: ",idfac,
+                "Tipo documento: ", combo
+            };
+            String id_fac, tiponc;
             if(flag.compareTo("correcto") == 0){
-                String id_fac = JOptionPane.showInputDialog("Id de factura: ");
-                String[] idOts = new String[filas];
-                int neto = 0, iva = 0, total = 0;
-                for (int i = 0; i < filas; i++) {
-                    idOts[i] = getIdFact(i);
-                    neto += getNetoFact(i);
-                    iva += getIvaFact(i);
-                    total += getTotalFact(i);
-                }
-                controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
-                String id = micontroladorFacturas.archivarFacturas(idOts, neto, iva, total, "nota debito", id_fac);
-                if ((miControlador.crearNotaDebXML(idOts, Integer.toString(neto), Integer.toString(iva),
-                        Integer.toString(total), id, id_fac).compareTo("correcto") == 0)) {
-                    JTabbedPane tabs = (JTabbedPane) this.getParent();
-                    micontroladorOts.crearControladorPrincipal(tabs);
-                    miControlador.crearControladorPrincipal(tabs);
+                int resp = JOptionPane.showConfirmDialog(null, message, "N° de folio de factura: ", JOptionPane.OK_CANCEL_OPTION);
+                if(resp == JOptionPane.OK_OPTION){
+                    id_fac = idfac.getText().toString();
+                    tiponc = combo.getSelectedItem().toString();
+                    String[] idOts = new String[filas];
+                    int neto = 0, iva = 0, total = 0;
+                    for (int i = 0; i < filas; i++) {
+                        idOts[i] = getIdFact(i);
+                        neto += getNetoFact(i);
+                        iva += getIvaFact(i);
+                        total += getTotalFact(i);
+                    }
+                    controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
+                    String id = micontroladorFacturas.archivarFacturas(idOts, neto, iva, total, "nota debito", id_fac, tiponc);
+                    if(id.compareTo("incorrecto") != 0){
+                        if ((miControlador.crearNotaDebXML(idOts, Integer.toString(neto), Integer.toString(iva),
+                                Integer.toString(total), id, id_fac).compareTo("correcto") == 0)) {
+                            JTabbedPane tabs = (JTabbedPane) this.getParent();
+                            micontroladorOts.crearControladorPrincipal(tabs);
+                            miControlador.crearControladorPrincipal(tabs);
+                        }
+                    }
                 }
             }else{
                 JOptionPane.showMessageDialog(null, "No se puede generar una nota de débito para clientes distintos");
@@ -288,7 +303,7 @@ public class vistaFacturasP extends javax.swing.JPanel {
                     total += getTotalFact(i);
                 }
                 controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
-                String id = micontroladorFacturas.archivarFacturas(idOts, neto, iva, total, "factura ex", "0");
+                String id = micontroladorFacturas.archivarFacturas(idOts, neto, iva, total, "factura ex", "0", "0");
                 if ((miControlador.crearFacExXML(idOts, Integer.toString(neto), Integer.toString(iva),
                         Integer.toString(total), id).compareTo("correcto") == 0)) {
                     JTabbedPane tabs = (JTabbedPane) this.getParent();

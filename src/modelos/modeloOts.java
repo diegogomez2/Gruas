@@ -231,7 +231,7 @@ public class modeloOts {
             String esttel = res.getString("tel_cli");
             String estton = res.getString("ton_gru");
             String estfot = res.getString("fec_ot");
-            String estcond = res.getString("cod_ot");
+            String estcond = res.getString("cond_ot");
             String estpago = res.getString("pag_ot");
             String estcont = res.getString("cont_ot");
             String esttot = res.getString("total_ot");
@@ -655,12 +655,73 @@ public class modeloOts {
         return datos;
     }
     
-    public Object[][] obtenerOtPorIdFacturada(String id){
+    public Object[][] obtenerOtPorIdFacturada(String id, String tipo){
         int registros = 0;
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM jornadas where id_fac = ?");
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM jornadas INNER JOIN facturas"
+                    + " ON facturas.id_fac = jornadas.id_fac where fol_fac = ? and tipo_fac = ?");
+            pstm.setString(1, id);
+            pstm.setString(2, tipo);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+       }catch(SQLException e){
+            System.out.println("Error obtener ot por id facturada");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        
+        Object[][] data = new String[registros][11];
+        
+        try{
+            PreparedStatement pstm = conn.prepareStatement("SELECT fec_ot, raz_cli, gir_cli, dir_cli,"
+                    + "ciu_cli, com_cli, cod_ot, total_ot, neto_ot, "
+                    + "iva_ot, fact_ot FROM Jornadas  INNER JOIN facturas ON facturas.id_fac = jornadas.id_fac"
+                    + " INNER JOIN"
+                    + " clientes ON clientes.rut_cli = jornadas.rut_cli INNER JOIN empleados ON empleados.rut_emp "
+                    + "= jornadas.rut_emp Where fol_fac = ? and tipo_fac = ? ORDER BY cod_ot");
+            pstm.setString(1, id);
+            pstm.setString(2, tipo);
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while(res.next()){
+                String estfec = res.getString("fec_ot");
+                java.util.Date fecha = formatDate.parse(estfec);
+                estfec = newFormat.format(fecha);
+                String estraz = res.getString("raz_cli");
+                String estgir = res.getString("gir_cli");
+                String estdir = res.getString("dir_cli");
+                String estciu = res.getString("ciu_cli");
+                String estcom = res.getString("com_cli");
+                String esttot = res.getString("total_ot");
+                String estnet = res.getString("neto_ot");
+                String estiva = res.getString("iva_ot");
+                String estcodot = res.getString("cod_ot");
+                String estfact = res.getString("fact_ot");
+                data[i] = new String[]{estcodot, estraz, estgir, estdir, estciu, estcom, estfec, estnet,
+                estiva, esttot, estfact};
+                i++;
+            }
+            res.close();
+        }catch(SQLException e){
+            System.out.println("Error obtener ot por id facturada");
+            System.out.println(e);
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        return data;
+    }
+    
+    public Object[][] obtenerOtPorIdFacturadaNC(String id){
+        int registros = 0;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM notacredito where fol_nc = ?");
             pstm.setString(1, id);
             ResultSet res = pstm.executeQuery();
             res.next();
@@ -676,11 +737,13 @@ public class modeloOts {
         Object[][] data = new String[registros][11];
         
         try{
-            PreparedStatement pstm = conn.prepareStatement("SELECT id_jor, fec_ot, raz_cli, gir_cli, dir_cli,"
-                    + "ciu_cli, com_cli, pat_gru, nom_emp, apP_emp, obs_jor, cod_ot, total_ot, neto_ot, "
-                    + "iva_ot, fact_ot FROM Jornadas INNER JOIN"
+            PreparedStatement pstm = conn.prepareStatement("SELECT fec_ot, raz_cli, gir_cli, dir_cli,"
+                    + "ciu_cli, com_cli, cod_ot, total_ot, neto_ot, "
+                    + "iva_ot, fact_ot FROM Jornadas INNER JOIN notacredito ON notacredito.id_fac = "
+                    + " jornadas.id_fac "
+                    + "INNER JOIN"
                     + " clientes ON clientes.rut_cli = jornadas.rut_cli INNER JOIN empleados ON empleados.rut_emp "
-                    + "= jornadas.rut_emp Where id_fac = ? ORDER BY cod_ot");
+                    + "= jornadas.rut_emp Where fol_nc = ? ORDER BY cod_ot");
             pstm.setString(1, id);
             ResultSet res = pstm.executeQuery();
             int i = 0;
@@ -696,6 +759,64 @@ public class modeloOts {
                 String esttot = res.getString("total_ot");
                 String estnet = res.getString("neto_ot");
                 String estiva = res.getString("iva_ot");
+                String estcodot = res.getString("cod_ot");
+                String estfact = res.getString("fact_ot");
+                data[i] = new String[]{estcodot, estraz, estgir, estdir, estciu, estcom, estfec, estnet,
+                estiva, esttot, estfact};
+                i++;
+            }
+            res.close();
+        }catch(SQLException e){
+            System.out.println("Error obtener ot por id facturada");
+            System.out.println(e);
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        return data;
+    }
+    
+    public Object[][] obtenerOtPorIdFacturadaND(String id){
+        int registros = 0;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM notadebito where fol_nd = ?");
+            pstm.setString(1, id);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+       }catch(SQLException e){
+            System.out.println("Error obtener ot por id facturada");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        
+        Object[][] data = new String[registros][11];
+        
+        try{
+            PreparedStatement pstm = conn.prepareStatement("SELECT fec_ot, raz_cli, gir_cli, dir_cli,"
+                    + "ciu_cli, com_cli, cod_ot, tot_nd, neto_nd, "
+                    + "iva_nd, fact_ot FROM Jornadas INNER JOIN notadebito ON jornadas.id_nd = notadebito.id_nd "
+                    + "INNER JOIN"
+                    + " clientes ON clientes.rut_cli = jornadas.rut_cli INNER JOIN empleados ON empleados.rut_emp "
+                    + "= jornadas.rut_emp Where notadebito.fol_nd = ? ORDER BY cod_ot");
+            pstm.setString(1, id);
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while(res.next()){
+                String estfec = res.getString("fec_ot");
+                java.util.Date fecha = formatDate.parse(estfec);
+                estfec = newFormat.format(fecha);
+                String estraz = res.getString("raz_cli");
+                String estgir = res.getString("gir_cli");
+                String estdir = res.getString("dir_cli");
+                String estciu = res.getString("ciu_cli");
+                String estcom = res.getString("com_cli");
+                String esttot = res.getString("tot_nd");
+                String estnet = res.getString("neto_nd");
+                String estiva = res.getString("iva_nd");
                 String estcodot = res.getString("cod_ot");
                 String estfact = res.getString("fact_ot");
                 data[i] = new String[]{estcodot, estraz, estgir, estdir, estciu, estcom, estfec, estnet,

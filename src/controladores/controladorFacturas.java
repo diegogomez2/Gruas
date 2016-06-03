@@ -9,6 +9,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import modelos.modeloFacturas;
@@ -42,15 +43,19 @@ public class controladorFacturas {
         miControlador.crearControladorDetalleFacturas(id);
     }
     
-    public String archivarFacturas(String[] idOts, int neto, int iva, int total, String tipo, String id_fac){
+    public String archivarFacturas(String[] idOts, int neto, int iva, int total, String tipo, String id_fac, String tiponc){
         modelos.modeloFacturas factura = new modeloFacturas();
         String id;
         modelos.modeloOts ot = new modeloOts();
         if(tipo.compareTo("nota debito") == 0){
             String folio = factura.folioND();
-            id = factura.ingresarND(formatDate.format(new Date()), neto, iva, total, id_fac, folio);
-            for(int i = 0; i < idOts.length; i++){
-                ot.archivarFacturaND(idOts[i], id);
+            id = factura.ingresarND(formatDate.format(new Date()), neto, iva, total, id_fac, folio, tiponc);
+            if(id.compareTo("incorrecto") == 0){
+                JOptionPane.showMessageDialog(null, "No se encontró la factura con el folio indicado");
+            }else{
+                for(int i = 0; i < idOts.length; i++){
+                    ot.archivarFacturaND(idOts[i], id);
+                }  
             }
         }else{
             String folio = "";

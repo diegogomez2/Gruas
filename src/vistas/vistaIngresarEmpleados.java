@@ -15,7 +15,10 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 import org.jdesktop.swingx.JXDatePicker;
+import org.jdesktop.swingx.plaf.basic.CalendarHeaderHandler;
+import org.jdesktop.swingx.plaf.basic.SpinningCalendarHeaderHandler;
 
 /**
  *
@@ -447,7 +450,7 @@ public class vistaIngresarEmpleados extends javax.swing.JDialog {
     }
 
     public String getComboCargo() {
-        return comboCargo.getSelectedItem().toString();
+        return comboCargo.getSelectedItem().toString().trim();
     }
 
     public String getComboComuna() {
@@ -463,11 +466,11 @@ public class vistaIngresarEmpleados extends javax.swing.JDialog {
     }
 
     public String getTextoApMaterno() {
-        return textoApMaterno.getText();
+        return textoApMaterno.getText().trim();
     }
 
     public String getTextoApPaterno() {
-        return textoApPaterno.getText();
+        return textoApPaterno.getText().trim();
     }
 
     public String getTextoCorreo() {
@@ -493,7 +496,9 @@ public class vistaIngresarEmpleados extends javax.swing.JDialog {
     }
 
     public String getTextoNombres() {
-        return textoNombres.getText();
+        String text = textoNombres.getText().trim();
+        
+        return text.replaceAll("\\s+", " ");
     }
 
     public String getTextoRut() {

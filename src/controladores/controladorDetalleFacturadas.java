@@ -14,9 +14,9 @@ import vistas.vistaDetalleFacturadas;
 public class controladorDetalleFacturadas {
     
     vistas.vistaDetalleFacturadas vistaDF;
-    public void mostrarVistaDetalleFacturadas(String id) {
+    public void mostrarVistaDetalleFacturadas(String id, String tipo) {
         controladorPrincipal miControlador = new controladorPrincipal();
-        Object[][] data = miControlador.obtenerOtPorIdFacturada(id);
+        Object[][] data = miControlador.obtenerOtPorIdFacturada(id, tipo);
         vistaDF = new vistaDetalleFacturadas(new javax.swing.JFrame(), true, data);
         vistaDF.setLocationRelativeTo(null);
         vistaDF.setVisible(true);

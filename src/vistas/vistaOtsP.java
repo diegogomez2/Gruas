@@ -72,7 +72,8 @@ jScrollPane1.setViewportView(tablaOts);
         if (tablaOts.getRowCount() > 0) {
             tablaOts.setRowSelectionInterval(0, 0);
         }
-        tablaOts.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tablaOts.setRowSelectionAllowed(true);
+        tablaOts.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         tablaOts.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent evt) {
                 JTable table = (JTable) evt.getSource();
@@ -116,21 +117,23 @@ jScrollPane1.setViewportView(tablaOts);
         botonFacturar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         textoFiltro = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        botonAnular = new javax.swing.JButton();
         botonActualizar = new javax.swing.JButton();
 
         tablaOts.getTableHeader().setReorderingAllowed(false);
+        tablaOts.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         tablaOts.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
+        tablaOts.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tablaOts);
 
         botonFacturar.setText("Facturar OT");
@@ -148,10 +151,10 @@ jScrollPane1.setViewportView(tablaOts);
             }
         });
 
-        jButton1.setText("Anular OT");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        botonAnular.setText("Anular OT");
+        botonAnular.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                botonAnularActionPerformed(evt);
             }
         });
 
@@ -172,7 +175,7 @@ jScrollPane1.setViewportView(tablaOts);
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1)
+                        .addComponent(botonAnular)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botonFacturar))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -196,7 +199,7 @@ jScrollPane1.setViewportView(tablaOts);
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonFacturar)
-                    .addComponent(jButton1))
+                    .addComponent(botonAnular))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -231,7 +234,7 @@ jScrollPane1.setViewportView(tablaOts);
         filtroPorRazon(query);
     }//GEN-LAST:event_textoFiltroKeyReleased
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void botonAnularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAnularActionPerformed
         String id;
         String idOt;
         controladores.controladorOts miControlador = new controladores.controladorOts();
@@ -251,7 +254,7 @@ jScrollPane1.setViewportView(tablaOts);
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una orden de trabajo para ser anulada");
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_botonAnularActionPerformed
 
     private void botonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarActionPerformed
         controladores.controladorOts miControlador = new controladores.controladorOts();
@@ -262,8 +265,8 @@ jScrollPane1.setViewportView(tablaOts);
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonActualizar;
+    private javax.swing.JButton botonAnular;
     private javax.swing.JButton botonFacturar;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaOts;

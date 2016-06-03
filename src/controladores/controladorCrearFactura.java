@@ -162,7 +162,7 @@ public class controladorCrearFactura {
             
             //DETALLE
             Element detalle = doc.createElement("Detalle");
-            encabezado.appendChild(detalle);
+            rootElement.appendChild(detalle);
             
             for(int i = 0; i < idOts.length; i++){
                 data = ots.obtenerFacturaPorId(idOts[i]);
@@ -333,7 +333,7 @@ public class controladorCrearFactura {
             
             //DETALLE
             Element detalle = doc.createElement("Detalle");
-            encabezado.appendChild(detalle);
+            rootElement.appendChild(detalle);
             
             for(int i = 0; i < idOts.length; i++){
                 data = ots.obtenerFacturaPorId(idOts[i]);
@@ -511,7 +511,7 @@ public class controladorCrearFactura {
             
             //DETALLE
             Element detalle = doc.createElement("Detalle");
-            encabezado.appendChild(detalle);
+            rootElement.appendChild(detalle);
             
             for(int i = 0; i < ots_nc.length; i++){
                 data = ots.obtenerFacturaPorId(ots_nc[i]);
@@ -717,7 +717,7 @@ public class controladorCrearFactura {
             
             //DETALLE
             Element detalle = doc.createElement("Detalle");
-            encabezado.appendChild(detalle);
+            rootElement.appendChild(detalle);
             
             for(int i = 0; i < idOts.length; i++){
                 data = ots.obtenerFacturaPorId(idOts[i]);
@@ -881,7 +881,7 @@ public class controladorCrearFactura {
             
             //DETALLE
             Element detalle = doc.createElement("Detalle");
-            encabezado.appendChild(detalle);
+            rootElement.appendChild(detalle);
             
             for(int i = 0; i < idOts.length; i++){
                 data = ots.obtenerFacturaPorId(idOts[i]);
@@ -1041,7 +1041,7 @@ public class controladorCrearFactura {
             
             //DETALLE
             Element detalle = doc.createElement("Detalle");
-            encabezado.appendChild(detalle);
+            rootElement.appendChild(detalle);
             
             for(int i = 0; i < idOts.length; i++){
                 data = ots.obtenerFacturaPorId(idOts[i]);
