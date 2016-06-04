@@ -275,11 +275,15 @@ public class vistaFacturasP extends javax.swing.JPanel {
                     controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
                     String id = micontroladorFacturas.archivarFacturas(idOts, neto, iva, total, "nota debito", id_fac, tiponc);
                     if(id.compareTo("incorrecto") != 0){
-                        if ((miControlador.crearNotaDebXML(idOts, Integer.toString(neto), Integer.toString(iva),
-                                Integer.toString(total), id, id_fac).compareTo("correcto") == 0)) {
-                            JTabbedPane tabs = (JTabbedPane) this.getParent();
-                            micontroladorOts.crearControladorPrincipal(tabs);
-                            miControlador.crearControladorPrincipal(tabs);
+                        try {
+                            if ((miControlador.crearNotaDebXML(idOts, Integer.toString(neto), Integer.toString(iva),
+                                    Integer.toString(total), id, id_fac).compareTo("correcto") == 0)) {
+                                JTabbedPane tabs = (JTabbedPane) this.getParent();
+                                micontroladorOts.crearControladorPrincipal(tabs);
+                                miControlador.crearControladorPrincipal(tabs);
+                            }
+                        } catch (ParseException ex) {
+                            Logger.getLogger(vistaFacturasP.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
                 }

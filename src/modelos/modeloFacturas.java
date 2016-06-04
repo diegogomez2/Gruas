@@ -599,13 +599,15 @@ public class modeloFacturas {
         return fol;
     }
     
-    public String obtenerFechaFac(String id){
+    public String obtenerFechaFac(String id, String tipo){
         String fec = "";
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("SELECT fec_fac from facturas WHERE id_fac = ? ");
+            PreparedStatement pstm = conn.prepareStatement("SELECT fec_fac from facturas WHERE fol_fac = ? and"
+                    + " tipo_fac = ?");
             pstm.setString(1, id);
+            pstm.setString(2, tipo);
             ResultSet res = pstm.executeQuery();
             res.next();
             String estfec = res.getString("fec_fac");

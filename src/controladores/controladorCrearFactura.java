@@ -459,7 +459,22 @@ public class controladorCrearFactura {
                 mtoItem.appendChild(doc.createTextNode(data[7]));
                 detalle.appendChild(mtoItem);
             }
-                        
+                     
+            Element adj = doc.createElement("Adjuntos");
+                rootElement.appendChild(adj);
+            
+                Element obs = doc.createElement("Observacion");
+                obs.appendChild(doc.createTextNode("OBSERVACIONES"));
+                adj.appendChild(obs);
+                
+                Element imp = doc.createElement("Impresora");
+                imp.appendChild(doc.createTextNode("impresora"));
+                adj.appendChild(imp);
+                
+                Element copias = doc.createElement("Copias");
+                copias.appendChild(doc.createTextNode("1"));
+                adj.appendChild(copias);
+                
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
@@ -479,7 +494,7 @@ public class controladorCrearFactura {
         }
     }
     
-    public String crearNotaCredXML(String id_nc, String[] valores_nc, String[] ots_nc, String razon, String fac){
+    public String crearNotaCredXML(String id_nc, String[] valores_nc, String[] ots_nc, String razon, String fac, String tipo_fac) throws ParseException{
         
         String fecha = formatDate.format(new Date());
         
@@ -615,40 +630,132 @@ public class controladorCrearFactura {
             bruto.appendChild(doc.createTextNode(valores_nc[3]));
             totales.appendChild(bruto);
             
-            //DETALLE
-            Element detalle = doc.createElement("Detalle");
-            rootElement.appendChild(detalle);
+//            //DETALLE
+//            Element detalle = doc.createElement("Detalle");
+//            rootElement.appendChild(detalle);
             
+            int contador = 0;
             for(int i = 0; i < ots_nc.length; i++){
+                modelos.modeloJornadas jornada = new modeloJornadas();
+                String[] datosDias;
                 data = ots.obtenerFacturaPorId(ots_nc[i]);
+                datosDias = ots.obtenerDiasPorIdOt(ots_nc[i]);
+                controladores.controladorIngresarOts miControlador = new controladores.controladorIngresarOts();
+                List<List<String>> valores = miControlador.calcularTarifa(datosDias[0], datosDias[1], datosDias[2],
+                        datosDias[3], datosDias[4]);
+                String[] infoDespacho = ots.obtenerValorDespachoOt(ots_nc[i]);
                 
-                Element numLin = doc.createElement("NroLinDet");
-                numLin.appendChild(doc.createTextNode(Integer.toString(i+1)));
-                detalle.appendChild(numLin);
+                for (int j = 0; j < valores.size() - 1; j++) {
+                    //DETALLE
+                    Element detalle = doc.createElement("Detalle");
+                    rootElement.appendChild(detalle);
+                    
+                    Element numLin = doc.createElement("NroLinDet");
+                    numLin.appendChild(doc.createTextNode(Integer.toString(contador+1)));
+                    detalle.appendChild(numLin);
+
+                    Element codItem = doc.createElement("CdgItem");
+                    detalle.appendChild(codItem);
+
+                    Element tipoCod = doc.createElement("TpoCodigo");
+                    tipoCod.appendChild(doc.createTextNode("Interna"));
+                    codItem.appendChild(tipoCod);
+
+                    Element valCod = doc.createElement("VlrCodigo");
+                    valCod.appendChild(doc.createTextNode("1"));
+                    codItem.appendChild(valCod);
+
+                    Element nomItem = doc.createElement("NmbItem");
+                    //nomItem.appendChild(doc.createTextNode(data[11]+" HORAS DE GRUA HORQUILLA O.T.:"+data[10]));
+                    nomItem.appendChild(doc.createTextNode(valores.get(j).get(3)+" HORAS DE GRUA HORQUILLA O.T.:"+data[10]));
+                    detalle.appendChild(nomItem);
+
+                    Element qtyItem = doc.createElement("QtyItem");
+                    //nomItem.appendChild(doc.createTextNode(data[11]+" HORAS DE GRUA HORQUILLA O.T.:"+data[10]));
+                    qtyItem.appendChild(doc.createTextNode(valores.get(j).get(3)));
+                    detalle.appendChild(qtyItem);
+                    
+                    Element prcItem = doc.createElement("PrcItem");
+                    //nomItem.appendChild(doc.createTextNode(data[11]+" HORAS DE GRUA HORQUILLA O.T.:"+data[10]));
+                    prcItem.appendChild(doc.createTextNode(valores.get(j).get(0)));
+                    detalle.appendChild(prcItem);
+                    
+                    Element mtoItem = doc.createElement("MtoItem");
+                    mtoItem.appendChild(doc.createTextNode(Float.toString(Float.parseFloat(valores.get(j).get(0))
+                            * Float.parseFloat(valores.get(j).get(3)))));
+                    detalle.appendChild(mtoItem);
+                    
+                    contador += 1;
+                }
                 
-                Element codItem = doc.createElement("CdgItem");
-                detalle.appendChild(codItem);
-                
-                Element tipoCod = doc.createElement("TpoCodigo");
-                tipoCod.appendChild(doc.createTextNode("Interna"));
-                codItem.appendChild(tipoCod);
-                
-                Element valCod = doc.createElement("VlrCodigo");
-                valCod.appendChild(doc.createTextNode("1"));
-                codItem.appendChild(valCod);
-                
-                Element nomItem = doc.createElement("NmbItem");
-                nomItem.appendChild(doc.createTextNode(data[11]+" HORAS DE GRUA HORQUILLA O.T.:"+data[10]));
-                detalle.appendChild(nomItem);
-                
-                Element mtoItem = doc.createElement("MtoItem");
-                mtoItem.appendChild(doc.createTextNode(data[7]));
-                detalle.appendChild(mtoItem);
+                if(infoDespacho[0].compareTo("1") == 0){
+                    //DETALLE
+                    Element detalle = doc.createElement("Detalle");
+                    rootElement.appendChild(detalle);
+                    
+                    Element numLin = doc.createElement("NroLinDet");
+                    numLin.appendChild(doc.createTextNode(Integer.toString(contador+1)));
+                    detalle.appendChild(numLin);
+
+                    Element codItem = doc.createElement("CdgItem");
+                    detalle.appendChild(codItem);
+
+                    Element tipoCod = doc.createElement("TpoCodigo");
+                    tipoCod.appendChild(doc.createTextNode("Interna"));
+                    codItem.appendChild(tipoCod);
+
+                    Element valCod = doc.createElement("VlrCodigo");
+                    valCod.appendChild(doc.createTextNode("2"));
+                    codItem.appendChild(valCod);
+
+                    Element nomItem = doc.createElement("NmbItem");
+                    //nomItem.appendChild(doc.createTextNode(data[11]+" HORAS DE GRUA HORQUILLA O.T.:"+data[10]));
+                    nomItem.appendChild(doc.createTextNode("TRASLADO GRUA A OBRA"));
+                    detalle.appendChild(nomItem);
+
+                    Element qtyItem = doc.createElement("QtyItem");
+                    qtyItem.appendChild(doc.createTextNode("1"));
+                    detalle.appendChild(qtyItem);
+                    
+                    Element prcItem = doc.createElement("PrcItem");
+                    //nomItem.appendChild(doc.createTextNode(data[11]+" HORAS DE GRUA HORQUILLA O.T.:"+data[10]));
+                    prcItem.appendChild(doc.createTextNode(infoDespacho[1]));
+                    detalle.appendChild(prcItem);
+                    
+                    Element mtoItem = doc.createElement("MtoItem");
+                    mtoItem.appendChild(doc.createTextNode(infoDespacho[1]));
+                    detalle.appendChild(mtoItem);
+                    
+                    contador += 1;
+                }
+//                Element numLin = doc.createElement("NroLinDet");
+//                numLin.appendChild(doc.createTextNode(Integer.toString(i+1)));
+//                detalle.appendChild(numLin);
+//                
+//                Element codItem = doc.createElement("CdgItem");
+//                detalle.appendChild(codItem);
+//                
+//                Element tipoCod = doc.createElement("TpoCodigo");
+//                tipoCod.appendChild(doc.createTextNode("Interna"));
+//                codItem.appendChild(tipoCod);
+//                
+//                Element valCod = doc.createElement("VlrCodigo");
+//                valCod.appendChild(doc.createTextNode("1"));
+//                codItem.appendChild(valCod);
+//                
+//                Element nomItem = doc.createElement("NmbItem");
+//                nomItem.appendChild(doc.createTextNode(data[11]+" HORAS DE GRUA HORQUILLA O.T.:"+data[10]));
+//                detalle.appendChild(nomItem);
+//                
+//                Element mtoItem = doc.createElement("MtoItem");
+//                mtoItem.appendChild(doc.createTextNode(data[7]));
+//                detalle.appendChild(mtoItem);
 
             }
             
+            //REFERENCIA
             Element ref = doc.createElement("Referencia");
-            encabezado.appendChild(ref);
+            rootElement.appendChild(ref);
             
             Element nrolin = doc.createElement("NroLinRef");
             nrolin.appendChild(doc.createTextNode("1"));
@@ -658,13 +765,13 @@ public class controladorCrearFactura {
             tporef.appendChild(doc.createTextNode("33"));
             ref.appendChild(tporef);
             
-            String fol_fac = mod.obtenerFolioFac(fac);
+//            String fol_fac = mod.obtenerFolioFac(fac);
             
             Element folioref = doc.createElement("FolioRef");
-            folioref.appendChild(doc.createTextNode(fol_fac));
+            folioref.appendChild(doc.createTextNode(fac));
             ref.appendChild(folioref);
             
-            String fec_ref = mod.obtenerFechaFac(fac);
+            String fec_ref = mod.obtenerFechaFac(fac, tipo_fac);
             
             Element fecref = doc.createElement("FchRef");
             fecref.appendChild(doc.createTextNode(fec_ref));
@@ -677,7 +784,22 @@ public class controladorCrearFactura {
             Element razref = doc.createElement("RazonRef");
             razref.appendChild(doc.createTextNode(razon));
             ref.appendChild(razref);
-                        
+                      
+            Element adj = doc.createElement("Adjuntos");
+                rootElement.appendChild(adj);
+            
+                Element obs = doc.createElement("Observacion");
+                obs.appendChild(doc.createTextNode("OBSERVACIONES"));
+                adj.appendChild(obs);
+                
+                Element imp = doc.createElement("Impresora");
+                imp.appendChild(doc.createTextNode("impresora"));
+                adj.appendChild(imp);
+                
+                Element copias = doc.createElement("Copias");
+                copias.appendChild(doc.createTextNode("1"));
+                adj.appendChild(copias);
+                
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
@@ -697,7 +819,7 @@ public class controladorCrearFactura {
         }
     }
     
-    public String crearNotaDebXML(String[] idOts, String valorNeto, String valorIva, String valorTotal, String fac, String id_fac){
+    public String crearNotaDebXML(String[] idOts, String valorNeto, String valorIva, String valorTotal, String fac, String id_fac) throws ParseException{
         
         String fecha = formatDate.format(new Date());
         
@@ -829,36 +951,173 @@ public class controladorCrearFactura {
             bruto.appendChild(doc.createTextNode(valorTotal));
             totales.appendChild(bruto);
             
-            //DETALLE
-            Element detalle = doc.createElement("Detalle");
-            rootElement.appendChild(detalle);
+//            //DETALLE
+//            Element detalle = doc.createElement("Detalle");
+//            rootElement.appendChild(detalle);
             
+            int contador = 0;
             for(int i = 0; i < idOts.length; i++){
+                modelos.modeloJornadas jornada = new modeloJornadas();
+                String[] datosDias;
                 data = ots.obtenerFacturaPorId(idOts[i]);
+                datosDias = ots.obtenerDiasPorIdOt(idOts[i]);
+                controladores.controladorIngresarOts miControlador = new controladores.controladorIngresarOts();
+                List<List<String>> valores = miControlador.calcularTarifa(datosDias[0], datosDias[1], datosDias[2],
+                        datosDias[3], datosDias[4]);
+                String[] infoDespacho = ots.obtenerValorDespachoOt(idOts[i]);
                 
-                Element numLin = doc.createElement("NroLinDet");
-                numLin.appendChild(doc.createTextNode(Integer.toString(i+1)));
-                detalle.appendChild(numLin);
+                for (int j = 0; j < valores.size() - 1; j++) {
+                    //DETALLE
+                    Element detalle = doc.createElement("Detalle");
+                    rootElement.appendChild(detalle);
+                    
+                    Element numLin = doc.createElement("NroLinDet");
+                    numLin.appendChild(doc.createTextNode(Integer.toString(contador+1)));
+                    detalle.appendChild(numLin);
+
+                    Element codItem = doc.createElement("CdgItem");
+                    detalle.appendChild(codItem);
+
+                    Element tipoCod = doc.createElement("TpoCodigo");
+                    tipoCod.appendChild(doc.createTextNode("Interna"));
+                    codItem.appendChild(tipoCod);
+
+                    Element valCod = doc.createElement("VlrCodigo");
+                    valCod.appendChild(doc.createTextNode("1"));
+                    codItem.appendChild(valCod);
+
+                    Element nomItem = doc.createElement("NmbItem");
+                    //nomItem.appendChild(doc.createTextNode(data[11]+" HORAS DE GRUA HORQUILLA O.T.:"+data[10]));
+                    nomItem.appendChild(doc.createTextNode(valores.get(j).get(3)+" HORAS DE GRUA HORQUILLA O.T.:"+data[10]));
+                    detalle.appendChild(nomItem);
+
+                    Element qtyItem = doc.createElement("QtyItem");
+                    //nomItem.appendChild(doc.createTextNode(data[11]+" HORAS DE GRUA HORQUILLA O.T.:"+data[10]));
+                    qtyItem.appendChild(doc.createTextNode(valores.get(j).get(3)));
+                    detalle.appendChild(qtyItem);
+                    
+                    Element prcItem = doc.createElement("PrcItem");
+                    //nomItem.appendChild(doc.createTextNode(data[11]+" HORAS DE GRUA HORQUILLA O.T.:"+data[10]));
+                    prcItem.appendChild(doc.createTextNode(valores.get(j).get(0)));
+                    detalle.appendChild(prcItem);
+                    
+                    Element mtoItem = doc.createElement("MtoItem");
+                    mtoItem.appendChild(doc.createTextNode(Float.toString(Float.parseFloat(valores.get(j).get(0))
+                            * Float.parseFloat(valores.get(j).get(3)))));
+                    detalle.appendChild(mtoItem);
+                    
+                    contador += 1;
+                }
                 
-                Element codItem = doc.createElement("CdgItem");
-                detalle.appendChild(codItem);
+//                Element numLin = doc.createElement("NroLinDet");
+//                numLin.appendChild(doc.createTextNode(Integer.toString(i+1)));
+//                detalle.appendChild(numLin);
+//                
+//                Element codItem = doc.createElement("CdgItem");
+//                detalle.appendChild(codItem);
+//                
+//                Element tipoCod = doc.createElement("TpoCodigo");
+//                tipoCod.appendChild(doc.createTextNode("Interna"));
+//                codItem.appendChild(tipoCod);
+//                
+//                Element valCod = doc.createElement("VlrCodigo");
+//                valCod.appendChild(doc.createTextNode("1"));
+//                codItem.appendChild(valCod);
+//                
+//                Element nomItem = doc.createElement("NmbItem");
+//                nomItem.appendChild(doc.createTextNode(data[11]+" HORAS DE GRUA HORQUILLA O.T.:"+data[10]));
+//                detalle.appendChild(nomItem);
+//                
+//                Element mtoItem = doc.createElement("MtoItem");
+//                mtoItem.appendChild(doc.createTextNode(data[7]));
+//                detalle.appendChild(mtoItem);
                 
-                Element tipoCod = doc.createElement("TpoCodigo");
-                tipoCod.appendChild(doc.createTextNode("Interna"));
-                codItem.appendChild(tipoCod);
+                if(infoDespacho[0].compareTo("1") == 0){
+                    //DETALLE
+                    Element detalle = doc.createElement("Detalle");
+                    rootElement.appendChild(detalle);
+                    
+                    Element numLin = doc.createElement("NroLinDet");
+                    numLin.appendChild(doc.createTextNode(Integer.toString(contador+1)));
+                    detalle.appendChild(numLin);
+
+                    Element codItem = doc.createElement("CdgItem");
+                    detalle.appendChild(codItem);
+
+                    Element tipoCod = doc.createElement("TpoCodigo");
+                    tipoCod.appendChild(doc.createTextNode("Interna"));
+                    codItem.appendChild(tipoCod);
+
+                    Element valCod = doc.createElement("VlrCodigo");
+                    valCod.appendChild(doc.createTextNode("2"));
+                    codItem.appendChild(valCod);
+
+                    Element nomItem = doc.createElement("NmbItem");
+                    //nomItem.appendChild(doc.createTextNode(data[11]+" HORAS DE GRUA HORQUILLA O.T.:"+data[10]));
+                    nomItem.appendChild(doc.createTextNode("TRASLADO GRUA A OBRA"));
+                    detalle.appendChild(nomItem);
+
+                    Element qtyItem = doc.createElement("QtyItem");
+                    qtyItem.appendChild(doc.createTextNode("1"));
+                    detalle.appendChild(qtyItem);
+                    
+                    Element prcItem = doc.createElement("PrcItem");
+                    //nomItem.appendChild(doc.createTextNode(data[11]+" HORAS DE GRUA HORQUILLA O.T.:"+data[10]));
+                    prcItem.appendChild(doc.createTextNode(infoDespacho[1]));
+                    detalle.appendChild(prcItem);
+                    
+                    Element mtoItem = doc.createElement("MtoItem");
+                    mtoItem.appendChild(doc.createTextNode(infoDespacho[1]));
+                    detalle.appendChild(mtoItem);
+                    
+                    contador += 1;
+                }
                 
-                Element valCod = doc.createElement("VlrCodigo");
-                valCod.appendChild(doc.createTextNode("1"));
-                codItem.appendChild(valCod);
-                
-                Element nomItem = doc.createElement("NmbItem");
-                nomItem.appendChild(doc.createTextNode(data[11]+" HORAS DE GRUA HORQUILLA O.T.:"+data[10]));
-                detalle.appendChild(nomItem);
-                
-                Element mtoItem = doc.createElement("MtoItem");
-                mtoItem.appendChild(doc.createTextNode(data[7]));
-                detalle.appendChild(mtoItem);
             }
+            
+            //REFERENCIA
+            Element ref = doc.createElement("Referencia");
+            rootElement.appendChild(ref);
+            
+            Element nrolin = doc.createElement("NroLinRef");
+            nrolin.appendChild(doc.createTextNode("1"));
+            ref.appendChild(nrolin);
+            
+            Element tporef = doc.createElement("TpoDocRef");
+            tporef.appendChild(doc.createTextNode("33"));
+            ref.appendChild(tporef);
+            
+//            String fol_fac = mod.obtenerFolioFac(fac);
+            
+            Element folioref = doc.createElement("FolioRef");
+            folioref.appendChild(doc.createTextNode(fac));
+            ref.appendChild(folioref);
+            
+            String fec_ref = mod.obtenerFechaFac(id_fac, "factura");
+            
+            Element fecref = doc.createElement("FchRef");
+            fecref.appendChild(doc.createTextNode(fec_ref));
+            ref.appendChild(fecref);
+            
+            Element codref = doc.createElement("CodRef");
+            codref.appendChild(doc.createTextNode("1"));
+            ref.appendChild(codref);
+            
+            
+            Element adj = doc.createElement("Adjuntos");
+                rootElement.appendChild(adj);
+            
+                Element obs = doc.createElement("Observacion");
+                obs.appendChild(doc.createTextNode("OBSERVACIONES"));
+                adj.appendChild(obs);
+                
+                Element imp = doc.createElement("Impresora");
+                imp.appendChild(doc.createTextNode("impresora"));
+                adj.appendChild(imp);
+                
+                Element copias = doc.createElement("Copias");
+                copias.appendChild(doc.createTextNode("1"));
+                adj.appendChild(copias);
                         
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
@@ -1028,6 +1287,21 @@ public class controladorCrearFactura {
                 detalle.appendChild(mtoItem);
                 
             }
+            
+            Element adj = doc.createElement("Adjuntos");
+                rootElement.appendChild(adj);
+            
+                Element obs = doc.createElement("Observacion");
+                obs.appendChild(doc.createTextNode("OBSERVACIONES"));
+                adj.appendChild(obs);
+                
+                Element imp = doc.createElement("Impresora");
+                imp.appendChild(doc.createTextNode("impresora"));
+                adj.appendChild(imp);
+                
+                Element copias = doc.createElement("Copias");
+                copias.appendChild(doc.createTextNode("1"));
+                adj.appendChild(copias);
                         
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
@@ -1187,7 +1461,22 @@ public class controladorCrearFactura {
                 nomItem.appendChild(doc.createTextNode(data[11]+" HORAS DE GRUA HORQUILLA O.T.:"+data[10]));
                 detalle.appendChild(nomItem);
             }
-                        
+                    
+            Element adj = doc.createElement("Adjuntos");
+                rootElement.appendChild(adj);
+            
+                Element obs = doc.createElement("Observacion");
+                obs.appendChild(doc.createTextNode("OBSERVACIONES"));
+                adj.appendChild(obs);
+                
+                Element imp = doc.createElement("Impresora");
+                imp.appendChild(doc.createTextNode("impresora"));
+                adj.appendChild(imp);
+                
+                Element copias = doc.createElement("Copias");
+                copias.appendChild(doc.createTextNode("1"));
+                adj.appendChild(copias);
+                
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");

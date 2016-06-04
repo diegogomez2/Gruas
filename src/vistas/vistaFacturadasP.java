@@ -182,10 +182,14 @@ public class vistaFacturadasP extends javax.swing.JPanel {
                    String id_nc = miControlador.ingresarNotaCredito(id, razon, tipo);
                     String[] valores_nc = miControlador.obtenerValoresNC(id_nc);
                     String[] ots = miControlador.obtenerOtsPorIdNC(id_nc);
-                    if((miControladorC.crearNotaCredXML(id_nc, valores_nc, ots, razon, id).compareTo("correcto") == 0)){
-                        JTabbedPane tabs = (JTabbedPane)this.getParent();
-                        miControlador.crearControladorPrincipal(tabs);
-                    } 
+                    try {
+                        if((miControladorC.crearNotaCredXML(id_nc, valores_nc, ots, razon, id, tipo).compareTo("correcto") == 0)){
+                            JTabbedPane tabs = (JTabbedPane)this.getParent();
+                            miControlador.crearControladorPrincipal(tabs); 
+                        }
+                    } catch (ParseException ex) {
+                        Logger.getLogger(vistaFacturadasP.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
         }else{
