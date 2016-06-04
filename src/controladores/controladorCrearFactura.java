@@ -77,7 +77,7 @@ public class controladorCrearFactura {
             id.appendChild(fpago);
             
             Element mpago = doc.createElement("MedioPago");
-            mpago.appendChild(doc.createTextNode("VER MEDIO"));
+            mpago.appendChild(doc.createTextNode("CH"));
             id.appendChild(mpago);
             
             //INFORMACION EMISOR
@@ -99,6 +99,10 @@ public class controladorCrearFactura {
             Element actEmisor = doc.createElement("Acteco");
             actEmisor.appendChild(doc.createTextNode("712900"));
             emisor.appendChild(actEmisor);
+            
+            Element sucEmisor = doc.createElement("Sucursal");
+            sucEmisor.appendChild(doc.createTextNode("712900"));
+            emisor.appendChild(sucEmisor);
             
             Element dirEmisor = doc.createElement("DirOrigen");
             dirEmisor.appendChild(doc.createTextNode("ALFONSO DONOSO 1021"));
@@ -151,6 +155,10 @@ public class controladorCrearFactura {
             Element neto = doc.createElement("MntNeto");
             neto.appendChild(doc.createTextNode(valorNeto));
             totales.appendChild(neto);
+            
+            Element tasaiva = doc.createElement("TasaIVA");
+            tasaiva.appendChild(doc.createTextNode("19.00"));
+            totales.appendChild(tasaiva);
             
             Element iva = doc.createElement("IVA");
             iva.appendChild(doc.createTextNode(valorIva));
@@ -252,7 +260,7 @@ public class controladorCrearFactura {
             id.appendChild(fpago);
             
             Element mpago = doc.createElement("MedioPago");
-            mpago.appendChild(doc.createTextNode("VER MEDIO"));
+            mpago.appendChild(doc.createTextNode("CH"));
             id.appendChild(mpago);
             
             //INFORMACION EMISOR
@@ -274,6 +282,10 @@ public class controladorCrearFactura {
             Element actEmisor = doc.createElement("Acteco");
             actEmisor.appendChild(doc.createTextNode("712900"));
             emisor.appendChild(actEmisor);
+            
+            Element sucEmisor = doc.createElement("Sucursal");
+            sucEmisor.appendChild(doc.createTextNode("712900"));
+            emisor.appendChild(sucEmisor);
             
             Element dirEmisor = doc.createElement("DirOrigen");
             dirEmisor.appendChild(doc.createTextNode("ALFONSO DONOSO 1021"));
@@ -423,7 +435,7 @@ public class controladorCrearFactura {
             id.appendChild(fpago);
             
             Element mpago = doc.createElement("MedioPago");
-            mpago.appendChild(doc.createTextNode("VER MEDIO"));
+            mpago.appendChild(doc.createTextNode("CH"));
             id.appendChild(mpago);
             
             Element fven = doc.createElement("FchaVenc");
@@ -449,6 +461,10 @@ public class controladorCrearFactura {
             Element actEmisor = doc.createElement("Acteco");
             actEmisor.appendChild(doc.createTextNode("712900"));
             emisor.appendChild(actEmisor);
+            
+            Element sucEmisor = doc.createElement("Sucursal");
+            sucEmisor.appendChild(doc.createTextNode("712900"));
+            emisor.appendChild(sucEmisor);
             
             Element dirEmisor = doc.createElement("DirOrigen");
             dirEmisor.appendChild(doc.createTextNode("ALFONSO DONOSO 1021"));
@@ -500,6 +516,10 @@ public class controladorCrearFactura {
             Element neto = doc.createElement("MntNeto");
             neto.appendChild(doc.createTextNode(valores_nc[1]));
             totales.appendChild(neto);
+            
+            Element tasaiva = doc.createElement("TasaIVA");
+            tasaiva.appendChild(doc.createTextNode("19.00"));
+            totales.appendChild(tasaiva);
             
             Element iva = doc.createElement("IVA");
             iva.appendChild(doc.createTextNode(valores_nc[2]));
@@ -633,7 +653,7 @@ public class controladorCrearFactura {
             id.appendChild(fpago);
             
             Element mpago = doc.createElement("MedioPago");
-            mpago.appendChild(doc.createTextNode("VER MEDIO"));
+            mpago.appendChild(doc.createTextNode("CH"));
             id.appendChild(mpago);
             
             //DATOS EMISOR
@@ -655,6 +675,10 @@ public class controladorCrearFactura {
             Element actEmisor = doc.createElement("Acteco");
             actEmisor.appendChild(doc.createTextNode("712900"));
             emisor.appendChild(actEmisor);
+            
+            Element sucEmisor = doc.createElement("Sucursal");
+            sucEmisor.appendChild(doc.createTextNode("712900"));
+            emisor.appendChild(sucEmisor);
             
             Element dirEmisor = doc.createElement("DirOrigen");
             dirEmisor.appendChild(doc.createTextNode("ALFONSO DONOSO 1021"));
@@ -706,6 +730,10 @@ public class controladorCrearFactura {
             Element neto = doc.createElement("MntNeto");
             neto.appendChild(doc.createTextNode(valorNeto));
             totales.appendChild(neto);
+            
+            Element tasaiva = doc.createElement("TasaIVA");
+            tasaiva.appendChild(doc.createTextNode("19.00"));
+            totales.appendChild(tasaiva);
             
             Element iva = doc.createElement("IVA");
             iva.appendChild(doc.createTextNode(valorIva));
@@ -827,6 +855,10 @@ public class controladorCrearFactura {
             Element actEmisor = doc.createElement("Acteco");
             actEmisor.appendChild(doc.createTextNode("712900"));
             emisor.appendChild(actEmisor);
+            
+            Element sucEmisor = doc.createElement("Sucursal");
+            sucEmisor.appendChild(doc.createTextNode("712900"));
+            emisor.appendChild(sucEmisor);
             
             Element dirEmisor = doc.createElement("DirOrigen");
             dirEmisor.appendChild(doc.createTextNode("ALFONSO DONOSO 1021"));
@@ -972,7 +1004,7 @@ public class controladorCrearFactura {
             id.appendChild(fpago);
             
             Element mpago = doc.createElement("MedioPago");
-            mpago.appendChild(doc.createTextNode("VER MEDIO"));
+            mpago.appendChild(doc.createTextNode("CH"));
             id.appendChild(mpago);
             
             //INFORMACION EMISOR
@@ -994,6 +1026,10 @@ public class controladorCrearFactura {
             Element actEmisor = doc.createElement("Acteco");
             actEmisor.appendChild(doc.createTextNode("712900"));
             emisor.appendChild(actEmisor);
+            
+            Element sucEmisor = doc.createElement("Sucursal");
+            sucEmisor.appendChild(doc.createTextNode("712900"));
+            emisor.appendChild(sucEmisor);
             
             Element dirEmisor = doc.createElement("DirOrigen");
             dirEmisor.appendChild(doc.createTextNode("ALFONSO DONOSO 1021"));
