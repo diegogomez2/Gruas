@@ -39,6 +39,8 @@ public class controladorDetalleOts {
         vistaDO.setTextoIva(data[21]);
         vistaDO.setTextoDespachado(data[22]);
         vistaDO.setSpinnerFinFaena(data[23]);
+        vistaDO.setCheckDespacho(data[24]);
+        vistaDO.setTextoValorDespacho(data[25]);
         vistaDO.setTextoCodigo(id);
         vistaDO.setLocationRelativeTo(null);
         vistaDO.setVisible(true);

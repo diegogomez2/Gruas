@@ -8,7 +8,10 @@ package controladores;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Pattern;
 import javax.swing.JTabbedPane;
 import vistas.vistaIngresarOts;
@@ -41,11 +44,23 @@ public class controladorIngresarOts {
     
     public boolean irVistaJornadasP(String id, int horas) {
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
+        String textoNeto, textoIva, textoBruto;
+        if(vistaIO.getCheckDespacho().compareTo("1") == 0){
+            int valor = Integer.parseInt(vistaIO.getTextoDespacho());
+            int iva = (int)(valor * 0.19);
+            int bruto = (int)(valor * 1.19);
+            textoNeto = Integer.toString(valor + Integer.parseInt(removeDots(vistaIO.getTextoNeto())));
+            textoIva = Integer.toString(iva + Integer.parseInt(removeDots(vistaIO.getTextoIva())));
+            textoBruto = Integer.toString(bruto + Integer.parseInt(removeDots(vistaIO.getTextoBruto())));
+        }else{
+            textoNeto = removeDots(vistaIO.getTextoNeto());
+            textoIva = removeDots(vistaIO.getTextoIva());
+            textoBruto = removeDots(vistaIO.getTextoBruto());
+        }
         String[] data = {vistaIO.getTextoContacto(), vistaIO.getTextoFechaOt(), vistaIO.getComboFormaPago(),
             vistaIO.getComboCondPago(), vistaIO.getTextoDespachado(), id, vistaIO.getTextoCodigo(),
-            removeDots(vistaIO.getTextoNeto()), removeDots(vistaIO.getTextoIva()), 
-            removeDots(vistaIO.getTextoBruto()), vistaIO.getSpinnerFinFaena(), Integer.toString(horas), vistaIO.getSpinnerHoraSalida(),
-        vistaIO.getSpinnerHoraLlegada()};
+            textoNeto, textoIva, textoBruto, vistaIO.getSpinnerFinFaena(), Integer.toString(horas), vistaIO.getSpinnerHoraSalida(),
+        vistaIO.getSpinnerHoraLlegada(), vistaIO.getCheckDespacho(), vistaIO.getTextoDespacho()};
         boolean flag = miControlador.ingresarOt(data);
         return flag;
     } 
@@ -70,10 +85,12 @@ public class controladorIngresarOts {
         return respuesta;
     }
     
-    public String[] calcularTarifa(String diaInicio, String diaFin, String horaInicio, String horaFin, String ton) throws ParseException{
-        int horasTotales = 0;
+    public List<List<String>> calcularTarifa(String diaInicio, String diaFin, String horaInicio, String horaFin, String ton) throws ParseException{
+        float horasTotales = 0;
         modelos.modeloOts ots = new modelos.modeloOts();
-        String[] data;// = {};
+        List<List<String>> data = new ArrayList<>();
+        String[] datos;
+        //String[] data;// = {};
         int tarifa;// = 0;
         Date fecha = formatDate.parse(diaInicio);
         String day1 = formatDay.format(fecha);
@@ -89,11 +106,13 @@ public class controladorIngresarOts {
             long minutes = (diff2 / (1000 * 60)) % 60;
             long hours = (diff2 / (1000 * 60 * 60)) % 24;
             if((hours == 3 && minutes == 0) || (hours < 3)){
-                data = ots.getMaxTarifa(diaInicio, horaInicio, getIdDia(day1), ton);
-                tarifa = Integer.parseInt(data[0]);
+                tarifa = Integer.parseInt(ots.getMaxTarifa(diaInicio, horaInicio, getIdDia(day1), ton));
                 long totalTarifa = tarifa * 3;
-                data = new String[]{Integer.toString((int)totalTarifa), String.valueOf((int)(totalTarifa * 0.19)),
-            String.valueOf((int)(totalTarifa * 1.19)), Integer.toString(3)};
+                data.add(Arrays.asList(Integer.toString((int)totalTarifa), String.valueOf((int)
+                        (totalTarifa * 0.19)), String.valueOf((int)(totalTarifa * 1.19)),
+                        Integer.toString(3), "3"));
+                //data = new String[]{Integer.toString((int)totalTarifa), String.valueOf((int)(totalTarifa * 0.19)),
+            //String.valueOf((int)(totalTarifa * 1.19)), Integer.toString(3)};
             return data;
             }
         }
@@ -114,9 +133,9 @@ public class controladorIngresarOts {
             //System.out.println("IIIII "+i);
         boolean flag = true;
             while(flag){
-                data = ots.getTarifa(diaInicio, horas[2*i], getIdDia(day1), ton);
-                tarifa = Integer.parseInt(data[0]);
-                hora = data[1];
+                datos = ots.getTarifa(diaInicio, horas[2*i], getIdDia(day1), ton);
+                tarifa = Integer.parseInt(datos[0]);
+                hora = datos[1];
                 if(hora.compareTo("00:00:00") == 0) hora = "24:00:00";
                 //System.out.println("tarifa "+tarifa + " hora "+hora );
                 Date horaIn = formatClock.parse(horas[2*i]);
@@ -144,11 +163,16 @@ public class controladorIngresarOts {
                 if(tramoDiff <= 0)  flag = false;
                 horas[2*i] = formatClock.format(finTramo.getTime());
 //                System.out.println("hora inicio nueva "+horas[2*i]);
+                data.add(Arrays.asList(Integer.toString((int)tarifa),String.valueOf((int)(tarifa * 0.19)),
+            String.valueOf((int)(tarifa * 1.19)), Float.toString(duracionTramo)));
             }
             day1 = nextDay(day1);
+            
         }
-        data = new String[]{Integer.toString((int)totalTarifa), String.valueOf((int)(totalTarifa * 0.19)),
-            String.valueOf((int)(totalTarifa * 1.19)), Integer.toString(horasTotales)};
+        data.add(Arrays.asList(Integer.toString((int)totalTarifa),String.valueOf((int)(totalTarifa * 0.19)),
+            String.valueOf((int)(totalTarifa * 1.19)), Float.toString(horasTotales)));
+        /*data = new String[]{Integer.toString((int)totalTarifa), String.valueOf((int)(totalTarifa * 0.19)),
+            String.valueOf((int)(totalTarifa * 1.19)), Integer.toString(horasTotales)};*/
 //        StringBuilder str = new StringBuilder(data[0]);
 //        data[0] = addDots(str);
 //        str = new StringBuilder(data[1]);

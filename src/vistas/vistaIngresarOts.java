@@ -10,9 +10,11 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
@@ -49,7 +51,7 @@ public class vistaIngresarOts extends javax.swing.JDialog {
         ton = data[14];
         textoCiudad.setText(data[15]);
         controladores.controladorIngresarOts miControlador = new controladores.controladorIngresarOts();
-        String[] valores = miControlador.calcularTarifa(diaInicio, diaFin, horaInicio, horaFin, ton);
+        List<List<String>> valores = miControlador.calcularTarifa(diaInicio, diaFin, horaInicio, horaFin, ton);
         textoGrua.setText(data[4]);
         textoEmpleado.setText(data[5]);
         textoObs.setText(data[6]);
@@ -60,14 +62,15 @@ public class vistaIngresarOts extends javax.swing.JDialog {
         textoDireccion.setText(data[11]);
         textoTelefono.setText(data[12]);   
         id = data[13];
-        textoNeto.setText(String.format("%,d", Integer.parseInt(valores[0])));
-        textoIva.setText(String.format("%,d", Integer.parseInt(valores[1])));
-        textoBruto.setText(String.format("%,d", Integer.parseInt(valores[2])));
+        int size = valores.size();
+        textoNeto.setText(String.format("%,d", Integer.parseInt(valores.get(size - 1).get(0))));
+        textoIva.setText(String.format("%,d", Integer.parseInt(valores.get(size - 1).get(1))));
+        textoBruto.setText(String.format("%,d", Integer.parseInt(valores.get(size - 1).get(2))));
         spinnerHoraSalida.setValue(formatClock.parse(horaInicio));
         spinnerHoraLlegada.setValue(formatClock.parse(horaFin));
         spinnerFinFaena.setValue(formatClock.parse(horaFin));
         textoFechaOt.setDate(new Date());
-        horas = Integer.parseInt(valores[3]);
+        horas = (int)Float.parseFloat(valores.get(size - 1).get(3));
 //        String[] listaRegiones = new String[ciudades.length];
 //        for(int i = 0; i < ciudades.length; i++){
 //            listaRegiones[i] = ciudades[i].toString();
@@ -139,6 +142,9 @@ public class vistaIngresarOts extends javax.swing.JDialog {
         textoCodigo = new javax.swing.JTextField();
         botonCalcular = new javax.swing.JButton();
         textoCiudad = new javax.swing.JTextField();
+        checkDespacho = new javax.swing.JCheckBox();
+        textoDespacho = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Ingresar orden de trabajo");
@@ -330,6 +336,10 @@ public class vistaIngresarOts extends javax.swing.JDialog {
             }
         });
 
+        checkDespacho.setText("Despacho");
+
+        jLabel12.setText("Valor Despacho");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -397,15 +407,18 @@ public class vistaIngresarOts extends javax.swing.JDialog {
                             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(textoGrua))
                         .addGap(4, 4, 4)))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel23)
-                        .addGap(65, 65, 65))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(textoCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10))))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel23)
+                            .addGap(65, 65, 65))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(textoCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addContainerGap()))
+                    .addComponent(jLabel12)
+                    .addComponent(textoDespacho, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(checkDespacho)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -441,17 +454,20 @@ public class vistaIngresarOts extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textoGiro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboCondPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboCondPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(checkDespacho))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel7)
-                    .addComponent(jLabel11))
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel12))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textoContacto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textoRazon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textoGrua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textoGrua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textoDespacho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -514,10 +530,14 @@ public class vistaIngresarOts extends javax.swing.JDialog {
     private void botonCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCalcularActionPerformed
         controladores.controladorIngresarOts miControlador = new controladores.controladorIngresarOts();
         try {
-            String[] valores = miControlador.calcularTarifa(diaInicio, diaFin, getSpinnerHoraSalida(), getSpinnerHoraLlegada(), ton);
-            textoNeto.setText(String.format("%,d", Integer.parseInt(valores[0])));
-            textoIva.setText(String.format("%,d", Integer.parseInt(valores[1])));
-            textoBruto.setText(String.format("%,d", Integer.parseInt(valores[2])));
+            List<List<String>> valores = miControlador.calcularTarifa(diaInicio, diaFin, getSpinnerHoraSalida(), getSpinnerHoraLlegada(), ton);
+//            textoNeto.setText(String.format("%,d", Integer.parseInt(valores[0])));
+//            textoIva.setText(String.format("%,d", Integer.parseInt(valores[1])));
+//            textoBruto.setText(String.format("%,d", Integer.parseInt(valores[2])));
+            int size = valores.size();
+            textoNeto.setText(String.format("%,d", Integer.parseInt(valores.get(size - 1).get(0))));
+            textoIva.setText(String.format("%,d", Integer.parseInt(valores.get(size - 1).get(1))));
+            textoBruto.setText(String.format("%,d", Integer.parseInt(valores.get(size - 1).get(2))));
         } catch (ParseException ex) {
             Logger.getLogger(vistaIngresarOts.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -564,11 +584,13 @@ public class vistaIngresarOts extends javax.swing.JDialog {
     private javax.swing.JButton botonCalcular;
     private javax.swing.JButton botonCancelar;
     private javax.swing.JButton botonIngresar;
+    private javax.swing.JCheckBox checkDespacho;
     private javax.swing.JComboBox<String> comboCondPago;
     private javax.swing.JComboBox<String> comboFormaPago;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
@@ -604,6 +626,7 @@ public class vistaIngresarOts extends javax.swing.JDialog {
     private javax.swing.JTextField textoCodigo;
     private javax.swing.JTextField textoContacto;
     private javax.swing.JTextField textoDespachado;
+    private javax.swing.JTextField textoDespacho;
     private javax.swing.JTextField textoDireccion;
     private javax.swing.JTextField textoEmpleado;
     private org.jdesktop.swingx.JXDatePicker textoFechaOt;
@@ -714,4 +737,15 @@ public class vistaIngresarOts extends javax.swing.JDialog {
         if(hora == null) return "";
         return hora;
     }
+
+    public String getCheckDespacho() {
+        if(checkDespacho.isSelected()) return "1";
+        return "0";
+    }
+
+    public String getTextoDespacho() {
+        return textoDespacho.getText().toString();
+    }
+    
+    
 }

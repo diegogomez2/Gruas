@@ -191,6 +191,7 @@ public class modeloJornadas {
                     + "jornadas.rut_cli = clientes.rut_cli LEFT JOIN gruas ON gruas.pat_gru = jornadas.pat_gru "
                     + "LEFT JOIN empleados ON empleados.rut_emp = jornadas.rut_emp WHERE id_jor = ?");
             pstm.setString(1, id);
+            System.out.println(pstm);
             ResultSet res = pstm.executeQuery();
             res.next();
             String estrutcli = res.getString("clientes.rut_cli");

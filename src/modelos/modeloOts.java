@@ -13,6 +13,8 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 /**
@@ -47,8 +49,8 @@ public class modeloOts {
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("update jornadas set cont_ot = ?, fec_ot = ?, pag_ot = ?,"
                     + "cond_ot = ?, desp_ot = ?, cod_ot = ?, neto_ot = ?, iva_ot = ?, total_ot = ?, "
-                    + "horfin_ot=?, hortot_ot=?, horsal_jor=?, horlleg_jor=? where"
-                    + " id_jor = ?");
+                    + "horfin_ot=?, hortot_ot=?, horsal_jor=?, horlleg_jor=?, checkdesp_ot = ?, vdesp_ot = ?"
+                    + " where id_jor = ?");
             pstm.setString(1, data[0]);
             pstm.setString(2, data[1]);
             pstm.setString(3, data[2]);
@@ -62,7 +64,13 @@ public class modeloOts {
             pstm.setInt(11, Integer.parseInt(data[11]));
             pstm.setString(12, data[12]);
             pstm.setString(13, data[13]);
-            pstm.setInt(14, Integer.parseInt(data[5]));
+            pstm.setString(14, data[14]);
+            if(data[14].compareTo("1") == 0){
+                pstm.setInt(15, Integer.parseInt(data[15]));
+            }else{
+                pstm.setInt(15, 0);
+            }
+            pstm.setInt(16, Integer.parseInt(data[5]));
             pstm.execute();
             pstm.close();
         }catch(SQLException e){
@@ -210,7 +218,8 @@ public class modeloOts {
             PreparedStatement pstm = conn.prepareStatement("SELECT fsal_jor, horsal_jor, freg_jor, horlleg_jor,"
                     + "des_gru, raz_cli, nom_emp, apP_emp, apM_emp, freg_jor, obs_jor, clientes.rut_cli, clientes.dig_cli,"
                     + "gir_cli, dir_cli, tel_cli, ton_gru, fec_ot, cod_ot, pag_ot, cond_ot, cont_ot, "
-                    + "total_ot, neto_ot, iva_ot, desp_ot, horfin_ot  FROM jornadas INNER JOIN clientes ON "
+                    + "total_ot, neto_ot, iva_ot, desp_ot, horfin_ot, checkdesp_ot, vdesp_ot"
+                    + " FROM jornadas INNER JOIN clientes ON "
                     + "jornadas.rut_cli = clientes.rut_cli INNER JOIN gruas ON gruas.pat_gru = jornadas.pat_gru "
                     + "INNER JOIN empleados ON empleados.rut_emp = jornadas.rut_emp WHERE cod_ot = ?");
             pstm.setString(1, id);
@@ -239,9 +248,11 @@ public class modeloOts {
             String estiva = res.getString("iva_ot");
             String estdesp = res.getString("desp_ot");
             String esthorfin = res.getString("horfin_ot");
+            String estcdesp = res.getString("checkdesp_ot");
+            String estvdesp = res.getString("vdesp_ot");
             data = new String[]{estfsal, esthorsal, estfreg, esthorlleg, estdes, estnom, estobs
                     , estrutcli, estdigcli, estraz, estgir, estdir, esttel, id, estton, estfot, estcond
-                    , estpago, estcont, esttot, estneto, estiva, estdesp, esthorfin};
+                    , estpago, estcont, esttot, estneto, estiva, estdesp, esthorfin, estcdesp, estvdesp};
         }catch(SQLException e){
             System.out.println("Error obtener ot por id");
             System.out.println(e);
@@ -278,8 +289,9 @@ public class modeloOts {
         return data;
     }
     
-    public String[] getMaxTarifa(String diaInicio, String horaInicio, String day, String ton){
-        String data[] = new String[]{};
+    public String getMaxTarifa(String diaInicio, String horaInicio, String day, String ton){
+        //String data[] = new String[]{};
+        String data = "";
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
@@ -291,7 +303,7 @@ public class modeloOts {
             ResultSet res = pstm.executeQuery();
             res.next();
             String estprec = res.getString("prec_tar");
-            data = new String[]{estprec};
+            data = estprec;
         }catch(SQLException e){
             System.out.println("Error obtener tarifa");
             System.out.println(e);
@@ -857,4 +869,61 @@ public class modeloOts {
             return "incorrecto";
         }
     }
+    
+    public String[] obtenerDiasPorIdOt(String idOt){
+        String[] data = new String[12];
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT fsal_jor, freg_jor, horsal_jor, horlleg_jor,"
+                    + "ton_gru FROM jornadas INNER JOIN gruas ON gruas.pat_gru = jornadas.pat_gru "
+                    + " WHERE cod_ot = ?");
+            pstm.setString(1, idOt);
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while(res.next()){
+                String estfsal = res.getString("fsal_jor");
+                String estfreg = res.getString("freg_jor");
+                String esthsal = res.getString("horsal_jor");
+                String esthreg = res.getString("horlleg_jor");
+                String estton = res.getString("ton_gru");
+                data = new String[]{estfsal, estfreg, esthsal, esthreg, estton};
+                i++;
+            }
+            res.close();
+       }catch(SQLException e){
+            System.out.println("Error obtener factura por id");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        return data;
+    }
+    
+    public String[] obtenerValorDespachoOt(String idOt){
+        String[] data = new String[2];
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT vdesp_ot, checkdesp_ot FROM jornadas WHERE cod_ot = ?");
+            pstm.setString(1, idOt);
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while(res.next()){
+                String estcheck = res.getString("checkdesp_ot");
+                String estvdesp = res.getString("vdesp_ot");
+                data[0] = estcheck;
+                data[1] = estvdesp;
+                i++;
+            }
+            res.close();
+       }catch(SQLException e){
+            System.out.println("Error obtener factura por id");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        return data;
+    }
+    
 }

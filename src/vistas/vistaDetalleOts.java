@@ -10,6 +10,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -67,7 +68,6 @@ public class vistaDetalleOts extends javax.swing.JDialog {
         jLabel10 = new javax.swing.JLabel();
         comboCondPago = new javax.swing.JComboBox<String>();
         jLabel11 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
         spinnerHoraSalida = new javax.swing.JSpinner(new SpinnerDateModel());
         labelHoraSalida = new javax.swing.JLabel();
@@ -97,6 +97,9 @@ public class vistaDetalleOts extends javax.swing.JDialog {
         textoGrua = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
         textoCodigo = new javax.swing.JTextField();
+        checkDespacho = new javax.swing.JCheckBox();
+        jLabel12 = new javax.swing.JLabel();
+        textoValorDespacho = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Detalle orden de trabajo");
@@ -159,8 +162,6 @@ public class vistaDetalleOts extends javax.swing.JDialog {
         comboCondPago.setEnabled(false);
 
         jLabel11.setText("Grúa");
-
-        jCheckBox1.setText("Tarifa especial");
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Horarios"));
 
@@ -340,6 +341,10 @@ public class vistaDetalleOts extends javax.swing.JDialog {
         textoCodigo.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         textoCodigo.setEnabled(false);
 
+        checkDespacho.setText("Despacho");
+
+        jLabel12.setText("Valor Despacho");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -406,19 +411,17 @@ public class vistaDetalleOts extends javax.swing.JDialog {
                             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(textoGrua))
                         .addGap(4, 4, 4)))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel23)
                         .addGap(65, 65, 65))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(26, 26, 26)
-                                .addComponent(jCheckBox1))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(textoCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(textoCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
+                            .addComponent(checkDespacho)
+                            .addComponent(jLabel12)
+                            .addComponent(textoValorDespacho))
                         .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
@@ -455,18 +458,20 @@ public class vistaDetalleOts extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textoGiro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboCondPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboCondPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(checkDespacho))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel7)
-                    .addComponent(jLabel11))
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel12))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textoContacto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textoRazon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCheckBox1)
-                    .addComponent(textoGrua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textoGrua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textoValorDespacho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -551,13 +556,14 @@ public class vistaDetalleOts extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonOk;
+    private javax.swing.JCheckBox checkDespacho;
     private javax.swing.JComboBox<String> comboCondPago;
     private javax.swing.JComboBox<String> comboFormaPago;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
@@ -604,6 +610,7 @@ public class vistaDetalleOts extends javax.swing.JDialog {
     private javax.swing.JTextField textoRazon2;
     private javax.swing.JTextField textoRutCliente;
     private javax.swing.JTextField textoTelefono;
+    private javax.swing.JTextField textoValorDespacho;
     // End of variables declaration//GEN-END:variables
 
     public void setComboCondPago(String comboCondPago) {
@@ -692,4 +699,15 @@ public class vistaDetalleOts extends javax.swing.JDialog {
         this.spinnerHoraSalida.setValue(formatClock.parse(spinnerHoraSalida));
     }
 
+    public void setCheckDespacho(String checkDespacho) {
+        if(checkDespacho.compareTo("1") == 0){
+            this.checkDespacho.setSelected(true);
+        }else{
+            this.checkDespacho.setSelected(false);
+        }
+    }
+
+    public void setTextoValorDespacho(String textoValorDespacho) {
+        this.textoValorDespacho.setText(textoValorDespacho);
+    }
 }

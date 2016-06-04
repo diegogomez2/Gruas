@@ -197,11 +197,15 @@ public class vistaFacturasP extends javax.swing.JPanel {
                 }
                 controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
                 String id = micontroladorFacturas.archivarFacturas(idOts, neto, iva, total, "factura", "0", "0");
-                if ((miControlador.crearFacXML(idOts, Integer.toString(neto), Integer.toString(iva),
-                        Integer.toString(total), id).compareTo("correcto") == 0)) {
-                    JTabbedPane tabs = (JTabbedPane) this.getParent();
-                    micontroladorOts.crearControladorPrincipal(tabs);
-                    miControlador.crearControladorPrincipal(tabs);
+                try {
+                    if ((miControlador.crearFacXML(idOts, Integer.toString(neto), Integer.toString(iva),
+                            Integer.toString(total), id).compareTo("correcto") == 0)) {
+                        JTabbedPane tabs = (JTabbedPane) this.getParent();
+                        micontroladorOts.crearControladorPrincipal(tabs);
+                        miControlador.crearControladorPrincipal(tabs);
+                    }
+                } catch (ParseException ex) {
+                    Logger.getLogger(vistaFacturasP.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "No se puede generar una factura para clientes distintos");
