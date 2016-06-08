@@ -232,6 +232,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textoRazon2">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
@@ -239,6 +242,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textoDireccion">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
@@ -246,6 +252,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textoGiro">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
@@ -260,6 +269,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textoRutCliente">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
@@ -267,6 +279,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textoTelefono">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">
           <Properties>
@@ -279,6 +294,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textoRazon">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel8">
           <Properties>
@@ -573,6 +591,12 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textoObs">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTextField(){&#xa;//Implement table cell tool tips.&#xa;    public String getToolTipText(MouseEvent e) {&#xa;        return this.getText();&#xa;    }&#xa;}"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JButton" name="botonIngresar">
           <Properties>
@@ -591,8 +615,14 @@
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="textoEmpleado">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textoGrua">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel23">
           <Properties>
@@ -610,6 +640,9 @@
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="textoCiudad">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JCheckBox" name="checkDespacho">
           <Properties>

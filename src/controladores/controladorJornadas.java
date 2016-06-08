@@ -56,4 +56,10 @@ public class controladorJornadas {
         miControlador.crearControladorModificarJornadas(id);
     }
     
+    public String[] obtenerJornadaPorId(String id){
+        modelos.modeloJornadas jornada = new modelos.modeloJornadas();
+        String[] data;
+        data = jornada.obtenerJornadaPorId(id);
+        return data;
+    }
 }

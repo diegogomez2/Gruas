@@ -25,10 +25,10 @@ import javax.swing.JButton;
 public class modeloJornadas {
     
     static String login = "root";
-//    static String password = "gruas_205243";
-//    static String url = "jdbc:mysql://10.20.224.100:3306/fact_gruas";
-    static String password = "205243";
-    static String url = "jdbc:mysql://localhost:3306/fact_gruas";
+    static String password = "gruas_205243";
+    static String url = "jdbc:mysql://10.20.224.100:3306/fact_gruas";
+//    static String password = "205243";
+//    static String url = "jdbc:mysql://localhost:3306/fact_gruas";
     Connection conn = null;
     
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
@@ -100,43 +100,6 @@ public class modeloJornadas {
         }
         return data;
     }
-
-//    public String obtenerIdOt(String id){
-//        int registros = 0;
-//        try{
-//            Class.forName("com.mysql.jdbc.Driver");
-//            conn = DriverManager.getConnection(url, login, password);
-//            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM ots where id_jor = ?");
-//            pstm.setString(1, id);
-//            ResultSet res = pstm.executeQuery();
-//            res.next();
-//            registros = res.getInt("total");
-//            res.close();
-//       }catch(SQLException e){
-//            System.out.println("Error al obtener id de ot");
-//            System.out.println(e);
-//       }catch(ClassNotFoundException e){
-//            System.out.println(e);
-//       }
-//        if(registros == 0) return "null";
-//        
-//        String data = "null";
-//        try{
-//            Class.forName("com.mysql.jdbc.Driver");
-//            conn = DriverManager.getConnection(url, login, password);
-//            PreparedStatement pstm = conn.prepareStatement("SELECT id_ot From ots Where id_jor = ?");
-//            pstm.setString(1, id);
-//            ResultSet res = pstm.executeQuery();
-//            res.next();
-//            String estidot = res.getString("id_ot");
-//            data = estidot;
-//        }catch(SQLException e){
-//            System.out.println(e);
-//        }catch(ClassNotFoundException e){
-//            System.out.println(e);
-//        }
-//        return data;
-//    }
     
     public String ingresarJornada(String[] data) {
         try{
@@ -276,5 +239,56 @@ public class modeloJornadas {
             return "incorrecto";
         }
         return "correcto";
+    }
+    
+    public String[] obtenerClienteIdJornada(String id){
+        String[] data = new String[5];
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT clientes.rut_cli, dig_cli, raz_cli, gir_cli,"
+                    + "dir_cli, ciu_cli, com_cli FROM jornadas INNER JOIN clientes"
+                    + " ON clientes.rut_cli = jornadas.rut_cli where id_jor = ?");
+            pstm.setString(1, id);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            String estrut = res.getString("rut_cli");
+            String estdig = res.getString("dig_cli");
+            String estraz = res.getString("raz_cli");
+            String estgir = res.getString("gir_cli");
+            String estdir = res.getString("dir_cli");
+            String estciu = res.getString("ciu_cli");
+            String estcom = res.getString("com_cli");
+            data = new String[]{estrut + "-" + estdig, estraz, estgir, estdir, estciu, estcom};           
+            res.close();
+       }catch(SQLException e){
+            System.out.println("Error obtener factura por id");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        return data;
+    }
+    
+    public String obtenerGruaPorIdJornada(String id){
+        String data = "";
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT des_gru FROM jornadas INNER JOIN gruas"
+                    + " ON gruas.pat_gru = jornadas.pat_gru where id_jor = ?");
+            pstm.setString(1, id);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            String estgru = res.getString("des_gru");
+            data = estgru;
+            res.close();
+       }catch(SQLException e){
+            System.out.println("Error obtener factura por id");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        return data;
     }
 }

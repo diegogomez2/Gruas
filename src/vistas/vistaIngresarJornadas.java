@@ -21,10 +21,10 @@ import java.awt.event.MouseEvent;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Stack;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
@@ -37,6 +37,9 @@ import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.JTextComponent;
 import modelos.modeloClientes;
 import org.jdesktop.swingx.JXDatePicker;
 
@@ -45,25 +48,18 @@ import org.jdesktop.swingx.JXDatePicker;
  * @author diego
  */
 public class vistaIngresarJornadas extends javax.swing.JDialog {
-
-    /**
-     * Creates new form vistaIngresarJornadas
-     */
-    List<String> listClientes;
-    List<String> listGruas;
-    List<String> listEmpleados;
+                                modelos.modeloClientes cliente = new modeloClientes();
+    List<String> listClientes = new ArrayList<>();
+    List<String> listGruas = new ArrayList<>();
+    List<String> listEmpleados = new ArrayList<>();
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
     SimpleDateFormat formatClock = new SimpleDateFormat("HH:mm");
     DateFormat formatDia = new SimpleDateFormat("EEE");
-    Vector<String> vectorClientes = new Stack<String>();
-    Vector<String> vectorGruas = new Stack<String>();
-    Vector<String> vectorEmpleados = new Stack<String>();
     JTextField textoClientes = new JTextField();
     JTextField textoOperadores = new JTextField();
     JTextField textoGruas = new JTextField();
     private boolean hide_flag = false;
-    //TextAutoCompleter listaGruas;
-    //TextAutoCompleter listaEmpleados;
+
 
     public vistaIngresarJornadas(java.awt.Frame parent, boolean modal, Object[] clientes,
             Object[] gruas, Object[] empleados) {
@@ -73,23 +69,25 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
         textoGruas = (JTextField)comboGruas.getEditor().getEditorComponent();
         textoOperadores = (JTextField)comboOperadores.getEditor().getEditorComponent();
         textoFechaSalida.setDate(new Date());
-//        textoGruas.addFocusListener(new FocusListener(){
-//                @Override
-//                public void focusGained(FocusEvent e){
-//                    modelos.modeloGruas grua = new modelos.modeloGruas();
-//                    Object[] gruas = grua.obtenerDescGruasDisp(getTextoFechaSalida() + " " + getTextoHoraSalida(),
-//                getTextoFechaRegreso() + " " + getTextoHoraRegreso());
-//                    autosuggestGruas(gruas);
-//                }
-//
-//            @Override
-//            public void focusLost(FocusEvent fe) {
-//            }
-//            });
         
-  
-        textoFechaRegreso.getEditor().addFocusListener(new FocusListener() {
+        final JTextComponent tcc = (JTextComponent) comboClientes.getEditor().getEditorComponent();
+        tcc.getDocument().addDocumentListener(new DocumentListener() { 
+            @Override
+            public void insertUpdate(DocumentEvent de) {
+                String obs = cliente.obtenerObsPorRazon(comboClientes.getSelectedItem().toString());
+                setTextoObsCliente(obs);            
+            }
 
+            @Override
+            public void removeUpdate(DocumentEvent de) {
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent de) {
+            }
+        });
+        
+        textoFechaSalida.getEditor().addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent fe) {
             }
@@ -97,8 +95,8 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
             @Override
             public void focusLost(FocusEvent fe) {
                  if(getTextoFechaRegreso().compareTo("") != 0 && getTextoFechaSalida().compareTo("") != 0){
-                     modelos.modeloGruas grua = new modelos.modeloGruas();
-                     Object[] gruas = grua.obtenerDescGruasDisp(getTextoFechaSalida() + " " + getTextoHoraSalida(),
+                    modelos.modeloGruas grua = new modelos.modeloGruas();
+                    Object[] gruas = grua.obtenerDescGruasDisp(getTextoFechaSalida() + " " + getTextoHoraSalida(),
                     getTextoFechaRegreso() + " " + getTextoHoraRegreso());
                     autosuggestGruas(gruas); 
                     modelos.modeloEmpleados empleado = new modelos.modeloEmpleados();
@@ -108,34 +106,87 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
                  }
             }
         });
-//        textoOperadores.addFocusListener(new FocusListener(){
-//            @Override
-//            public void focusGained(FocusEvent e){
-//        modelos.modeloEmpleados empleado = new modelos.modeloEmpleados();
-//        Object[] empleados = empleado.obtenerNomEmpDisp(getTextoFechaSalida() + " " + getTextoHoraSalida(),
-//                getTextoFechaRegreso() + " " + getTextoHoraRegreso());
-//        autosuggestOperadores(empleados);
-//            }
-//            @Override
-//            public void focusLost(FocusEvent fe) {
-//            }
-//        });
+        
+        textoFechaRegreso.getEditor().addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent fe) {
+            }
+
+            @Override
+            public void focusLost(FocusEvent fe) {
+                 if(getTextoFechaRegreso().compareTo("") != 0 && getTextoFechaSalida().compareTo("") != 0){
+                    modelos.modeloGruas grua = new modelos.modeloGruas();
+                    Object[] gruas = grua.obtenerDescGruasDisp(getTextoFechaSalida() + " " + getTextoHoraSalida(),
+                    getTextoFechaRegreso() + " " + getTextoHoraRegreso());
+                    autosuggestGruas(gruas); 
+                    modelos.modeloEmpleados empleado = new modelos.modeloEmpleados();
+                    Object[] empleados = empleado.obtenerNomEmpDisp(getTextoFechaSalida() + " " + getTextoHoraSalida(),
+                    getTextoFechaRegreso() + " " + getTextoHoraRegreso());
+                    autosuggestOperadores(empleados);
+                 }
+            }
+        });
+
+        textoGruas.addKeyListener(new KeyAdapter(){
+            public void keyTyped(KeyEvent e){
+                EventQueue.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        String text = textoGruas.getText();
+                        if(text.length() == 0){
+                            comboGruas.hidePopup();
+                            setModel(new DefaultComboBoxModel(listGruas.toArray()), "", comboGruas, textoGruas);
+                        }else{
+                            DefaultComboBoxModel m = getSuggestedModel(listGruas, text);
+                            if(m.getSize() == 0){
+                                comboGruas.hidePopup();
+                            }else{
+                                setModel(m, text, comboGruas, textoGruas);
+                                comboGruas.showPopup();
+                            }
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e){
+                String text = textoGruas.getText();
+                int code = e.getKeyCode();
+                if(code == KeyEvent.VK_ENTER){
+                    for (int i = 0; i < listGruas.size(); i++) {
+                        String str = (String)listGruas.get(i);
+                        if(str.toLowerCase().contains(text.toLowerCase())){
+                            textoGruas.setText(str);
+                            comboGruas.hidePopup();
+                            return;
+                        }
+                    }
+                }else if(code == KeyEvent.VK_ESCAPE){
+                    hide_flag = true;
+                }else if(code == KeyEvent.VK_RIGHT){
+                    for (int i = 0; i < listGruas.size(); i++) {
+                        String str = (String)listGruas.get(i);
+                        if(str.toLowerCase().contains(text.toLowerCase())){
+                            textoGruas.setText(str);
+                            return;
+                        }
+                    }
+                }
+            }
+        });
+        comboGruas.addItemListener(new ItemListener() {
+                        @Override
+                        public void itemStateChanged(ItemEvent ie) {
+                            if(ie.getStateChange() == ItemEvent.SELECTED){
+                                comboGruas.getSelectedIndex();
+                            }
+                        }
+                    });
+        
         autosuggestClientes(clientes);
         autosuggestGruas(gruas);
         autosuggestOperadores(empleados);
-        controladores.controladorIngresarJornadas miControlador = new controladores.controladorIngresarJornadas();
-        //TextAutoCompleter listaClientes = new TextAutoCompleter(textoCliente);
-        //listaGruas = new TextAutoCompleter(textoGrua);
-        //listaEmpleados = new TextAutoCompleter(textoOperador);
-//        for (int i = 0; i < clientes.length; i++) {
-//            listaClientes.addItem(clientes[i].toString());
-//        }
-//        for (int i = 0; i < gruas.length; i++) {
-//            listaGruas.addItem(gruas[i].toString());
-//        }
-//        for (int i = 0; i < empleados.length; i++) {
-//            listaEmpleados.addItem(empleados[i].toString());
-//        }
     }
 
     /**
@@ -223,18 +274,7 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
         textoObsCliente.setRows(5);
         jScrollPane1.setViewportView(textoObsCliente);
 
-        comboGruas.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                comboGruasFocusGained(evt);
-            }
-        });
-
         comboClientes.setMaximumSize(new java.awt.Dimension(28, 20));
-        comboClientes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                comboClientesMouseReleased(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -370,23 +410,6 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_botonAceptarActionPerformed
 
-    private void comboClientesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboClientesMouseReleased
-        modelos.modeloClientes cliente = new modeloClientes();
-        String obs = cliente.obtenerObsPorRazon(comboClientes.getSelectedItem().toString());
-        setTextoObsCliente(obs);
-    }//GEN-LAST:event_comboClientesMouseReleased
-
-    private void comboGruasFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_comboGruasFocusGained
-//        //listaGruas.removeAll();
-//        modelos.modeloGruas grua = new modelos.modeloGruas();
-//        Object[] gruas = grua.obtenerDescGruasDisp(getTextoFechaSalida() + " " + getTextoHoraSalida(),
-//                getTextoFechaRegreso() + " " + getTextoHoraRegreso());
-////        for (int i = 0; i < gruas.length; i++) {
-////            listaGruas.addItem(gruas[i].toString());
-////        }
-//        autosuggestGruas(gruas);
-    }//GEN-LAST:event_comboGruasFocusGained
-
     /**
      * @param args the command line arguments
      */
@@ -512,10 +535,16 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
     }
 
     public String getTextoGrua() {
+        if(comboGruas.getSelectedItem() == null){
+            return "";
+        }
         return comboGruas.getSelectedItem().toString();
     }
 
     public String getTextoOperador() {
+        if(comboOperadores.getSelectedItem() == null){
+            return "";
+        }
         return comboOperadores.getSelectedItem().toString();
     }
 
@@ -542,12 +571,12 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
         return m;
     }
 
-    public void autosuggestClientes(Object[] data){
+    public final void autosuggestClientes(Object[] data){
             comboClientes.removeAllItems();
             if(comboClientes.getItemCount() == 0){
                 for (Object data1 : data) {
                     comboClientes.addItem(data1);
-                    vectorClientes.addElement((String) data1);
+                    listClientes.add((String) data1);
                     comboClientes.addItemListener(new ItemListener() {
 
                         @Override
@@ -564,6 +593,7 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
 
         comboClientes.setEditable(true);
         textoClientes.addKeyListener(new KeyAdapter(){
+            @Override
             public void keyTyped(KeyEvent e){
                 EventQueue.invokeLater(new Runnable() {
                     @Override
@@ -571,9 +601,9 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
                         String text = textoClientes.getText();
                         if(text.length() == 0){
                             comboClientes.hidePopup();
-                            setModel(new DefaultComboBoxModel(vectorClientes), "", comboClientes, textoClientes);
+                            setModel(new DefaultComboBoxModel(listClientes.toArray()), "", comboClientes, textoClientes);
                         }else{
-                            DefaultComboBoxModel m = getSuggestedModel(vectorClientes, text);
+                            DefaultComboBoxModel m = getSuggestedModel(listClientes, text);
                             if(m.getSize() == 0){
                                 comboClientes.hidePopup();
                             }else{
@@ -590,141 +620,61 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
                 String text = textoClientes.getText();
                 int code = e.getKeyCode();
                 if(code == KeyEvent.VK_ENTER){
-                    for (int i = 0; i < vectorClientes.size(); i++) {
-                        String str = (String)vectorClientes.elementAt(i);
+                    for (int i = 0; i < listClientes.size(); i++) {
+                        String str = (String)listClientes.get(i);
                         if(str.toLowerCase().contains(text.toLowerCase())){
                             textoClientes.setText(str);
-                            modelos.modeloClientes cliente = new modeloClientes();
-                            String obs = cliente.obtenerObsPorRazon(comboClientes.getSelectedItem().toString());
-                            setTextoObsCliente(obs);
                             return;
                         }
                     }
                 }else if(code == KeyEvent.VK_ESCAPE){
                     hide_flag = true;
                 }else if(code == KeyEvent.VK_RIGHT){
-                    for (int i = 0; i < vectorClientes.size(); i++) {
-                        String str = (String)vectorClientes.elementAt(i);
+                    for (int i = 0; i < listClientes.size(); i++) {
+                        String str = (String)listClientes.get(i);
                         if(str.toLowerCase().contains(text.toLowerCase())){
                             textoClientes.setText(str);
-                            modelos.modeloClientes cliente = new modeloClientes();
-                            String obs = cliente.obtenerObsPorRazon(comboClientes.getSelectedItem().toString());
-                            setTextoObsCliente(obs);
                             return;
                         }
                     }
                 }
             }
-
-//            public void mousePressed(MouseEvent e){
-//                String text = textoClientes.getText();
-//                int code = e.getButton();
-//                if(code == MouseEvent.BUTTON1){
-//                    modelos.modeloClientes cliente = new modeloClientes();
-//                            String obs = cliente.obtenerObsPorRazon(comboClientes.getSelectedItem().toString());
-//                            setTextoObsCliente(obs);
-//                }
-//            }
         });
     }
 
-    public void autosuggestGruas(Object[] data){
+    public final void autosuggestGruas(Object[] data){
             String item = "";
             if(comboGruas.getSelectedItem() != null){
                 item = comboGruas.getSelectedItem().toString();
             }
             comboGruas.removeAllItems();
-            vectorGruas.removeAllElements();
+            listGruas.clear();
             if(comboGruas.getItemCount() == 0){
-                for (int j = 0; j < data.length; j++) {
-                    int ola = comboGruas.getItemCount();
-                    comboGruas.addItem(data[j]);
-                    int ola2 = comboGruas.getItemCount();
-                    vectorGruas.addElement((String)data[j]);
-                    int ola3 = comboGruas.getItemCount();
-                    comboGruas.addItemListener(new ItemListener() {
-
-                        @Override
-                        public void itemStateChanged(ItemEvent ie) {
-                            if(ie.getStateChange() == ItemEvent.SELECTED){
-                                int chao = comboGruas.getItemCount();
-                                String chao2 = comboGruas.getSelectedItem().toString();
-                                comboGruas.getSelectedIndex();
-                            }
-                        }
-                    });
-
+                    //comboGruas.setModel(new DefaultComboBoxModel(data));
+                for (Object data1 : data) {
+                    comboGruas.addItem(data1);
+                    listGruas.add((String) data1);
                 }
                 comboGruas.setSelectedIndex(((DefaultComboBoxModel)comboGruas.getModel()).getIndexOf(item));
             }else{
-                System.out.println("ERROR");
                 comboGruas.addItem("Error");
             }
 
-        comboGruas.setEditable(true);
-        System.out.println(comboGruas.getItemCount());
-
-        textoGruas.addKeyListener(new KeyAdapter(){
-            public void keyTyped(KeyEvent e){
-                EventQueue.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        String text = textoGruas.getText();
-                        if(text.length() == 0){
-                            comboGruas.hidePopup();
-                            setModel(new DefaultComboBoxModel(vectorGruas), "", comboGruas, textoGruas);
-                        }else{
-                            DefaultComboBoxModel m = getSuggestedModel(vectorGruas, text);
-                            if(m.getSize() == 0){
-                                comboGruas.hidePopup();
-                            }else{
-                                setModel(m, text, comboGruas, textoGruas);
-                                comboGruas.showPopup();
-                            }
-                        }
-                    }
-                });
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e){
-                String text = textoGruas.getText();
-                int code = e.getKeyCode();
-                if(code == KeyEvent.VK_ENTER){
-                    for (int i = 0; i < vectorGruas.size(); i++) {
-                        String str = (String)vectorGruas.elementAt(i);
-                        if(str.toLowerCase().contains(text.toLowerCase())){
-                            textoGruas.setText(str);
-                            comboGruas.hidePopup();
-                            return;
-                        }
-                    }
-                }else if(code == KeyEvent.VK_ESCAPE){
-                    hide_flag = true;
-                }else if(code == KeyEvent.VK_RIGHT){
-                    for (int i = 0; i < vectorGruas.size(); i++) {
-                        String str = (String)vectorGruas.elementAt(i);
-                        if(str.toLowerCase().contains(text.toLowerCase())){
-                            textoGruas.setText(str);
-                            return;
-                        }
-                    }
-                }
-            }
-        });
+        comboGruas.setEditable(true); 
     }
 
-    public void autosuggestOperadores(Object[] data){
+    public final void autosuggestOperadores(Object[] data){
             String item = "";
             if(comboOperadores.getSelectedItem() != null){
                 item = comboOperadores.getSelectedItem().toString();
             }
             comboOperadores.removeAllItems();
-            vectorEmpleados.removeAllElements();
+            listEmpleados.clear();
             if(comboOperadores.getItemCount() == 0){
+                //comboOperadores.setModel(new DefaultComboBoxModel(data));
                 for (Object data1 : data) {
                     comboOperadores.addItem(data1);
-                    vectorEmpleados.addElement((String) data1);
+                    listEmpleados.add((String) data1);
                     comboOperadores.addItemListener(new ItemListener() {
 
                         @Override
@@ -742,6 +692,7 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
             
         comboOperadores.setEditable(true);
         textoOperadores.addKeyListener(new KeyAdapter(){
+            @Override
             public void keyTyped(KeyEvent e){
                 EventQueue.invokeLater(new Runnable() {
                     @Override
@@ -749,9 +700,9 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
                         String text = textoOperadores.getText();
                         if(text.length() == 0){
                             comboOperadores.hidePopup();
-                            setModel(new DefaultComboBoxModel(vectorEmpleados), "", comboOperadores, textoOperadores);
+                            setModel(new DefaultComboBoxModel(listEmpleados.toArray()), "", comboOperadores, textoOperadores);
                         }else{
-                            DefaultComboBoxModel m = getSuggestedModel(vectorEmpleados, text);
+                            DefaultComboBoxModel m = getSuggestedModel(listEmpleados, text);
                             if(m.getSize() == 0){
                                 comboOperadores.hidePopup();
                             }else{
@@ -768,8 +719,8 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
                 String text = textoOperadores.getText();
                 int code = e.getKeyCode();
                 if(code == KeyEvent.VK_ENTER){
-                    for (int i = 0; i < vectorEmpleados.size(); i++) {
-                        String str = (String)vectorEmpleados.elementAt(i);
+                    for (int i = 0; i < listEmpleados.size(); i++) {
+                        String str = (String)listEmpleados.get(i);
                         if(str.toLowerCase().contains(text.toLowerCase())){
                             textoOperadores.setText(str);
                             return;
@@ -778,8 +729,8 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
                 }else if(code == KeyEvent.VK_ESCAPE){
                     hide_flag = true;
                 }else if(code == KeyEvent.VK_RIGHT){
-                    for (int i = 0; i < vectorEmpleados.size(); i++) {
-                        String str = (String)vectorEmpleados.elementAt(i);
+                    for (int i = 0; i < listEmpleados.size(); i++) {
+                        String str = (String)listEmpleados.get(i);
                         if(str.toLowerCase().contains(text.toLowerCase())){
                             textoOperadores.setText(str);
                             return;
@@ -788,11 +739,5 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
                 }
             }
         });
-    }
-    
-    public void fillList(List<String> lista, Object[] data){
-        for (Object data1 : data) {
-            lista.add(data1.toString());
-        }
     }
 }

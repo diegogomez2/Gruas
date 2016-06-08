@@ -28,7 +28,6 @@ public class vistaDetalleFacturadas extends javax.swing.JDialog {
     public vistaDetalleFacturadas(java.awt.Frame parent, boolean modal, Object[][] data) {
         super(parent, modal);
         initComponents();
-        final int rows = 5;
         String[] columNames = {"Código OT", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
             "Neto", "IVA", "Total"};
         datos = new DefaultTableModel(data, columNames){

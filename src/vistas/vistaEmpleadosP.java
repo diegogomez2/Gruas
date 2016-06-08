@@ -66,7 +66,23 @@ public class vistaEmpleadosP extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaEmpleados = new javax.swing.JTable();
+        tablaEmpleados = new javax.swing.JTable(){
+            //Implement table cell tool tips.
+            public String getToolTipText(MouseEvent e) {
+                String tip = null;
+                java.awt.Point p = e.getPoint();
+                int rowIndex = rowAtPoint(p);
+                int colIndex = columnAtPoint(p);
+
+                try {
+                    tip = getValueAt(rowIndex, colIndex).toString();
+                } catch (RuntimeException e1) {
+                    //catch null pointer exception if mouse is over an empty line
+                }
+
+                return tip;
+            }
+        };
         botonModificar = new javax.swing.JButton();
         botonEliminar = new javax.swing.JButton();
         botonAgregar = new javax.swing.JButton();
@@ -76,13 +92,13 @@ public class vistaEmpleadosP extends javax.swing.JPanel {
 
         tablaEmpleados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         tablaEmpleados.getTableHeader().setReorderingAllowed(false);
@@ -184,8 +200,8 @@ public class vistaEmpleadosP extends javax.swing.JPanel {
             int row = getFilaSeleccionada();
             nombres = getNombresFila(row);
             rut = getRutFila(row);
-            int dialogResult = JOptionPane.showOptionDialog(null, "Esta seguro que desea eliminar al empleado: \n "
-            + rut + "\n" + nombres, "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, 0);
+            int dialogResult = JOptionPane.showOptionDialog(null, "Esta seguro que desea eliminar al empleado: \nRut: "
+            + rut + "\nNombre: " + nombres, "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, 0);
             if(dialogResult == JOptionPane.YES_OPTION)  miControlador.eliminarEmpleados(rut);
             JTabbedPane tabs = (JTabbedPane)this.getParent();
             miControlador.crearControladorPrincipal(tabs);

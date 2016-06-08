@@ -33,7 +33,7 @@ public class vistaAgregarTarifa extends javax.swing.JDialog {
         for(int i = 0; i < data.length; i++){
             listarTonelajes[i] = data[i].toString();
         }
-        comboTonelaje.setModel(new DefaultComboBoxModel<String>(listarTonelajes));    
+        comboTonelaje.setModel(new DefaultComboBoxModel<>(listarTonelajes));    
     }
 
     /**
@@ -246,5 +246,4 @@ public class vistaAgregarTarifa extends javax.swing.JDialog {
     public String getTextoTarifa() {
         return textoTarifa.getText();
     }
-    
 }

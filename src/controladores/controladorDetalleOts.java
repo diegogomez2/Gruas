@@ -41,6 +41,7 @@ public class controladorDetalleOts {
         vistaDO.setSpinnerFinFaena(data[23]);
         vistaDO.setCheckDespacho(data[24]);
         vistaDO.setTextoValorDespacho(data[25]);
+        vistaDO.setTextoCiudad(data[26]);
         vistaDO.setTextoCodigo(id);
         vistaDO.setLocationRelativeTo(null);
         vistaDO.setVisible(true);

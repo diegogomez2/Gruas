@@ -6,6 +6,7 @@
 package vistas;
 
 import controladores.controladorGruas;
+import java.awt.event.MouseEvent;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -37,45 +38,13 @@ public class vistaIngresarOts extends javax.swing.JDialog {
     String fechaInicio, fechaFin;
     String diaInicio, diaFin;
     String horaInicio, horaFin;
+    String id;
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
     SimpleDateFormat formatClock = new SimpleDateFormat("HH:mm:ss");
-    String id;
     
     public vistaIngresarOts(java.awt.Frame parent, boolean modal, String[] data, Object[] ciudades) throws ParseException {
         super(parent, modal);
         initComponents();
-        diaInicio = data[0];
-        horaInicio = data[1];
-        diaFin = data[2];
-        horaFin = data[3];
-        ton = data[14];
-        textoCiudad.setText(data[15]);
-        controladores.controladorIngresarOts miControlador = new controladores.controladorIngresarOts();
-        List<List<String>> valores = miControlador.calcularTarifa(diaInicio, diaFin, horaInicio, horaFin, ton);
-        textoGrua.setText(data[4]);
-        textoEmpleado.setText(data[5]);
-        textoObs.setText(data[6]);
-        textoRutCliente.setText(data[7]+"-"+data[8]);
-        textoRazon2.setText(data[9]);
-        textoRazon.setText(data[9]);
-        textoGiro.setText(data[10]);
-        textoDireccion.setText(data[11]);
-        textoTelefono.setText(data[12]);   
-        id = data[13];
-        int size = valores.size();
-        textoNeto.setText(String.format("%,d", Integer.parseInt(valores.get(size - 1).get(0))));
-        textoIva.setText(String.format("%,d", Integer.parseInt(valores.get(size - 1).get(1))));
-        textoBruto.setText(String.format("%,d", Integer.parseInt(valores.get(size - 1).get(2))));
-        spinnerHoraSalida.setValue(formatClock.parse(horaInicio));
-        spinnerHoraLlegada.setValue(formatClock.parse(horaFin));
-        spinnerFinFaena.setValue(formatClock.parse(horaFin));
-        textoFechaOt.setDate(new Date());
-        horas = (int)Float.parseFloat(valores.get(size - 1).get(3));
-//        String[] listaRegiones = new String[ciudades.length];
-//        for(int i = 0; i < ciudades.length; i++){
-//            listaRegiones[i] = ciudades[i].toString();
-//        }
-//        comboCiudad.setModel(new DefaultComboBoxModel<String>(listaRegiones));
     }
 
     /**
@@ -133,7 +102,12 @@ public class vistaIngresarOts extends javax.swing.JDialog {
         textoDespachado = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
-        textoObs = new javax.swing.JTextField();
+        textoObs = new javax.swing.JTextField(){
+            //Implement table cell tool tips.
+            public String getToolTipText(MouseEvent e) {
+                return this.getText();
+            }
+        };
         botonIngresar = new javax.swing.JButton();
         botonCancelar = new javax.swing.JButton();
         textoEmpleado = new javax.swing.JTextField();
@@ -151,19 +125,31 @@ public class vistaIngresarOts extends javax.swing.JDialog {
 
         labelSeñores.setText("Señores");
 
+        textoRazon2.setEditable(false);
+
         jLabel1.setText("Dirección");
 
+        textoDireccion.setEditable(false);
+
         jLabel2.setText("Giro");
+
+        textoGiro.setEditable(false);
 
         jLabel3.setText("Solicitado por");
 
         jLabel4.setText("Rut");
 
+        textoRutCliente.setEditable(false);
+
         jLabel5.setText("Ciudad");
+
+        textoTelefono.setEditable(false);
 
         jLabel6.setText("Teléfono");
 
         jLabel7.setText("Trabajo realizado en");
+
+        textoRazon.setEditable(false);
 
         jLabel8.setText("Fecha");
 
@@ -313,6 +299,8 @@ public class vistaIngresarOts extends javax.swing.JDialog {
 
         jLabel22.setText("Observación en faena");
 
+        textoObs.setEditable(false);
+
         botonIngresar.setText("Ingresar");
         botonIngresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -327,6 +315,10 @@ public class vistaIngresarOts extends javax.swing.JDialog {
             }
         });
 
+        textoEmpleado.setEditable(false);
+
+        textoGrua.setEditable(false);
+
         jLabel23.setText("Codigo Ot");
 
         botonCalcular.setText("Calcular tarifa");
@@ -335,6 +327,8 @@ public class vistaIngresarOts extends javax.swing.JDialog {
                 botonCalcularActionPerformed(evt);
             }
         });
+
+        textoCiudad.setEditable(false);
 
         checkDespacho.setText("Despacho");
 
@@ -512,7 +506,6 @@ public class vistaIngresarOts extends javax.swing.JDialog {
     }//GEN-LAST:event_botonCancelarActionPerformed
 
     private void botonIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonIngresarActionPerformed
-        controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
         controladores.controladorIngresarOts miControladorIO = new controladores.controladorIngresarOts();
         String respuesta = miControladorIO.camposVacios();
         boolean esVacio = respuesta.length() == 0;
@@ -531,9 +524,6 @@ public class vistaIngresarOts extends javax.swing.JDialog {
         controladores.controladorIngresarOts miControlador = new controladores.controladorIngresarOts();
         try {
             List<List<String>> valores = miControlador.calcularTarifa(diaInicio, diaFin, getSpinnerHoraSalida(), getSpinnerHoraLlegada(), ton);
-//            textoNeto.setText(String.format("%,d", Integer.parseInt(valores[0])));
-//            textoIva.setText(String.format("%,d", Integer.parseInt(valores[1])));
-//            textoBruto.setText(String.format("%,d", Integer.parseInt(valores[2])));
             int size = valores.size();
             textoNeto.setText(String.format("%,d", Integer.parseInt(valores.get(size - 1).get(0))));
             textoIva.setText(String.format("%,d", Integer.parseInt(valores.get(size - 1).get(1))));
@@ -744,7 +734,123 @@ public class vistaIngresarOts extends javax.swing.JDialog {
     }
 
     public String getTextoDespacho() {
-        return textoDespacho.getText().toString();
+        return textoDespacho.getText();
+    }
+
+    public void setTon(String ton) {
+        this.ton = ton;
+    }
+
+    public void setFechaInicio(String fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public void setFechaFin(String fechaFin) {
+        this.fechaFin = fechaFin;
+    }
+
+    public void setDiaInicio(String diaInicio) {
+        this.diaInicio = diaInicio;
+    }
+
+    public void setDiaFin(String diaFin) {
+        this.diaFin = diaFin;
+    }
+
+    public void setHoraInicio(String horaInicio) {
+        this.horaInicio = horaInicio;
+    }
+
+    public void setHoraFin(String horaFin) {
+        this.horaFin = horaFin;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setSpinnerFinFaena(String spinnerFinFaena) throws ParseException {
+        this.spinnerFinFaena.setValue(formatClock.parse(spinnerFinFaena));
+    }
+
+    public void setSpinnerHoraLlegada(String spinnerHoraLlegada) throws ParseException {
+        this.spinnerHoraLlegada.setValue(formatClock.parse(spinnerHoraLlegada));
+    }
+
+    public void setSpinnerHoraSalida(String spinnerHoraSalida) throws ParseException {
+        this.spinnerHoraSalida.setValue(formatClock.parse(spinnerHoraSalida));
+    }
+
+    public void setTextoBruto(String textoBruto) {
+        this.textoBruto.setText(textoBruto);
+    }
+
+    public void setTextoCiudad(String textoCiudad) {
+        this.textoCiudad.setText(textoCiudad);
+    }
+
+    public void setTextoCodigo(String textoCodigo) {
+        this.textoCodigo.setText(textoCodigo);
+    }
+
+    public void setTextoContacto(String textoContacto) {
+        this.textoContacto.setText(textoContacto);
+    }
+
+    public void setTextoDespachado(String textoDespachado) {
+        this.textoDespachado.setText(textoDespachado);
+    }
+
+    public void setTextoDespacho(String textoDespacho) {
+        this.textoDespacho.setText(textoDespacho);
+    }
+
+    public void setTextoDireccion(String textoDireccion) {
+        this.textoDireccion.setText(textoDireccion);
+    }
+
+    public void setTextoEmpleado(String textoEmpleado) {
+        this.textoEmpleado.setText(textoEmpleado);
+    }
+
+    public void setTextoFechaOt() throws ParseException {
+        this.textoFechaOt.setDate(new Date());
+    }
+
+    public void setTextoGiro(String textoGiro) {
+        this.textoGiro.setText(textoGiro);
+    }
+
+    public void setTextoGrua(String textoGrua) {
+        this.textoGrua.setText(textoGrua);
+    }
+
+    public void setTextoIva(String textoIva) {
+        this.textoIva.setText(textoIva);
+    }
+
+    public void setTextoNeto(String textoNeto) {
+        this.textoNeto.setText(textoNeto);
+    }
+
+    public void setTextoObs(String textoObs) {
+        this.textoObs.setText(textoObs);
+    }
+
+    public void setTextoRazon(String textoRazon) {
+        this.textoRazon.setText(textoRazon);
+    }
+
+    public void setTextoRazon2(String textoRazon2) {
+        this.textoRazon2.setText(textoRazon2);
+    }
+
+    public void setTextoRutCliente(String textoRutCliente) {
+        this.textoRutCliente.setText(textoRutCliente);
+    }
+
+    public void setTextoTelefono(String textoTelefono) {
+        this.textoTelefono.setText(textoTelefono);
     }
     
     

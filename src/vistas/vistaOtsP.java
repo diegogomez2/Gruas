@@ -39,28 +39,11 @@ public class vistaOtsP extends javax.swing.JPanel {
 
     public vistaOtsP(String tipo, Object[][] data) {
         initComponents();
-        Object[] columnNames = {"Código OT", "Razon", "Giro", "Dirección", "Región", "Comuna", "Fecha",
-            "Neto", "IVA", "Total", "Estado"};
 
-
-//JTable table = new JTable(data, columnNames) {
-//    @Override
-//    public java.awt.Component prepareRenderer(TableCellRenderer renderer, int row, int col) {
-//        java.awt.Component comp = super.prepareRenderer(renderer, row, col);
-//        Object value = getModel().getValueAt(row, 0);
-//        if (value.equals("222")) {
-//            comp.setBackground(Color.lightGray);
-//        }  else {
-//           comp.setBackground(Color.white);
-//        }
-//        return comp;
-//    }
-//};
-jScrollPane1.setViewportView(tablaOts);
-        final int rows = 5;
-        String[] columNames = {"Código OT", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
+        jScrollPane1.setViewportView(tablaOts);
+        String[] columnNames = {"Código OT", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
             "Neto", "IVA", "Total", "Estado"};
-        datos = new DefaultTableModel(data, columNames) {
+        datos = new DefaultTableModel(data, columnNames) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;

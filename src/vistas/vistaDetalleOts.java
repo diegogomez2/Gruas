@@ -56,7 +56,6 @@ public class vistaDetalleOts extends javax.swing.JDialog {
         jLabel4 = new javax.swing.JLabel();
         textoRutCliente = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<String>();
         textoTelefono = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -100,6 +99,7 @@ public class vistaDetalleOts extends javax.swing.JDialog {
         checkDespacho = new javax.swing.JCheckBox();
         jLabel12 = new javax.swing.JLabel();
         textoValorDespacho = new javax.swing.JTextField();
+        textoCiudad = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Detalle orden de trabajo");
@@ -130,10 +130,6 @@ public class vistaDetalleOts extends javax.swing.JDialog {
         textoRutCliente.setEnabled(false);
 
         jLabel5.setText("Ciudad");
-
-        jComboBox1.setEditable(true);
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione un item" }));
-        jComboBox1.setEnabled(false);
 
         textoTelefono.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         textoTelefono.setEnabled(false);
@@ -345,6 +341,9 @@ public class vistaDetalleOts extends javax.swing.JDialog {
 
         jLabel12.setText("Valor Despacho");
 
+        textoRutCliente.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        textoCiudad.setEnabled(false);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -384,21 +383,21 @@ public class vistaDetalleOts extends javax.swing.JDialog {
                             .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(33, 33, 33)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel21)
+                                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel4)
                                     .addComponent(textoRutCliente)
                                     .addComponent(jLabel5)
-                                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(textoTelefono)
                                     .addComponent(jLabel6)
                                     .addComponent(jLabel7)
-                                    .addComponent(textoRazon, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(33, 33, 33)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel21)
-                                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addComponent(textoRazon, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
+                                    .addComponent(textoCiudad))))
                         .addGap(52, 52, 52)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel8)
@@ -447,8 +446,8 @@ public class vistaDetalleOts extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textoDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboFormaPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboFormaPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textoCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -559,7 +558,6 @@ public class vistaDetalleOts extends javax.swing.JDialog {
     private javax.swing.JCheckBox checkDespacho;
     private javax.swing.JComboBox<String> comboCondPago;
     private javax.swing.JComboBox<String> comboFormaPago;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -595,6 +593,7 @@ public class vistaDetalleOts extends javax.swing.JDialog {
     private javax.swing.JSpinner spinnerHoraLlegada;
     private javax.swing.JSpinner spinnerHoraSalida;
     private javax.swing.JTextField textoBruto;
+    private javax.swing.JTextField textoCiudad;
     private javax.swing.JTextField textoCodigo;
     private javax.swing.JTextField textoContacto;
     private javax.swing.JTextField textoDespachado;
@@ -709,5 +708,9 @@ public class vistaDetalleOts extends javax.swing.JDialog {
 
     public void setTextoValorDespacho(String textoValorDespacho) {
         this.textoValorDespacho.setText(textoValorDespacho);
+    }
+    
+    public void setTextoCiudad(String textoCiudad){
+        this.textoCiudad.setText(textoCiudad);
     }
 }

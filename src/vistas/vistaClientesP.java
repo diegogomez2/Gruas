@@ -33,7 +33,6 @@ public class vistaClientesP extends javax.swing.JPanel {
     
     public vistaClientesP(String tipo, Object[][] data) {
         initComponents();
-        final int rows = 5;
         String[] columNames = {"Rut", "Razón social", "Teléfono", "Dirección", "Contacto"};
         datos = new DefaultTableModel(data, columNames){
             @Override
@@ -69,7 +68,23 @@ public class vistaClientesP extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaClientes = new javax.swing.JTable();
+        tablaClientes = new javax.swing.JTable(){
+            //Implement table cell tool tips.
+            public String getToolTipText(MouseEvent e) {
+                String tip = null;
+                java.awt.Point p = e.getPoint();
+                int rowIndex = rowAtPoint(p);
+                int colIndex = columnAtPoint(p);
+
+                try {
+                    tip = getValueAt(rowIndex, colIndex).toString();
+                } catch (RuntimeException e1) {
+                    //catch null pointer exception if mouse is over an empty line
+                }
+
+                return tip;
+            }
+        };
         botonAgregarCliente = new javax.swing.JButton();
         botonEliminar = new javax.swing.JButton();
         botonModificar = new javax.swing.JButton();
@@ -79,16 +94,17 @@ public class vistaClientesP extends javax.swing.JPanel {
 
         tablaClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"", null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Rut", "Nombre", "Teléfono", "Dirección"
+
             }
         ));
         tablaClientes.setToolTipText("");
+        tablaClientes.getTableHeader().setReorderingAllowed(false);
         tablaClientes.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tablaClientes);
 
@@ -188,8 +204,8 @@ public class vistaClientesP extends javax.swing.JPanel {
             int row = getFilaSeleccionada();
             rut = getRutFila(row);
             nombres = getNombresFila(row);
-            int dialogResult = JOptionPane.showOptionDialog(null, "Esta seguro que desea eliminar el cliente: \n "
-            + rut + "\n" + nombres, "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, 0);
+            int dialogResult = JOptionPane.showOptionDialog(null, "Esta seguro que desea eliminar el cliente: \n " +
+                    "Rut: " + rut + "\nNombre: " + nombres, "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, 0);
             if(dialogResult == JOptionPane.YES_OPTION)  miControlador.eliminarClientes(rut);
             JTabbedPane tabs = (JTabbedPane)this.getParent();
             miControlador.crearControladorPrincipal(tabs);

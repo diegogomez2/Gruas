@@ -40,6 +40,8 @@ public class controladorDetalleFacturas {
         vistaDF.setTextoDespachado(data[22]);
         vistaDF.setSpinnerFinFaena(data[23]);
         vistaDF.setTextoCodigo(id);
+        vistaDF.setCheckDespacho(data[24]);
+        vistaDF.setTextoValorDespacho(data[25]);
         vistaDF.setLocationRelativeTo(null);
         vistaDF.setVisible(true);
     }

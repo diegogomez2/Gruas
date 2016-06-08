@@ -30,7 +30,32 @@ public class controladorIngresarOts {
     
     void mostrarVistaIngresarOts(String[] data, Object[] ciudades) throws ParseException {
         vistaIO = new vistaIngresarOts(new javax.swing.JFrame(), true, data, ciudades);
-        //setters
+        vistaIO.setDiaInicio(data[0]);
+        vistaIO.setHoraInicio(data[1]);
+        vistaIO.setDiaFin(data[2]);
+        vistaIO.setHoraFin(data[3]);
+        vistaIO.setTextoGrua(data[4]);
+        vistaIO.setTextoEmpleado(data[5]);
+        vistaIO.setTextoObs(data[6]);
+        vistaIO.setTextoRutCliente(data[7] + "-" + data[8]);
+        vistaIO.setTextoRazon(data[9]);
+        vistaIO.setTextoRazon2(data[9]);
+        vistaIO.setTextoGiro(data[10]);
+        vistaIO.setTextoDireccion(data[11]);
+        vistaIO.setTextoTelefono(data[12]);
+        vistaIO.setId(data[13]);
+        vistaIO.setSpinnerHoraSalida(data[1]);
+        vistaIO.setSpinnerFinFaena(data[3]);
+        vistaIO.setSpinnerHoraLlegada(data[3]);
+        vistaIO.setTon(data[14]);
+        vistaIO.setTextoCiudad(data[15]);
+        vistaIO.setTextoFechaOt();
+        List<List<String>> valores = calcularTarifa(data[0], data[2], data[1], data[3], data[14]);
+        int size = valores.size();
+        vistaIO.setTextoNeto(String.format("%,d", Integer.parseInt(valores.get(size - 1).get(0))));
+        vistaIO.setTextoIva(String.format("%,d", Integer.parseInt(valores.get(size - 1).get(1))));
+        vistaIO.setTextoBruto(String.format("%,d", Integer.parseInt(valores.get(size - 1).get(2))));
+        vistaIO.setHoras((int)Float.parseFloat(valores.get(size - 1).get(3)));
         vistaIO.setLocationRelativeTo(null);
         vistaIO.setVisible(true);        
     }
@@ -70,12 +95,6 @@ public class controladorIngresarOts {
         if (vistaIO.getTextoCodigo().compareTo("") == 0) {
             respuesta += "-Código de OT.\n";
         }
-//        if (vistaIO.getTextoContacto().compareTo("") == 0) {
-//            respuesta += "-Contacto.\n";
-//        }
-//        if (vistaIO.getTextoDespachado().compareTo("") == 0) {
-//            respuesta += "-Despachado por.\n";
-//        }
         if (vistaIO.getTextoObs().compareTo("") == 0) {
             respuesta += "-Observaciones.\n";
         }
@@ -90,12 +109,10 @@ public class controladorIngresarOts {
         modelos.modeloOts ots = new modelos.modeloOts();
         List<List<String>> data = new ArrayList<>();
         String[] datos;
-        //String[] data;// = {};
-        int tarifa;// = 0;
+        int tarifa;
         Date fecha = formatDate.parse(diaInicio);
         String day1 = formatDay.format(fecha);
         Date fecha2 = formatDate.parse(diaFin);
-        //String day2 = formatDay.format(fecha);
         
         long diff = fecha2.getTime() - fecha.getTime();
         long difDias = diff/(60*60*1000*24);
@@ -107,7 +124,12 @@ public class controladorIngresarOts {
             long hours = (diff2 / (1000 * 60 * 60)) % 24;
             if((hours == 3 && minutes == 0) || (hours < 3)){
                 tarifa = Integer.parseInt(ots.getMaxTarifa(diaInicio, horaInicio, getIdDia(day1), ton));
-                long totalTarifa = tarifa * 3;
+                long totalTarifa;
+                if(Integer.parseInt(ton) < 11){
+                    totalTarifa = tarifa * 2;
+                }else{
+                    totalTarifa = tarifa * 3;
+                }
                 data.add(Arrays.asList(Integer.toString((int)totalTarifa), String.valueOf((int)
                         (totalTarifa * 0.19)), String.valueOf((int)(totalTarifa * 1.19)),
                         Integer.toString(3), "3"));
@@ -120,7 +142,6 @@ public class controladorIngresarOts {
         horas[0] = horaInicio;
         horas[2*((int)difDias+1)-1] = horaFin;
         for(int i = 1; i < 2*(difDias)+1; i++){
-            //System.out.println(i%2);
             if(i%2 == 0) {
                 horas[i] = "00:00";
             }else{
@@ -130,57 +151,37 @@ public class controladorIngresarOts {
         long totalTarifa = 0;
         String hora;
         for(int i = 0; i < difDias+1; i++){
-            //System.out.println("IIIII "+i);
         boolean flag = true;
             while(flag){
                 datos = ots.getTarifa(diaInicio, horas[2*i], getIdDia(day1), ton);
                 tarifa = Integer.parseInt(datos[0]);
                 hora = datos[1];
                 if(hora.compareTo("00:00:00") == 0) hora = "24:00:00";
-                //System.out.println("tarifa "+tarifa + " hora "+hora );
                 Date horaIn = formatClock.parse(horas[2*i]);
                 Date horaF = formatClock.parse(horas[2*i+1]);
-//                System.out.println("hora ini " +horaIn + "ms: " +horaIn.getTime());
-//                System.out.println("hora final "+horaF + " ms: " + horaF.getTime() );
                 Date finTramo = formatClock.parse(hora);
-//                System.out.println("fin tramo " + hora + " ms: " +finTramo.getTime());
                 long tramoDiff;// = 0;
                 if(finTramo.getTime() > horaF.getTime()){
                     tramoDiff = horaF.getTime() - horaIn.getTime();
                 }else{
                     tramoDiff = finTramo.getTime() - horaIn.getTime();
                 }
-//                System.out.println("primer tramo " + tramoDiff);
                 long minutes = (tramoDiff / (1000 * 60)) % 60;
                 long hours = (tramoDiff / (1000 * 60 * 60)) % 24;
                 float duracionTramo = hours + (float)minutes/60;
                 horasTotales += duracionTramo;
-//                System.out.println("duracion tramo " +duracionTramo);
                 totalTarifa += duracionTramo * tarifa;
-//                System.out.println("tarifa parcial "+totalTarifa);
                 tramoDiff = horaF.getTime() - finTramo.getTime();
-//                System.out.println("tramo restante " + tramoDiff);
                 if(tramoDiff <= 0)  flag = false;
                 horas[2*i] = formatClock.format(finTramo.getTime());
-//                System.out.println("hora inicio nueva "+horas[2*i]);
                 data.add(Arrays.asList(Integer.toString((int)tarifa),String.valueOf((int)(tarifa * 0.19)),
-            String.valueOf((int)(tarifa * 1.19)), Float.toString(duracionTramo)));
+                    String.valueOf((int)(tarifa * 1.19)), Float.toString(duracionTramo)));
             }
             day1 = nextDay(day1);
             
         }
         data.add(Arrays.asList(Integer.toString((int)totalTarifa),String.valueOf((int)(totalTarifa * 0.19)),
             String.valueOf((int)(totalTarifa * 1.19)), Float.toString(horasTotales)));
-        /*data = new String[]{Integer.toString((int)totalTarifa), String.valueOf((int)(totalTarifa * 0.19)),
-            String.valueOf((int)(totalTarifa * 1.19)), Integer.toString(horasTotales)};*/
-//        StringBuilder str = new StringBuilder(data[0]);
-//        data[0] = addDots(str);
-//        str = new StringBuilder(data[1]);
-//        data[1] = addDots(str);
-//        str = new StringBuilder(data[2]);
-//        data[2] = addDots(str);
-        //actualizarHorometro(horasTotales, desc);
-        //
         return data;
     }
     
@@ -225,13 +226,11 @@ public class controladorIngresarOts {
     }
     
     public String removeDots(String data){
-        //System.out.println("data "+data);
         String new_data = "";
         String[] data_dev = data.split(Pattern.quote("."));
         for(int i = 0; i < data_dev.length; i++){
             new_data = new_data + data_dev[i];
         }
-        //System.out.println("new data "+new_data);
         return new_data;
     }
     
@@ -239,5 +238,4 @@ public class controladorIngresarOts {
         modelos.modeloGruas grua = new modelos.modeloGruas();
         grua.actualizarHorometro(horas, desc);
     }
-    
 }

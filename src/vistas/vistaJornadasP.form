@@ -30,6 +30,8 @@
                   <Group type="102" attributes="0">
                       <Component id="botonAsignar" linkSize="1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
+                      <Component id="botonGenerarGD" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="botonAgregar" linkSize="1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="botonEliminar" linkSize="1" min="-2" max="-2" attributes="0"/>
@@ -58,6 +60,7 @@
                   <Component id="botonEliminar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="botonAgregar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="botonAsignar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="botonGenerarGD" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -121,7 +124,6 @@
     </Component>
     <Component class="javax.swing.JTextField" name="textoFiltro">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textoFiltroActionPerformed"/>
         <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="textoFiltroKeyReleased"/>
       </Events>
     </Component>
@@ -136,6 +138,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonActualizarActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="botonGenerarGD">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Generar Gu&#xed;a despacho"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonGenerarGDActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

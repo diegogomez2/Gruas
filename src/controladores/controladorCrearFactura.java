@@ -26,6 +26,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import modelos.modeloFacturas;
 import modelos.modeloJornadas;
+import modelos.modeloOts;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -1322,7 +1323,7 @@ public class controladorCrearFactura {
         }
     }
     
-    public String crearGuiaDespXML(String[] idOts, String fac){
+    public String crearGuiaDespXML(String[] datos, String id_jor){
         
         String fecha = formatDate.format(new Date());
         
@@ -1404,8 +1405,9 @@ public class controladorCrearFactura {
             emisor.appendChild(ciuEmisor);
             
             //OBTENER LOS DATOS DEL CLIENTE
-            modelos.modeloOts ots = new modelos.modeloOts();
-            String[] data = ots.obtenerFacturaPorId(idOts[0]);
+            
+            modelos.modeloJornadas jornada = new modelos.modeloJornadas();
+            String[] data = jornada.obtenerClienteIdJornada(id_jor);
             
             //DATOS CLIENTE
             Element receptor = doc.createElement("Receptor");
@@ -1439,11 +1441,11 @@ public class controladorCrearFactura {
             Element detalle = doc.createElement("Detalle");
             rootElement.appendChild(detalle);
             
-            for(int i = 0; i < idOts.length; i++){
-                data = ots.obtenerFacturaPorId(idOts[i]);
+            
+            String grua = jornada.obtenerGruaPorIdJornada(id_jor);
                 
                 Element numLin = doc.createElement("NroLinDet");
-                numLin.appendChild(doc.createTextNode(Integer.toString(i+1)));
+                numLin.appendChild(doc.createTextNode(Integer.toString(1)));
                 detalle.appendChild(numLin);
                 
                 Element codItem = doc.createElement("CdgItem");
@@ -1454,13 +1456,13 @@ public class controladorCrearFactura {
                 codItem.appendChild(tipoCod);
                 
                 Element valCod = doc.createElement("VlrCodigo");
-                valCod.appendChild(doc.createTextNode("1"));
+                valCod.appendChild(doc.createTextNode("2"));
                 codItem.appendChild(valCod);
                 
                 Element nomItem = doc.createElement("NmbItem");
-                nomItem.appendChild(doc.createTextNode(data[11]+" HORAS DE GRUA HORQUILLA O.T.:"+data[10]));
+                nomItem.appendChild(doc.createTextNode("DESPACHO A OBRA DE GRUA " + grua));
                 detalle.appendChild(nomItem);
-            }
+            
                     
             Element adj = doc.createElement("Adjuntos");
                 rootElement.appendChild(adj);

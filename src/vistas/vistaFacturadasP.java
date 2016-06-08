@@ -32,6 +32,7 @@ public class vistaFacturadasP extends javax.swing.JPanel {
     
     public vistaFacturadasP(String tipo, Object[][] data) {
         initComponents();
+        botonGuiaDesp.setVisible(false);
          String[] columNames = {"N°Folio", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
              "Neto", "IVA", "Total", "Tipo"};
         datos = new DefaultTableModel(data, columNames){

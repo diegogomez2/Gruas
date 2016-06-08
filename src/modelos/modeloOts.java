@@ -23,10 +23,10 @@ import java.util.regex.Pattern;
  */
 public class modeloOts {
     static String login = "root";
-//    static String password = "gruas_205243";
-//    static String url = "jdbc:mysql://10.20.224.100:3306/fact_gruas";
-    static String password = "205243";
-    static String url = "jdbc:mysql://localhost:3306/fact_gruas";
+    static String password = "gruas_205243";
+    static String url = "jdbc:mysql://10.20.224.100:3306/fact_gruas";
+//    static String password = "205243";
+//    static String url = "jdbc:mysql://localhost:3306/fact_gruas";
     Connection conn = null;
     
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
@@ -216,7 +216,7 @@ public class modeloOts {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("SELECT fsal_jor, horsal_jor, freg_jor, horlleg_jor,"
-                    + "des_gru, raz_cli, nom_emp, apP_emp, apM_emp, freg_jor, obs_jor, clientes.rut_cli, clientes.dig_cli,"
+                    + "des_gru, raz_cli, ciu_cli, nom_emp, apP_emp, apM_emp, freg_jor, obs_jor, clientes.rut_cli, clientes.dig_cli,"
                     + "gir_cli, dir_cli, tel_cli, ton_gru, fec_ot, cod_ot, pag_ot, cond_ot, cont_ot, "
                     + "total_ot, neto_ot, iva_ot, desp_ot, horfin_ot, checkdesp_ot, vdesp_ot"
                     + " FROM jornadas INNER JOIN clientes ON "
@@ -231,6 +231,7 @@ public class modeloOts {
             String esthorsal = res.getString("horsal_jor");
             String estdes = res.getString("des_gru");
             String estraz = res.getString("raz_cli");
+            String estciu = res.getString("ciu_cli");
             String estnom = res.getString("nom_emp") + " " + res.getString("apP_emp") + " " + res.getString("apM_emp");
             String estfreg = res.getString("freg_jor");
             String esthorlleg = res.getString("horlleg_jor");
@@ -252,7 +253,7 @@ public class modeloOts {
             String estvdesp = res.getString("vdesp_ot");
             data = new String[]{estfsal, esthorsal, estfreg, esthorlleg, estdes, estnom, estobs
                     , estrutcli, estdigcli, estraz, estgir, estdir, esttel, id, estton, estfot, estcond
-                    , estpago, estcont, esttot, estneto, estiva, estdesp, esthorfin, estcdesp, estvdesp};
+                    , estpago, estcont, esttot, estneto, estiva, estdesp, esthorfin, estcdesp, estvdesp, estciu};
         }catch(SQLException e){
             System.out.println("Error obtener ot por id");
             System.out.println(e);

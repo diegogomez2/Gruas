@@ -68,7 +68,23 @@ public class vistaGruasP extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaGruas = new javax.swing.JTable();
+        tablaGruas = new javax.swing.JTable(){
+            //Implement table cell tool tips.
+            public String getToolTipText(MouseEvent e) {
+                String tip = null;
+                java.awt.Point p = e.getPoint();
+                int rowIndex = rowAtPoint(p);
+                int colIndex = columnAtPoint(p);
+
+                try {
+                    tip = getValueAt(rowIndex, colIndex).toString();
+                } catch (RuntimeException e1) {
+                    //catch null pointer exception if mouse is over an empty line
+                }
+
+                return tip;
+            }
+        };
         botonEliminar = new javax.swing.JButton();
         botonModificar = new javax.swing.JButton();
         botonAgregar = new javax.swing.JButton();
@@ -78,13 +94,13 @@ public class vistaGruasP extends javax.swing.JPanel {
 
         tablaGruas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Patente", "Descripción", "Marca", "Modelo"
+
             }
         ));
         tablaGruas.getTableHeader().setReorderingAllowed(false);

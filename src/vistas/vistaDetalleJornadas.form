@@ -45,8 +45,7 @@
                       <Component id="botonCancelar" min="-2" pref="100" max="-2" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="textoCliente" alignment="0" max="32767" attributes="0"/>
-                              <Component id="textoGrua" alignment="0" max="32767" attributes="0"/>
+                              <Component id="textoGrua" alignment="0" pref="28" max="32767" attributes="0"/>
                               <Component id="textoHoraSalida" alignment="0" max="32767" attributes="0"/>
                               <Component id="labelCliente" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="labelGrua" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -55,19 +54,18 @@
                               <Component id="textoFechaSalida" alignment="0" max="32767" attributes="0"/>
                               <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jScrollPane1" alignment="0" pref="258" max="32767" attributes="0"/>
+                              <Component id="textoCliente" alignment="0" pref="258" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace pref="18" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="textoHoraRegreso" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="scrollpan" alignment="1" pref="309" max="32767" attributes="0"/>
-                              </Group>
-                              <Component id="textoFechaRegreso" alignment="1" min="-2" pref="309" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="textoHoraRegreso" alignment="1" max="32767" attributes="0"/>
+                              <Component id="scrollpan" alignment="1" pref="309" max="32767" attributes="0"/>
+                              <Component id="textoFechaRegreso" alignment="0" pref="309" max="32767" attributes="0"/>
                               <Component id="labelHoraRegreso" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="labelFechaRegreso" min="-2" max="-2" attributes="0"/>
                               <Component id="labelOperador" min="-2" max="-2" attributes="0"/>
-                              <Component id="textoEmpleado" min="-2" pref="258" max="-2" attributes="0"/>
                               <Component id="labelObs" min="-2" max="-2" attributes="0"/>
+                              <Component id="textoEmpleado" alignment="0" pref="309" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -112,9 +110,9 @@
                       <Component id="textoEmpleado" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="labelCliente" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="labelObs" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelCliente" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -271,6 +269,7 @@
           <SubComponents>
             <Component class="javax.swing.JTextArea" name="textoObsCliente">
               <Properties>
+                <Property name="editable" type="boolean" value="false"/>
                 <Property name="columns" type="int" value="20"/>
                 <Property name="rows" type="int" value="5"/>
               </Properties>

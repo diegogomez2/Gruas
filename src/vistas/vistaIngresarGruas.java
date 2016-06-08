@@ -35,7 +35,7 @@ public class vistaIngresarGruas extends javax.swing.JDialog {
         for(int i = 0; i < tonelajes.length; i++){
             listarTonelajes[i] = tonelajes[i].toString();
         }
-        comboToneladas.setModel(new DefaultComboBoxModel<String>(listarTonelajes));
+        comboToneladas.setModel(new DefaultComboBoxModel<>(listarTonelajes));
     }
 
     /**

@@ -86,6 +86,7 @@ public class vistaJornadasP extends javax.swing.JPanel {
         textoFiltro = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         botonActualizar = new javax.swing.JButton();
+        botonGenerarGD = new javax.swing.JButton();
 
         tablaJornadas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -129,11 +130,6 @@ public class vistaJornadasP extends javax.swing.JPanel {
             }
         });
 
-        textoFiltro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textoFiltroActionPerformed(evt);
-            }
-        });
         textoFiltro.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 textoFiltroKeyReleased(evt);
@@ -146,6 +142,13 @@ public class vistaJornadasP extends javax.swing.JPanel {
         botonActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonActualizarActionPerformed(evt);
+            }
+        });
+
+        botonGenerarGD.setText("Generar Guía despacho");
+        botonGenerarGD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonGenerarGDActionPerformed(evt);
             }
         });
 
@@ -166,6 +169,8 @@ public class vistaJornadasP extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(botonAsignar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botonGenerarGD)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botonAgregar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botonEliminar)
@@ -191,7 +196,8 @@ public class vistaJornadasP extends javax.swing.JPanel {
                     .addComponent(botonModificar)
                     .addComponent(botonEliminar)
                     .addComponent(botonAgregar)
-                    .addComponent(botonAsignar))
+                    .addComponent(botonAsignar)
+                    .addComponent(botonGenerarGD))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -226,7 +232,6 @@ public class vistaJornadasP extends javax.swing.JPanel {
         String id;
         controladores.controladorJornadas miControlador = new controladores.controladorJornadas();
         controladores.controladorOts miControladorOt = new controladores.controladorOts();
-        //controladores.controladorGruas micontroladorGruas = new controladores.controladorGruas();
         boolean selected = tablaJornadas.getSelectedRowCount() > 0;
         if (selected) {
             int row = getFilaSeleccionada();
@@ -243,7 +248,6 @@ public class vistaJornadasP extends javax.swing.JPanel {
                 JTabbedPane tabs = (JTabbedPane) this.getParent();
                 miControladorOt.crearControladorPrincipal(tabs);
                 miControlador.crearControladorPrincipal(tabs);
-                //micontroladorGruas.agregarHoras(getGruaFila(row));
             } else {
                 JOptionPane.showMessageDialog(null, "Debe llenar los datos faltantes para asignar una OT a esta jornada");
             }
@@ -276,15 +280,35 @@ public class vistaJornadasP extends javax.swing.JPanel {
         filtrar(query);
     }//GEN-LAST:event_textoFiltroKeyReleased
 
-    private void textoFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoFiltroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textoFiltroActionPerformed
-
     private void botonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarActionPerformed
         controladores.controladorJornadas miControlador = new controladores.controladorJornadas();
         JTabbedPane tabs = (JTabbedPane)this.getParent();
         miControlador.crearControladorPrincipal(tabs);
     }//GEN-LAST:event_botonActualizarActionPerformed
+
+    private void botonGenerarGDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGenerarGDActionPerformed
+        String id;
+        //controladores.controladorFacturadas miControlador = new controladores.controladorFacturadas();
+        controladores.controladorJornadas miControlador = new controladores.controladorJornadas();
+        controladores.controladorCrearFactura miControladorC = new controladores.controladorCrearFactura();
+        boolean selected = tablaJornadas.getSelectedRowCount() > 0;
+        if(selected){
+            int row = getFilaSeleccionada();
+            String grua = getGruaFila(row);
+            if(grua.compareTo("") != 0){
+                id = getIdFila(row);
+                String[] jornada = miControlador.obtenerJornadaPorId(id);
+                if((miControladorC.crearGuiaDespXML(jornada, id).compareTo("correcto") == 0)){
+                    JTabbedPane tabs = (JTabbedPane)this.getParent();
+                    miControlador.crearControladorPrincipal(tabs);
+                }  
+            }else{
+                JOptionPane.showMessageDialog(null, "Debe asignar una grúa a esta jornada para generar el despacho");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una factura para generar una guía de despacho");
+        }
+    }//GEN-LAST:event_botonGenerarGDActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -292,6 +316,7 @@ public class vistaJornadasP extends javax.swing.JPanel {
     private javax.swing.JButton botonAgregar;
     private javax.swing.JButton botonAsignar;
     private javax.swing.JButton botonEliminar;
+    private javax.swing.JButton botonGenerarGD;
     private javax.swing.JButton botonModificar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
