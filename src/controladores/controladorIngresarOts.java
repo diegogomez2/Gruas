@@ -109,11 +109,16 @@ public class controladorIngresarOts {
         modelos.modeloOts ots = new modelos.modeloOts();
         List<List<String>> data = new ArrayList<>();
         String[] datos;
-        int tarifa;
+        int tarifa = 0;
         Date fecha = formatDate.parse(diaInicio);
         String day1 = formatDay.format(fecha);
         Date fecha2 = formatDate.parse(diaFin);
-        
+        int minHor;
+        int horMin = 0, minMin = 0;
+        if(Integer.parseInt(ton) >= 11){
+            minHor = 3;
+        }
+        minHor = 2;
         long diff = fecha2.getTime() - fecha.getTime();
         long difDias = diff/(60*60*1000*24);
         if(difDias == 0){
@@ -122,20 +127,26 @@ public class controladorIngresarOts {
             long diff2 = horaF.getTime() - horaIn.getTime();
             long minutes = (diff2 / (1000 * 60)) % 60;
             long hours = (diff2 / (1000 * 60 * 60)) % 24;
-            if((hours == 3 && minutes == 0) || (hours < 3)){
-                tarifa = Integer.parseInt(ots.getMaxTarifa(diaInicio, horaInicio, getIdDia(day1), ton));
-                long totalTarifa;
-                if(Integer.parseInt(ton) < 11){
-                    totalTarifa = tarifa * 2;
-                }else{
-                    totalTarifa = tarifa * 3;
-                }
-                data.add(Arrays.asList(Integer.toString((int)totalTarifa), String.valueOf((int)
-                        (totalTarifa * 0.19)), String.valueOf((int)(totalTarifa * 1.19)),
-                        Integer.toString(3), "3"));
-                //data = new String[]{Integer.toString((int)totalTarifa), String.valueOf((int)(totalTarifa * 0.19)),
-            //String.valueOf((int)(totalTarifa * 1.19)), Integer.toString(3)};
-            return data;
+//            if((hours == minHor && minutes == 0) || (hours < minHor)){
+////                tarifa = Integer.parseInt(ots.getMaxTarifa(diaInicio, horaInicio, getIdDia(day1), ton));
+////                System.out.println(tarifa);
+////                long totalTarifa;
+//////                if(Integer.parseInt(ton) < 11){
+//////                    totalTarifa = tarifa * 2;
+//////                }else{
+//////                    totalTarifa = tarifa * 3;
+//////                }
+////                totalTarifa = tarifa * minHor;
+////                data.add(Arrays.asList(Integer.toString((int)totalTarifa), String.valueOf((int)
+////                        (totalTarifa * 0.19)), String.valueOf((int)(totalTarifa * 1.19)),
+////                        Integer.toString(3), String.valueOf(minHor)));
+////                //data = new String[]{Integer.toString((int)totalTarifa), String.valueOf((int)(totalTarifa * 0.19)),
+////            //String.valueOf((int)(totalTarifa * 1.19)), Integer.toString(3)};
+////            return data;
+//            }
+            if(hours < minHor){
+                horMin = minHor - (int)hours - 1;
+                minMin = 60 - (int)minutes;
             }
         }
         String[] horas= new String[2*((int)difDias+1)];
@@ -155,6 +166,7 @@ public class controladorIngresarOts {
             while(flag){
                 datos = ots.getTarifa(diaInicio, horas[2*i], getIdDia(day1), ton);
                 tarifa = Integer.parseInt(datos[0]);
+                System.out.println("tarifa "+ tarifa);
                 hora = datos[1];
                 if(hora.compareTo("00:00:00") == 0) hora = "24:00:00";
                 Date horaIn = formatClock.parse(horas[2*i]);
@@ -178,8 +190,10 @@ public class controladorIngresarOts {
                     String.valueOf((int)(tarifa * 1.19)), Float.toString(duracionTramo)));
             }
             day1 = nextDay(day1);
-            
         }
+        System.out.println("tarifa "+ tarifa);
+        float duracionTramo = horMin + (float)minMin/60;
+        totalTarifa += duracionTramo * tarifa;
         data.add(Arrays.asList(Integer.toString((int)totalTarifa),String.valueOf((int)(totalTarifa * 0.19)),
             String.valueOf((int)(totalTarifa * 1.19)), Float.toString(horasTotales)));
         return data;
