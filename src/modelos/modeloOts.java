@@ -927,4 +927,29 @@ public class modeloOts {
         return data;
     }
     
+    public String obtenerFormaPago(String idOt){
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT pag_ot, cond_ot FROM jornadas WHERE cod_ot = ?");
+            pstm.setString(1, idOt);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            String pag_ot = res.getString("pag_ot");
+            String cond_ot = res.getString("cond_ot");
+            res.close();
+            if(pag_ot.compareTo("Al día") == 0 && cond_ot.compareTo("Cheque") != 0){
+                return "1";
+            }else{
+                return "2";
+            }
+       }catch(SQLException e){
+            System.out.println("Error obtener forma pago por id");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        return "0";
+    }
+    
 }

@@ -166,7 +166,6 @@ public class controladorIngresarOts {
             while(flag){
                 datos = ots.getTarifa(diaInicio, horas[2*i], getIdDia(day1), ton);
                 tarifa = Integer.parseInt(datos[0]);
-                System.out.println("tarifa "+ tarifa);
                 hora = datos[1];
                 if(hora.compareTo("00:00:00") == 0) hora = "24:00:00";
                 Date horaIn = formatClock.parse(horas[2*i]);
@@ -191,11 +190,14 @@ public class controladorIngresarOts {
             }
             day1 = nextDay(day1);
         }
-        System.out.println("tarifa "+ tarifa);
-        float duracionTramo = horMin + (float)minMin/60;
-        totalTarifa += duracionTramo * tarifa;
+        if(horMin > 0 || minMin > 0){
+            float duracionTramo = horMin + (float)minMin/60;
+            totalTarifa += duracionTramo * tarifa;
+            data.add(Arrays.asList(Integer.toString((int)tarifa),String.valueOf((int)(tarifa * 0.19)),
+             String.valueOf((int)(tarifa * 1.19)), Float.toString(duracionTramo)));
+        }
         data.add(Arrays.asList(Integer.toString((int)totalTarifa),String.valueOf((int)(totalTarifa * 0.19)),
-            String.valueOf((int)(totalTarifa * 1.19)), Float.toString(horasTotales)));
+        String.valueOf((int)(totalTarifa * 1.19)), Float.toString(horasTotales)));
         return data;
     }
     

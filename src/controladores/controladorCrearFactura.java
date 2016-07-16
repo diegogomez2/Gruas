@@ -77,8 +77,11 @@ public class controladorCrearFactura {
             fecEmision.appendChild(doc.createTextNode(fecha));
             id.appendChild(fecEmision);
             
+            modelos.modeloOts modOt = new modeloOts();
+            String form = modOt.obtenerFormaPago(idOts[0]);
+            
             Element fpago = doc.createElement("FmaPago");
-            fpago.appendChild(doc.createTextNode("VER FORMA"));
+            fpago.appendChild(doc.createTextNode(form));
             id.appendChild(fpago);
             
             Element mpago = doc.createElement("MedioPago");
@@ -290,7 +293,7 @@ public class controladorCrearFactura {
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
             DOMSource source = new DOMSource(doc);
-            StreamResult result =   new StreamResult(new File("33_"+fol_fac+"_normal.xml"));
+            StreamResult result =   new StreamResult(new File("C:/AppServ/www/eugcomdte/entregas/XML_pre/33_"+fol_fac+"_normal.xml"));
             
             transformer.transform(source, result);
             JOptionPane.showMessageDialog(vistaF, "Documento realizado con éxito");
@@ -480,7 +483,7 @@ public class controladorCrearFactura {
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
             DOMSource source = new DOMSource(doc);
-            StreamResult result =   new StreamResult(new File("34_"+fol_facex+"_exenta.xml"));
+            StreamResult result =   new StreamResult(new File("C:/AppServ/www/eugcomdte/entregas/XML_pre/34_"+fol_facex+"_exenta.xml"));
             
             transformer.transform(source, result);
             JOptionPane.showMessageDialog(vistaF, "Documento realizado con éxito");
@@ -805,7 +808,7 @@ public class controladorCrearFactura {
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
             DOMSource source = new DOMSource(doc);
-            StreamResult result =   new StreamResult(new File("61_"+fol_nc+"_anula_33.xml"));
+            StreamResult result =   new StreamResult(new File("C:/AppServ/www/eugcomdte/entregas/XML_pre/61_"+fol_nc+"_anula_33.xml"));
             
             transformer.transform(source, result);
             JOptionPane.showMessageDialog(vistaF, "Documento realizado con éxito");
@@ -1124,7 +1127,7 @@ public class controladorCrearFactura {
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
             DOMSource source = new DOMSource(doc);
-            StreamResult result =   new StreamResult(new File("56_"+fol_nd+"_normal.xml"));
+            StreamResult result =   new StreamResult(new File("C:/AppServ/www/eugcomdte/entregas/XML_pre/56_"+fol_nd+"_normal.xml"));
             
             transformer.transform(source, result);
             JOptionPane.showMessageDialog(vistaF, "Documento realizado con éxito");
@@ -1308,7 +1311,7 @@ public class controladorCrearFactura {
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
             DOMSource source = new DOMSource(doc);
-            StreamResult result =   new StreamResult(new File("boleta_39_"+fac+".xml"));
+            StreamResult result =   new StreamResult(new File("C:/AppServ/www/eugcomdte/entregas/XML_pre/boleta_39_"+fac+".xml"));
             
             transformer.transform(source, result);
             JOptionPane.showMessageDialog(vistaF, "Documento realizado con éxito");
@@ -1483,7 +1486,7 @@ public class controladorCrearFactura {
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
             DOMSource source = new DOMSource(doc);
-            StreamResult result =   new StreamResult(new File("33_"+num_fol+"_REF_GUIA.xml"));
+            StreamResult result =   new StreamResult(new File("C:/AppServ/www/eugcomdte/entregas/XML_pre/33_"+num_fol+"_REF_GUIA.xml"));
             
             transformer.transform(source, result);
             JOptionPane.showMessageDialog(vistaF, "Documento realizado con éxito");
