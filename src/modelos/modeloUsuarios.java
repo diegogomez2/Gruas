@@ -9,6 +9,7 @@ import controladores.controladorPrincipal;
 import java.net.ConnectException;
 import java.sql.*;
 import javax.swing.JOptionPane;
+import static modelos.modeloClientes.url;
 
 /**
  *
@@ -92,5 +93,80 @@ public class modeloUsuarios {
             return "incorrecto";
         }
         return "correcto";
+    }
+    
+    public String agregarUsuario(String usuario, String pw){
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("insert into usuarios (user, pass) values (?, ?)");
+            pstm.setString(1, usuario);
+            pstm.setString(2, pw);
+            pstm.execute();
+            pstm.close();
+        }catch(SQLException e){
+            System.out.println("Error al agregar usuario");
+            System.out.println(e);
+            return "incorrecto";
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+            return "incorrecto";
+        }
+        return "correcto";
+    }
+    
+    public Object[][] listarUsuarios(){
+        int registros = 0;
+        
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Usuarios");
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+       }catch(SQLException e){
+            System.out.println("Error al listar usuarios");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        
+        Object[][] data = new String[registros][1];
+        
+        try{
+            PreparedStatement pstm = conn.prepareStatement("SELECT user FROM Usuarios ORDER BY user");
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while(res.next()){
+                String estuser = res.getString("user");
+                data[i] = new String[]{estuser};
+                i++;
+            }
+            res.close();
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+        return data;
+    }
+    
+    public String eliminarUsuario(String data){
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("DELETE FROM usuarios WHERE user = ?");
+            pstm.setString(1, data);
+            pstm.execute();
+            pstm.close();
+            return "correcto";
+        }catch(SQLException e){
+            System.out.println("Error al eliminar usuario");
+            System.out.println(e);
+            return "incorrecto";
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+            return "incorrecto";
+        }
     }
 }

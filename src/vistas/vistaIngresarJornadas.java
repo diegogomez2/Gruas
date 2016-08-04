@@ -48,7 +48,7 @@ import org.jdesktop.swingx.JXDatePicker;
  * @author diego
  */
 public class vistaIngresarJornadas extends javax.swing.JDialog {
-                                modelos.modeloClientes cliente = new modeloClientes();
+    modelos.modeloClientes cliente = new modeloClientes();
     List<String> listClientes = new ArrayList<>();
     List<String> listGruas = new ArrayList<>();
     List<String> listEmpleados = new ArrayList<>();

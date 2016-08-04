@@ -22,6 +22,8 @@ import modelos.modeloTonelajes;
 import vistas.vistaLogin;
 import modelos.modeloUsuarios;
 import vistas.vistaPrincipal;
+import controladores2.*;
+import modelos2.modeloProveedores;
 
 /**
  *
@@ -41,6 +43,8 @@ public class controladorPrincipal {
     static controladorUsuarios micontroladorUsuarios;
     static controladorDetalleClientes micontroladorDC;
     static controladorTarifas micontroladorTarifas;
+    static controladorProveedores micontroladorProveedores;
+    static controladorCompras micontroladorCompras;
     static vistaLogin miVistaL;
     static vistaPrincipal mivistaP;
     static vistas.vistaJornadasP mivistaJP;
@@ -77,9 +81,11 @@ public class controladorPrincipal {
         tabs.addTab("Grúas", crearControladorGruasP());
         tabs.addTab("Trabajadores", crearControladorEmpleadosP());
         tabs.addTab("Jornada Diaria", crearControladorJornadaP());
+        //tabs.addTab("Usuarios", crearControladorUsuariosP());
         tabs.setSelectedIndex(i);
     }
     
+    //CLIENTES
     public JPanel crearControladorClientesP() {
         modelos.modeloClientes clientes;
         clientes = new modelos.modeloClientes();
@@ -117,6 +123,7 @@ public class controladorPrincipal {
         micontroladorDC.mostrarVistaDetalleCliente(rut);
     }
     
+    //GRUAS
     public JPanel crearControladorGruasP() {
         modelos.modeloGruas gruas;
         gruas = new modelos.modeloGruas();
@@ -154,6 +161,7 @@ public class controladorPrincipal {
         micontroladorDG.mostrarVistaDetalleCliente(patente);
     }
 
+    //EMPLEADOS
     public JPanel crearControladorEmpleadosP() {
         modelos.modeloEmpleados empleados;
         empleados = new modelos.modeloEmpleados();
@@ -191,6 +199,7 @@ public class controladorPrincipal {
         micontroladorDE.mostrarVistaDetalleEmpleado(rut);
     }
 
+    //JORNADAS
     public JPanel crearControladorJornadaP() {
         modelos.modeloJornadas jornadas;
         jornadas = new modelos.modeloJornadas();
@@ -198,6 +207,24 @@ public class controladorPrincipal {
         data = jornadas.listarJornadas();
         micontroladorJornadas = new controladorJornadas();
         return micontroladorJornadas.mostrarTabControlJornadas(tipo, data);    
+    }
+    
+    public JPanel crearControladorUsuariosP() {
+        modelos.modeloUsuarios usuarios;
+        usuarios = new modelos.modeloUsuarios();
+        Object[][] data;
+        data = usuarios.listarUsuarios();
+        micontroladorUsuarios = new controladorUsuarios();
+        return micontroladorUsuarios.mostrarTabControlUsuarios(tipo, data);    
+    }
+    
+    public JPanel crearControladorTarifasP() {
+        modelos.modeloTarifas tarifas;
+        tarifas = new modelos.modeloTarifas();
+        Object[][] data;
+        data = tarifas.listarTarifas();
+        micontroladorTarifas = new controladorTarifas();
+        return micontroladorTarifas.mostrarTabControlTarifas(tipo, data);    
     }
     
     void crearControladorIngresarJornadas() {
@@ -232,6 +259,7 @@ public class controladorPrincipal {
         micontroladorMJ.mostrarVistaModificarJornadas(id, dataClientes, dataGruas, dataEmpleados);
     }
     
+    //OTS
     public JPanel crearControladorOtsP() {
         modelos.modeloOts ots;
         ots = new modelos.modeloOts();
@@ -286,6 +314,7 @@ public class controladorPrincipal {
         micontroladorDF.mostrarVistaDetalleFacturadas(id, tipo);
     }
     
+    //USUARIOS
     public void crearControladorUsuarios() {
         modelos.modeloUsuarios usuarios;
         usuarios = new modelos.modeloUsuarios();
@@ -295,6 +324,37 @@ public class controladorPrincipal {
         micontroladorUsuarios.mostrarVistaCambioClave(tipo, data);
     }
     
+    public void crearControladorAgregarUsuario() {
+        controladorAgregarUsuario micontrolador = new controladorAgregarUsuario();
+        micontrolador.mostrarVistaAgregarUsuario();
+    }
+    
+    public void crearControladorEliminarUsuario(String user){
+        controladorEliminarUsuario micontroladorEU;
+        micontroladorEU = new controladorEliminarUsuario();
+        micontroladorEU.irVistaUsuariosP(user);
+    }
+    
+    public boolean agregarUsuario(String usuario, String pw, String pw2){
+        modelos.modeloUsuarios usuarios = new modelos.modeloUsuarios();
+        String res = "pw";
+        if(pw.compareTo(pw2) == 0){
+            res = usuarios.agregarUsuario(usuario, pw);
+        }
+        
+        if(res.compareTo("pw") == 0){
+            JOptionPane.showMessageDialog(miVistaL, "Las contraseñas deben ser las mismas", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }else if(res.compareTo("correcto") == 0){
+            JOptionPane.showMessageDialog(miVistaL, "Usuario agregado con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al ingresar al usuario", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+    
+    //TARIFAS
     public void crearControladorTarifas() {
         modelos.modeloTarifas tarifas;
         tarifas = new modelos.modeloTarifas();
@@ -327,6 +387,82 @@ public class controladorPrincipal {
             return false;
         }
     }
+    
+    //PROVEEDORES
+    public JPanel crearControladorProveedoresP() {
+        modelos2.modeloProveedores proveedores;
+        proveedores = new modelos2.modeloProveedores();
+        Object[][] data;
+        data = proveedores.listarProveedores();
+        micontroladorProveedores = new controladorProveedores();
+        return micontroladorProveedores.mostrarTabControlProveedores(tipo, data);
+    }
+    
+    public void crearControladorIngresarProveedores() {
+        modelos.modeloRegiones regiones = new modeloRegiones();
+        Object[][] dataRegiones = regiones.listarRegiones();
+        controladorIngresarProveedores micontroladorIP;
+        micontroladorIP = new controladorIngresarProveedores();
+        micontroladorIP.mostrarVistaIngresarProveedores(dataRegiones);
+    }
+    
+    public void crearControladorEliminarProveedores(String rut){
+        controladorEliminarProveedores micontroladorEP;
+        micontroladorEP = new controladorEliminarProveedores();
+        micontroladorEP.irVistaProveedoresP(rut);
+    }
+    
+    public void crearControladorModificarProveedores(String rut, String nombres) {
+        modelos.modeloRegiones regiones = new modeloRegiones();
+        Object[][] dataRegiones = regiones.listarRegiones();
+        controladorModificarProveedores micontroladorMP;
+        micontroladorMP = new controladorModificarProveedores();
+        micontroladorMP.mostrarVistaModificarProveedor(rut, nombres, dataRegiones);
+    }
+    
+    public void crearControladorDetalleProveedor(String rut) {
+        controladorDetalleProveedores micontroladorDP;
+        micontroladorDP = new controladorDetalleProveedores();
+        micontroladorDP.mostrarVistaDetalleProveedor(rut);
+    }
+    
+    //COMPRAS
+    public JPanel crearControladorComprasP() {
+        modelos2.modeloProveedores proveedores;
+        proveedores = new modelos2.modeloProveedores();
+        Object[][] data;
+        data = proveedores.listarProveedores();
+        micontroladorCompras = new controladorCompras();
+        return micontroladorCompras.mostrarTabControlCompras(tipo, data);
+    }
+    
+    public void crearControladorIngresarCompras() {
+        modelos.modeloRegiones regiones = new modeloRegiones();
+        Object[][] dataRegiones = regiones.listarRegiones();
+        controladorIngresarCompras micontroladorIC;
+        micontroladorIC = new controladorIngresarCompras();
+        micontroladorIC.mostrarVistaIngresarCompras();
+    }
+//    
+//    public void crearControladorEliminarProveedores(String rut){
+//        controladorEliminarProveedores micontroladorEP;
+//        micontroladorEP = new controladorEliminarProveedores();
+//        micontroladorEP.irVistaProveedoresP(rut);
+//    }
+//    
+//    public void crearControladorModificarProveedores(String rut, String nombres) {
+//        modelos.modeloRegiones regiones = new modeloRegiones();
+//        Object[][] dataRegiones = regiones.listarRegiones();
+//        controladorModificarProveedores micontroladorMP;
+//        micontroladorMP = new controladorModificarProveedores();
+//        micontroladorMP.mostrarVistaModificarProveedor(rut, nombres, dataRegiones);
+//    }
+//    
+//    public void crearControladorDetalleProveedor(String rut) {
+//        controladorDetalleProveedores micontroladorDP;
+//        micontroladorDP = new controladorDetalleProveedores();
+//        micontroladorDP.mostrarVistaDetalleProveedor(rut);
+//    }
     
     //Funciones
     public boolean ingresarCliente(String[] data){
@@ -660,5 +796,55 @@ public class controladorPrincipal {
         return datos;
     }
     
+    public boolean eliminarUsuario(String data){
+        modelos.modeloUsuarios usuario = new modelos.modeloUsuarios();
+        if(usuario.eliminarUsuario(data).compareTo("correcto") == 0){
+            JOptionPane.showMessageDialog(miVistaL, "Usuario eliminado con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al eliminar el usuario seleccionado", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
     
+    //Funciones PROVEEDORES
+    public boolean ingresarProveedor(String[] data){
+        modeloProveedores proveedor = new modeloProveedores();
+        if(proveedor.ingresarProveedor(data).compareTo("correcto") == 0){
+            JOptionPane.showMessageDialog(miVistaL, "Proveedor ingresado con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al ingresar los datos\n" 
+                    + "verifique que el rut no exista previamente en la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+    
+    public boolean eliminarProveedores(String data){
+        modeloProveedores proveedor = new modeloProveedores();
+        if(proveedor.eliminarProveedor(data).compareTo("correcto") == 0){
+            JOptionPane.showMessageDialog(miVistaL, "Proveedor eliminado con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al eliminar el proveedor seleccionado", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+    
+    public boolean modificarProveedor(String[] data, int rut){
+        modeloProveedores proveedor = new modeloProveedores();
+        if(proveedor.modificarProveedor(data, rut).compareTo("correcto") == 0){
+            JOptionPane.showMessageDialog(miVistaL, "Proveedor modificado con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al modificar el proveedor selecionado", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+    
+    public String[] obtenerProveedorPorRut(String rut){
+        modeloProveedores proveedor = new modeloProveedores();
+        String[] data = proveedor.obtenerProveedorPorRut(rut);
+        return data;
+    }
 }

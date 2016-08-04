@@ -5,6 +5,7 @@
  */
 package controladores;
 
+import javax.swing.JPanel;
 import vistas.vistaTarifas;
 
 /**
@@ -19,4 +20,9 @@ public class controladorTarifas {
         vistaTarifas = new vistaTarifas(tipo, data);
         vistaTarifas.setVisible(true);
     }
+    
+    public JPanel mostrarTabControlTarifas(String tipo, Object[][] data) {
+        vistaTarifas = new vistaTarifas(tipo, data);
+        return vistaTarifas;
+    } 
 }
