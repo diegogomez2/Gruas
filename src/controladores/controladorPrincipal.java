@@ -23,6 +23,7 @@ import vistas.vistaLogin;
 import modelos.modeloUsuarios;
 import vistas.vistaPrincipal;
 import controladores2.*;
+import modelos2.modeloCompras;
 import modelos2.modeloProveedores;
 
 /**
@@ -428,20 +429,22 @@ public class controladorPrincipal {
     
     //COMPRAS
     public JPanel crearControladorComprasP() {
-        modelos2.modeloProveedores proveedores;
-        proveedores = new modelos2.modeloProveedores();
+        modelos2.modeloCompras compras;
+        compras = new modelos2.modeloCompras();
         Object[][] data;
-        data = proveedores.listarProveedores();
+        data = compras.listarCompras();
         micontroladorCompras = new controladorCompras();
         return micontroladorCompras.mostrarTabControlCompras(tipo, data);
     }
     
     public void crearControladorIngresarCompras() {
         modelos.modeloRegiones regiones = new modeloRegiones();
+        modelos2.modeloProveedores proveedores = new modeloProveedores();
+        Object dataProveedores[] = proveedores.obtenerRutProveedores();
         Object[][] dataRegiones = regiones.listarRegiones();
         controladorIngresarCompras micontroladorIC;
         micontroladorIC = new controladorIngresarCompras();
-        micontroladorIC.mostrarVistaIngresarCompras();
+        micontroladorIC.mostrarVistaIngresarCompras(dataProveedores);
     }
 //    
 //    public void crearControladorEliminarProveedores(String rut){
@@ -846,5 +849,46 @@ public class controladorPrincipal {
         modeloProveedores proveedor = new modeloProveedores();
         String[] data = proveedor.obtenerProveedorPorRut(rut);
         return data;
+    }
+    
+    //Funciones COMPRAS
+
+    public String ingresarCompra(String[] data){
+        modeloCompras compra = new modeloCompras();
+        String id = compra.ingresarCompra(data);
+        if(id.compareTo("incorrecto") == 0){
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al ingresar los datos de la compra\n" 
+                    , "Error", JOptionPane.ERROR_MESSAGE);
+            return "incorrecto";
+        }else{
+//            JOptionPane.showMessageDialog(miVistaL, "Compra ingresada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+            return id;
+        }
+    }
+    
+    public boolean ingresarCheques(String[][] data, String id){
+        modeloCompras compra = new modeloCompras();
+        if(compra.ingresarCheques(data, id).compareTo("correcto") == 0){
+//            JOptionPane.showMessageDialog(miVistaL, "Compra ingresada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        }else{
+//            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al ingresar los datos de la compra\n" 
+//                    , "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error al ingresar cheques");
+            return false;
+        }
+    }
+    
+    public boolean ingresarCuotas(String[][] data, String id){
+        modeloCompras compra = new modeloCompras();
+        if(compra.ingresarCuotas(data, id).compareTo("correcto") == 0){
+//            JOptionPane.showMessageDialog(miVistaL, "Compra ingresada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        }else{
+//            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al ingresar los datos de la compra\n" 
+//                    , "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error al ingresar cuotas");
+            return false;
+        }
     }
 }

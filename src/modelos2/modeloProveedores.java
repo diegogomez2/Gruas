@@ -188,18 +188,18 @@ public class modeloProveedores {
         return "correcto";
     }
 
-    public Object[] obtenerRazonClientes() {
+    public Object[] obtenerRutProveedores() {
         int registros = 0;
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Clientes");
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Proveedores");
             ResultSet res = pstm.executeQuery();
             res.next();
             registros = res.getInt("total");
             res.close();
        }catch(SQLException e){
-            System.out.println("Error al obtener razon cliente");
+            System.out.println("Error al obtener rut proveedores");
             System.out.println(e);
        }catch(ClassNotFoundException e){
             System.out.println(e);
@@ -208,12 +208,14 @@ public class modeloProveedores {
         Object[] data = new String[registros];
         
         try{
-            PreparedStatement pstm = conn.prepareStatement("SELECT raz_cli FROM Clientes ORDER BY raz_cli");
+            PreparedStatement pstm = conn.prepareStatement("SELECT rut_pro, dig_pro FROM Proveedores"
+                    + " ORDER BY rut_pro");
             ResultSet res = pstm.executeQuery();
             int i = 0;
             while(res.next()){
-                String estrazon = res.getString("raz_cli");
-                data[i] = estrazon;
+                String estrut = res.getString("rut_pro");
+                String estdig = res.getString("dig_pro");
+                data[i] = estrut + "-" + estdig;
                 i++;
             }
             res.close();

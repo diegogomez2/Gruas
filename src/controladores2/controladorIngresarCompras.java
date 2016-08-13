@@ -7,7 +7,12 @@ package controladores2;
 
 import controladores.*;
 import java.awt.Frame;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import modelos2.modeloCompras;
 import vistas.vistaIngresarClientes;
 import vistas2.vistaIngresarCompras;
 
@@ -19,22 +24,53 @@ public class controladorIngresarCompras {
 
     static vistaIngresarCompras vistaIC;
 
-    public void mostrarVistaIngresarCompras() {
-        vistaIC = new vistaIngresarCompras(new javax.swing.JFrame(), true);
+    public void mostrarVistaIngresarCompras(Object proveedores[]) {
+        vistaIC = new vistaIngresarCompras(new javax.swing.JFrame(), true, proveedores);
         vistaIC.setLocationRelativeTo(null);
         vistaIC.setVisible(true);
     }
 
     public boolean irVistaComprasP() {
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
-//        String[] rut_dv = vistaIP.getTextoRut().split("-");
-//        String[] data = {rut_dv[0], rut_dv[1], vistaIP.getTextoContacto(), vistaIP.getTextoRazon(), 
-//            vistaIP.getTextoGiro(), vistaIP.getTextoCorreo(), vistaIP.getTextoTelefono(),
-//            vistaIP.getTextoDireccion(), vistaIP.getComboRegion(), vistaIP.getComboComuna(), 
-//            vistaIP.getComboCiudad(), vistaIP.getTextoObs(), vistaIP.getComboForma(), vistaIP.getComboMedio()};
-        String [] data ={};
-        boolean flag = miControlador.ingresarProveedor(data);
-        return flag;
+        modelos2.modeloCompras compra = new modeloCompras();
+        String folioInterno = compra.folioFac();
+        boolean flag;
+        String[] rut_dv = vistaIC.getComboRut().split("-");
+        String[] data = {rut_dv[0], vistaIC.getComboTipoDTE(), vistaIC.getTextoFolio(), folioInterno, 
+            vistaIC.getTextoFechaIngreso(), vistaIC.getTextoOrden(), vistaIC.getTextoFechaPago(),
+            vistaIC.getComboForma(), vistaIC.getTextoAsunto(), vistaIC.getTextoObs(), 
+            vistaIC.getComboMedio(), vistaIC.getTextoBanco(), vistaIC.getTextoNumTC()};
+        String id = miControlador.ingresarCompra(data);
+        if(id.compareTo("incorrecto") == 0){
+            return false;
+        }
+        int cuotas;
+        JTable tabla;
+        switch(vistaIC.getCuotas()){
+            case 1:
+                cuotas = vistaIC.getSpinnerCant();
+                String[][] dataCQ = new String[cuotas][5];
+                tabla = vistaIC.getTablaCuotas();
+                for(int i = 0; i < cuotas; i++){
+                    dataCQ[i] = new String[]{tabla.getValueAt(i, 0).toString(), tabla.getValueAt(i, 1).toString(),
+                        vistaIC.getfechaTablaCheques(i), tabla.getValueAt(i, 3).toString(),
+                        vistaIC.getEstadoTablaCheques(i)};
+                }
+                flag = miControlador.ingresarCheques(dataCQ, id);
+                return flag;
+            case 2:
+                cuotas = vistaIC.getSpinnerCant();
+                String[][] dataTC = new String[cuotas][4];
+                tabla = vistaIC.getTablaCuotas();
+                for(int i = 0; i < cuotas; i++){
+                    dataTC[i] = new String[]{tabla.getValueAt(i, 0).toString(),vistaIC.getfechaTablaTC(i),
+                        tabla.getValueAt(i, 2).toString(), vistaIC.getEstadoTablaTC(i)};
+                }
+                flag = miControlador.ingresarCuotas(dataTC, id);
+                return flag;
+            default:
+                return true;
+        }
     }
 
     public boolean verificarRut(String rut) {
@@ -75,18 +111,15 @@ public class controladorIngresarCompras {
 
     public String camposVacios() {
         String respuesta = "";
-//        if (vistaIP.getTextoRut().compareTo("") == 0) {
-//            respuesta += "-Rut.\n";
-//        }
-//        if (vistaIP.getTextoRazon().compareTo("") == 0) {
-//            respuesta += "-Razón social.\n";
-//        }
-//        if (vistaIP.getTextoGiro().compareTo("") == 0) {
-//            respuesta += "-Giro.\n";
-//        }
-//        if (vistaIP.getTextoDireccion().compareTo("") == 0) {
-//            respuesta += "-Dirección.\n";
-//        }
+        if (vistaIC.getTextoFechaIngreso().compareTo("") == 0) {
+            respuesta += "-Fecha de ingreso.\n";
+        }
+        if (vistaIC.getTextoFolio().compareTo("") == 0) {
+            respuesta += "-Folio.\n";
+        }
+        if (vistaIC.getTextoFechaPago().compareTo("") == 0) {
+            respuesta += "-Fecha de pago.\n";
+        }
         return respuesta;
     }
 

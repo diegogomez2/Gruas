@@ -23,12 +23,12 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
+          <Component id="jScrollPane1" alignment="0" pref="719" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
+          <Component id="jScrollPane1" min="-2" pref="563" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -45,33 +45,97 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="comboMedio" alignment="0" max="32767" attributes="0"/>
-                              <Component id="labelTipoDTE" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="comboTipoDTE" alignment="0" max="32767" attributes="0"/>
-                              <Component id="labelRut" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="comboRut" alignment="0" max="32767" attributes="0"/>
-                              <Component id="labelRazon" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="textoRazon" alignment="0" max="32767" attributes="0"/>
-                              <Component id="labelForma" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="comboForma" alignment="0" min="-2" pref="239" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="scrollObs" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                           </Group>
-                          <Component id="labelMedio" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="scrollDatos" max="32767" attributes="0"/>
+                                  <Component id="jPanel3" pref="683" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="7" pref="7" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="textoOrden" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="textoGiro" max="32767" attributes="0"/>
+                                  <Component id="labelMedio" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="comboRut" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="comboForma" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="textoAsunto" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="comboTipoDTE" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="comboMedio" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="textoBanco" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="textoContacto" max="32767" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="1" attributes="0">
+                                          <Component id="labelTipoDTE" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="labelRut" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="labelBanco" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="labelContacto" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="labelCantidad" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="textoNumTC" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="spinnerCantidad" alignment="0" max="32767" attributes="0"/>
+                                          <Group type="102" attributes="0">
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="labelRazon" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="labelNumTC" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="labelFolio" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                          </Group>
+                                          <Component id="textoFolio" alignment="1" max="32767" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="textoDireccion" alignment="1" max="32767" attributes="0"/>
+                                          <Component id="textoRazon" max="32767" attributes="0"/>
+                                          <Component id="textoFechaIngreso" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="textoFechaPago" alignment="0" max="32767" attributes="0"/>
+                                          <Group type="102" attributes="0">
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="labelNumCuotas" min="-2" pref="153" max="-2" attributes="0"/>
+                                                  <Component id="labelFechaPago" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="labelFechaIngreso" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="labelDireccion" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                          </Group>
+                                          <Component id="spinnerNumCuotas" alignment="0" max="32767" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="labelGiro" min="-2" max="-2" attributes="0"/>
+                                  <Component id="labelOrden" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="labelForma" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="labelAsunto" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="labelObs" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="labelEstado" min="-2" max="-2" attributes="0"/>
-                          <Component id="labelFechaIngreso" min="-2" max="-2" attributes="0"/>
-                          <Component id="textoFechaIngreso" max="32767" attributes="0"/>
-                          <Component id="labelFolio" min="-2" max="-2" attributes="0"/>
-                          <Component id="textoFolio" alignment="0" max="32767" attributes="0"/>
-                          <Component id="labelOrden" min="-2" max="-2" attributes="0"/>
-                          <Component id="textoOrden" alignment="0" max="32767" attributes="0"/>
-                          <Component id="labelFechaPago" min="-2" max="-2" attributes="0"/>
-                          <Component id="textoFechaPago" alignment="0" max="32767" attributes="0"/>
-                          <Component id="comboEstado" alignment="0" min="-2" pref="221" max="-2" attributes="0"/>
-                      </Group>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
+                      <Component id="botonAceptar" linkSize="4" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="botonCancelar" linkSize="4" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -91,44 +155,91 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="labelRut" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="labelFechaIngreso" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelRazon" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="comboRut" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="textoFechaIngreso" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="textoRazon" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="labelRazon" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="labelOrden" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelGiro" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelDireccion" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="textoRazon" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="textoOrden" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="textoGiro" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="textoDireccion" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="labelForma" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelFechaIngreso" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelContacto" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="textoFechaIngreso" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="textoContacto" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="labelOrden" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="labelFechaPago" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="comboForma" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="textoOrden" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="textoFechaPago" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="labelForma" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="comboForma" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="labelAsunto" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelNumCuotas" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="textoAsunto" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="spinnerNumCuotas" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="labelObs" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="scrollObs" min="-2" pref="59" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="labelMedio" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="labelEstado" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelCantidad" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="comboMedio" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="comboEstado" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="spinnerCantidad" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace type="unrelated" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="labelBanco" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelNumTC" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="textoBanco" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="textoNumTC" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="scrollDatos" min="-2" pref="89" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jPanel3" min="-2" pref="161" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="botonCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="botonAceptar" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -163,12 +274,7 @@
             <Component class="javax.swing.JComboBox" name="comboRut">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="4">
-                    <StringItem index="0" value="Item 1"/>
-                    <StringItem index="1" value="Item 2"/>
-                    <StringItem index="2" value="Item 3"/>
-                    <StringItem index="3" value="Item 4"/>
-                  </StringArray>
+                  <StringArray count="0"/>
                 </Property>
               </Properties>
             </Component>
@@ -178,6 +284,15 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="textoRazon">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="11" style="1"/>
+                </Property>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="textoRazon.setForeground(new java.awt.Color(255, 51, 51));&#xa;&#xa;textoRazon.setDisabledTextColor(new java.awt.Color(102, 102, 102));&#xa;&#xa;textoRazon.setEnabled(false);"/>
+              </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="labelForma">
               <Properties>
@@ -196,6 +311,9 @@
                   </StringArray>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboFormaActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="labelFechaIngreso">
               <Properties>
@@ -230,6 +348,11 @@
                 <Property name="text" type="java.lang.String" value="Medio de pago"/>
               </Properties>
             </Component>
+            <Component class="javax.swing.JLabel" name="labelCantidad">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Cantidad"/>
+              </Properties>
+            </Component>
             <Component class="javax.swing.JComboBox" name="comboMedio">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
@@ -241,21 +364,243 @@
                   </StringArray>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboMedioActionPerformed"/>
+              </Events>
             </Component>
-            <Component class="javax.swing.JLabel" name="labelEstado">
+            <Component class="javax.swing.JSpinner" name="spinnerCantidad">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Estado"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JComboBox" name="comboEstado">
-              <Properties>
-                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="2">
-                    <StringItem index="0" value="Pagada"/>
-                    <StringItem index="1" value="No pagada"/>
-                  </StringArray>
+                <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                  <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="spinnerCantidadStateChanged"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="labelBanco">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Banco"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="textoBanco">
+            </Component>
+            <Container class="javax.swing.JScrollPane" name="scrollDatos">
+              <AuxValues>
+                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+              </AuxValues>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="javax.swing.JTable" name="tablaDatos">
+                  <Properties>
+                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                      <Table columnCount="4" rowCount="4">
+                        <Column editable="true" title="Title 1" type="java.lang.Object"/>
+                        <Column editable="true" title="Title 2" type="java.lang.Object"/>
+                        <Column editable="true" title="Title 3" type="java.lang.Object"/>
+                        <Column editable="true" title="Title 4" type="java.lang.Object"/>
+                      </Table>
+                    </Property>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Component class="javax.swing.JLabel" name="labelNumTC">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="N&#xfa;mero de tarjeta de cr&#xe9;dito"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="textoNumTC">
+            </Component>
+            <Container class="javax.swing.JPanel" name="jPanel3">
+              <Properties>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                    <TitledBorder title="Detalle"/>
+                  </Border>
+                </Property>
+                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[200, 176]"/>
+                </Property>
+              </Properties>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="jScrollPane2" pref="661" max="32767" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="jButton2" linkSize="1" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jButton1" linkSize="1" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jScrollPane2" min="-2" pref="109" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+                  <AuxValues>
+                    <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                  </AuxValues>
+
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                  <SubComponents>
+                    <Component class="javax.swing.JTable" name="tablaDetalle">
+                      <Properties>
+                        <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                          <Table columnCount="4" rowCount="4">
+                            <Column editable="true" title="Title 1" type="java.lang.Object"/>
+                            <Column editable="true" title="Title 2" type="java.lang.Object"/>
+                            <Column editable="true" title="Title 3" type="java.lang.Object"/>
+                            <Column editable="true" title="Title 4" type="java.lang.Object"/>
+                          </Table>
+                        </Property>
+                      </Properties>
+                    </Component>
+                  </SubComponents>
+                </Container>
+                <Component class="javax.swing.JButton" name="jButton1">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="8" style="1"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="-"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JButton" name="jButton2">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="8" style="1"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="+"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+                  </Events>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Component class="javax.swing.JTextField" name="textoAsunto">
+            </Component>
+            <Component class="javax.swing.JLabel" name="labelAsunto">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Asunto"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JSpinner" name="spinnerNumCuotas">
+            </Component>
+            <Component class="javax.swing.JLabel" name="labelNumCuotas">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="N&#xfa;mero de cuotas"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="labelGiro">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Giro"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="textoGiro">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="11" style="1"/>
+                </Property>
+                <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="66" green="66" red="66" type="rgb"/>
+                </Property>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="labelDireccion">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Direcci&#xf3;n"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="textoDireccion">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="11" style="1"/>
+                </Property>
+                <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="66" green="66" red="66" type="rgb"/>
+                </Property>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="labelContacto">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Contacto"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="textoContacto">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="11" style="1"/>
+                </Property>
+                <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="66" green="66" red="66" type="rgb"/>
+                </Property>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="labelObs">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Observaciones de pago"/>
+              </Properties>
+            </Component>
+            <Container class="javax.swing.JScrollPane" name="scrollObs">
+              <AuxValues>
+                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+              </AuxValues>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="javax.swing.JTextArea" name="textoObs">
+                  <Properties>
+                    <Property name="columns" type="int" value="20"/>
+                    <Property name="rows" type="int" value="5"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Component class="javax.swing.JButton" name="botonAceptar">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Aceptar"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonAceptarActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="botonCancelar">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Cancelar"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonCancelarActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
