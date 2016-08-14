@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package vistas;
-
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;

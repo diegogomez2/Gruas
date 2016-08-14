@@ -11,6 +11,9 @@ import vistas.*;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -35,7 +38,7 @@ public class vistaComprasP extends javax.swing.JPanel {
     
     public vistaComprasP(String tipo, Object[][] data) {
         initComponents();
-        String[] columNames = {"Tipo de documento", "Folio real", "Folio interno", "Rut proveedor",
+        String[] columNames = {"Id","Tipo de documento", "Folio real", "Folio interno", "Rut proveedor",
             "Razón social", "Fecha vencimiento", "Estado"};
         datos = new DefaultTableModel(data, columNames){
             @Override
@@ -54,7 +57,11 @@ public class vistaComprasP extends javax.swing.JPanel {
                 int row = table.rowAtPoint(p);
                 if(evt.getClickCount() == 2){
                     controladorCompras miControlador = new controladorCompras();
-                    miControlador.irVistaDetalleProveedor(tablaCompras.getValueAt(row, 0).toString());
+                    try {
+                        miControlador.irVistaDetalleCompras(tablaCompras.getValueAt(row, 0).toString());
+                    } catch (ParseException ex) {
+                        Logger.getLogger(vistaComprasP.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
         });
@@ -218,19 +225,23 @@ public class vistaComprasP extends javax.swing.JPanel {
     }//GEN-LAST:event_botonEliminarProveedorActionPerformed
 
     private void botonModificarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarProveedorActionPerformed
-//        controladorProveedores miControlador = new controladorProveedores();
-//        boolean selected = tablaCompras.getSelectedRowCount() > 0;
-//        if(selected){
-//            int row = getFilaSeleccionada();
-//            String rut = getRutFila(row);
-//            String nombres = getNombresFila(row);
-//            String[] rut_dv = rut.split("-");
-//            miControlador.irVistaModificarProveedores(rut_dv[0], nombres);
-//            JTabbedPane tabs = (JTabbedPane)this.getParent();
-//            miControlador.crearControladorPrincipal(tabs);
-//        }else{
-//            JOptionPane.showMessageDialog(null, "Debe seleccionar un proveedor para ser modificado");
-//        }
+        controladorCompras miControlador = new controladorCompras();
+        boolean selected = tablaCompras.getSelectedRowCount() > 0;
+        if(selected){
+            int row = getFilaSeleccionada();
+            //String rut = getRutFila(row);
+            String id = getIdFila(row);
+            try {
+                //String[] rut_dv = rut.split("-");
+                miControlador.irVistaModificarCompras(id);
+            } catch (ParseException ex) {
+                Logger.getLogger(vistaComprasP.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            JTabbedPane tabs = (JTabbedPane)this.getParent();
+            miControlador.crearControladorPrincipal(tabs);
+        }else{
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un proveedor para ser modificado");
+        }
     }//GEN-LAST:event_botonModificarProveedorActionPerformed
 
     private void textoFiltroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoFiltroKeyReleased
@@ -261,11 +272,11 @@ public class vistaComprasP extends javax.swing.JPanel {
     }
 
     public String getRutFila(int row){
-        return tablaCompras.getValueAt(row, 0).toString();
+        return tablaCompras.getValueAt(row, 4).toString();
     }
     
-    public String getNombresFila(int row){
-        return tablaCompras.getValueAt(row,1).toString();
+    public String getIdFila(int row){
+        return tablaCompras.getValueAt(row,0).toString();
     }
     
     public void filtrar(String query){

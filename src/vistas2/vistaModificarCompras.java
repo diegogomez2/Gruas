@@ -5,7 +5,6 @@
  */
 package vistas2;
 
-import controladores2.controladorIngresarCompras;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.event.ItemEvent;
@@ -15,23 +14,17 @@ import java.awt.event.KeyEvent;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.text.Format;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -39,9 +32,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.text.JTextComponent;
+import modelos2.modeloCompras;
 import modelos2.modeloProveedores;
-import org.eclipse.persistence.jaxb.javamodel.JavaModel;
-import org.jdesktop.swingx.JXDatePicker;
 import org.jdesktop.swingx.renderer.DefaultTableRenderer;
 import org.jdesktop.swingx.renderer.FormatStringValue;
 import org.jdesktop.swingx.renderer.StringValue;
@@ -51,10 +43,12 @@ import org.jdesktop.swingx.table.DatePickerCellEditor;
  *
  * @author diego
  */
-public class vistaIngresarCompras extends javax.swing.JDialog {
+public class vistaModificarCompras extends javax.swing.JDialog {
+
     modelos2.modeloProveedores proveedor = new modeloProveedores();
     StringValue sv = new FormatStringValue(new SimpleDateFormat("dd-MMMM-yyyy"));
     TableCellRenderer r = new DefaultTableRenderer(sv);
+    // either per-column
     NumberFormat FORMAT = NumberFormat.getCurrencyInstance();
     DecimalFormatSymbols dfs = new DecimalFormatSymbols();
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
@@ -66,14 +60,14 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
     MyTableModel detalles = new MyTableModel();
     private boolean hide_flag = false;
     
-    public vistaIngresarCompras(java.awt.Frame parent, boolean modal, Object proveedores[]) {
+    public vistaModificarCompras(java.awt.Frame parent, boolean modal, Object proveedores[]) {
         super(parent, modal);
         initComponents();
         dfs.setCurrencySymbol("$");
         dfs.setGroupingSeparator('.');
         dfs.setMonetaryDecimalSeparator('.');
         ((DecimalFormat) FORMAT).setDecimalFormatSymbols(dfs);
-//        DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
         textoRut = (JTextField)comboRut.getEditor().getEditorComponent();
         final JTextComponent tcr = (JTextComponent) comboRut.getEditor().getEditorComponent();
         tcr.getDocument().addDocumentListener(new DocumentListener() { 
@@ -94,10 +88,6 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
             public void changedUpdate(DocumentEvent de) {
             }
         });
-        textoFechaIngreso.setDate(new Date());
-        hideOtrosPagos();
-        hideMedioPago();
-        detalles.setRowCount(1);
         tablaDetalle.setModel(detalles);
         autosuggestProveedores(proveedores);
     }
@@ -110,7 +100,6 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -144,8 +133,8 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaDetalle = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        botonMenos = new javax.swing.JButton();
+        botonMas = new javax.swing.JButton();
         textoAsunto = new javax.swing.JTextField();
         labelAsunto = new javax.swing.JLabel();
         spinnerNumCuotas = new javax.swing.JSpinner();
@@ -159,8 +148,8 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
         labelObs = new javax.swing.JLabel();
         scrollObs = new javax.swing.JScrollPane();
         textoObs = new javax.swing.JTextArea();
-        botonAceptar = new javax.swing.JButton();
-        botonCancelar = new javax.swing.JButton();
+        botonOK = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -232,6 +221,8 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
 
         labelNumTC.setText("Número de tarjeta de crédito");
 
+        textoNumTC.setEditable(false);
+
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalle"));
         jPanel3.setPreferredSize(new java.awt.Dimension(200, 176));
 
@@ -246,21 +237,22 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaDetalle.setEnabled(false);
         jScrollPane2.setViewportView(tablaDetalle);
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
-        jButton1.setText("-");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        botonMenos.setFont(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
+        botonMenos.setText("-");
+        botonMenos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                botonMenosActionPerformed(evt);
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
-        jButton2.setText("+");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        botonMas.setFont(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
+        botonMas.setText("+");
+        botonMas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                botonMasActionPerformed(evt);
             }
         });
 
@@ -270,25 +262,22 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 681, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 757, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2)
+                        .addComponent(botonMas)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)))
+                        .addComponent(botonMenos)))
                 .addContainerGap())
         );
-
-        jPanel3Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2});
-
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)))
+                    .addComponent(botonMenos)
+                    .addComponent(botonMas)))
         );
 
         labelAsunto.setText("Asunto");
@@ -300,21 +289,18 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
         textoGiro.setEditable(false);
         textoGiro.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         textoGiro.setDisabledTextColor(new java.awt.Color(102, 102, 102));
-        textoGiro.setEnabled(false);
 
         labelDireccion.setText("Dirección");
 
         textoDireccion.setEditable(false);
         textoDireccion.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         textoDireccion.setDisabledTextColor(new java.awt.Color(102, 102, 102));
-        textoDireccion.setEnabled(false);
 
         labelContacto.setText("Contacto");
 
         textoContacto.setEditable(false);
         textoContacto.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         textoContacto.setDisabledTextColor(new java.awt.Color(102, 102, 102));
-        textoContacto.setEnabled(false);
 
         labelObs.setText("Observaciones de pago");
 
@@ -335,7 +321,7 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(scrollDatos)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 703, Short.MAX_VALUE))
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 779, Short.MAX_VALUE))
                         .addGap(7, 7, 7))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -475,82 +461,60 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
 
         jScrollPane1.setViewportView(jPanel1);
 
-        botonAceptar.setText("Aceptar");
-        botonAceptar.addActionListener(new java.awt.event.ActionListener() {
+        botonOK.setText("Cancelar");
+        botonOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonAceptarActionPerformed(evt);
+                botonOKActionPerformed(evt);
             }
         });
 
-        botonCancelar.setText("Cancelar");
-        botonCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonCancelarActionPerformed(evt);
-            }
-        });
+        jButton3.setText("Aceptar");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(569, Short.MAX_VALUE)
-                .addComponent(botonAceptar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(botonCancelar)
+                .addContainerGap(607, Short.MAX_VALUE)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botonOK, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 739, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 815, Short.MAX_VALUE))
         );
 
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {botonAceptar, botonCancelar});
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {botonOK, jButton3});
 
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(551, Short.MAX_VALUE)
+                .addContainerGap(571, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botonCancelar)
-                    .addComponent(botonAceptar))
+                    .addComponent(botonOK)
+                    .addComponent(jButton3))
                 .addContainerGap())
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE)
-                    .addGap(49, 49, 49)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE)
+                    .addGap(46, 46, 46)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, 0)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void comboMedioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboMedioActionPerformed
-        switch(comboMedio.getSelectedIndex()){
-            case 2:
-                showCheques();
-                break;
-            case 3:
-                showTC();
-                break;
-            default:
-                hideMedioPago();
-        }        
-    }//GEN-LAST:event_comboMedioActionPerformed
 
     private void spinnerCantidadStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinnerCantidadStateChanged
         if(comboMedio.getSelectedIndex() == 2){
@@ -568,6 +532,35 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_spinnerCantidadStateChanged
 
+    private void botonMenosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonMenosActionPerformed
+        if(detalles.getRowCount() > 0){
+            detalles.setRowCount(detalles.getRowCount()-1);
+            tablaDetalle.setModel(detalles);
+        }  
+    }//GEN-LAST:event_botonMenosActionPerformed
+
+    private void botonMasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonMasActionPerformed
+        detalles.setRowCount(detalles.getRowCount()+1);
+        tablaDetalle.setModel(detalles);
+    }//GEN-LAST:event_botonMasActionPerformed
+
+    private void botonOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonOKActionPerformed
+        dispose();
+    }//GEN-LAST:event_botonOKActionPerformed
+
+    private void comboMedioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboMedioActionPerformed
+        switch(comboMedio.getSelectedIndex()){
+            case 2:
+                showCheques();
+                break;
+            case 3:
+                showTC();
+                break;
+            default:
+                hideMedioPago();
+        }
+    }//GEN-LAST:event_comboMedioActionPerformed
+
     private void comboFormaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFormaActionPerformed
         if(comboForma.getSelectedIndex() == 4){
             showOtrosPagos();
@@ -575,36 +568,6 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
             hideOtrosPagos();
         }
     }//GEN-LAST:event_comboFormaActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        detalles.setRowCount(detalles.getRowCount()+1);
-        tablaDetalle.setModel(detalles);
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if(detalles.getRowCount() > 0){
-            detalles.setRowCount(detalles.getRowCount()-1);
-            tablaDetalle.setModel(detalles);
-        }  
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
-        dispose();
-    }//GEN-LAST:event_botonCancelarActionPerformed
-
-    private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
-        controladorIngresarCompras miControladorIC = new controladorIngresarCompras();
-        String respuesta = miControladorIC.camposVacios();
-        boolean esVacio = respuesta.length() == 0;
-        if (!esVacio) {
-            JOptionPane.showMessageDialog(this, respuesta, "Debe rellenar los siguientes campos", JOptionPane.INFORMATION_MESSAGE);
-        } else {            
-                if (miControladorIC.irVistaComprasP()) {
-                    JOptionPane.showMessageDialog(this, "Compra ingresada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
-                    setVisible(false);
-                }            
-        }
-    }//GEN-LAST:event_botonAceptarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -623,15 +586,14 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(vistaIngresarCompras.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(vistaModificarCompras.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(vistaIngresarCompras.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(vistaModificarCompras.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(vistaIngresarCompras.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(vistaModificarCompras.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(vistaIngresarCompras.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(vistaModificarCompras.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
@@ -642,14 +604,14 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botonAceptar;
-    private javax.swing.JButton botonCancelar;
+    private javax.swing.JButton botonMas;
+    private javax.swing.JButton botonMenos;
+    private javax.swing.JButton botonOK;
     private javax.swing.JComboBox comboForma;
     private javax.swing.JComboBox comboMedio;
     private javax.swing.JComboBox comboRut;
     private javax.swing.JComboBox comboTipoDTE;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -692,247 +654,35 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
     private javax.swing.JTextField textoOrden;
     private javax.swing.JTextField textoRazon;
     // End of variables declaration//GEN-END:variables
-
-    final public void hideOtrosPagos(){
-        labelAsunto.setVisible(false);
-        labelNumCuotas.setVisible(false);
-        labelObs.setVisible(false);
-        textoAsunto.setVisible(false);
-        spinnerNumCuotas.setVisible(false);
-        scrollObs.setVisible(false);
-    }
-
-    final public void showOtrosPagos(){
-        labelAsunto.setVisible(true);
-        labelNumCuotas.setVisible(true);
-        labelObs.setVisible(true);
-        textoAsunto.setVisible(true);
-        spinnerNumCuotas.setVisible(true);
-        scrollObs.setVisible(true);
-    }
     
-    final public void hideMedioPago(){
-        labelCantidad.setVisible(false);
-        spinnerCantidad.setVisible(false);
-        labelBanco.setVisible(false);
-        textoBanco.setVisible(false);
-        labelNumTC.setVisible(false);
-        textoNumTC.setVisible(false);
-        scrollDatos.setVisible(false);
-    }
-    
-    final public void showCheques(){
-        labelCantidad.setText("Cantidad de cheques");
-        labelCantidad.setVisible(true);
-        spinnerCantidad.setVisible(true);
-        String[] columNames = {"Cheque", "Folio", "Fecha vencimiento", "Monto", "Estado"};
-        Object[][] data = new Object[0][0];
-        cheques.setRowCount(Integer.parseInt(spinnerCantidad.getValue().toString()));
-        for(int i = 0; i < Integer.parseInt(spinnerCantidad.getValue().toString()); i++){
-            cheques.setValueAt(i+1, i, 0);
-        }
-        tablaDatos.setModel(cheques);
-        TableColumn column = tablaDatos.getColumnModel().getColumn(2);
-        column.setCellEditor(new DatePickerCellEditor());
-        tablaDatos.getColumnModel().getColumn(3).setCellRenderer(new CurrencyTableCellRenderer());
-        scrollDatos.setVisible(true);
-        spinnerCantidad.setValue(spinnerNumCuotas.getValue());
-        labelBanco.setVisible(true);
-        textoBanco.setVisible(true);
-        labelNumTC.setVisible(false);
-        textoNumTC.setVisible(false);
-    }
-    
-    final public void showTC(){
-        labelCantidad.setText("Número de cuotas");
-        labelCantidad.setVisible(true);
-        spinnerCantidad.setVisible(true);
-        String[] columNames = {"Cuota", "Fecha de vencimiento", "Monto", "Estado"};
-        Object[][] data = new Object[0][0];
-        tc.setRowCount(Integer.parseInt(spinnerCantidad.getValue().toString()));
-        for(int i = 0; i < Integer.parseInt(spinnerCantidad.getValue().toString()); i++){
-            tc.setValueAt(i+1, i, 0);
-        }
-        
-        tablaDatos.setModel(tc);
-        TableColumn column = tablaDatos.getColumnModel().getColumn(1);
-        column.setCellEditor(new DatePickerCellEditor());
-        scrollDatos.setVisible(true);
-        spinnerCantidad.setValue(spinnerNumCuotas.getValue());
-        labelBanco.setVisible(true);
-        textoBanco.setVisible(true);
-        labelNumTC.setVisible(true);
-        textoNumTC.setVisible(true);
+    public void setComboForma(String comboForma) {
+        this.comboForma.setSelectedItem(comboForma);
     }
 
-    private void setModel(DefaultComboBoxModel mdl, String str, JComboBox combo, JTextField texto){
-        combo.setModel(mdl);
-        texto.setText(str);
+    public void setComboMedio(String comboMedio) {
+        this.comboMedio.setSelectedItem(comboMedio);
     }
 
-    private DefaultComboBoxModel getSuggestedModel(List<String> list, String tx){
-        DefaultComboBoxModel m = new DefaultComboBoxModel();
-        for (String s : list){
-            if(s.toLowerCase().contains(tx.toLowerCase())){
-                m.addElement(s);
-            }
-        }
-        return m;
-    }
-    
-    public final void autosuggestProveedores(Object[] data){
-            comboRut.removeAllItems();
-            if(comboRut.getItemCount() == 0){
-                for (Object data1 : data) {
-                    comboRut.addItem(data1);
-                    listProveedores.add((String) data1);
-                    comboRut.addItemListener(new ItemListener() {
-
-                        @Override
-                        public void itemStateChanged(ItemEvent ie) {
-                            if(ie.getStateChange() == ItemEvent.SELECTED){
-                                comboRut.getSelectedIndex();
-                            }
-                        }
-                    });
-                }
-            }else{
-                comboRut.addItem("Error");
-            }
-
-        comboRut.setEditable(true);
-        textoRut.addKeyListener(new KeyAdapter(){
-            @Override
-            public void keyTyped(KeyEvent e){
-                EventQueue.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        String text = textoRut.getText();
-                        if(text.length() == 0){
-                            comboRut.hidePopup();
-                            setModel(new DefaultComboBoxModel(listProveedores.toArray()), "", comboRut, textoRut);
-                        }else{
-                            DefaultComboBoxModel m = getSuggestedModel(listProveedores, text);
-                            if(m.getSize() == 0){
-                                comboRut.hidePopup();
-                            }else{
-                                setModel(m, text, comboRut, textoRut);
-                                comboRut.showPopup();
-                            }
-                        }
-                    }
-                });
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e){
-                String text = textoRut.getText();
-                int code = e.getKeyCode();
-                if(code == KeyEvent.VK_ENTER){
-                    for (int i = 0; i < listProveedores.size(); i++) {
-                        String str = (String)listProveedores.get(i);
-                        if(str.toLowerCase().contains(text.toLowerCase())){
-                            textoRut.setText(str);
-                            return;
-                        }
-                    }
-                }else if(code == KeyEvent.VK_ESCAPE){
-                    hide_flag = true;
-                }else if(code == KeyEvent.VK_RIGHT){
-                    for (int i = 0; i < listProveedores.size(); i++) {
-                        String str = (String)listProveedores.get(i);
-                        if(str.toLowerCase().contains(text.toLowerCase())){
-                            textoRut.setText(str);
-                            return;
-                        }
-                    }
-                }
-            }
-        });
-    }
-    
-    public class MyTableModel extends DefaultTableModel{
-        public MyTableModel() {
-          super(new String[]{"Código del producto", "Detalle", "Cantidad", "Precio Unitario", "Iva"}, 0);
-        }
-
-        @Override
-        public Class getColumnClass(int column) {
-          switch (column) {
-            case 0:
-              return Integer.class;
-            case 1: 
-                return String.class;
-            case 2:
-                return Integer.class;
-            case 3: 
-                return Integer.class;
-            default:
-                return Boolean.class;
-          }
-        }
+    public void setComboRut(String comboRut) {
+        this.comboRut.setSelectedItem(comboRut);
     }
 
-    public class MyTableModelCheques extends DefaultTableModel{
-        public MyTableModelCheques() {
-          super(new String[]{"Cheque", "Folio", "Fecha vencimiento", "Monto", "Estado"}, 0);
-        }
+    public void setComboTipoDTE(String comboTipoDTE) {
+        this.comboTipoDTE.setSelectedItem(comboTipoDTE);
+    }
 
-        @Override
-        public Class getColumnClass(int column) {
-          switch (column) {
-            case 0:
-                return Integer.class;
-            case 1: 
-                return Integer.class;
-            case 2:
-                return Date.class;
-            case 3: 
-                return Integer.class;
-            default:
-                return Boolean.class;
-          }
-        }
+    public void setSpinnerCantidad(String spinnerCantidad) {
+        this.spinnerCantidad.setValue(Integer.parseInt(spinnerCantidad));
     }
-    
-    public class CurrencyTableCellRenderer extends DefaultTableCellRenderer {
-        @Override
-        public final Component getTableCellRendererComponent(JTable table, Object value,
-            boolean isSelected, boolean hasFocus, int row, int column) {
-                final Component result = super.getTableCellRendererComponent(table, value,
-                    isSelected, hasFocus, row, column);
-                if (value instanceof Number) {
-                    setHorizontalAlignment(JLabel.RIGHT);
-                    setText(FORMAT.format(value));
-                } else {
-                    setText("");
-                }
-                return result;
-        }
-    }
-    
-    public class MyTableModelTC extends DefaultTableModel{
-        public MyTableModelTC() {
-          super(new String[]{"Cuota", "Fecha vencimiento", "Monto", "Estado"}, 0);
-        }
 
-        @Override
-        public Class getColumnClass(int column) {
-          switch (column) {
-            case 0:
-                return Integer.class;
-            case 1: 
-                return Date.class;
-            case 2:
-                return Integer.class;
-            default:
-                return Boolean.class;
-          }
-        }
-        
-        
+    public void setSpinnerNumCuotas(String spinnerNumCuotas) {
+        this.spinnerNumCuotas.setValue(Integer.parseInt(spinnerNumCuotas));
     }
-    
+
+    public void setTextoBanco(String textoBanco) {
+        this.textoBanco.setText(textoBanco);
+    }
+
     public void setTextoContacto(String textoContacto) {
         this.textoContacto.setText(textoContacto);
     }
@@ -941,14 +691,42 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
         this.textoDireccion.setText(textoDireccion);
     }
 
+    public void setTextoFechaIngreso(String textoFechaIngreso) throws ParseException {
+        this.textoFechaIngreso.setDate(formatDate.parse(textoFechaIngreso));
+    }
+
+    public void setTextoFechaPago(String textoFechaPago) throws ParseException {
+        this.textoFechaPago.setDate(formatDate.parse(textoFechaPago));
+    }
+
+    public void setTextoFolio(String textoFolio) {
+        this.textoFolio.setText(textoFolio);
+    }
+
     public void setTextoGiro(String textoGiro) {
         this.textoGiro.setText(textoGiro);
+    }
+
+    public void setTextoNumTC(String textoNumTC) {
+        this.textoNumTC.setText(textoNumTC);
+    }
+
+    public void setTextoObs(String textoObs) {
+        this.textoObs.setText(textoObs);
+    }
+
+    public void setTextoOrden(String textoOrden) {
+        this.textoOrden.setText(textoOrden);
     }
 
     public void setTextoRazon(String textoRazon) {
         this.textoRazon.setText(textoRazon);
     }
 
+    public void setTextoAsunto(String textoAsunto) {
+        this.textoAsunto.setText(textoAsunto);
+    }
+    
     public String getComboForma() {
         return comboForma.getSelectedItem().toString();
     }
@@ -1055,7 +833,7 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
         if (fecha == null) {
             return "";
         }
-        String dateString = formatDate.format((Date)tablaDatos.getValueAt(row, 2));
+        String dateString = formatDate.format(textoFechaIngreso.getDate());
         return dateString;
     }
     
@@ -1064,7 +842,318 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
         if (fecha == null) {
             return "";
         }
-        String dateString = formatDate.format((Date)tablaDatos.getValueAt(row, 2));
+        String dateString = formatDate.format(textoFechaIngreso.getDate());
         return dateString;
+    }
+    
+    final public void showCheques(){
+        labelCantidad.setText("Cantidad de cheques");
+        labelCantidad.setVisible(true);
+        spinnerCantidad.setVisible(true);
+        String[] columNames = {"Cheque", "Folio", "Fecha vencimiento", "Monto", "Estado"};
+        Object[][] data = new Object[0][0];
+        cheques.setRowCount(Integer.parseInt(spinnerCantidad.getValue().toString()));
+        for(int i = 0; i < Integer.parseInt(spinnerCantidad.getValue().toString()); i++){
+            cheques.setValueAt(i+1, i, 0);
+        }
+        tablaDatos.setModel(cheques);
+        TableColumn column = tablaDatos.getColumnModel().getColumn(2);
+        column.setCellEditor(new DatePickerCellEditor());
+        tablaDatos.getColumnModel().getColumn(3).setCellRenderer(new CurrencyTableCellRenderer());
+        scrollDatos.setVisible(true);
+        spinnerCantidad.setValue(spinnerNumCuotas.getValue());
+        labelBanco.setVisible(true);
+        textoBanco.setVisible(true);
+        labelNumTC.setVisible(false);
+        textoNumTC.setVisible(false);
+    }
+    
+    final public void hideOtrosPagos(){
+        labelAsunto.setVisible(false);
+        labelNumCuotas.setVisible(false);
+        labelObs.setVisible(false);
+        textoAsunto.setVisible(false);
+        spinnerNumCuotas.setVisible(false);
+        scrollObs.setVisible(false);
+    }
+
+    final public void showTC(){
+        labelCantidad.setText("Número de cuotas");
+        labelCantidad.setVisible(true);
+        spinnerCantidad.setVisible(true);
+        String[] columNames = {"Cuota", "Fecha de vencimiento", "Monto", "Estado"};
+        Object[][] data = new Object[0][0];
+        tc.setRowCount(Integer.parseInt(spinnerCantidad.getValue().toString()));
+        for(int i = 0; i < Integer.parseInt(spinnerCantidad.getValue().toString()); i++){
+            tc.setValueAt(i+1, i, 0);
+        }
+        
+        tablaDatos.setModel(tc);
+        TableColumn column = tablaDatos.getColumnModel().getColumn(1);
+        column.setCellEditor(new DatePickerCellEditor());
+        scrollDatos.setVisible(true);
+        spinnerCantidad.setValue(spinnerNumCuotas.getValue());
+        labelBanco.setVisible(true);
+        textoBanco.setVisible(true);
+        labelNumTC.setVisible(true);
+        textoNumTC.setVisible(true);
+    }
+    
+    final public void showOtrosPagos(){
+        labelAsunto.setVisible(true);
+        labelNumCuotas.setVisible(true);
+        labelObs.setVisible(true);
+        textoAsunto.setVisible(true);
+        spinnerNumCuotas.setVisible(true);
+        scrollObs.setVisible(true);
+    }
+    
+    final public void hideMedioPago(){
+        labelCantidad.setVisible(false);
+        spinnerCantidad.setVisible(false);
+        labelBanco.setVisible(false);
+        textoBanco.setVisible(false);
+        labelNumTC.setVisible(false);
+        textoNumTC.setVisible(false);
+        scrollDatos.setVisible(false);
+    }
+    
+    final public void showCheques(String id) throws ParseException{
+        labelCantidad.setText("Cantidad de cheques");
+        labelCantidad.setVisible(true);
+        spinnerCantidad.setVisible(true);
+        String[] columNames = {"Cheque", "Folio", "Fecha vencimiento", "Monto", "Estado"};
+        modelos2.modeloCompras compra = new modeloCompras();
+        Object[][] data = compra.obtenerChequesPorId(id);
+        spinnerCantidad.setValue(data.length);
+        cheques.setRowCount(Integer.parseInt(spinnerCantidad.getValue().toString()));
+        for(int i = 0; i < Integer.parseInt(spinnerCantidad.getValue().toString()); i++){
+            cheques.setValueAt(i+1, i, 0);
+        }
+        tablaDatos.setModel(cheques);
+        agregarCheques(data);
+        scrollDatos.setVisible(true);
+        spinnerNumCuotas.setValue(data.length);
+        labelBanco.setVisible(true);
+        textoBanco.setVisible(true);
+        labelNumTC.setVisible(false);
+        textoNumTC.setVisible(false);
+    }
+    
+    final public void showTC(String id){
+        labelCantidad.setText("Número de cuotas");
+        labelCantidad.setVisible(true);
+        spinnerCantidad.setVisible(true);
+        String[] columNames = {"Cuota", "Fecha de vencimiento", "Monto", "Estado"};
+        modelos2.modeloCompras compra = new modeloCompras();
+        Object[][] data = compra.obtenerCuotasPorId(id);
+        for (Object[] data1 : data) {
+            tc.addRow(data1);
+        }
+        tablaDatos.setModel(tc);
+        TableColumn column = tablaDatos.getColumnModel().getColumn(1);
+        column.setCellEditor(new DatePickerCellEditor());
+        scrollDatos.setVisible(true);
+        spinnerCantidad.setValue(data.length);
+        spinnerNumCuotas.setValue(data.length);
+        labelBanco.setVisible(true);
+        textoBanco.setVisible(true);
+        labelNumTC.setVisible(true);
+        textoNumTC.setVisible(true);
+    }
+
+    private void setModel(DefaultComboBoxModel mdl, String str, JComboBox combo, JTextField texto){
+        combo.setModel(mdl);
+        texto.setText(str);
+    }
+
+    private DefaultComboBoxModel getSuggestedModel(List<String> list, String tx){
+        DefaultComboBoxModel m = new DefaultComboBoxModel();
+        for (String s : list){
+            if(s.toLowerCase().contains(tx.toLowerCase())){
+                m.addElement(s);
+            }
+        }
+        return m;
+    }
+    
+    public final void autosuggestProveedores(Object[] data){
+            comboRut.removeAllItems();
+            if(comboRut.getItemCount() == 0){
+                for (Object data1 : data) {
+                    comboRut.addItem(data1);
+                    listProveedores.add((String) data1);
+                    comboRut.addItemListener(new ItemListener() {
+
+                        @Override
+                        public void itemStateChanged(ItemEvent ie) {
+                            if(ie.getStateChange() == ItemEvent.SELECTED){
+                                comboRut.getSelectedIndex();
+                            }
+                        }
+                    });
+                }
+            }else{
+                comboRut.addItem("Error");
+            }
+
+        comboRut.setEditable(true);
+        textoRut.addKeyListener(new KeyAdapter(){
+            @Override
+            public void keyTyped(KeyEvent e){
+                EventQueue.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        String text = textoRut.getText();
+                        if(text.length() == 0){
+                            comboRut.hidePopup();
+                            setModel(new DefaultComboBoxModel(listProveedores.toArray()), "", comboRut, textoRut);
+                        }else{
+                            DefaultComboBoxModel m = getSuggestedModel(listProveedores, text);
+                            if(m.getSize() == 0){
+                                comboRut.hidePopup();
+                            }else{
+                                setModel(m, text, comboRut, textoRut);
+                                comboRut.showPopup();
+                            }
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e){
+                String text = textoRut.getText();
+                int code = e.getKeyCode();
+                if(code == KeyEvent.VK_ENTER){
+                    for (int i = 0; i < listProveedores.size(); i++) {
+                        String str = (String)listProveedores.get(i);
+                        if(str.toLowerCase().contains(text.toLowerCase())){
+                            textoRut.setText(str);
+                            return;
+                        }
+                    }
+                }else if(code == KeyEvent.VK_ESCAPE){
+                    hide_flag = true;
+                }else if(code == KeyEvent.VK_RIGHT){
+                    for (String listProveedore : listProveedores) {
+                        String str = (String) listProveedore;
+                        if(str.toLowerCase().contains(text.toLowerCase())){
+                            textoRut.setText(str);
+                            return;
+                        }
+                    }
+                }
+            }
+        });
+    }
+    
+    public class MyTableModel extends DefaultTableModel{
+        public MyTableModel() {
+          super(new String[]{"Código del producto", "Detalle", "Cantidad", "Precio Unitario", "Iva"}, 0);
+        }
+
+        @Override
+        public Class getColumnClass(int column) {
+          switch (column) {
+            case 0:
+              return Integer.class;
+            case 1: 
+                return String.class;
+            case 2:
+                return Integer.class;
+            case 3: 
+                return Integer.class;
+            default:
+                return Boolean.class;
+          }
+        }
+    }
+
+    public class MyTableModelCheques extends DefaultTableModel{
+        public MyTableModelCheques() {
+          super(new String[]{"Cheque", "Folio", "Fecha vencimiento", "Monto", "Estado"}, 0);
+        }
+
+        @Override
+        public Class getColumnClass(int column) {
+          switch (column) {
+            case 0:
+                return Integer.class;
+            case 1: 
+                return Integer.class;
+            case 2:
+                return Date.class;
+            case 3: 
+                return Integer.class;
+            default:
+                return Boolean.class;
+          }
+        }
+//        @Override
+//        public void setValueAt(Object aValue, int row, int column) {
+//            if( column == 2 ){
+//                super.setValueAt( new Date() , row, 2);
+//            }else if(column == 4){
+//                if(aValue.toString().compareTo("Pagado") == 0){
+//                    super.setValueAt(true, row, column);
+//                }else{
+//                    super.setValueAt(false, row, column);
+//                }
+//            }else {
+//                super.setValueAt(aValue, row, column); // Call parent class
+//            }
+//        }  
+    }
+    
+    public class MyTableModelTC extends DefaultTableModel{
+        public MyTableModelTC() {
+          super(new String[]{"Cuota", "Fecha vencimiento", "Monto", "Estado"}, 0);
+        }
+
+        @Override
+        public Class getColumnClass(int column) {
+          switch (column) {
+            case 0:
+                return Integer.class;
+            case 1: 
+                return Date.class;
+            case 2:
+                return Integer.class;
+            default:
+                return Boolean.class;
+          }
+        }
+    }
+    
+    public class CurrencyTableCellRenderer extends DefaultTableCellRenderer {
+        @Override
+        public final Component getTableCellRendererComponent(JTable table, Object value,
+                boolean isSelected, boolean hasFocus, int row, int column) {
+            final Component result = super.getTableCellRendererComponent(table, value,
+                    isSelected, hasFocus, row, column);
+            if (value instanceof Number) {
+                setHorizontalAlignment(JLabel.RIGHT);
+                setText(FORMAT.format(value));
+            } else {
+                setText("");
+            }
+            return result;
+        }
+    }
+    
+    public void agregarCheques(Object[][] data) throws ParseException{
+        int i = 0;
+        System.out.println(data[0].length);
+        for(Object[] data1 : data){
+            tablaDatos.setValueAt(data1[0], i, 0);
+            tablaDatos.setValueAt(data1[1], i, 1);
+            Date date = formatDate.parse(data1[2].toString());
+            tablaDatos.setValueAt(date, i, 2);
+            boolean flag = data1[4].toString().compareTo("Pagado") == 0;
+            tablaDatos.setValueAt(Integer.parseInt(data1[3].toString()), i, 3);
+            tablaDatos.setValueAt(flag, i, 4);
+            i++;
+        }
     }
 }

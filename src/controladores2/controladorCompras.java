@@ -6,6 +6,7 @@
 package controladores2;
 
 import controladores.*;
+import java.text.ParseException;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import vistas2.vistaComprasP;
@@ -28,14 +29,14 @@ public class controladorCompras {
         miControlador.crearControladorEliminarProveedores(rut);
     }
 
-    public void irVistaModificarProveedores(String rut, String nombres) {
+    public void irVistaModificarCompras(String id) throws ParseException {
         controladorPrincipal miControlador = new controladorPrincipal();
-        miControlador.crearControladorModificarProveedores(rut, nombres);
+        miControlador.crearControladorModificarCompras(id);
     }
 
-    public void irVistaDetalleProveedor(String rut) {
+    public void irVistaDetalleCompras(String id) throws ParseException {
         controladorPrincipal miControlador = new controladorPrincipal();
-        miControlador.crearControladorDetalleProveedor(rut);
+        miControlador.crearControladorDetalleCompra(id);
     }
 
     public JPanel mostrarTabControlCompras(String tipo, Object[][] data) {

@@ -453,19 +453,19 @@ public class controladorPrincipal {
 //        micontroladorEP.irVistaProveedoresP(rut);
 //    }
 //    
-//    public void crearControladorModificarProveedores(String rut, String nombres) {
-//        modelos.modeloRegiones regiones = new modeloRegiones();
-//        Object[][] dataRegiones = regiones.listarRegiones();
-//        controladorModificarProveedores micontroladorMP;
-//        micontroladorMP = new controladorModificarProveedores();
-//        micontroladorMP.mostrarVistaModificarProveedor(rut, nombres, dataRegiones);
-//    }
-//    
-//    public void crearControladorDetalleProveedor(String rut) {
-//        controladorDetalleProveedores micontroladorDP;
-//        micontroladorDP = new controladorDetalleProveedores();
-//        micontroladorDP.mostrarVistaDetalleProveedor(rut);
-//    }
+    public void crearControladorModificarCompras(String id) throws ParseException {
+        modelos2.modeloProveedores proveedores = new modeloProveedores();
+        Object dataProveedores[] = proveedores.obtenerRutProveedores();
+        controladorModificarCompras micontroladorMC;
+        micontroladorMC = new controladorModificarCompras();
+        micontroladorMC.mostrarVistaModificarCompras(id, dataProveedores);
+    }
+    
+    public void crearControladorDetalleCompra(String id) throws ParseException {
+        controladorDetalleCompras micontroladorDC;
+        micontroladorDC = new controladorDetalleCompras();
+        micontroladorDC.mostrarVistaDetalleCompras(id);
+    }
     
     //Funciones
     public boolean ingresarCliente(String[] data){
@@ -890,5 +890,11 @@ public class controladorPrincipal {
             System.out.println("Error al ingresar cuotas");
             return false;
         }
+    }
+    
+    public String[] obtenerCompraPorId(String id){
+        modeloCompras compra = new modeloCompras();
+        String[] data = compra.obtenerCompraPorId(id);
+        return data;
     }
 }

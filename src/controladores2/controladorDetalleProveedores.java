@@ -6,7 +6,6 @@
 package controladores2;
 
 import controladores.controladorPrincipal;
-import vistas.vistaDetalleClientes;
 import vistas2.vistaDetalleProveedores;
 
 /**

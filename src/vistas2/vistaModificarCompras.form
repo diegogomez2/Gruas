@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.9" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
   </Properties>
@@ -23,17 +23,12 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
-              <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
-              <Component id="jPanel2" max="32767" attributes="0"/>
-              <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
-          </Group>
+          <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
-              <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
+          <Group type="102" alignment="1" attributes="0">
               <Component id="jPanel2" max="32767" attributes="0"/>
               <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
           </Group>
@@ -47,31 +42,31 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="569" max="32767" attributes="0"/>
-                  <Component id="botonAceptar" linkSize="4" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="botonCancelar" linkSize="4" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace pref="607" max="32767" attributes="0"/>
+                  <Component id="jButton3" linkSize="4" min="-2" pref="96" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <Component id="botonOK" linkSize="4" min="-2" pref="79" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
               </Group>
               <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane1" alignment="0" pref="739" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" alignment="0" pref="815" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="551" max="32767" attributes="0"/>
+                  <EmptySpace pref="571" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="botonCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="botonAceptar" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="botonOK" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButton3" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
               <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jScrollPane1" pref="536" max="32767" attributes="0"/>
-                      <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" pref="559" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -90,23 +85,23 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
                                   <Component id="scrollObs" max="32767" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="scrollDatos" max="32767" attributes="0"/>
-                                      <Component id="jPanel3" pref="703" max="32767" attributes="0"/>
+                                      <Component id="scrollDatos" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jPanel3" alignment="0" pref="779" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="7" pref="7" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="textoGiro" max="32767" attributes="0"/>
+                                      <Component id="textoGiro" alignment="1" max="32767" attributes="0"/>
                                       <Component id="labelMedio" alignment="1" max="32767" attributes="0"/>
                                       <Component id="comboTipoDTE" alignment="1" max="32767" attributes="0"/>
-                                      <Component id="textoContacto" max="32767" attributes="0"/>
+                                      <Component id="textoContacto" alignment="1" max="32767" attributes="0"/>
                                       <Component id="textoBanco" alignment="0" max="32767" attributes="0"/>
                                       <Component id="textoOrden" alignment="0" max="32767" attributes="0"/>
                                       <Component id="comboRut" alignment="0" max="32767" attributes="0"/>
@@ -126,7 +121,7 @@
                                               <Component id="textoFolio" alignment="1" max="32767" attributes="0"/>
                                               <Component id="textoNumTC" alignment="0" max="32767" attributes="0"/>
                                               <Component id="spinnerCantidad" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="labelRazon" min="-2" max="-2" attributes="0"/>
+                                              <Component id="labelRazon" alignment="0" min="-2" max="-2" attributes="0"/>
                                               <Component id="labelNumTC" alignment="0" min="-2" max="-2" attributes="0"/>
                                               <Component id="labelFolio" alignment="0" min="-2" max="-2" attributes="0"/>
                                           </Group>
@@ -138,15 +133,15 @@
                                                   <EmptySpace min="2" pref="2" max="-2" attributes="0"/>
                                                   <Component id="textoDireccion" max="32767" attributes="0"/>
                                               </Group>
-                                              <Group type="102" attributes="0">
+                                              <Group type="102" alignment="0" attributes="0">
                                                   <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="textoRazon" max="32767" attributes="0"/>
+                                                      <Component id="textoRazon" alignment="0" max="32767" attributes="0"/>
                                                       <Component id="textoFechaIngreso" alignment="0" max="32767" attributes="0"/>
                                                       <Component id="textoFechaPago" alignment="0" max="32767" attributes="0"/>
-                                                      <Component id="labelNumCuotas" min="-2" pref="153" max="-2" attributes="0"/>
-                                                      <Component id="labelFechaPago" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="labelFechaIngreso" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="labelDireccion" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="labelNumCuotas" alignment="0" min="-2" pref="153" max="-2" attributes="0"/>
+                                                      <Component id="labelFechaPago" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="labelFechaIngreso" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="labelDireccion" alignment="0" min="-2" max="-2" attributes="0"/>
                                                       <Component id="spinnerNumCuotas" alignment="0" max="32767" attributes="0"/>
                                                   </Group>
                                                   <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
@@ -156,9 +151,9 @@
                                   </Group>
                                   <EmptySpace min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="labelGiro" min="-2" max="-2" attributes="0"/>
+                                      <Component id="labelGiro" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="labelOrden" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="labelForma" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="labelAsunto" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -438,6 +433,9 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="textoNumTC">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                  </Properties>
                 </Component>
                 <Container class="javax.swing.JPanel" name="jPanel3">
                   <Properties>
@@ -456,12 +454,12 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="jScrollPane2" pref="681" max="32767" attributes="0"/>
-                                  <Group type="102" attributes="0">
+                                  <Component id="jScrollPane2" alignment="1" pref="757" max="32767" attributes="0"/>
+                                  <Group type="102" alignment="1" attributes="0">
                                       <EmptySpace max="32767" attributes="0"/>
-                                      <Component id="jButton2" linkSize="1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="botonMas" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jButton1" linkSize="1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="botonMenos" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -474,8 +472,8 @@
                               <Component id="jScrollPane2" min="-2" pref="109" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="botonMenos" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="botonMas" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -499,11 +497,12 @@
                                 <Column editable="true" title="Title 4" type="java.lang.Object"/>
                               </Table>
                             </Property>
+                            <Property name="enabled" type="boolean" value="false"/>
                           </Properties>
                         </Component>
                       </SubComponents>
                     </Container>
-                    <Component class="javax.swing.JButton" name="jButton1">
+                    <Component class="javax.swing.JButton" name="botonMenos">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Tahoma" size="8" style="1"/>
@@ -511,10 +510,10 @@
                         <Property name="text" type="java.lang.String" value="-"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonMenosActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JButton" name="jButton2">
+                    <Component class="javax.swing.JButton" name="botonMas">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Tahoma" size="8" style="1"/>
@@ -522,7 +521,7 @@
                         <Property name="text" type="java.lang.String" value="+"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonMasActionPerformed"/>
                       </Events>
                     </Component>
                   </SubComponents>
@@ -555,7 +554,6 @@
                     <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="66" green="66" red="66" type="rgb"/>
                     </Property>
-                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="labelDireccion">
@@ -572,7 +570,6 @@
                     <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="66" green="66" red="66" type="rgb"/>
                     </Property>
-                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="labelContacto">
@@ -589,7 +586,6 @@
                     <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="66" green="66" red="66" type="rgb"/>
                     </Property>
-                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="labelObs">
@@ -616,21 +612,18 @@
             </Container>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JButton" name="botonAceptar">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Aceptar"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonAceptarActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="botonCancelar">
+        <Component class="javax.swing.JButton" name="botonOK">
           <Properties>
             <Property name="text" type="java.lang.String" value="Cancelar"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonCancelarActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonOKActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Aceptar"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

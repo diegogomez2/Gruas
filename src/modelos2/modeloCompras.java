@@ -26,7 +26,6 @@ public class modeloCompras {
     
     public Object[][] listarCompras(){
         int registros = 0;
-        
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
@@ -45,7 +44,7 @@ public class modeloCompras {
         Object[][] data = new String[registros][7];
         
         try{
-            PreparedStatement pstm = conn.prepareStatement("SELECT Compras_fac.rut_pro, dig_pro, raz_pro, tipo_com,"
+            PreparedStatement pstm = conn.prepareStatement("SELECT id_com, Compras_fac.rut_pro, dig_pro, raz_pro, tipo_com,"
                     + " fol_com, fol_int_com, fec_pag_com, est_com FROM Compras_fac INNER JOIN Proveedores WHERE"
                     + " Compras_fac.rut_pro = Proveedores.rut_pro ORDER BY fec_pag_com");
             ResultSet res = pstm.executeQuery();
@@ -59,7 +58,8 @@ public class modeloCompras {
                 String estfolin = res.getString("fol_int_com");
                 String estfecpag = res.getString("fec_pag_com");
                 String estest = res.getString("est_com");
-                data[i] = new String[]{esttip, estfol, estfolin, estrut + "-" + estdig, estraz, estfecpag, estest};
+                String estid = res.getString("id_com");
+                data[i] = new String[]{estid, esttip, estfol, estfolin, estrut + "-" + estdig, estraz, estfecpag, estest};
                 i++;
             }
             res.close();
@@ -347,5 +347,132 @@ public class modeloCompras {
             return "incorrecto";
         }
         return "correcto";
+    }
+   
+   public String[] obtenerCompraPorId(String id){
+        String data[] = new String[]{};
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT * FROM Compras_fac INNER JOIN Proveedores "
+                    + "ON Compras_fac.rut_pro = Proveedores.rut_pro WHERE id_com = ?");
+            pstm.setString(1, id);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            String esttip = res.getString("tipo_com");
+            String estfol = res.getString("fol_com");
+            String estrut = res.getString("Compras_fac.rut_pro");
+            String estdig = res.getString("dig_pro");
+            String estraz = res.getString("raz_pro");
+            String estgir = res.getString("gir_pro");
+            String estdir = res.getString("dir_pro");
+            String estcon = res.getString("con_pro");
+            String estfecin = res.getString("fec_in_com");
+            String estord = res.getString("ord_com");
+            String estfecpag = res.getString("fec_pag_com");
+            String estfor = res.getString("form_com");
+            String estasu = res.getString("asun_com");
+            String estobs = res.getString("obs_com");
+            String estmed = res.getString("med_com");
+            String estban = res.getString("ban_com");
+            String estntc = res.getString("num_tc_com");
+            data = new String[]{esttip, estfol, estrut + "-" + estdig , estraz, estgir, estdir, estcon, 
+                estfecin, estord, estfecpag, estfor, estasu, estobs, estmed, estban, estntc};
+        }catch(SQLException e){
+            System.out.println("Error al obtener proveedor por rut");
+            System.out.println(e);
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+        }
+        return data;
+    }
+   
+   public Object[][] obtenerChequesPorId(String id){
+       int registros = 0;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Cuotas WHERE id_com = ?");
+            pstm.setString(1, id);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+       }catch(SQLException e){
+            System.out.println("Error al contar cheques");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        
+        Object[][] data = new String[registros][5];
+        
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT * FROM Cuotas WHERE id_com = ? Order by num_cuo");
+            pstm.setString(1, id);
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while(res.next()){
+                String estnum = res.getString("num_cuo");
+                String estfol = res.getString("folio_cuo");
+                String estfec = res.getString("fec_cuo");
+                String estmon = res.getString("mon_cuo");
+                String estest = res.getString("est_cuo");
+                data[i] = new String[]{estnum, estfol, estfec, estmon, estest};
+                i++;
+            }
+        }catch(SQLException e){
+            System.out.println("Error al obtener cheques por id");
+            System.out.println(e);
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+        }
+        return data;
+    }
+   
+   public Object[][] obtenerCuotasPorId(String id){
+       int registros = 0;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Cuotas WHERE id_com = ?");
+            pstm.setString(1, id);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+       }catch(SQLException e){
+            System.out.println("Error al contar cuotas");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        
+        Object[][] data = new String[registros][5];
+        
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT * FROM Cuotas WHERE id_com = ? Order by num_cuo");
+            pstm.setString(1, id);
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while(res.next()){
+                String estnum = res.getString("num_cuo");
+                String estfec = res.getString("fec_cuo");
+                String estmon = res.getString("mon_cuo");
+                String estest = res.getString("est_cuo");
+                data[i] = new String[]{estnum, estfec, estmon, estest};
+                i++;
+            }
+        }catch(SQLException e){
+            System.out.println("Error al obtener cuotas por id");
+            System.out.println(e);
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+        }
+        return data;
     }
 }
