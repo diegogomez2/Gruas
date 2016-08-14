@@ -866,9 +866,33 @@ public class controladorPrincipal {
         }
     }
     
+    public boolean modificarCompra(String[] data, String id){
+        modeloCompras compra = new modeloCompras();
+        if(compra.modificarCompra(data, id).compareTo("correcto") == 0){
+            JOptionPane.showMessageDialog(miVistaL, "Compra modificada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al modificar la compra selecionada", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+    
     public boolean ingresarCheques(String[][] data, String id){
         modeloCompras compra = new modeloCompras();
         if(compra.ingresarCheques(data, id).compareTo("correcto") == 0){
+//            JOptionPane.showMessageDialog(miVistaL, "Compra ingresada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        }else{
+//            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al ingresar los datos de la compra\n" 
+//                    , "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error al ingresar cheques");
+            return false;
+        }
+    }
+    
+    public boolean borrarCheques(String id){
+        modeloCompras compra = new modeloCompras();
+        if(compra.borrarCuotas(id).compareTo("correcto") == 0){
 //            JOptionPane.showMessageDialog(miVistaL, "Compra ingresada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
             return true;
         }else{

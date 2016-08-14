@@ -5,6 +5,8 @@
  */
 package vistas2;
 
+import controladores2.controladorIngresarCompras;
+import controladores2.controladorModificarCompras;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.event.ItemEvent;
@@ -23,6 +25,7 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
@@ -44,7 +47,8 @@ import org.jdesktop.swingx.table.DatePickerCellEditor;
  * @author diego
  */
 public class vistaModificarCompras extends javax.swing.JDialog {
-
+    
+    String id;
     modelos2.modeloProveedores proveedor = new modeloProveedores();
     StringValue sv = new FormatStringValue(new SimpleDateFormat("dd-MMMM-yyyy"));
     TableCellRenderer r = new DefaultTableRenderer(sv);
@@ -149,7 +153,7 @@ public class vistaModificarCompras extends javax.swing.JDialog {
         scrollObs = new javax.swing.JScrollPane();
         textoObs = new javax.swing.JTextArea();
         botonOK = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        botonAceptar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -468,7 +472,12 @@ public class vistaModificarCompras extends javax.swing.JDialog {
             }
         });
 
-        jButton3.setText("Aceptar");
+        botonAceptar.setText("Aceptar");
+        botonAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAceptarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -476,7 +485,7 @@ public class vistaModificarCompras extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(607, Short.MAX_VALUE)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(botonAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(botonOK, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -484,7 +493,7 @@ public class vistaModificarCompras extends javax.swing.JDialog {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 815, Short.MAX_VALUE))
         );
 
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {botonOK, jButton3});
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {botonAceptar, botonOK});
 
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -492,7 +501,7 @@ public class vistaModificarCompras extends javax.swing.JDialog {
                 .addContainerGap(571, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonOK)
-                    .addComponent(jButton3))
+                    .addComponent(botonAceptar))
                 .addContainerGap())
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
@@ -569,6 +578,20 @@ public class vistaModificarCompras extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_comboFormaActionPerformed
 
+    private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
+        controladorModificarCompras miControladorMC = new controladorModificarCompras();
+        String respuesta = miControladorMC.camposVacios();
+        boolean esVacio = respuesta.length() == 0;
+        if (!esVacio) {
+            JOptionPane.showMessageDialog(this, respuesta, "Debe rellenar los siguientes campos", JOptionPane.INFORMATION_MESSAGE);
+        } else {            
+                if (miControladorMC.irVistaComprasP()) {
+                    JOptionPane.showMessageDialog(this, "Compra modificada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+                    setVisible(false);
+                }            
+        }
+    }//GEN-LAST:event_botonAceptarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -604,6 +627,7 @@ public class vistaModificarCompras extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonAceptar;
     private javax.swing.JButton botonMas;
     private javax.swing.JButton botonMenos;
     private javax.swing.JButton botonOK;
@@ -611,7 +635,6 @@ public class vistaModificarCompras extends javax.swing.JDialog {
     private javax.swing.JComboBox comboMedio;
     private javax.swing.JComboBox comboRut;
     private javax.swing.JComboBox comboTipoDTE;
-    private javax.swing.JButton jButton3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -1155,5 +1178,13 @@ public class vistaModificarCompras extends javax.swing.JDialog {
             tablaDatos.setValueAt(flag, i, 4);
             i++;
         }
+    }
+    
+    public void setId(String id){
+        this.id = id;
+    }
+    
+    public String getId(){
+        return this.id;
     }
 }

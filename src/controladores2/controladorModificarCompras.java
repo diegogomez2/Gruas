@@ -8,6 +8,8 @@ package controladores2;
 import vistas2.vistaModificarCompras;
 import controladores.controladorPrincipal;
 import java.text.ParseException;
+import javax.swing.JTable;
+import modelos2.modeloCompras;
 
 /**
  *
@@ -20,6 +22,7 @@ public class controladorModificarCompras {
         controladorPrincipal miControlador = new controladorPrincipal();
         String data[] = miControlador.obtenerCompraPorId(id);
         vistaMC = new vistaModificarCompras(new javax.swing.JFrame(), true, proveedores);
+        vistaMC.setId(id);
         vistaMC.setComboTipoDTE(data[0]);
         vistaMC.setTextoFolio(data[1]);
         vistaMC.setComboRut(data[2]);
@@ -52,16 +55,47 @@ public class controladorModificarCompras {
     }
     
     public boolean irVistaComprasP() {
-//        controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
-//        String[] rut_dv = vistaMC.getTextoRut().split("-");
-//        String[] data = {rut_dv[0], rut_dv[1], vistaMC.getTextoContacto(), vistaMC.getTextoRazon(),
-//            vistaMC.getTextoGiro(), vistaMC.getTextoCorreo(), vistaMC.getTextoTelefono(), 
-//            vistaMC.getTextoDireccion(), vistaMC.getComboRegion(), 
-//            vistaMC.getComboCiudad(), vistaMC.getComboComuna(), vistaMC.getTextoObs(), vistaMC.getComboForma(),
-//            vistaMC.getComboMedio()};
-//        boolean flag = miControlador.modificarProveedor(data, vistaMC.getRut());
-//        return flag;
-        return false;
+        controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
+        modelos2.modeloCompras compra = new modeloCompras();
+        String folioInterno = compra.folioFac();
+        boolean flag;
+        String id = vistaMC.getId();
+        String[] rut_dv = vistaMC.getComboRut().split("-");
+        String[] data = {rut_dv[0], vistaMC.getComboTipoDTE(), vistaMC.getTextoFolio(), folioInterno, 
+            vistaMC.getTextoFechaIngreso(), vistaMC.getTextoOrden(), vistaMC.getTextoFechaPago(),
+            vistaMC.getComboForma(), vistaMC.getTextoAsunto(), vistaMC.getTextoObs(), 
+            vistaMC.getComboMedio(), vistaMC.getTextoBanco(), vistaMC.getTextoNumTC()};
+        if(!miControlador.modificarCompra(data, id)){
+            return false;
+        }
+        int cuotas;
+        miControlador.borrarCheques(id);
+        JTable tabla;
+        switch(vistaMC.getCuotas()){
+            case 1:
+                cuotas = vistaMC.getSpinnerCant();
+                String[][] dataCQ = new String[cuotas][5];
+                tabla = vistaMC.getTablaCuotas();
+                for(int i = 0; i < cuotas; i++){
+                    dataCQ[i] = new String[]{tabla.getValueAt(i, 0).toString(), tabla.getValueAt(i, 1).toString(),
+                        vistaMC.getfechaTablaCheques(i), tabla.getValueAt(i, 3).toString(),
+                        vistaMC.getEstadoTablaCheques(i)};
+                }
+                flag = miControlador.ingresarCheques(dataCQ, id);
+                return flag;
+            case 2:
+                cuotas = vistaMC.getSpinnerCant();
+                String[][] dataTC = new String[cuotas][4];
+                tabla = vistaMC.getTablaCuotas();
+                for(int i = 0; i < cuotas; i++){
+                    dataTC[i] = new String[]{tabla.getValueAt(i, 0).toString(),vistaMC.getfechaTablaTC(i),
+                        tabla.getValueAt(i, 2).toString(), vistaMC.getEstadoTablaTC(i)};
+                }
+                flag = miControlador.ingresarCuotas(dataTC, id);
+                return flag;
+            default:
+                return true;
+        }
     }
         
     public String camposVacios() {
