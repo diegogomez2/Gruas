@@ -52,7 +52,6 @@ public class vistaModificarCompras extends javax.swing.JDialog {
     modelos2.modeloProveedores proveedor = new modeloProveedores();
     StringValue sv = new FormatStringValue(new SimpleDateFormat("dd-MMMM-yyyy"));
     TableCellRenderer r = new DefaultTableRenderer(sv);
-    // either per-column
     NumberFormat FORMAT = NumberFormat.getCurrencyInstance();
     DecimalFormatSymbols dfs = new DecimalFormatSymbols();
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
@@ -71,7 +70,6 @@ public class vistaModificarCompras extends javax.swing.JDialog {
         dfs.setGroupingSeparator('.');
         dfs.setMonetaryDecimalSeparator('.');
         ((DecimalFormat) FORMAT).setDecimalFormatSymbols(dfs);
-        DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
         textoRut = (JTextField)comboRut.getEditor().getEditorComponent();
         final JTextComponent tcr = (JTextComponent) comboRut.getEditor().getEditorComponent();
         tcr.getDocument().addDocumentListener(new DocumentListener() { 
@@ -241,11 +239,11 @@ public class vistaModificarCompras extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tablaDetalle.setEnabled(false);
         jScrollPane2.setViewportView(tablaDetalle);
 
         botonMenos.setFont(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
         botonMenos.setText("-");
+        botonMenos.setEnabled(false);
         botonMenos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonMenosActionPerformed(evt);
@@ -254,6 +252,7 @@ public class vistaModificarCompras extends javax.swing.JDialog {
 
         botonMas.setFont(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
         botonMas.setText("+");
+        botonMas.setEnabled(false);
         botonMas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonMasActionPerformed(evt);
@@ -784,18 +783,14 @@ public class vistaModificarCompras extends javax.swing.JDialog {
 
     public String getTextoFechaIngreso() {
         Date fecha = textoFechaIngreso.getDate();
-        if (fecha == null) {
-            return "";
-        }
+        if (fecha == null) return "";
         String dateString = formatDate.format(textoFechaIngreso.getDate());
         return dateString;
     }
 
     public String getTextoFechaPago() {
         Date fecha = textoFechaPago.getDate();
-        if (fecha == null) {
-            return "";
-        }
+        if (fecha == null) return "";
         String dateString = formatDate.format(textoFechaPago.getDate());
         return dateString;
     }
@@ -836,36 +831,32 @@ public class vistaModificarCompras extends javax.swing.JDialog {
     }
     
     public String getEstadoTablaCheques(int row){
-        if(tablaDatos.getValueAt(row, 4) != null){
-            return "Pagado";
-        }else{
+        if(tablaDatos.getValueAt(row, 4) == null || (Boolean)tablaDatos.getValueAt(row, 4) == false){
             return "No pagado";
+        }else{
+            return "Pagado";
         }
     }
     
     public String getEstadoTablaTC(int row){
-        if(tablaDatos.getValueAt(row, 3) != null){
-            return "Pagado";
-        }else{
+        if(tablaDatos.getValueAt(row, 3) == null || (Boolean)tablaDatos.getValueAt(row, 3) == false){
             return "No pagado";
+        }else{
+            return "Pagado";
         }
     }
     
     public String getfechaTablaCheques(int row){
         Date fecha = (Date)tablaDatos.getValueAt(row, 2);
-        if (fecha == null) {
-            return "";
-        }
-        String dateString = formatDate.format(textoFechaIngreso.getDate());
+        if (fecha == null) return "";
+        String dateString = formatDate.format(fecha);
         return dateString;
     }
     
     public String getfechaTablaTC(int row){
         Date fecha = (Date)tablaDatos.getValueAt(row, 1);
-        if (fecha == null) {
-            return "";
-        }
-        String dateString = formatDate.format(textoFechaIngreso.getDate());
+        if (fecha == null) return "";
+        String dateString = formatDate.format(fecha);
         return dateString;
     }
     
@@ -873,8 +864,6 @@ public class vistaModificarCompras extends javax.swing.JDialog {
         labelCantidad.setText("Cantidad de cheques");
         labelCantidad.setVisible(true);
         spinnerCantidad.setVisible(true);
-        String[] columNames = {"Cheque", "Folio", "Fecha vencimiento", "Monto", "Estado"};
-        Object[][] data = new Object[0][0];
         cheques.setRowCount(Integer.parseInt(spinnerCantidad.getValue().toString()));
         for(int i = 0; i < Integer.parseInt(spinnerCantidad.getValue().toString()); i++){
             cheques.setValueAt(i+1, i, 0);
@@ -904,13 +893,10 @@ public class vistaModificarCompras extends javax.swing.JDialog {
         labelCantidad.setText("Número de cuotas");
         labelCantidad.setVisible(true);
         spinnerCantidad.setVisible(true);
-        String[] columNames = {"Cuota", "Fecha de vencimiento", "Monto", "Estado"};
-        Object[][] data = new Object[0][0];
         tc.setRowCount(Integer.parseInt(spinnerCantidad.getValue().toString()));
         for(int i = 0; i < Integer.parseInt(spinnerCantidad.getValue().toString()); i++){
             tc.setValueAt(i+1, i, 0);
         }
-        
         tablaDatos.setModel(tc);
         TableColumn column = tablaDatos.getColumnModel().getColumn(1);
         column.setCellEditor(new DatePickerCellEditor());
@@ -945,7 +931,6 @@ public class vistaModificarCompras extends javax.swing.JDialog {
         labelCantidad.setText("Cantidad de cheques");
         labelCantidad.setVisible(true);
         spinnerCantidad.setVisible(true);
-        String[] columNames = {"Cheque", "Folio", "Fecha vencimiento", "Monto", "Estado"};
         modelos2.modeloCompras compra = new modeloCompras();
         Object[][] data = compra.obtenerChequesPorId(id);
         spinnerCantidad.setValue(data.length);
@@ -963,21 +948,23 @@ public class vistaModificarCompras extends javax.swing.JDialog {
         textoNumTC.setVisible(false);
     }
     
-    final public void showTC(String id){
+    final public void showTC(String id) throws ParseException{
         labelCantidad.setText("Número de cuotas");
         labelCantidad.setVisible(true);
         spinnerCantidad.setVisible(true);
-        String[] columNames = {"Cuota", "Fecha de vencimiento", "Monto", "Estado"};
         modelos2.modeloCompras compra = new modeloCompras();
         Object[][] data = compra.obtenerCuotasPorId(id);
-        for (Object[] data1 : data) {
-            tc.addRow(data1);
-        }
         tablaDatos.setModel(tc);
         TableColumn column = tablaDatos.getColumnModel().getColumn(1);
         column.setCellEditor(new DatePickerCellEditor());
-        scrollDatos.setVisible(true);
         spinnerCantidad.setValue(data.length);
+        tc.setRowCount(Integer.parseInt(spinnerCantidad.getValue().toString()));
+        for(int i = 0; i < Integer.parseInt(spinnerCantidad.getValue().toString()); i++){
+            tc.setValueAt(i+1, i, 0);
+        }
+        tablaDatos.setModel(tc);
+        agregarCuotas(data);
+        scrollDatos.setVisible(true);
         spinnerNumCuotas.setValue(data.length);
         labelBanco.setVisible(true);
         textoBanco.setVisible(true);
@@ -1113,20 +1100,6 @@ public class vistaModificarCompras extends javax.swing.JDialog {
                 return Boolean.class;
           }
         }
-//        @Override
-//        public void setValueAt(Object aValue, int row, int column) {
-//            if( column == 2 ){
-//                super.setValueAt( new Date() , row, 2);
-//            }else if(column == 4){
-//                if(aValue.toString().compareTo("Pagado") == 0){
-//                    super.setValueAt(true, row, column);
-//                }else{
-//                    super.setValueAt(false, row, column);
-//                }
-//            }else {
-//                super.setValueAt(aValue, row, column); // Call parent class
-//            }
-//        }  
     }
     
     public class MyTableModelTC extends DefaultTableModel{
@@ -1167,15 +1140,43 @@ public class vistaModificarCompras extends javax.swing.JDialog {
     
     public void agregarCheques(Object[][] data) throws ParseException{
         int i = 0;
-        System.out.println(data[0].length);
         for(Object[] data1 : data){
+            Date date = formatDate.parse(data1[2].toString());
+            boolean flag = data1[4].toString().compareTo("Pagado") == 0;
             tablaDatos.setValueAt(data1[0], i, 0);
             tablaDatos.setValueAt(data1[1], i, 1);
-            Date date = formatDate.parse(data1[2].toString());
             tablaDatos.setValueAt(date, i, 2);
-            boolean flag = data1[4].toString().compareTo("Pagado") == 0;
             tablaDatos.setValueAt(Integer.parseInt(data1[3].toString()), i, 3);
             tablaDatos.setValueAt(flag, i, 4);
+            i++;
+        }
+    }
+    
+    public void agregarCuotas(Object[][] data) throws ParseException{
+        int i = 0;
+        for(Object[] data1 : data){
+            Date date = formatDate.parse(data1[1].toString());
+            boolean flag = data1[3].toString().compareTo("Pagado") == 0;
+            tablaDatos.setValueAt(data1[0], i, 0);
+            tablaDatos.setValueAt(date, i, 1);
+            tablaDatos.setValueAt(Integer.parseInt(data1[2].toString()), i, 2);
+            tablaDatos.setValueAt(flag, i, 3);
+            i++;
+        }
+    }
+    
+    public void agregarProductos(String id) throws ParseException{
+        int i = 0;
+        modelos2.modeloCompras compra = new modeloCompras();
+        Object[][] data = compra.obtenerProductosPorId(id);
+        detalles.setRowCount(data.length);
+        for(Object[] data1 : data){
+            boolean flag = data1[4].toString().compareTo("1") == 0;
+            tablaDetalle.setValueAt(data1[0], i, 0);
+            tablaDetalle.setValueAt(data1[1], i, 1);
+            tablaDetalle.setValueAt(data1[2], i, 2);
+            tablaDetalle.setValueAt(Integer.parseInt(data1[3].toString()), i, 3);
+            tablaDetalle.setValueAt(flag, i, 4);
             i++;
         }
     }
@@ -1186,5 +1187,17 @@ public class vistaModificarCompras extends javax.swing.JDialog {
     
     public String getId(){
         return this.id;
+    }
+    
+    public JTable getTablaDetalle(){
+        return tablaDetalle;
+    }
+    
+    public String getIva(int row){
+        if(tablaDetalle.getValueAt(row, 4) == null || (Boolean)tablaDetalle.getValueAt(row, 4) == false){
+            return "Sin";
+        }else{
+            return "Con";
+        }
     }
 }

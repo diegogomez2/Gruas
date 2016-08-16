@@ -446,13 +446,13 @@ public class controladorPrincipal {
         micontroladorIC = new controladorIngresarCompras();
         micontroladorIC.mostrarVistaIngresarCompras(dataProveedores);
     }
-//    
-//    public void crearControladorEliminarProveedores(String rut){
-//        controladorEliminarProveedores micontroladorEP;
-//        micontroladorEP = new controladorEliminarProveedores();
-//        micontroladorEP.irVistaProveedoresP(rut);
-//    }
-//    
+    
+    public void crearControladorEliminarCompras(String id){
+        controladorEliminarCompras micontroladorEC;
+        micontroladorEC = new controladorEliminarCompras();
+        micontroladorEC.irVistaComprasP(id);
+    }
+    
     public void crearControladorModificarCompras(String id) throws ParseException {
         modelos2.modeloProveedores proveedores = new modeloProveedores();
         Object dataProveedores[] = proveedores.obtenerRutProveedores();
@@ -861,7 +861,6 @@ public class controladorPrincipal {
                     , "Error", JOptionPane.ERROR_MESSAGE);
             return "incorrecto";
         }else{
-//            JOptionPane.showMessageDialog(miVistaL, "Compra ingresada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
             return id;
         }
     }
@@ -869,7 +868,6 @@ public class controladorPrincipal {
     public boolean modificarCompra(String[] data, String id){
         modeloCompras compra = new modeloCompras();
         if(compra.modificarCompra(data, id).compareTo("correcto") == 0){
-            JOptionPane.showMessageDialog(miVistaL, "Compra modificada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
             return true;
         }else{
             JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al modificar la compra selecionada", "Error", JOptionPane.ERROR_MESSAGE);
@@ -877,14 +875,22 @@ public class controladorPrincipal {
         }
     }
     
+    public boolean eliminarCompras(String id){
+        modeloCompras compra = new modeloCompras();
+        if(compra.eliminarCompra(id).compareTo("correcto") == 0){
+            JOptionPane.showMessageDialog(miVistaL, "Compra eliminado con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al eliminar la compra seleccionada", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+    
     public boolean ingresarCheques(String[][] data, String id){
         modeloCompras compra = new modeloCompras();
         if(compra.ingresarCheques(data, id).compareTo("correcto") == 0){
-//            JOptionPane.showMessageDialog(miVistaL, "Compra ingresada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
             return true;
         }else{
-//            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al ingresar los datos de la compra\n" 
-//                    , "Error", JOptionPane.ERROR_MESSAGE);
             System.out.println("Error al ingresar cheques");
             return false;
         }
@@ -893,12 +899,19 @@ public class controladorPrincipal {
     public boolean borrarCheques(String id){
         modeloCompras compra = new modeloCompras();
         if(compra.borrarCuotas(id).compareTo("correcto") == 0){
-//            JOptionPane.showMessageDialog(miVistaL, "Compra ingresada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
             return true;
         }else{
-//            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al ingresar los datos de la compra\n" 
-//                    , "Error", JOptionPane.ERROR_MESSAGE);
             System.out.println("Error al ingresar cheques");
+            return false;
+        }
+    }
+    
+    public boolean borrarProductos(String id){
+        modeloCompras compra = new modeloCompras();
+        if(compra.borrarProductos(id).compareTo("correcto") == 0){
+            return true;
+        }else{
+            System.out.println("Error al borrar productos");
             return false;
         }
     }
@@ -906,12 +919,19 @@ public class controladorPrincipal {
     public boolean ingresarCuotas(String[][] data, String id){
         modeloCompras compra = new modeloCompras();
         if(compra.ingresarCuotas(data, id).compareTo("correcto") == 0){
-//            JOptionPane.showMessageDialog(miVistaL, "Compra ingresada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
             return true;
         }else{
-//            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al ingresar los datos de la compra\n" 
-//                    , "Error", JOptionPane.ERROR_MESSAGE);
             System.out.println("Error al ingresar cuotas");
+            return false;
+        }
+    }
+    
+    public boolean ingresarProductos(String[][] data, String id){
+        modeloCompras compra = new modeloCompras();
+        if(compra.ingresarProductos(data, id).compareTo("correcto") == 0){
+            return true;
+        }else{
+            System.out.println("Error al ingresar productos");
             return false;
         }
     }

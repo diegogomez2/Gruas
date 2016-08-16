@@ -57,7 +57,8 @@ public class controladorIngresarCompras {
                         vistaIC.getEstadoTablaCheques(i)};
                 }
                 flag = miControlador.ingresarCheques(dataCQ, id);
-                return flag;
+                if(!flag) return flag;
+                break;
             case 2:
                 cuotas = vistaIC.getSpinnerCant();
                 String[][] dataTC = new String[cuotas][4];
@@ -67,10 +68,14 @@ public class controladorIngresarCompras {
                         tabla.getValueAt(i, 2).toString(), vistaIC.getEstadoTablaTC(i)};
                 }
                 flag = miControlador.ingresarCuotas(dataTC, id);
-                return flag;
+                if(!flag) return flag;
+                break;
             default:
-                return true;
+                break;
         }
+        tabla = vistaIC.getTablaDetalle();
+        if(tabla.getRowCount() > 0) return ingresarProductos(tabla, id);
+        return true;
     }
 
     public boolean verificarRut(String rut) {
@@ -120,6 +125,16 @@ public class controladorIngresarCompras {
         if (vistaIC.getTextoFechaPago().compareTo("") == 0) {
             respuesta += "-Fecha de pago.\n";
         }
+        if(vistaIC.getTablaCuotas().getRowCount() > 0){
+            if(!vistaIC.checkTablaDatos()){
+                respuesta += "-Tabla de cuotas.\n";
+            }
+        }
+        if(vistaIC.getTablaDetalle().getRowCount() > 0){
+            if(!vistaIC.checkTablaDetalles()){
+                respuesta += "-Tabla detalles.\n";
+            }
+        }
         return respuesta;
     }
 
@@ -131,5 +146,17 @@ public class controladorIngresarCompras {
     public Object[] cargarCiudades(int region) {
         controladorPrincipal miControlador = new controladorPrincipal();
         return miControlador.cargarCiudades(region);
+    }
+    
+    public boolean ingresarProductos(JTable tabla, String id){
+        controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
+        int cant = tabla.getRowCount();
+        String[][] dataDetalle = new String[cant][5];
+        for(int i = 0; i < cant; i++){
+            dataDetalle[i] = new String[]{tabla.getValueAt(i, 0).toString(), tabla.getValueAt(i, 1).toString(),
+                        tabla.getValueAt(i, 2).toString(), tabla.getValueAt(i, 3).toString(), 
+                        vistaIC.getIva(i)};
+        }
+        return miControlador.ingresarProductos(dataDetalle, id);
     }
 }

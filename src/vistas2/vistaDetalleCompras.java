@@ -13,24 +13,17 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JSpinner;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import modelos2.modeloCompras;
-import org.jdesktop.swingx.JXDatePicker;
 import org.jdesktop.swingx.renderer.DefaultTableRenderer;
 import org.jdesktop.swingx.renderer.FormatStringValue;
 import org.jdesktop.swingx.renderer.StringValue;
 import org.jdesktop.swingx.table.DatePickerCellEditor;
-import vistas2.vistaIngresarCompras.MyTableModelCheques;
-import vistas2.vistaIngresarCompras.MyTableModelTC;
 
 /**
  *
@@ -46,11 +39,13 @@ public class vistaDetalleCompras extends javax.swing.JDialog {
     NumberFormat FORMAT = NumberFormat.getCurrencyInstance();
     DecimalFormatSymbols dfs = new DecimalFormatSymbols();
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+    MyTableModel detalles = new MyTableModel();
     MyTableModelCheques cheques = new MyTableModelCheques();
-    DefaultTableModel tc = new DefaultTableModel();
+    MyTableModelTC tc = new MyTableModelTC();
     public vistaDetalleCompras(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        tablaDetalle.setModel(detalles);
         dfs.setCurrencySymbol("$");
         dfs.setGroupingSeparator('.');
         dfs.setMonetaryDecimalSeparator('.');
@@ -116,6 +111,8 @@ public class vistaDetalleCompras extends javax.swing.JDialog {
         botonOK = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jScrollPane1.getVerticalScrollBar().setUnitIncrement(16);
 
         labelTipoDTE.setText("Tipo de DTE");
 
@@ -584,9 +581,6 @@ public class vistaDetalleCompras extends javax.swing.JDialog {
         public MyTableModelCheques() {
           super(new String[]{"Cheque", "Folio", "Fecha vencimiento", "Monto", "Estado"}, 0);
         }
-        public MyTableModelCheques(Object[][] data){
-            super(data, new String[]{"Cheque", "Folio", "Fecha vencimiento", "Monto", "Estado"});
-        }
         
         @Override
         public Class getColumnClass(int column) {
@@ -618,6 +612,28 @@ public class vistaDetalleCompras extends javax.swing.JDialog {
             case 1: 
                 return Date.class;
             case 2:
+                return Integer.class;
+            default:
+                return Boolean.class;
+          }
+        }
+    }
+    
+    public class MyTableModel extends DefaultTableModel{
+        public MyTableModel() {
+          super(new String[]{"Código del producto", "Detalle", "Cantidad", "Precio Unitario", "Iva"}, 0);
+        }
+
+        @Override
+        public Class getColumnClass(int column) {
+          switch (column) {
+            case 0:
+                return Integer.class;
+            case 1: 
+                return String.class;
+            case 2:
+                return Integer.class;
+            case 3: 
                 return Integer.class;
             default:
                 return Boolean.class;
@@ -697,6 +713,22 @@ public class vistaDetalleCompras extends javax.swing.JDialog {
         this.textoAsunto.setText(textoAsunto);
     }
     
+    public class CurrencyTableCellRenderer extends DefaultTableCellRenderer {
+        @Override
+        public final Component getTableCellRendererComponent(JTable table, Object value,
+            boolean isSelected, boolean hasFocus, int row, int column) {
+                final Component result = super.getTableCellRendererComponent(table, value,
+                    isSelected, hasFocus, row, column);
+                if (value instanceof Number) {
+                    setHorizontalAlignment(JLabel.RIGHT);
+                    setText(FORMAT.format(value));
+                } else {
+                    setText("");
+                }
+                return result;
+        }
+    }
+    
     final public void hideOtrosPagos(){
         labelAsunto.setVisible(false);
         labelNumCuotas.setVisible(false);
@@ -716,32 +748,15 @@ public class vistaDetalleCompras extends javax.swing.JDialog {
         scrollDatos.setVisible(false);
     }
     
-    public class CurrencyTableCellRenderer extends DefaultTableCellRenderer {
-        @Override
-        public final Component getTableCellRendererComponent(JTable table, Object value,
-            boolean isSelected, boolean hasFocus, int row, int column) {
-                final Component result = super.getTableCellRendererComponent(table, value,
-                    isSelected, hasFocus, row, column);
-                if (value instanceof Number) {
-                    setHorizontalAlignment(JLabel.RIGHT);
-                    setText(FORMAT.format(value));
-                } else {
-                    setText("");
-                }
-                return result;
-        }
-    }
-    
     final public void showCheques(String id) throws ParseException{
         labelCantidad.setText("Cantidad de cheques");
         labelCantidad.setVisible(true);
         spinnerCantidad.setVisible(true);
-        String[] columNames = {"Cheque", "Folio", "Fecha vencimiento", "Monto", "Estado"};
         modelos2.modeloCompras compra = new modeloCompras();
         Object[][] data = compra.obtenerChequesPorId(id);
         cheques.setRowCount(data.length);
         tablaDatos.setModel(cheques);
-        TableColumn column = tablaDatos.getColumnModel().getColumn(2);
+        //TableColumn column = tablaDatos.getColumnModel().getColumn(2);
 //        column.setCellEditor(new DatePickerCellEditor());
         tablaDatos.getColumnModel().getColumn(3).setCellRenderer(new CurrencyTableCellRenderer());
         agregarCheques(data);
@@ -756,33 +771,46 @@ public class vistaDetalleCompras extends javax.swing.JDialog {
     
     public void agregarCheques(Object[][] data) throws ParseException{
         int i = 0;
-        System.out.println(data[0].length);
         for(Object[] data1 : data){
+            Date date = formatDate.parse(data1[2].toString());
+            boolean flag = data1[4].toString().compareTo("Pagado") == 0;
             tablaDatos.setValueAt(data1[0], i, 0);
             tablaDatos.setValueAt(data1[1], i, 1);
-            Date date = formatDate.parse(data1[2].toString());
             tablaDatos.setValueAt(date, i, 2);
-            boolean flag = data1[4].toString().compareTo("Pagado") == 0;
             tablaDatos.setValueAt(Integer.parseInt(data1[3].toString()), i, 3);
             tablaDatos.setValueAt(flag, i, 4);
             i++;
         }
     }
     
-    final public void showTC(String id){
+    public void agregarProductos(String id) throws ParseException{
+        int i = 0;
+        modelos2.modeloCompras compra = new modeloCompras();
+        Object[][] data = compra.obtenerProductosPorId(id);
+        detalles.setRowCount(data.length);
+        for(Object[] data1 : data){
+            boolean flag = data1[4].toString().compareTo("1") == 0;
+            tablaDetalle.setValueAt(data1[0], i, 0);
+            tablaDetalle.setValueAt(data1[1], i, 1);
+            tablaDetalle.setValueAt(data1[2], i, 2);
+            tablaDetalle.setValueAt(Integer.parseInt(data1[3].toString()), i, 3);
+            tablaDetalle.setValueAt(flag, i, 4);
+            i++;
+        }
+    }
+    
+    final public void showTC(String id) throws ParseException{
         labelCantidad.setText("Número de cuotas");
         labelCantidad.setVisible(true);
         spinnerCantidad.setVisible(true);
-        String[] columNames = {"Cuota", "Fecha de vencimiento", "Monto", "Estado"};
         modelos2.modeloCompras compra = new modeloCompras();
         Object[][] data = compra.obtenerCuotasPorId(id);
-        tc = new DefaultTableModel(new Object[0][0], columNames);
-        for (Object[] data1 : data) {
-            tc.addRow(data1);
-        }
+        tc.setRowCount(data.length);
         tablaDatos.setModel(tc);
-        TableColumn column = tablaDatos.getColumnModel().getColumn(1);
-        column.setCellEditor(new DatePickerCellEditor());
+        tablaDatos.getColumnModel().getColumn(2).setCellRenderer(new CurrencyTableCellRenderer());
+        agregarCuotas(data);
+//        TableColumn column = tablaDatos.getColumnModel().getColumn(1);
+//        column.setCellEditor(new DatePickerCellEditor());
         scrollDatos.setVisible(true);
         spinnerCantidad.setValue(data.length);
         spinnerNumCuotas.setValue(data.length);
@@ -790,5 +818,18 @@ public class vistaDetalleCompras extends javax.swing.JDialog {
         textoBanco.setVisible(true);
         labelNumTC.setVisible(true);
         textoNumTC.setVisible(true);
+    }
+    
+    public void agregarCuotas(Object[][] data) throws ParseException{
+        int i = 0;
+        for(Object[] data1 : data){
+            Date date = formatDate.parse(data1[1].toString());
+            boolean flag = data1[3].toString().compareTo("Pagado") == 0;
+            tablaDatos.setValueAt(data1[0], i, 0);
+            tablaDatos.setValueAt(date, i, 1);
+            tablaDatos.setValueAt(Integer.parseInt(data1[2].toString()), i, 2);
+            tablaDatos.setValueAt(flag, i, 3);
+            i++;
+        }
     }
 }

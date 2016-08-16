@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -38,6 +40,10 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
 import javax.swing.text.JTextComponent;
 import modelos2.modeloProveedores;
 import org.eclipse.persistence.jaxb.javamodel.JavaModel;
@@ -52,6 +58,18 @@ import org.jdesktop.swingx.table.DatePickerCellEditor;
  * @author diego
  */
 public class vistaIngresarCompras extends javax.swing.JDialog {
+    DocumentFilter onlyNumbers = new DocumentFilter() {
+            Pattern regEx = Pattern.compile("\\d+");
+
+            @Override
+            public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                Matcher matcher = regEx.matcher(text);
+                if (!matcher.matches()) {
+                    return;
+                }
+                super.replace(fb, offset, length, text, attrs);
+            }
+        };
     modelos2.modeloProveedores proveedor = new modeloProveedores();
     StringValue sv = new FormatStringValue(new SimpleDateFormat("dd-MMMM-yyyy"));
     TableCellRenderer r = new DefaultTableRenderer(sv);
@@ -60,7 +78,6 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
     List<String> listProveedores = new ArrayList<>();
     JTextField textoRut = new JTextField();
-    DefaultTableModel datos;
     MyTableModelCheques cheques = new MyTableModelCheques();
     MyTableModelTC tc = new MyTableModelTC();
     MyTableModel detalles = new MyTableModel();
@@ -69,11 +86,11 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
     public vistaIngresarCompras(java.awt.Frame parent, boolean modal, Object proveedores[]) {
         super(parent, modal);
         initComponents();
+        ((AbstractDocument) textoFolio.getDocument()).setDocumentFilter(onlyNumbers);
         dfs.setCurrencySymbol("$");
         dfs.setGroupingSeparator('.');
         dfs.setMonetaryDecimalSeparator('.');
         ((DecimalFormat) FORMAT).setDecimalFormatSymbols(dfs);
-//        DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
         textoRut = (JTextField)comboRut.getEditor().getEditorComponent();
         final JTextComponent tcr = (JTextComponent) comboRut.getEditor().getEditorComponent();
         tcr.getDocument().addDocumentListener(new DocumentListener() { 
@@ -97,7 +114,6 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
         textoFechaIngreso.setDate(new Date());
         hideOtrosPagos();
         hideMedioPago();
-        detalles.setRowCount(1);
         tablaDetalle.setModel(detalles);
         autosuggestProveedores(proveedores);
     }
@@ -110,7 +126,6 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -144,8 +159,8 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaDetalle = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        botonMenos = new javax.swing.JButton();
+        botonMas = new javax.swing.JButton();
         textoAsunto = new javax.swing.JTextField();
         labelAsunto = new javax.swing.JLabel();
         spinnerNumCuotas = new javax.swing.JSpinner();
@@ -163,6 +178,8 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
         botonCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jScrollPane1.getVerticalScrollBar().setUnitIncrement(16);
 
         labelTipoDTE.setText("Tipo de DTE");
 
@@ -219,10 +236,7 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
 
         tablaDatos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
@@ -237,10 +251,7 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
 
         tablaDetalle.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
@@ -248,19 +259,19 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
         ));
         jScrollPane2.setViewportView(tablaDetalle);
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
-        jButton1.setText("-");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        botonMenos.setFont(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
+        botonMenos.setText("-");
+        botonMenos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                botonMenosActionPerformed(evt);
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
-        jButton2.setText("+");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        botonMas.setFont(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
+        botonMas.setText("+");
+        botonMas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                botonMasActionPerformed(evt);
             }
         });
 
@@ -273,13 +284,13 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 681, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2)
+                        .addComponent(botonMas)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)))
+                        .addComponent(botonMenos)))
                 .addContainerGap())
         );
 
-        jPanel3Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2});
+        jPanel3Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {botonMas, botonMenos});
 
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -287,8 +298,8 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)))
+                    .addComponent(botonMenos)
+                    .addComponent(botonMas)))
         );
 
         labelAsunto.setText("Asunto");
@@ -576,17 +587,17 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_comboFormaActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void botonMasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonMasActionPerformed
         detalles.setRowCount(detalles.getRowCount()+1);
         tablaDetalle.setModel(detalles);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_botonMasActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void botonMenosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonMenosActionPerformed
         if(detalles.getRowCount() > 0){
             detalles.setRowCount(detalles.getRowCount()-1);
             tablaDetalle.setModel(detalles);
         }  
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_botonMenosActionPerformed
 
     private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
         dispose();
@@ -599,10 +610,10 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
         if (!esVacio) {
             JOptionPane.showMessageDialog(this, respuesta, "Debe rellenar los siguientes campos", JOptionPane.INFORMATION_MESSAGE);
         } else {            
-                if (miControladorIC.irVistaComprasP()) {
-                    JOptionPane.showMessageDialog(this, "Compra ingresada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
-                    setVisible(false);
-                }            
+            if (miControladorIC.irVistaComprasP()) {
+                JOptionPane.showMessageDialog(this, "Compra ingresada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+                setVisible(false);
+            }            
         }
     }//GEN-LAST:event_botonAceptarActionPerformed
 
@@ -644,12 +655,12 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAceptar;
     private javax.swing.JButton botonCancelar;
+    private javax.swing.JButton botonMas;
+    private javax.swing.JButton botonMenos;
     private javax.swing.JComboBox comboForma;
     private javax.swing.JComboBox comboMedio;
     private javax.swing.JComboBox comboRut;
     private javax.swing.JComboBox comboTipoDTE;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -693,6 +704,8 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
     private javax.swing.JTextField textoRazon;
     // End of variables declaration//GEN-END:variables
 
+    
+    
     final public void hideOtrosPagos(){
         labelAsunto.setVisible(false);
         labelNumCuotas.setVisible(false);
@@ -725,8 +738,6 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
         labelCantidad.setText("Cantidad de cheques");
         labelCantidad.setVisible(true);
         spinnerCantidad.setVisible(true);
-        String[] columNames = {"Cheque", "Folio", "Fecha vencimiento", "Monto", "Estado"};
-        Object[][] data = new Object[0][0];
         cheques.setRowCount(Integer.parseInt(spinnerCantidad.getValue().toString()));
         for(int i = 0; i < Integer.parseInt(spinnerCantidad.getValue().toString()); i++){
             cheques.setValueAt(i+1, i, 0);
@@ -747,8 +758,6 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
         labelCantidad.setText("Número de cuotas");
         labelCantidad.setVisible(true);
         spinnerCantidad.setVisible(true);
-        String[] columNames = {"Cuota", "Fecha de vencimiento", "Monto", "Estado"};
-        Object[][] data = new Object[0][0];
         tc.setRowCount(Integer.parseInt(spinnerCantidad.getValue().toString()));
         for(int i = 0; i < Integer.parseInt(spinnerCantidad.getValue().toString()); i++){
             tc.setValueAt(i+1, i, 0);
@@ -860,7 +869,7 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
         public Class getColumnClass(int column) {
           switch (column) {
             case 0:
-              return Integer.class;
+                return Integer.class;
             case 1: 
                 return String.class;
             case 2:
@@ -908,7 +917,7 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
                     setText("");
                 }
                 return result;
-        }
+            }
     }
     
     public class MyTableModelTC extends DefaultTableModel{
@@ -929,8 +938,6 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
                 return Boolean.class;
           }
         }
-        
-        
     }
     
     public void setTextoContacto(String textoContacto) {
@@ -1034,37 +1041,65 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
         return tablaDatos;
     }
     
+    public JTable getTablaDetalle(){
+        return tablaDetalle;
+    }
+    
     public String getEstadoTablaCheques(int row){
-        if(tablaDatos.getValueAt(row, 4) != null){
-            return "Pagado";
-        }else{
+        if(tablaDatos.getValueAt(row, 4) == null || (Boolean)tablaDatos.getValueAt(row, 4) == false){
             return "No pagado";
+        }else{
+            return "Pagado";
         }
     }
     
     public String getEstadoTablaTC(int row){
-        if(tablaDatos.getValueAt(row, 3) != null){
-            return "Pagado";
-        }else{
+        if(tablaDatos.getValueAt(row, 3) == null || (Boolean)tablaDatos.getValueAt(row, 3) == false){
             return "No pagado";
+        }else{
+            return "Pagado";
         }
     }
     
     public String getfechaTablaCheques(int row){
         Date fecha = (Date)tablaDatos.getValueAt(row, 2);
-        if (fecha == null) {
-            return "";
-        }
+        if (fecha == null) return "";
         String dateString = formatDate.format((Date)tablaDatos.getValueAt(row, 2));
         return dateString;
     }
     
     public String getfechaTablaTC(int row){
         Date fecha = (Date)tablaDatos.getValueAt(row, 1);
-        if (fecha == null) {
-            return "";
-        }
-        String dateString = formatDate.format((Date)tablaDatos.getValueAt(row, 2));
+        if (fecha == null) return "";
+        String dateString = formatDate.format((Date)tablaDatos.getValueAt(row, 1));
         return dateString;
+    }
+    
+    public String getIva(int row){
+        if(tablaDetalle.getValueAt(row, 4) == null || (Boolean)tablaDetalle.getValueAt(row, 4) == false){
+            return "Sin";
+        }else{
+            return "Con";
+        }
+    }
+    
+    public boolean checkTablaDatos(){
+        int rows = tablaDatos.getRowCount(), cols = tablaDatos.getColumnCount() - 1;
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < cols; j++){
+                if(tablaDatos.getValueAt(i, j) == null) return false;
+            }
+        }
+        return true;
+    }
+    
+    public boolean checkTablaDetalles(){
+        int rows = tablaDetalle.getRowCount(), cols = tablaDetalle.getColumnCount() - 1;
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < cols; j++){
+                if(tablaDetalle.getValueAt(i, j) == null) return false;
+            }
+        }
+        return true;
     }
 }

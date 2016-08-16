@@ -50,6 +50,7 @@ public class controladorModificarCompras {
         }else{
             vistaMC.hideMedioPago();
         }
+        vistaMC.agregarProductos(id);
         vistaMC.setLocationRelativeTo(null);
         vistaMC.setVisible(true);
     }
@@ -70,6 +71,7 @@ public class controladorModificarCompras {
         }
         int cuotas;
         miControlador.borrarCheques(id);
+        miControlador.borrarProductos(id);
         JTable tabla;
         switch(vistaMC.getCuotas()){
             case 1:
@@ -82,7 +84,8 @@ public class controladorModificarCompras {
                         vistaMC.getEstadoTablaCheques(i)};
                 }
                 flag = miControlador.ingresarCheques(dataCQ, id);
-                return flag;
+                if(!flag) return flag;
+                break;
             case 2:
                 cuotas = vistaMC.getSpinnerCant();
                 String[][] dataTC = new String[cuotas][4];
@@ -92,10 +95,14 @@ public class controladorModificarCompras {
                         tabla.getValueAt(i, 2).toString(), vistaMC.getEstadoTablaTC(i)};
                 }
                 flag = miControlador.ingresarCuotas(dataTC, id);
-                return flag;
+                if(!flag) return flag;
+                break;
             default:
-                return true;
+                break;
         }
+        tabla = vistaMC.getTablaDetalle();
+        if(tabla.getRowCount() > 0) return ingresarProductos(tabla, id);
+        return true;
     }
         
     public String camposVacios() {
@@ -110,5 +117,17 @@ public class controladorModificarCompras {
             respuesta += "-Fecha de pago.\n";
         }
         return respuesta;
+    }
+    
+    public boolean ingresarProductos(JTable tabla, String id){
+        controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
+        int cant = tabla.getRowCount();
+        String[][] dataDetalle = new String[cant][5];
+        for(int i = 0; i < cant; i++){
+            dataDetalle[i] = new String[]{tabla.getValueAt(i, 0).toString(), tabla.getValueAt(i, 1).toString(),
+                        tabla.getValueAt(i, 2).toString(), tabla.getValueAt(i, 3).toString(), 
+                        vistaMC.getIva(i)};
+        }
+        return miControlador.ingresarProductos(dataDetalle, id);
     }
 }

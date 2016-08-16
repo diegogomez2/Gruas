@@ -96,7 +96,7 @@ public class vistaComprasP extends javax.swing.JPanel {
             }
         };
         botonAgregarCompra = new javax.swing.JButton();
-        botonEliminarProveedor = new javax.swing.JButton();
+        botonEliminarCompra = new javax.swing.JButton();
         botonModificarProveedor = new javax.swing.JButton();
         textoFiltro = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -125,10 +125,10 @@ public class vistaComprasP extends javax.swing.JPanel {
             }
         });
 
-        botonEliminarProveedor.setText("Eliminar Compra");
-        botonEliminarProveedor.addActionListener(new java.awt.event.ActionListener() {
+        botonEliminarCompra.setText("Eliminar Compra");
+        botonEliminarCompra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonEliminarProveedorActionPerformed(evt);
+                botonEliminarCompraActionPerformed(evt);
             }
         });
 
@@ -165,7 +165,7 @@ public class vistaComprasP extends javax.swing.JPanel {
                         .addGap(373, 457, Short.MAX_VALUE)
                         .addComponent(botonAgregarCompra)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botonEliminarProveedor)
+                        .addComponent(botonEliminarCompra)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botonModificarProveedor))
                     .addGroup(layout.createSequentialGroup()
@@ -178,7 +178,7 @@ public class vistaComprasP extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {botonAgregarCompra, botonEliminarProveedor, botonModificarProveedor});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {botonAgregarCompra, botonEliminarCompra, botonModificarProveedor});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -193,7 +193,7 @@ public class vistaComprasP extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(botonAgregarCompra, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(botonEliminarProveedor, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(botonEliminarCompra, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(botonModificarProveedor, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
@@ -206,33 +206,32 @@ public class vistaComprasP extends javax.swing.JPanel {
         miControlador.crearControladorPrincipal(tabs);
     }//GEN-LAST:event_botonAgregarCompraActionPerformed
 
-    private void botonEliminarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarProveedorActionPerformed
-//        controladores2.controladorProveedores miControlador = new controladorProveedores();
-//        String rut, nombres;
-//        boolean selected = tablaCompras.getSelectedRowCount() > 0;
-//        if(selected){
-//            int row = getFilaSeleccionada();
-//            rut = getRutFila(row);
-//            nombres = getNombresFila(row);
-//            int dialogResult = JOptionPane.showOptionDialog(null, "Esta seguro que desea eliminar el proveedor: \n " +
-//                    "Rut: " + rut + "\nRazón social: " + nombres, "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, 0);
-//            if(dialogResult == JOptionPane.YES_OPTION)  miControlador.eliminarProveedores(rut);
-//            JTabbedPane tabs = (JTabbedPane)this.getParent();
-//            miControlador.crearControladorPrincipal(tabs);
-//        }else{
-//            JOptionPane.showMessageDialog(null, "Debe seleccionar un proveedor para ser eliminado");
-//        }
-    }//GEN-LAST:event_botonEliminarProveedorActionPerformed
+    private void botonEliminarCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarCompraActionPerformed
+        controladores2.controladorCompras miControlador = new controladorCompras();
+        String id, tipo, rut;
+        boolean selected = tablaCompras.getSelectedRowCount() > 0;
+        if(selected){
+            int row = getFilaSeleccionada();
+            id = getIdFila(row);
+            tipo = getTipoFila(row);
+            rut = getRutFila(row);
+            int dialogResult = JOptionPane.showOptionDialog(null, "Esta seguro que desea eliminar la compra: \n " +
+                    "Tipo: " + tipo + "\n Rut proveedor: " + rut, "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, 0);
+            if(dialogResult == JOptionPane.YES_OPTION)  miControlador.eliminarCompras(id);
+            JTabbedPane tabs = (JTabbedPane)this.getParent();
+            miControlador.crearControladorPrincipal(tabs);
+        }else{
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una compra para ser eliminada");
+        }
+    }//GEN-LAST:event_botonEliminarCompraActionPerformed
 
     private void botonModificarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarProveedorActionPerformed
         controladorCompras miControlador = new controladorCompras();
         boolean selected = tablaCompras.getSelectedRowCount() > 0;
         if(selected){
             int row = getFilaSeleccionada();
-            //String rut = getRutFila(row);
             String id = getIdFila(row);
             try {
-                //String[] rut_dv = rut.split("-");
                 miControlador.irVistaModificarCompras(id);
             } catch (ParseException ex) {
                 Logger.getLogger(vistaComprasP.class.getName()).log(Level.SEVERE, null, ex);
@@ -259,7 +258,7 @@ public class vistaComprasP extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonActualizar;
     private javax.swing.JButton botonAgregarCompra;
-    private javax.swing.JButton botonEliminarProveedor;
+    private javax.swing.JButton botonEliminarCompra;
     private javax.swing.JButton botonModificarProveedor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -279,8 +278,12 @@ public class vistaComprasP extends javax.swing.JPanel {
         return tablaCompras.getValueAt(row,0).toString();
     }
     
+    public String getTipoFila(int row){
+        return tablaCompras.getValueAt(row,1).toString();
+    }
+    
     public void filtrar(String query){
-        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<DefaultTableModel>(datos);
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(datos);
         tablaCompras.setRowSorter(sorter);
         sorter.setRowFilter(RowFilter.regexFilter("(?i)"+query));
     }

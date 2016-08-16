@@ -23,7 +23,7 @@
                       <EmptySpace min="373" pref="457" max="32767" attributes="0"/>
                       <Component id="botonAgregarCompra" linkSize="3" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="botonEliminarProveedor" linkSize="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="botonEliminarCompra" linkSize="3" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="botonModificarProveedor" linkSize="3" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -54,7 +54,7 @@
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="botonAgregarCompra" alignment="1" min="-2" max="-2" attributes="0"/>
-                  <Component id="botonEliminarProveedor" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="botonEliminarCompra" alignment="1" min="-2" max="-2" attributes="0"/>
                   <Component id="botonModificarProveedor" alignment="1" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -98,12 +98,12 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonAgregarCompraActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="botonEliminarProveedor">
+    <Component class="javax.swing.JButton" name="botonEliminarCompra">
       <Properties>
         <Property name="text" type="java.lang.String" value="Eliminar Compra"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonEliminarProveedorActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonEliminarCompraActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="botonModificarProveedor">

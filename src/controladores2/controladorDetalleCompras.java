@@ -46,6 +46,7 @@ public class controladorDetalleCompras {
         }else{
             vistaDC.hideMedioPago();
         }
+        vistaDC.agregarProductos(id);
         vistaDC.setLocationRelativeTo(null);
         vistaDC.setVisible(true);
     }

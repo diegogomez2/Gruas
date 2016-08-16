@@ -24,9 +24,9 @@ public class controladorCompras {
         miControlador.crearControladorIngresarCompras();
     }
 
-    public void eliminarProveedores(String rut) {
+    public void eliminarCompras(String id) {
         controladorPrincipal miControlador = new controladorPrincipal();
-        miControlador.crearControladorEliminarProveedores(rut);
+        miControlador.crearControladorEliminarCompras(id);
     }
 
     public void irVistaModificarCompras(String id) throws ParseException {

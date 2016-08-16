@@ -497,7 +497,6 @@
                                 <Column editable="true" title="Title 4" type="java.lang.Object"/>
                               </Table>
                             </Property>
-                            <Property name="enabled" type="boolean" value="false"/>
                           </Properties>
                         </Component>
                       </SubComponents>
@@ -508,6 +507,7 @@
                           <Font name="Tahoma" size="8" style="1"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="-"/>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonMenosActionPerformed"/>
@@ -519,6 +519,7 @@
                           <Font name="Tahoma" size="8" style="1"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="+"/>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonMasActionPerformed"/>
