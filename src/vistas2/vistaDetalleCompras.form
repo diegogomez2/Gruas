@@ -521,6 +521,7 @@
                           <Font name="Tahoma" size="8" style="1"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="-"/>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JButton" name="botonMas">
@@ -529,6 +530,7 @@
                           <Font name="Tahoma" size="8" style="1"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="+"/>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                   </SubComponents>

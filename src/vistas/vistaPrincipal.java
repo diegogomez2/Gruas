@@ -223,6 +223,9 @@ public class vistaPrincipal extends javax.swing.JFrame {
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
         vistaPrincipal.addTab("Proveedores", miControlador.crearControladorProveedoresP());
         vistaPrincipal.addTab("Compras", miControlador.crearControladorComprasP());
+        vistaPrincipal.add("Agenda de pagos", miControlador.crearControladorAgendaDePagosP());
+        vistaPrincipal.add("Agenda de otros pagos", miControlador.crearControladorAgendaDeOtrosPagosP());
+        vistaPrincipal.add("Global de pagos", miControlador.crearControladorGlobalPagosP());
     }//GEN-LAST:event_itemComprasActionPerformed
 
     /**

@@ -34,13 +34,13 @@ public class vistaComprasP extends javax.swing.JPanel {
      * Creates new form vistaClientesP
      */
     Object[][] data;
-    DefaultTableModel datos;
+    MyTableModel datos;
     
     public vistaComprasP(String tipo, Object[][] data) {
         initComponents();
         String[] columNames = {"Id","Tipo de documento", "Folio real", "Folio interno", "Rut proveedor",
             "Razón social", "Fecha vencimiento", "Estado"};
-        datos = new DefaultTableModel(data, columNames){
+        datos = new MyTableModel(data){
             @Override
             public boolean isCellEditable(int row, int column){
                 return false;
@@ -283,8 +283,49 @@ public class vistaComprasP extends javax.swing.JPanel {
     }
     
     public void filtrar(String query){
-        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(datos);
+        TableRowSorter<MyTableModel> sorter = new TableRowSorter<>(datos);
         tablaCompras.setRowSorter(sorter);
         sorter.setRowFilter(RowFilter.regexFilter("(?i)"+query));
+    }
+    
+    public class MyTableModel extends DefaultTableModel{
+        public MyTableModel() {
+          super(new String[]{"Id","Tipo de documento", "Folio real", "Folio interno", "Rut proveedor",
+            "Razón social", "Fecha vencimiento", "Estado"}, 0);
+        }
+        public MyTableModel(Object[][] data){
+            super(new String[]{"Id","Tipo de documento", "Folio real", "Folio interno", "Rut proveedor",
+            "Razón social", "Fecha vencimiento", "Estado"}, 0);
+            
+            int i = 0;
+            this.setRowCount(data.length);
+            for(Object[] data1 : data){
+                int id = Integer.parseInt(data1[0].toString());
+                int folr = Integer.parseInt(data1[2].toString());
+                int foli = Integer.parseInt(data1[3].toString());
+                this.setValueAt(id, i, 0);
+                this.setValueAt(data1[1], i, 1);
+                this.setValueAt(folr, i, 2);
+                this.setValueAt(foli, i, 3);
+                this.setValueAt(data1[4], i, 4);
+                this.setValueAt(data1[5], i, 5);
+                this.setValueAt(data1[6], i, 6);
+                this.setValueAt(data1[7], i, 7);
+                i++;
+            }
+        }
+        @Override
+        public Class getColumnClass(int column) {
+            switch (column) {
+                case 0:
+                    return Integer.class;
+                case 2:
+                    return Integer.class;
+                case 3:
+                    return Integer.class;
+                default:
+                    return String.class;
+          }
+        }
     }
 }

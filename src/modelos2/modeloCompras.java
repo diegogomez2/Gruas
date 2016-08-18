@@ -46,7 +46,8 @@ public class modeloCompras {
         
         try{
             PreparedStatement pstm = conn.prepareStatement("SELECT id_com, Compras_fac.rut_pro, dig_pro, raz_pro, tipo_com,"
-                    + " fol_com, fol_int_com, fec_pag_com, est_com FROM Compras_fac INNER JOIN Proveedores WHERE"
+                    + " fol_com, fol_int_com, fec_pag_com, coalesce(est_com,'') as est_com FROM Compras_fac "
+                    + "INNER JOIN Proveedores ON"
                     + " Compras_fac.rut_pro = Proveedores.rut_pro ORDER BY fec_pag_com");
             ResultSet res = pstm.executeQuery();
             int i = 0;
@@ -378,7 +379,7 @@ public class modeloCompras {
             int i = 0;
             while(res.next()){
                 String estnum = res.getString("num_cuo");
-                String estfol = res.getString("folio_cuo");
+                String estfol = res.getString("fol_cuo");
                 String estfec = res.getString("fec_cuo");
                 String estmon = res.getString("mon_cuo");
                 String estest = res.getString("est_cuo");
@@ -387,6 +388,30 @@ public class modeloCompras {
             }
         }catch(SQLException e){
             System.out.println("Error al obtener cheques por id");
+            System.out.println(e);
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+        }
+        return data;
+    }
+   
+   public String[] obtenerCuotaPorId(String id){
+        String[] data = new String[5];
+        
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT * FROM Cuotas WHERE id_cuo = ?");
+            pstm.setString(1, id);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+                String estnum = res.getString("num_cuo");
+                String estfec = res.getString("fec_cuo");
+                String estmon = res.getString("mon_cuo");
+                String estest = res.getString("est_cuo");
+                data = new String[]{estnum, estfec, estmon, estest};
+        }catch(SQLException e){
+            System.out.println("Error al obtener cuota por id");
             System.out.println(e);
         }catch(ClassNotFoundException e){
             System.out.println(e);
@@ -481,5 +506,131 @@ public class modeloCompras {
             System.out.println(e);
         }
         return data;
+    }
+   
+   public Object[][] listarAgendaDePagos(){
+        int registros = 0;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Cuotas INNER JOIN Compras_fac"
+                    + " ON Cuotas.id_com = Compras_fac.id_com WHERE MONTH(fec_cuo) = MONTH(curdate()) and  not form_com = "
+                    + "'Otros pagos'");
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+       }catch(SQLException e){
+            System.out.println("Error al listar agenda de pagos");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        
+        Object[][] data = new String[registros][7];
+        
+        try{
+            PreparedStatement pstm = conn.prepareStatement("SELECT med_com, Cuotas.id_com, Compras_fac.rut_pro, dig_pro,"
+                    + " raz_pro, coalesce(fol_cuo, '') as fol_cuo, num_cuo, fec_cuo, est_cuo, id_cuo FROM Cuotas INNER JOIN Compras_fac ON Cuotas.id_com"
+                    + "= Compras_fac.id_com INNER JOIN Proveedores ON Compras_fac.rut_pro = Proveedores.rut_pro"
+                    + " WHERE MONTH(fec_cuo) = MONTH(curdate()) and not form_com = 'Otros pagos' ORDER BY fec_cuo");
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while(res.next()){
+                String estmed = res.getString("med_com");
+                String estrut = res.getString("Compras_fac.rut_pro");
+                String estdig = res.getString("dig_pro");
+                String estraz = res.getString("raz_pro");
+//                String esttip = res.getString("tipo_com");
+                String estfol = res.getString("fol_cuo");
+                String estfec = res.getString("fec_cuo");
+                String estnum = res.getString("num_cuo");
+                String estest = res.getString("est_cuo");
+                String estid = res.getString("id_cuo");
+                //String estid = res.getString("Cuotas.id_com");
+                data[i] = new String[]{estmed, estrut + "-" + estdig, estraz, estfol, estnum, estfec, estest, estid};
+                i++;
+            }
+            res.close();
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+        return data;
+    }
+   
+   public Object[][] listarAgendaDeOtrosPagos(){
+        int registros = 0;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Cuotas INNER JOIN Compras_fac"
+                    + " ON Cuotas.id_com = Compras_fac.id_com WHERE MONTH(fec_cuo) = MONTH(curdate()) and form_com = "
+                    + "'Otros pagos'");
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+       }catch(SQLException e){
+            System.out.println("Error al listar agenda de otros pagos");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        
+        Object[][] data = new String[registros][7];
+        
+        try{
+            PreparedStatement pstm = conn.prepareStatement("SELECT med_com, Cuotas.id_com, Compras_fac.rut_pro, dig_pro,"
+                    + " raz_pro, coalesce(fol_cuo,'') as fol_cuo, num_cuo, fec_cuo, est_cuo, id_cuo, "
+                    + "coalesce(asun_com,'') as asun_com, coalesce(obs_com,'') as obs_com, mon_cuo FROM Cuotas "
+                    + "INNER JOIN Compras_fac ON Cuotas.id_com"
+                    + "= Compras_fac.id_com INNER JOIN Proveedores ON Compras_fac.rut_pro = Proveedores.rut_pro"
+                    + " WHERE MONTH(fec_cuo) = MONTH(curdate()) and form_com = 'Otros pagos' ORDER BY fec_cuo");
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while(res.next()){
+                String estmed = res.getString("med_com");
+                String estasu = res.getString("asun_com");
+                String estrut = res.getString("Compras_fac.rut_pro");
+                String estdig = res.getString("dig_pro");
+                String estraz = res.getString("raz_pro");
+//                String esttip = res.getString("tipo_com");
+                String estfol = res.getString("fol_cuo");
+                String estobs = res.getString("obs_com");
+                String estfec = res.getString("fec_cuo");
+                String estnum = res.getString("num_cuo");
+                String estmon = res.getString("mon_cuo");
+                String estest = res.getString("est_cuo");
+                String estid = res.getString("id_cuo");
+                //String estid = res.getString("Cuotas.id_com");
+                data[i] = new String[]{estmed, estasu, estrut + "-" + estdig, estraz, estfol, estobs, estnum, estmon,
+                    estfec, estest, estid};
+                i++;
+            }
+            res.close();
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+        return data;
+    }
+   
+   public String cambiarEstadoPago(String estado, String id){
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("UPDATE Cuotas set est_cuo=? WHERE id_cuo = ?");
+            pstm.setString(1, estado);
+            pstm.setString(2, id);
+            pstm.executeUpdate();
+            pstm.close();
+        }catch(SQLException e){
+            System.out.println("Error al cambiar estado");
+            System.out.println(e);
+            return "incorrecto";
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+            return "incorrecto";
+        }
+        return "correcto";
     }
 }

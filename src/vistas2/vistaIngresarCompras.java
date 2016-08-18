@@ -115,6 +115,7 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
         hideOtrosPagos();
         hideMedioPago();
         tablaDetalle.setModel(detalles);
+        tablaDetalle.getColumnModel().getColumn(3).setCellRenderer(new CurrencyTableCellRenderer());
         autosuggestProveedores(proveedores);
     }
 
@@ -594,7 +595,8 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
 
     private void botonMenosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonMenosActionPerformed
         if(detalles.getRowCount() > 0){
-            detalles.setRowCount(detalles.getRowCount()-1);
+            detalles.removeRow(detalles.getRowCount()-1);
+            //detalles.setRowCount(detalles.getRowCount()-1);
             tablaDetalle.setModel(detalles);
         }  
     }//GEN-LAST:event_botonMenosActionPerformed
@@ -766,6 +768,7 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
         tablaDatos.setModel(tc);
         TableColumn column = tablaDatos.getColumnModel().getColumn(1);
         column.setCellEditor(new DatePickerCellEditor());
+        tablaDatos.getColumnModel().getColumn(2).setCellRenderer(new CurrencyTableCellRenderer());
         scrollDatos.setVisible(true);
         spinnerCantidad.setValue(spinnerNumCuotas.getValue());
         labelBanco.setVisible(true);
@@ -880,6 +883,13 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
                 return Boolean.class;
           }
         }
+        @Override
+        public Object getValueAt(int row, int col){
+            if(col == 4 && super.getValueAt(row, col) == null){
+                return Boolean.FALSE;
+            }
+            return super.getValueAt(row, col);
+        }
     }
 
     public class MyTableModelCheques extends DefaultTableModel{
@@ -901,6 +911,14 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
             default:
                 return Boolean.class;
           }
+        }
+        
+        @Override
+        public Object getValueAt(int row, int col){
+            if(col == 4 && super.getValueAt(row, col) == null){
+                return Boolean.FALSE;
+            }
+            return super.getValueAt(row, col);
         }
     }
     
@@ -937,6 +955,14 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
             default:
                 return Boolean.class;
           }
+        }
+        
+        @Override
+        public Object getValueAt(int row, int col){
+            if(col == 3 && super.getValueAt(row, col) == null){
+                return Boolean.FALSE;
+            }
+            return super.getValueAt(row, col);
         }
     }
     
@@ -990,18 +1016,14 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
 
     public String getTextoFechaIngreso() {
         Date fecha = textoFechaIngreso.getDate();
-        if (fecha == null) {
-            return "";
-        }
+        if (fecha == null) return "";
         String dateString = formatDate.format(textoFechaIngreso.getDate());
         return dateString;
     }
 
     public String getTextoFechaPago() {
         Date fecha = textoFechaPago.getDate();
-        if (fecha == null) {
-            return "";
-        }
+        if (fecha == null)  return "";
         String dateString = formatDate.format(textoFechaPago.getDate());
         return dateString;
     }
@@ -1046,7 +1068,7 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
     }
     
     public String getEstadoTablaCheques(int row){
-        if(tablaDatos.getValueAt(row, 4) == null || (Boolean)tablaDatos.getValueAt(row, 4) == false){
+        if((Boolean)tablaDatos.getValueAt(row, 4) == false){
             return "No pagado";
         }else{
             return "Pagado";
@@ -1054,7 +1076,7 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
     }
     
     public String getEstadoTablaTC(int row){
-        if(tablaDatos.getValueAt(row, 3) == null || (Boolean)tablaDatos.getValueAt(row, 3) == false){
+        if((Boolean)tablaDatos.getValueAt(row, 3) == false){
             return "No pagado";
         }else{
             return "Pagado";
@@ -1076,7 +1098,7 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
     }
     
     public String getIva(int row){
-        if(tablaDetalle.getValueAt(row, 4) == null || (Boolean)tablaDetalle.getValueAt(row, 4) == false){
+        if((Boolean)tablaDetalle.getValueAt(row, 4) == false){
             return "Sin";
         }else{
             return "Con";

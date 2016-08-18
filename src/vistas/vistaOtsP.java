@@ -94,6 +94,9 @@ public class vistaOtsP extends javax.swing.JPanel {
                 }  else {
                     comp.setBackground(Color.white);
                 }
+                if(isRowSelected(row)){
+                    comp.setBackground(new java.awt.Color(184,207,229));
+                }
                 return comp;
             }
         };

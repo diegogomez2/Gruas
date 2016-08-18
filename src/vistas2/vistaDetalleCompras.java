@@ -46,6 +46,7 @@ public class vistaDetalleCompras extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         tablaDetalle.setModel(detalles);
+        tablaDetalle.getColumnModel().getColumn(3).setCellRenderer(new CurrencyTableCellRenderer());
         dfs.setCurrencySymbol("$");
         dfs.setGroupingSeparator('.');
         dfs.setMonetaryDecimalSeparator('.');
@@ -204,9 +205,11 @@ public class vistaDetalleCompras extends javax.swing.JDialog {
 
         botonMenos.setFont(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
         botonMenos.setText("-");
+        botonMenos.setEnabled(false);
 
         botonMas.setFont(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
         botonMas.setText("+");
+        botonMas.setEnabled(false);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);

@@ -7,6 +7,7 @@ package vistas2;
 
 import controladores2.controladorIngresarCompras;
 import controladores2.controladorModificarCompras;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.event.ItemEvent;
@@ -34,6 +35,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
 import javax.swing.text.JTextComponent;
 import modelos2.modeloCompras;
 import modelos2.modeloProveedores;
@@ -91,6 +93,7 @@ public class vistaModificarCompras extends javax.swing.JDialog {
             }
         });
         tablaDetalle.setModel(detalles);
+        tablaDetalle.getColumnModel().getColumn(3).setCellRenderer(new CurrencyTableCellRenderer());
         autosuggestProveedores(proveedores);
     }
 
@@ -243,7 +246,6 @@ public class vistaModificarCompras extends javax.swing.JDialog {
 
         botonMenos.setFont(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
         botonMenos.setText("-");
-        botonMenos.setEnabled(false);
         botonMenos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonMenosActionPerformed(evt);
@@ -252,7 +254,6 @@ public class vistaModificarCompras extends javax.swing.JDialog {
 
         botonMas.setFont(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
         botonMas.setText("+");
-        botonMas.setEnabled(false);
         botonMas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonMasActionPerformed(evt);
@@ -1200,4 +1201,5 @@ public class vistaModificarCompras extends javax.swing.JDialog {
             return "Con";
         }
     }
+    
 }

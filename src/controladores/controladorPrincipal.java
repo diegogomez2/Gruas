@@ -46,6 +46,9 @@ public class controladorPrincipal {
     static controladorTarifas micontroladorTarifas;
     static controladorProveedores micontroladorProveedores;
     static controladorCompras micontroladorCompras;
+    static controladorAgendaDePagos micontroladorAgendaDePagos;
+    static controladorAgendaDeOtrosPagos micontroladorAgendaDeOtrosPagos;
+    static controladorGlobalPagos micontroladorGlobalPagos;
     static vistaLogin miVistaL;
     static vistaPrincipal mivistaP;
     static vistas.vistaJornadasP mivistaJP;
@@ -465,6 +468,43 @@ public class controladorPrincipal {
         controladorDetalleCompras micontroladorDC;
         micontroladorDC = new controladorDetalleCompras();
         micontroladorDC.mostrarVistaDetalleCompras(id);
+    }
+    
+    //AGENDA DE PAGOS
+    public JPanel crearControladorAgendaDePagosP() {
+        modelos2.modeloCompras compras;
+        compras = new modelos2.modeloCompras();
+        Object[][] data;
+        data = compras.listarAgendaDePagos();
+        micontroladorAgendaDePagos = new controladorAgendaDePagos();
+        return micontroladorAgendaDePagos.mostrarTabControlAgendaDePagos(tipo, data);
+    }
+    
+    public void crearControladorCambiarEstadoPago(String id) {
+        controladorCambiarEstadoPago micontroladorCEP;
+        micontroladorCEP = new controladorCambiarEstadoPago();
+        micontroladorCEP.mostrarVistaCambiarEstadoPago(id);
+    }
+    
+    //AGENDA DE OTROS PAGOS
+    public JPanel crearControladorAgendaDeOtrosPagosP() {
+        modelos2.modeloCompras compras;
+        compras = new modelos2.modeloCompras();
+        Object[][] data;
+        data = compras.listarAgendaDeOtrosPagos();
+        micontroladorAgendaDeOtrosPagos = new controladorAgendaDeOtrosPagos();
+        return micontroladorAgendaDeOtrosPagos.mostrarTabControlAgendaDeOtrosPagos(tipo, data);
+    }
+    
+    //GLOBAL DE PAGOS
+    public JPanel crearControladorGlobalPagosP() {
+        modelos2.modeloCompras compras;
+        compras = new modelos2.modeloCompras();
+        Object[][] data, data2;
+        data = compras.listarAgendaDePagos();
+        data2 = compras.listarAgendaDeOtrosPagos();
+        micontroladorGlobalPagos = new controladorGlobalPagos();
+        return micontroladorGlobalPagos.mostrarTabControlGlobalPagos(tipo, data, data2);
     }
     
     //Funciones
@@ -941,4 +981,32 @@ public class controladorPrincipal {
         String[] data = compra.obtenerCompraPorId(id);
         return data;
     }
+    
+    public String[] obtenerCuotaPorId(String id){
+        modeloCompras compra = new modeloCompras();
+        String[] data = compra.obtenerCuotaPorId(id);
+        return data;
+    }
+    
+    //Funciones agenda de pagos
+    public boolean cambiarEstadoPago(String estado, String id){
+        modeloCompras compra = new modeloCompras();
+        if(compra.cambiarEstadoPago(estado, id).compareTo("correcto") == 0){
+            return true;
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al cambiar el estado de pago de la cuota selecionada", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+    
+    //Funciones agenda de otros pagos
+//    public boolean cambiarEstadoOtrosPago(String estado, String id){
+//        modeloCompras compra = new modeloCompras();
+//        if(compra.cambiarEstadoPago(estado, id).compareTo("correcto") == 0){
+//            return true;
+//        }else{
+//            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al cambiar el estado de pago de la cuota selecionada", "Error", JOptionPane.ERROR_MESSAGE);
+//            return false;
+//        }
+//    }
 }
