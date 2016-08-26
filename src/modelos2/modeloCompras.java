@@ -6,23 +6,22 @@
 package modelos2;
 
 import java.sql.CallableStatement;
-import modelos2.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import modelos.Connector;
 
 /**
  *
  * @author Diego
  */
 public class modeloCompras {
-    static String login = "root";
-//    static String password = "gruas_205243";
-//    static String url = "jdbc:mysql://10.20.224.100:3306/fact_gruas";
-    static String password = "205243";
-    static String url = "jdbc:mysql://localhost:3306/fact_gruas";
+    Connector conector = Connector.getInstance();
+    String login = conector.getLogin();
+    String password = conector.getPassword();
+    String url = conector.getUrl();
     Connection conn = null;
     
     public Object[][] listarCompras(){
@@ -192,7 +191,7 @@ public class modeloCompras {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
             for (String[] data1 : data) {
-                PreparedStatement pstm = conn.prepareStatement("INSERT into Cuotas (id_com, num_cuo, folio_cuo,"
+                PreparedStatement pstm = conn.prepareStatement("INSERT into Cuotas (id_com, num_cuo, fol_cuo,"
                         + "fec_cuo, mon_cuo, est_cuo) values (?, ?, ?, ?, ?, ?)");
                 pstm.setInt(1, Integer.parseInt(id));
                 pstm.setInt(2, Integer.parseInt(data1[0]));

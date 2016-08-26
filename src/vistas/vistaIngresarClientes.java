@@ -44,6 +44,7 @@ public class vistaIngresarClientes extends javax.swing.JDialog {
         controladores.controladorIngresarClientes miControlador = new controladorIngresarClientes();
         int index = comboRegion.getSelectedIndex();
         int region = Integer.parseInt(regiones[index][0].toString());
+        System.out.println(index+" "+region);
         Object[] comunas = miControlador.cargarComunas(region);
         String[] listaComunas = new String[comunas.length];
         for(int i = 0; i < comunas.length; i++){

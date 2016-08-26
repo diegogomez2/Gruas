@@ -29,7 +29,7 @@ public class controladorIngresarClientes {
         String[] data = {rut_dv[0], rut_dv[1], vistaIC.getTextoContacto(), vistaIC.getTextoRazon(), 
             vistaIC.getTextoGiro(), vistaIC.getTextoCorreo(), vistaIC.getTextoTelefono(), 
             vistaIC.getTextoCel(), vistaIC.getTextoDireccion(), vistaIC.getComboRegion(),
-            vistaIC.getComboComuna(), vistaIC.getComboCiudad(), vistaIC.getTextoObs()};
+            vistaIC.getComboCiudad(), vistaIC.getComboComuna(), vistaIC.getTextoObs()};
         boolean flag = miControlador.ingresarCliente(data);
         return flag;
     }

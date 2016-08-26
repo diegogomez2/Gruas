@@ -6,35 +6,31 @@
 package modelos;
 
 import controladores.controladorPrincipal;
-import java.net.ConnectException;
 import java.sql.*;
 import javax.swing.JOptionPane;
-import static modelos.modeloClientes.url;
 
 /**
  *
  * @author Diego
  */
 public class modeloUsuarios {
-    static String login = "root";
-//    static String password = "gruas_205243";
-//    static String url = "jdbc:mysql://10.20.224.100:3306/fact_gruas";
-    static String password = "205243";
-    static String url = "jdbc:mysql://localhost:3306/fact_gruas";
+    Connector conector = Connector.getInstance();
+    String login = conector.getLogin();
+    String password = conector.getPassword();
+    String url = conector.getUrl();
     Connection conn = null;
     
-    public String verificarLogin(String rut, String pass){
+    public int verificarLogin(String rut, String pass){
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("SELECT * FROM usuarios WHERE user = ?");
+            PreparedStatement pstm = conn.prepareStatement("SELECT pass FROM usuarios WHERE user = ?");
             pstm.setString(1, rut);
             ResultSet res = pstm.executeQuery();
-            
             while(res.next()){
                 String contraseña = res.getString("pass");
                 if(contraseña.compareTo(pass) == 0){
-                    return "correcto";
+                    return 1;
                 }
             }
             pstm.close();
@@ -42,12 +38,12 @@ public class modeloUsuarios {
         catch(SQLException e){
             System.out.println("Error verificar login");
             System.out.println(e);
-            JOptionPane.showMessageDialog(null, "La conexión con la base de datos falló");
+            return 2;
         }catch(ClassNotFoundException e){
             System.out.println(e);
-            JOptionPane.showMessageDialog(null, "La conexión con la base de datos falló");
+            return 4;
         }
-        return "incorrecto";
+        return 0;
     }
 
     public String obtenerContraseña(String user) {

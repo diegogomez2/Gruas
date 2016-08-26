@@ -5,17 +5,11 @@
  */
 package controladores;
 
-import java.awt.Component;
-import java.awt.Frame;
 import java.text.ParseException;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 import modelos.modeloClientes;
-import modelos.modeloEmpleados;
 import modelos.modeloJornadas;
 import modelos.modeloRegiones;
 import modelos.modeloTonelajes;
@@ -62,13 +56,17 @@ public class controladorPrincipal {
         modeloUsuarios usuario = new modeloUsuarios();
         rut = miVistaL.getTextoUsuario();
         pass = miVistaL.getTextoContraseña();
-        if((tipo = usuario.verificarLogin(rut, pass)).compareTo("incorrecto") != 0){
-            user = rut;
-            mostrarVentana();
-        }else{
-            JOptionPane.showMessageDialog(miVistaL, "Nombre de usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
-            miVistaL.setTextoUsuario();
-            miVistaL.setTextoContraseña();
+        switch(usuario.verificarLogin(rut, pass)){
+            case 1:
+                user = rut;
+                mostrarVentana();
+                break;
+            case 2:
+                JOptionPane.showMessageDialog(miVistaL, "No se pudo establecer la conexión con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+                break;
+            case 0:
+                JOptionPane.showMessageDialog(miVistaL, "Nombre de usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
+                break;
         }
     }
     
@@ -345,7 +343,6 @@ public class controladorPrincipal {
         if(pw.compareTo(pw2) == 0){
             res = usuarios.agregarUsuario(usuario, pw);
         }
-        
         if(res.compareTo("pw") == 0){
             JOptionPane.showMessageDialog(miVistaL, "Las contraseñas deben ser las mismas", "Error", JOptionPane.ERROR_MESSAGE);
             return false;

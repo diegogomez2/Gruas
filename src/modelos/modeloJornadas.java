@@ -6,7 +6,6 @@
 package modelos;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,8 +14,6 @@ import java.sql.Types;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.regex.Pattern;
-import javax.swing.JButton;
 
 /**
  *
@@ -24,11 +21,10 @@ import javax.swing.JButton;
  */
 public class modeloJornadas {
     
-    static String login = "root";
-//    static String password = "gruas_205243";
-//    static String url = "jdbc:mysql://10.20.224.100:3306/fact_gruas";
-    static String password = "205243";
-    static String url = "jdbc:mysql://localhost:3306/fact_gruas";
+    Connector conector = Connector.getInstance();
+    String login = conector.getLogin();
+    String password = conector.getPassword();
+    String url = conector.getUrl();
     Connection conn = null;
     
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");

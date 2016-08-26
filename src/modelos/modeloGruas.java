@@ -9,18 +9,16 @@ import java.sql.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-//import javafx.animation.KeyValue;
 
 /**
  *
  * @author Diego
  */
 public class modeloGruas {
-    static String login = "root";
-//    static String password = "gruas_205243";
-//    static String url = "jdbc:mysql://10.20.224.100:3306/fact_gruas";
-    static String password = "205243";
-    static String url = "jdbc:mysql://localhost:3306/fact_gruas";
+    Connector conector = Connector.getInstance();
+    String login = conector.getLogin();
+    String password = conector.getPassword();
+    String url = conector.getUrl();
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
     Connection conn = null;
     

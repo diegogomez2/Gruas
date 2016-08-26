@@ -16,11 +16,10 @@ import java.sql.SQLException;
  * @author Diego
  */
 public class modeloClientes {
-    static String login = "root";
-//    static String password = "gruas_205243";
-//    static String url = "jdbc:mysql://10.20.224.100:3306/fact_gruas";
-    static String password = "205243";
-    static String url = "jdbc:mysql://localhost:3306/fact_gruas";
+    Connector conector = Connector.getInstance();
+    String login = conector.getLogin();
+    String password = conector.getPassword();
+    String url = conector.getUrl();
     Connection conn = null;
     
     public Object[][] listarClientes(){
