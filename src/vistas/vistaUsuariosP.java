@@ -112,9 +112,7 @@ public class vistaUsuariosP extends javax.swing.JPanel {
 
     private void botonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarActionPerformed
         controladores.controladorUsuarios miControlador = new controladores.controladorUsuarios();
-        miControlador.irVistaIngresarUsuarios();
-        JTabbedPane tabs = (JTabbedPane)this.getParent();
-        miControlador.crearControladorPrincipal(tabs);
+        miControlador.irVistaIngresarUsuarios((JTabbedPane)this.getParent());
     }//GEN-LAST:event_botonAgregarActionPerformed
 
     private void botonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarActionPerformed

@@ -33,15 +33,14 @@ public class modeloUsuarios {
                     return 1;
                 }
             }
+            res.close();
             pstm.close();
+            conn.close();
         }
-        catch(SQLException e){
+        catch(SQLException | ClassNotFoundException e){
             System.out.println("Error verificar login");
             System.out.println(e);
             return 2;
-        }catch(ClassNotFoundException e){
-            System.out.println(e);
-            return 4;
         }
         return 0;
     }
@@ -59,11 +58,8 @@ public class modeloUsuarios {
                 contraseña = res.getString("pass");
             }
             pstm.close();
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, e);
-            System.out.println(e);
-        }catch(ClassNotFoundException e){
-            JOptionPane.showMessageDialog(null, e);
+        }catch(SQLException | ClassNotFoundException e){
+            System.out.println("Error verificar login");
             System.out.println(e);
         }
         return contraseña;
@@ -80,11 +76,8 @@ public class modeloUsuarios {
             pstm.setString(2, user);
             pstm.executeUpdate();
             pstm.close();
-        }catch(SQLException e){
+        }catch(SQLException | ClassNotFoundException e){
             System.out.println("Error cambiar clave");
-            System.out.println(e);
-            return "incorrecto";
-        }catch(ClassNotFoundException e){
             System.out.println(e);
             return "incorrecto";
         }
@@ -165,4 +158,28 @@ public class modeloUsuarios {
             return "incorrecto";
         }
     }
+    
+    public int comprobarUsuario(String user){
+        try{
+            int registros = 0;
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Usuarios WHERE "
+                    + "user = ?");
+            pstm.setString(1, user);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();  
+            return registros;
+        }catch(SQLException e){
+            System.out.println("Error al comprobar usuario");
+            System.out.println(e);
+            return 1;
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+            return 1;
+        }
+    }
+    
 }

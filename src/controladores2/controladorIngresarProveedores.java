@@ -28,10 +28,10 @@ public class controladorIngresarProveedores {
     public boolean irVistaProveedoresP() {
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
         String[] rut_dv = vistaIP.getTextoRut().split("-");
-        String[] data = {rut_dv[0], rut_dv[1], vistaIP.getTextoContacto(), vistaIP.getTextoRazon(), 
+        String[] data = {rut_dv[0], rut_dv[1].toLowerCase(), vistaIP.getTextoContacto(), vistaIP.getTextoRazon(), 
             vistaIP.getTextoGiro(), vistaIP.getTextoCorreo(), vistaIP.getTextoTelefono(),
-            vistaIP.getTextoDireccion(), vistaIP.getComboRegion(), vistaIP.getComboComuna(), 
-            vistaIP.getComboCiudad(), vistaIP.getTextoObs(), vistaIP.getComboForma(), vistaIP.getComboMedio()};
+            vistaIP.getTextoDireccion(), vistaIP.getComboRegion(), vistaIP.getComboCiudad(), 
+            vistaIP.getComboComuna(), vistaIP.getTextoObs(), vistaIP.getComboForma(), vistaIP.getComboMedio()};
         boolean flag = miControlador.ingresarProveedor(data);
         return flag;
     }
@@ -42,7 +42,7 @@ public class controladorIngresarProveedores {
             if (rut_dv.length == 2) {
                 try {
                     int num = Integer.parseInt(rut_dv[0]);
-                    char dv = rut_dv[1].charAt(0);
+                    char dv = rut_dv[1].toLowerCase().charAt(0);
                     if (validarRut(num, dv)) {
                         return true;
                     } else {

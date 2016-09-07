@@ -51,9 +51,9 @@ public class vistaDetalleProveedores extends javax.swing.JDialog {
         labelDireccion = new javax.swing.JLabel();
         textoDireccion = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        comboRegion = new javax.swing.JComboBox<String>();
+        comboRegion = new javax.swing.JComboBox<>();
         labelComuna = new javax.swing.JLabel();
-        comboComuna = new javax.swing.JComboBox<String>();
+        comboComuna = new javax.swing.JComboBox<>();
         labelCiudad = new javax.swing.JLabel();
         comboCiudad = new javax.swing.JComboBox();
         jPanel3 = new javax.swing.JPanel();
@@ -67,7 +67,7 @@ public class vistaDetalleProveedores extends javax.swing.JDialog {
         comboMedio = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Detalle cliente");
+        setTitle("Detalle proveedor");
         setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Informacion"));
@@ -117,19 +117,16 @@ public class vistaDetalleProveedores extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(textoRut)
                     .addComponent(textoContacto)
-                    .addComponent(textoRazon)
+                    .addComponent(textoRazon, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textoGiro)
                     .addComponent(textoCorreo)
                     .addComponent(textoTelefono)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelRut)
-                            .addComponent(labelContacto)
-                            .addComponent(labelRazon)
-                            .addComponent(jLabel1)
-                            .addComponent(labelCorreo)
-                            .addComponent(labelTelefono))
-                        .addGap(0, 310, Short.MAX_VALUE)))
+                    .addComponent(labelRut)
+                    .addComponent(labelContacto)
+                    .addComponent(labelRazon)
+                    .addComponent(jLabel1)
+                    .addComponent(labelCorreo)
+                    .addComponent(labelTelefono))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(

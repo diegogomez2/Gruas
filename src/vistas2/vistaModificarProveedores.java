@@ -96,9 +96,9 @@ public class vistaModificarProveedores extends javax.swing.JDialog {
         labelDireccion = new javax.swing.JLabel();
         textoDireccion = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        comboRegion = new javax.swing.JComboBox<String>();
+        comboRegion = new javax.swing.JComboBox<>();
         labelComuna = new javax.swing.JLabel();
-        comboComuna = new javax.swing.JComboBox<String>();
+        comboComuna = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         comboCiudad = new javax.swing.JComboBox();
         jPanel3 = new javax.swing.JPanel();
@@ -113,7 +113,7 @@ public class vistaModificarProveedores extends javax.swing.JDialog {
         comboMedio = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Modificar cliente");
+        setTitle("Modificar proveedor");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Informacion"));
 
@@ -122,6 +122,9 @@ public class vistaModificarProveedores extends javax.swing.JDialog {
         labelContacto.setText("Contacto");
 
         labelRazon.setText("Razón Social");
+
+        textoRazon.setMaximumSize(new java.awt.Dimension(6, 20));
+        textoRazon.setPreferredSize(new java.awt.Dimension(320, 20));
 
         labelGiro.setText("Giro");
 
@@ -136,21 +139,18 @@ public class vistaModificarProveedores extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelRut)
-                            .addComponent(labelContacto)
-                            .addComponent(labelRazon)
-                            .addComponent(labelGiro)
-                            .addComponent(labelCorreo)
-                            .addComponent(labelTelefono))
-                        .addGap(0, 310, Short.MAX_VALUE))
+                    .addComponent(labelRut)
+                    .addComponent(labelContacto)
+                    .addComponent(labelRazon)
+                    .addComponent(labelGiro)
+                    .addComponent(labelCorreo)
+                    .addComponent(labelTelefono)
                     .addComponent(textoTelefono)
                     .addComponent(textoRut)
                     .addComponent(textoContacto)
-                    .addComponent(textoRazon)
                     .addComponent(textoGiro)
-                    .addComponent(textoCorreo))
+                    .addComponent(textoCorreo)
+                    .addComponent(textoRazon, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -167,7 +167,7 @@ public class vistaModificarProveedores extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelRazon)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textoRazon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(textoRazon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelGiro)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)

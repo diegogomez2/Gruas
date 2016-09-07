@@ -16,7 +16,7 @@ public class controladorTarifas {
     static vistas.vistaTarifas vistaTarifas;
 
     void mostrarVistaTarifas(String tipo, Object[][] data) {
-        if(vistaTarifas != null) vistaTarifas.setVisible(false);
+        if(vistaTarifas != null) vistaTarifas.setVisible(true);
         vistaTarifas = new vistaTarifas(tipo, data);
         vistaTarifas.setVisible(true);
     }

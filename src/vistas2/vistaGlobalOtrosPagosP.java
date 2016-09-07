@@ -13,13 +13,13 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author diego
  */
-public class vistaGlobalPagosP extends javax.swing.JPanel {
+public class vistaGlobalOtrosPagosP extends javax.swing.JPanel {
 
     /**
      * Creates new form vistaGlobalPagosP
      */
     DefaultTableModel datos, datos2;
-    public vistaGlobalPagosP(String tipo, Object[][] noPagados, Object[][] pagados) {
+    public vistaGlobalOtrosPagosP(String tipo, Object[][] noPagados, Object[][] pagados) {
         initComponents();
         //Object[][] data = new Object[0][0];
         String[] columNames = {"Medio de pago", "Rut proveedor", "Razón social", "Folio", 

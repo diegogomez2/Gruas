@@ -28,9 +28,9 @@ public class controladorUsuarios {
         vistaCambioClave.setVisible(true);
     }
     
-    public void irVistaIngresarUsuarios() {
+    public void irVistaIngresarUsuarios(JTabbedPane tab) {
         controladorPrincipal miControlador = new controladorPrincipal();
-        miControlador.crearControladorAgregarUsuario();
+        miControlador.crearControladorAgregarUsuario(tab);
     }
     
     public JPanel mostrarTabControlUsuarios(String tipo, Object[][] data) {

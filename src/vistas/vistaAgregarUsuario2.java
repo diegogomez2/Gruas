@@ -16,15 +16,14 @@ import javax.swing.JTextField;
  *
  * @author diego
  */
-public class vistaAgregarUsuario extends javax.swing.JDialog {
+public class vistaAgregarUsuario2 extends javax.swing.JDialog {
 
     /**
      * Creates new form vistaAgregarUsuario
      */
     JTabbedPane tab;
-    public vistaAgregarUsuario(JTabbedPane tab) {
+    public vistaAgregarUsuario2() {
         initComponents();
-        this.tab = tab;
     }
 
     /**
@@ -82,12 +81,9 @@ public class vistaAgregarUsuario extends javax.swing.JDialog {
                             .addComponent(jLabel3))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textoUsuario, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(textoPW2, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(textoPW))
-                                .addGap(2, 2, 2))))
+                            .addComponent(textoUsuario)
+                            .addComponent(textoPW)
+                            .addComponent(textoPW2)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 110, Short.MAX_VALUE)
                         .addComponent(jButton1)
@@ -132,8 +128,6 @@ public class vistaAgregarUsuario extends javax.swing.JDialog {
         boolean resp = miControlador.agregarUsuario(getTextoUsuario(), getTextoPW(), getTextoPW2());
         if(resp){
             dispose();
-            controladores.controladorUsuarios MCU = new controladorUsuarios();
-            MCU.crearControladorPrincipal(tab);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

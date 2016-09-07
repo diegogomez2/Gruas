@@ -5,9 +5,6 @@
  */
 package vistas;
 
-import controladores.controladorPrincipal;
-import java.awt.PopupMenu;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
@@ -48,8 +45,8 @@ public class vistaPrincipal extends javax.swing.JFrame {
         vistaPrincipal = new javax.swing.JTabbedPane();
         MenuPrincipal = new javax.swing.JMenuBar();
         MenuArchivo = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        itemAgregarUsuario = new javax.swing.JMenuItem();
+        itemCambiarContraseña = new javax.swing.JMenuItem();
         itemUsuarios = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         menuTarifas = new javax.swing.JMenuItem();
@@ -70,21 +67,21 @@ public class vistaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jMenuItem2.setText("Agregar usuario");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        itemAgregarUsuario.setText("Agregar usuario");
+        itemAgregarUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                itemAgregarUsuarioActionPerformed(evt);
             }
         });
-        MenuArchivo.add(jMenuItem2);
+        MenuArchivo.add(itemAgregarUsuario);
 
-        jMenuItem1.setText("Cambiar contraseña");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        itemCambiarContraseña.setText("Cambiar contraseña");
+        itemCambiarContraseña.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                itemCambiarContraseñaActionPerformed(evt);
             }
         });
-        MenuArchivo.add(jMenuItem1);
+        MenuArchivo.add(itemCambiarContraseña);
 
         itemUsuarios.setText("Mostrar usuarios");
         itemUsuarios.addActionListener(new java.awt.event.ActionListener() {
@@ -163,14 +160,17 @@ public class vistaPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void itemCambiarContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCambiarContraseñaActionPerformed
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
         miControlador.crearControladorUsuarios();
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_itemCambiarContraseñaActionPerformed
 
     private void menuTarifasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTarifasActionPerformed
+        vistaPrincipal.removeAll();
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
-        miControlador.crearControladorTarifas();
+        vistaPrincipal.addTab("Usuarios", miControlador.crearControladorUsuariosP());
+        vistaPrincipal.addTab("Tarifas", miControlador.crearControladorTarifasP());
+        vistaPrincipal.setSelectedIndex(1);
     }//GEN-LAST:event_menuTarifasActionPerformed
 
     private void menuAgregarTarifaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAgregarTarifaActionPerformed
@@ -178,10 +178,10 @@ public class vistaPrincipal extends javax.swing.JFrame {
         miControlador.crearControladorAgregarTarifa();
     }//GEN-LAST:event_menuAgregarTarifaActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void itemAgregarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemAgregarUsuarioActionPerformed
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
-        miControlador.crearControladorAgregarUsuario();
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+        miControlador.crearControladorAgregarUsuario2();
+    }//GEN-LAST:event_itemAgregarUsuarioActionPerformed
 
     private void MenuArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuArchivoActionPerformed
         vistaPrincipal.removeAll();
@@ -223,9 +223,10 @@ public class vistaPrincipal extends javax.swing.JFrame {
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
         vistaPrincipal.addTab("Proveedores", miControlador.crearControladorProveedoresP());
         vistaPrincipal.addTab("Compras", miControlador.crearControladorComprasP());
-//        vistaPrincipal.add("Agenda de pagos", miControlador.crearControladorAgendaDePagosP());
-//        vistaPrincipal.add("Agenda de otros pagos", miControlador.crearControladorAgendaDeOtrosPagosP());
-//        vistaPrincipal.add("Global de pagos", miControlador.crearControladorGlobalPagosP());
+        vistaPrincipal.add("Agenda de pagos", miControlador.crearControladorAgendaDePagosP());
+        vistaPrincipal.add("Agenda de otros pagos", miControlador.crearControladorAgendaDeOtrosPagosP());
+        vistaPrincipal.add("Global de pagos", miControlador.crearControladorGlobalPagosP());
+        vistaPrincipal.add("Global otros pagos", miControlador.crearControladorGlobalOtrosPagosP());
     }//GEN-LAST:event_itemComprasActionPerformed
 
     /**
@@ -266,12 +267,12 @@ public class vistaPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu MenuArchivo;
     private javax.swing.JMenuBar MenuPrincipal;
+    private javax.swing.JMenuItem itemAgregarUsuario;
+    private javax.swing.JMenuItem itemCambiarContraseña;
     private javax.swing.JMenuItem itemCompras;
     private javax.swing.JMenuItem itemOperaciones;
     private javax.swing.JMenuItem itemUsuarios;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem menuAgregarTarifa;
     private javax.swing.JMenu menuCompras;
     private javax.swing.JMenu menuOperaciones;

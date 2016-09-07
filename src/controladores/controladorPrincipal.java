@@ -43,6 +43,7 @@ public class controladorPrincipal {
     static controladorAgendaDePagos micontroladorAgendaDePagos;
     static controladorAgendaDeOtrosPagos micontroladorAgendaDeOtrosPagos;
     static controladorGlobalPagos micontroladorGlobalPagos;
+    static controladorGlobalOtrosPagos micontroladorGlobalOtrosPagos;
     static vistaLogin miVistaL;
     static vistaPrincipal mivistaP;
     static vistas.vistaJornadasP mivistaJP;
@@ -62,10 +63,10 @@ public class controladorPrincipal {
                 mostrarVentana();
                 break;
             case 2:
-                JOptionPane.showMessageDialog(miVistaL, "No se pudo establecer la conexión con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "No se pudo establecer la conexión con la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
                 break;
             case 0:
-                JOptionPane.showMessageDialog(miVistaL, "Nombre de usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Nombre de usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
                 break;
         }
     }
@@ -326,9 +327,14 @@ public class controladorPrincipal {
         micontroladorUsuarios.mostrarVistaCambioClave(tipo, data);
     }
     
-    public void crearControladorAgregarUsuario() {
+    public void crearControladorAgregarUsuario(JTabbedPane tab) {
         controladorAgregarUsuario micontrolador = new controladorAgregarUsuario();
-        micontrolador.mostrarVistaAgregarUsuario();
+        micontrolador.mostrarVistaAgregarUsuario(tab);
+    }
+    
+    public void crearControladorAgregarUsuario2() {
+        controladorAgregarUsuario micontrolador = new controladorAgregarUsuario();
+        micontrolador.mostrarVistaAgregarUsuario2();
     }
     
     public void crearControladorEliminarUsuario(String user){
@@ -340,17 +346,25 @@ public class controladorPrincipal {
     public boolean agregarUsuario(String usuario, String pw, String pw2){
         modelos.modeloUsuarios usuarios = new modelos.modeloUsuarios();
         String res = "pw";
+        if(usuario.trim().compareTo("") == 0 || pw.trim().compareTo("") == 0 || pw2.trim().compareTo("") == 0){
+            JOptionPane.showMessageDialog(null, "Debe ingresar usuario y contraseña", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
         if(pw.compareTo(pw2) == 0){
+            if(usuarios.comprobarUsuario(usuario) > 0){
+                JOptionPane.showMessageDialog(null, "Este usuario ya se encuentra registrado", "Error", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
             res = usuarios.agregarUsuario(usuario, pw);
         }
         if(res.compareTo("pw") == 0){
-            JOptionPane.showMessageDialog(miVistaL, "Las contraseñas deben ser las mismas", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Las contraseñas deben ser las mismas", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }else if(res.compareTo("correcto") == 0){
-            JOptionPane.showMessageDialog(miVistaL, "Usuario agregado con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Usuario agregado con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
             return true;
         }else{
-            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al ingresar al usuario", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al ingresar al usuario", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }
@@ -497,11 +511,22 @@ public class controladorPrincipal {
     public JPanel crearControladorGlobalPagosP() {
         modelos2.modeloCompras compras;
         compras = new modelos2.modeloCompras();
-        Object[][] data, data2;
-        data = compras.listarAgendaDePagos();
-        data2 = compras.listarAgendaDeOtrosPagos();
+        Object[][] noPagados, pagados;
+        noPagados = compras.listarGlobalNoPagados();
+        pagados = compras.listarGlobalPagados();
         micontroladorGlobalPagos = new controladorGlobalPagos();
-        return micontroladorGlobalPagos.mostrarTabControlGlobalPagos(tipo, data, data2);
+        return micontroladorGlobalPagos.mostrarTabControlGlobalPagos(tipo, noPagados, pagados);
+    }
+    
+    //GLOBAL OTROS PAGOS
+    public JPanel crearControladorGlobalOtrosPagosP() {
+        modelos2.modeloCompras compras;
+        compras = new modelos2.modeloCompras();
+        Object[][] noPagados, pagados;
+        noPagados = compras.listarGlobalOtrosNoPagados();
+        pagados = compras.listarGlobalOtrosPagados();
+        micontroladorGlobalOtrosPagos = new controladorGlobalOtrosPagos();
+        return micontroladorGlobalOtrosPagos.mostrarTabControlGlobalOtrosPagos(tipo, noPagados, pagados);
     }
     
     //Funciones

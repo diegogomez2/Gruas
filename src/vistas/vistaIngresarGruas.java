@@ -80,7 +80,7 @@ public class vistaIngresarGruas extends javax.swing.JDialog {
         labelLargo = new javax.swing.JLabel();
         panelTipoNeumaticos = new javax.swing.JPanel();
         comboTipoNeumaticos = new javax.swing.JComboBox();
-        comboTipoNeumaticos2 = new javax.swing.JComboBox<String>();
+        comboTipoNeumaticos2 = new javax.swing.JComboBox<>();
         labelKMH = new javax.swing.JLabel();
         labelKMHUM = new javax.swing.JLabel();
         textoLargo = new javax.swing.JTextField();
@@ -91,10 +91,10 @@ public class vistaIngresarGruas extends javax.swing.JDialog {
         textoPesoGrua = new javax.swing.JTextField();
         labelMastil = new javax.swing.JLabel();
         labelAlturaMastil = new javax.swing.JLabel();
-        comboTipoCombustible = new javax.swing.JComboBox<String>();
+        comboTipoCombustible = new javax.swing.JComboBox<>();
         textoLargoUnas = new javax.swing.JTextField();
         labelNeumaticosTraseros = new javax.swing.JLabel();
-        comboMastil = new javax.swing.JComboBox<String>();
+        comboMastil = new javax.swing.JComboBox<>();
         labelLargoUnas = new javax.swing.JLabel();
         textoAlturaMastil = new javax.swing.JTextField();
         labelTipoCombustible = new javax.swing.JLabel();
@@ -226,7 +226,7 @@ public class vistaIngresarGruas extends javax.swing.JDialog {
 
         comboTipoNeumaticos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tubular", "Sólido" }));
 
-        comboTipoNeumaticos2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Simple", "Doble" }));
+        comboTipoNeumaticos2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Simple", "Doble" }));
 
         javax.swing.GroupLayout panelTipoNeumaticosLayout = new javax.swing.GroupLayout(panelTipoNeumaticos);
         panelTipoNeumaticos.setLayout(panelTipoNeumaticosLayout);
@@ -324,11 +324,11 @@ public class vistaIngresarGruas extends javax.swing.JDialog {
 
         labelAlturaMastil.setText("Altura Mástil (cm)");
 
-        comboTipoCombustible.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Diesel", "Gas" }));
+        comboTipoCombustible.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Diesel", "Gas" }));
 
         labelNeumaticosTraseros.setText("Medida Neumáticos traseros");
 
-        comboMastil.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Simple", "Doble" }));
+        comboMastil.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Simple", "Doble" }));
 
         labelLargoUnas.setText("Largo Uñas (cm)");
 
@@ -353,24 +353,22 @@ public class vistaIngresarGruas extends javax.swing.JDialog {
                         .addComponent(labelNeumaticosTraseros)
                         .addGap(157, 157, 157))
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(labelLargoUnas, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(textoLargoUnas, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(textoLargoUnas))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel5Layout.createSequentialGroup()
-                                        .addGap(0, 1, Short.MAX_VALUE)
-                                        .addComponent(textoAlturaLevante, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel5Layout.createSequentialGroup()
                                         .addComponent(labelAlturaLevante)
-                                        .addGap(0, 0, Short.MAX_VALUE))))
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(textoAlturaLevante)))
                             .addComponent(textoPesoGrua, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(textoAlturaMastil, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(comboMastil, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(comboTipoCombustible, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(96, 96, 96))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(labelPesoGrua)

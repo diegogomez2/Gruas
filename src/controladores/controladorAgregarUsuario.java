@@ -5,7 +5,9 @@
  */
 package controladores;
 
+import javax.swing.JTabbedPane;
 import vistas.vistaAgregarUsuario;
+import vistas.vistaAgregarUsuario2;
 
 /**
  *
@@ -13,10 +15,19 @@ import vistas.vistaAgregarUsuario;
  */
 public class controladorAgregarUsuario {
     static vistas.vistaAgregarUsuario vistaAgregarUsuario;
-
-    void mostrarVistaAgregarUsuario() {
+    static vistas.vistaAgregarUsuario2 vistaAgregarUsuario2;
+            
+    void mostrarVistaAgregarUsuario(JTabbedPane tab) {
         if(vistaAgregarUsuario != null) vistaAgregarUsuario.setVisible(false);
-        vistaAgregarUsuario = new vistaAgregarUsuario();
+        vistaAgregarUsuario = new vistaAgregarUsuario(tab);
         vistaAgregarUsuario.setVisible(true);
+        vistaAgregarUsuario.setLocationRelativeTo(null);
+    }
+    
+    void mostrarVistaAgregarUsuario2() {
+        if(vistaAgregarUsuario2 != null) vistaAgregarUsuario2.setVisible(false);
+        vistaAgregarUsuario2 = new vistaAgregarUsuario2();
+        vistaAgregarUsuario2.setVisible(true);
+        vistaAgregarUsuario2.setLocationRelativeTo(null);
     }
 }

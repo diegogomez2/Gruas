@@ -77,7 +77,7 @@ public class modeloCompras {
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("INSERT into Compras_fac (rut_pro,"
                     + "tipo_com, fol_com, fol_int_com, fec_in_com, ord_com, fec_pag_com, form_com, asun_com, obs_com,"
-                    + "med_com, ban_com, num_tc_com) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                    + "med_com, ban_com, num_tc_com, est_com) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                     PreparedStatement.RETURN_GENERATED_KEYS);
             pstm.setInt(1, Integer.parseInt(data[0]));
             pstm.setString(2, data[1]);
@@ -92,6 +92,7 @@ public class modeloCompras {
             pstm.setString(11, data[10]);
             pstm.setString(12, data[11]);
             pstm.setString(13, data[12]);
+            pstm.setString(14, data[13]);
             pstm.execute();
             ResultSet res = pstm.getGeneratedKeys();
             res.next();
@@ -202,6 +203,9 @@ public class modeloCompras {
                 pstm.execute();
                 pstm.close();
             }
+            CallableStatement cstmt = conn.prepareCall("{call set_estado_compra(?)}");
+            cstmt.setString(1, id);
+            cstmt.execute();
         }catch(SQLException e){
             System.out.println("Error al ingresar cheque");
             System.out.println(e);
@@ -631,5 +635,205 @@ public class modeloCompras {
             return "incorrecto";
         }
         return "correcto";
+    }
+   
+   public Object[][] listarGlobalNoPagados(){
+        int registros = 0;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Cuotas INNER JOIN Compras_fac"
+                    + " ON Cuotas.id_com = Compras_fac.id_com WHERE MONTH(fec_cuo) = MONTH(curdate()) and  not form_com = "
+                    + "'Otros pagos' and not est_cuo = 'Pagado'");
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+       }catch(SQLException e){
+            System.out.println("Error al listar agenda de pagos");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        
+        Object[][] data = new String[registros][7];
+        
+        try{
+            PreparedStatement pstm = conn.prepareStatement("SELECT med_com, Cuotas.id_com, Compras_fac.rut_pro, dig_pro,"
+                    + " raz_pro, coalesce(fol_cuo, '') as fol_cuo, num_cuo, fec_cuo, est_cuo, id_cuo FROM Cuotas INNER JOIN Compras_fac ON Cuotas.id_com"
+                    + "= Compras_fac.id_com INNER JOIN Proveedores ON Compras_fac.rut_pro = Proveedores.rut_pro"
+                    + " WHERE MONTH(fec_cuo) = MONTH(curdate()) and not form_com = 'Otros pagos' and not est_cuo = 'Pagado' ORDER BY fec_cuo");
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while(res.next()){
+                String estmed = res.getString("med_com");
+                String estrut = res.getString("Compras_fac.rut_pro");
+                String estdig = res.getString("dig_pro");
+                String estraz = res.getString("raz_pro");
+//                String esttip = res.getString("tipo_com");
+                String estfol = res.getString("fol_cuo");
+                String estfec = res.getString("fec_cuo");
+                String estnum = res.getString("num_cuo");
+                String estest = res.getString("est_cuo");
+                String estid = res.getString("id_cuo");
+                //String estid = res.getString("Cuotas.id_com");
+                data[i] = new String[]{estmed, estrut + "-" + estdig, estraz, estfol, estnum, estfec, estest, estid};
+                i++;
+            }
+            res.close();
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+        return data;
+    }
+   
+   public Object[][] listarGlobalPagados(){
+        int registros = 0;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Cuotas INNER JOIN Compras_fac"
+                    + " ON Cuotas.id_com = Compras_fac.id_com WHERE MONTH(fec_cuo) = MONTH(curdate()) and  not form_com = "
+                    + "'Otros pagos' and est_cuo = 'Pagado'");
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+       }catch(SQLException e){
+            System.out.println("Error al listar agenda de pagos");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        
+        Object[][] data = new String[registros][7];
+        
+        try{
+            PreparedStatement pstm = conn.prepareStatement("SELECT med_com, Cuotas.id_com, Compras_fac.rut_pro, dig_pro,"
+                    + " raz_pro, coalesce(fol_cuo, '') as fol_cuo, num_cuo, fec_cuo, est_cuo, id_cuo FROM Cuotas INNER JOIN Compras_fac ON Cuotas.id_com"
+                    + "= Compras_fac.id_com INNER JOIN Proveedores ON Compras_fac.rut_pro = Proveedores.rut_pro"
+                    + " WHERE MONTH(fec_cuo) = MONTH(curdate()) and not form_com = 'Otros pagos' and est_cuo = 'Pagado' ORDER BY fec_cuo");
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while(res.next()){
+                String estmed = res.getString("med_com");
+                String estrut = res.getString("Compras_fac.rut_pro");
+                String estdig = res.getString("dig_pro");
+                String estraz = res.getString("raz_pro");
+//                String esttip = res.getString("tipo_com");
+                String estfol = res.getString("fol_cuo");
+                String estfec = res.getString("fec_cuo");
+                String estnum = res.getString("num_cuo");
+                String estest = res.getString("est_cuo");
+                String estid = res.getString("id_cuo");
+                //String estid = res.getString("Cuotas.id_com");
+                data[i] = new String[]{estmed, estrut + "-" + estdig, estraz, estfol, estnum, estfec, estest, estid};
+                i++;
+            }
+            res.close();
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+        return data;
+    }
+   
+   public Object[][] listarGlobalOtrosNoPagados(){
+        int registros = 0;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Cuotas INNER JOIN Compras_fac"
+                    + " ON Cuotas.id_com = Compras_fac.id_com WHERE MONTH(fec_cuo) = MONTH(curdate()) and form_com = "
+                    + "'Otros pagos' and not est_cuo = 'Pagado'");
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+       }catch(SQLException e){
+            System.out.println("Error al listar agenda de pagos");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        
+        Object[][] data = new String[registros][7];
+        
+        try{
+            PreparedStatement pstm = conn.prepareStatement("SELECT med_com, Cuotas.id_com, Compras_fac.rut_pro, dig_pro,"
+                    + " raz_pro, coalesce(fol_cuo, '') as fol_cuo, num_cuo, fec_cuo, est_cuo, id_cuo FROM Cuotas INNER JOIN Compras_fac ON Cuotas.id_com"
+                    + "= Compras_fac.id_com INNER JOIN Proveedores ON Compras_fac.rut_pro = Proveedores.rut_pro"
+                    + " WHERE MONTH(fec_cuo) = MONTH(curdate()) and form_com = 'Otros pagos' and not est_cuo = 'Pagado' ORDER BY fec_cuo");
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while(res.next()){
+                String estmed = res.getString("med_com");
+                String estrut = res.getString("Compras_fac.rut_pro");
+                String estdig = res.getString("dig_pro");
+                String estraz = res.getString("raz_pro");
+//                String esttip = res.getString("tipo_com");
+                String estfol = res.getString("fol_cuo");
+                String estfec = res.getString("fec_cuo");
+                String estnum = res.getString("num_cuo");
+                String estest = res.getString("est_cuo");
+                String estid = res.getString("id_cuo");
+                //String estid = res.getString("Cuotas.id_com");
+                data[i] = new String[]{estmed, estrut + "-" + estdig, estraz, estfol, estnum, estfec, estest, estid};
+                i++;
+            }
+            res.close();
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+        return data;
+    }
+   
+   public Object[][] listarGlobalOtrosPagados(){
+        int registros = 0;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Cuotas INNER JOIN Compras_fac"
+                    + " ON Cuotas.id_com = Compras_fac.id_com WHERE MONTH(fec_cuo) = MONTH(curdate()) and form_com = "
+                    + "'Otros pagos' and est_cuo = 'Pagado'");
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+       }catch(SQLException e){
+            System.out.println("Error al listar agenda de pagos");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        
+        Object[][] data = new String[registros][7];
+        
+        try{
+            PreparedStatement pstm = conn.prepareStatement("SELECT med_com, Cuotas.id_com, Compras_fac.rut_pro, dig_pro,"
+                    + " raz_pro, coalesce(fol_cuo, '') as fol_cuo, num_cuo, fec_cuo, est_cuo, id_cuo FROM Cuotas INNER JOIN Compras_fac ON Cuotas.id_com"
+                    + "= Compras_fac.id_com INNER JOIN Proveedores ON Compras_fac.rut_pro = Proveedores.rut_pro"
+                    + " WHERE MONTH(fec_cuo) = MONTH(curdate()) and form_com = 'Otros pagos' and est_cuo = 'Pagado' ORDER BY fec_cuo");
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while(res.next()){
+                String estmed = res.getString("med_com");
+                String estrut = res.getString("Compras_fac.rut_pro");
+                String estdig = res.getString("dig_pro");
+                String estraz = res.getString("raz_pro");
+//                String esttip = res.getString("tipo_com");
+                String estfol = res.getString("fol_cuo");
+                String estfec = res.getString("fec_cuo");
+                String estnum = res.getString("num_cuo");
+                String estest = res.getString("est_cuo");
+                String estid = res.getString("id_cuo");
+                //String estid = res.getString("Cuotas.id_com");
+                data[i] = new String[]{estmed, estrut + "-" + estdig, estraz, estfol, estnum, estfec, estest, estid};
+                i++;
+            }
+            res.close();
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+        return data;
     }
 }

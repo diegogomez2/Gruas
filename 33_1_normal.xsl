@@ -1,4 +1,4 @@
-<?xml version="1.0" type="text/xsl" encoding="ISO-8859-1" standalone="no"?>
+<?xml -stylesheet type="text/xsl"?>
 <catalog>
 <Documento>
 	<Encabezado>

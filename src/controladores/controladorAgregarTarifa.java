@@ -18,5 +18,6 @@ public class controladorAgregarTarifa {
         if(vistaAgregarTarifa != null) vistaAgregarTarifa.setVisible(false);
         vistaAgregarTarifa = new vistaAgregarTarifa(data);
         vistaAgregarTarifa.setVisible(true);
+        vistaAgregarTarifa.setLocationRelativeTo(null);
     }
 }

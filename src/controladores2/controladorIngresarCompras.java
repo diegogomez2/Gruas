@@ -39,7 +39,7 @@ public class controladorIngresarCompras {
         String[] data = {rut_dv[0], vistaIC.getComboTipoDTE(), vistaIC.getTextoFolio(), folioInterno, 
             vistaIC.getTextoFechaIngreso(), vistaIC.getTextoOrden(), vistaIC.getTextoFechaPago(),
             vistaIC.getComboForma(), vistaIC.getTextoAsunto(), vistaIC.getTextoObs(), 
-            vistaIC.getComboMedio(), vistaIC.getTextoBanco(), vistaIC.getTextoNumTC()};
+            vistaIC.getComboMedio(), vistaIC.getTextoBanco(), vistaIC.getTextoNumTC(), vistaIC.getCheckEstado()};
         String id = miControlador.ingresarCompra(data);
         if(id.compareTo("incorrecto") == 0){
             return false;
