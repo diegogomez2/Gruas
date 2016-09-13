@@ -5,9 +5,17 @@
  */
 package vistas2;
 
+import controladores2.controladorGlobalPagos;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
+import javax.swing.JOptionPane;
+import javax.swing.JTabbedPane;
+import javax.swing.RowFilter;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.plaf.basic.BasicListUI;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -30,9 +38,26 @@ public class vistaGlobalPagosP extends javax.swing.JPanel {
                 return false;
             }
         };
-        datos2 = new DefaultTableModel(pagados, columNames);
+        datos2 = new DefaultTableModel(pagados, columNames){
+            @Override
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }
+        };
         tablaNoPagos.setModel(datos);
         tablaPagos.setModel(datos2);
+        tablaNoPagos.setAutoCreateRowSorter(true);
+        tablaPagos.setAutoCreateRowSorter(true);
+        tablaNoPagos.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+            public void valueChanged(ListSelectionEvent e){
+                tablaPagos.clearSelection();
+            }
+        });
+        tablaPagos.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+            public void valueChanged(ListSelectionEvent e){
+                tablaNoPagos.clearSelection();
+            }
+        });
         jSplitPane1.setDividerLocation(0.5);
     }
 
@@ -192,30 +217,36 @@ public class vistaGlobalPagosP extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonCambiarEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCambiarEstadoActionPerformed
-//        jScrollPane1.setVisible(false);
-//        jScrollPane2.setVisible(true);
-//        controladorAgendaDePagos miControlador = new controladorAgendaDePagos();
-        //        boolean selected = tablaPagos.getSelectedRowCount() > 0;
-        //        if(selected){
-            //            int row = getFilaSeleccionada();
-            //            String id = getIdFila(row);
-            //            miControlador.irVistaCambiarEstado(id);
-            //            JTabbedPane tabs = (JTabbedPane)this.getParent();
-            //            miControlador.crearControladorPrincipal(tabs);
-            //        }else{
-            //            JOptionPane.showMessageDialog(null, "Debe seleccionar una cuota para ser modificada");
-            //        }
+        controladorGlobalPagos miControlador = new controladorGlobalPagos();
+        boolean selectedPagos = tablaPagos.getSelectedRowCount() > 0;
+        boolean selectedNoPagos = tablaNoPagos.getSelectedRowCount() > 0;
+        if(selectedNoPagos){
+                int row = getFilaSeleccionada(0);
+                String id = getIdFila(row, 0);
+                miControlador.irVistaCambiarEstado(id);
+                JTabbedPane tabs = (JTabbedPane)this.getParent();
+                miControlador.crearControladorPrincipal(tabs);
+            }else if(selectedPagos){
+                int row = getFilaSeleccionada(1);
+                String id = getIdFila(row, 1);
+                miControlador.irVistaCambiarEstado(id);
+                JTabbedPane tabs = (JTabbedPane)this.getParent();
+                miControlador.crearControladorPrincipal(tabs);
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Debe seleccionar una cuota para ser modificada");
+            }
     }//GEN-LAST:event_botonCambiarEstadoActionPerformed
 
     private void textoFiltroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoFiltroKeyReleased
-        //        String query = textoFiltro.getText();
-        //        filtrar(query);
+                String query = textoFiltro.getText();
+                filtrar(query);
     }//GEN-LAST:event_textoFiltroKeyReleased
 
     private void botonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarActionPerformed
-        //        controladores2.controladorAgendaDePagos miControlador = new controladorAgendaDePagos();
-        //        JTabbedPane tabs = (JTabbedPane)this.getParent();
-        //        miControlador.crearControladorPrincipal(tabs);
+                controladores2.controladorGlobalPagos miControlador = new controladorGlobalPagos();
+                JTabbedPane tabs = (JTabbedPane)this.getParent();
+                miControlador.crearControladorPrincipal(tabs);
     }//GEN-LAST:event_botonActualizarActionPerformed
 
 
@@ -231,4 +262,29 @@ public class vistaGlobalPagosP extends javax.swing.JPanel {
     private javax.swing.JTable tablaPagos;
     private javax.swing.JTextField textoFiltro;
     // End of variables declaration//GEN-END:variables
+    
+    public int getFilaSeleccionada(int tabla) {
+        if(tabla == 0){
+            return tablaNoPagos.getSelectedRow();
+        }else{
+            return tablaPagos.getSelectedRow();
+        }
+    }
+    
+    public String getIdFila(int row, int tabla){
+        if(tabla == 0){
+            return tablaNoPagos.getModel().getValueAt(tablaPagos.convertRowIndexToModel(row), 7).toString();
+        }else{
+            return tablaPagos.getModel().getValueAt(tablaPagos.convertRowIndexToModel(row), 7).toString();
+        }
+    }
+    
+    public void filtrar(String query){
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(datos);
+        TableRowSorter<DefaultTableModel> sorter2 = new TableRowSorter<>(datos2);
+        tablaNoPagos.setRowSorter(sorter);
+        tablaPagos.setRowSorter(sorter2);
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)"+query));
+        sorter2.setRowFilter(RowFilter.regexFilter("(?i)"+query));
+    }   
 }

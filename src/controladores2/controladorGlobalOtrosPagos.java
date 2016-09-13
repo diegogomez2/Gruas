@@ -17,6 +17,10 @@ import vistas2.vistaGlobalOtrosPagosP;
 public class controladorGlobalOtrosPagos {
     static vistaGlobalOtrosPagosP vistaGlobalOtrosPagosP;
 
+    public void irVistaCambiarEstado(String id) {
+        controladorPrincipal miControlador = new controladorPrincipal();
+        miControlador.crearControladorCambiarEstadoPago(id);
+    }
 //    public void irVistaIngresarCompras() {
 //        controladorPrincipal miControlador = new controladorPrincipal();
 //        miControlador.crearControladorIngresarCompras();
@@ -45,7 +49,7 @@ public class controladorGlobalOtrosPagos {
     public void crearControladorPrincipal(JTabbedPane tabs) {
         controladorPrincipal miControlador = new controladorPrincipal();
         tabs.remove(5);
-        tabs.insertTab("Global otros pagos", null, miControlador.crearControladorGlobalOtrosPagosP(), null, 4);
+        tabs.insertTab("Global otros pagos", null, miControlador.crearControladorGlobalOtrosPagosP(), null, 5);
         tabs.setSelectedIndex(5);
     }
 }

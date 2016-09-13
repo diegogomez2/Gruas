@@ -97,10 +97,10 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
             @Override
             public void insertUpdate(DocumentEvent de) {
                 String data[] = proveedor.obtenerProveedorPorRut(comboRut.getSelectedItem().toString());
-                setTextoContacto(data[2]);
-                setTextoRazon(data[3]);
-                setTextoGiro(data[4]);
-                setTextoDireccion(data[7]);
+                setTextoContacto(data[1]);
+                setTextoRazon(data[2]);
+                setTextoGiro(data[3]);
+                setTextoDireccion(data[6]);
             }
 
             @Override

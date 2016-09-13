@@ -17,6 +17,11 @@ import vistas2.vistaGlobalPagosP;
 public class controladorGlobalPagos {
     static vistaGlobalPagosP vistaGlobalPagosP;
 
+    public void irVistaCambiarEstado(String id) {
+        controladorPrincipal miControlador = new controladorPrincipal();
+        miControlador.crearControladorCambiarEstadoPago(id);
+    }
+    
 //    public void irVistaIngresarCompras() {
 //        controladorPrincipal miControlador = new controladorPrincipal();
 //        miControlador.crearControladorIngresarCompras();

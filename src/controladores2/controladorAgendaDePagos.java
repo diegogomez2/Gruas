@@ -46,6 +46,8 @@ public class controladorAgendaDePagos {
         controladorPrincipal miControlador = new controladorPrincipal();
         tabs.remove(2);
         tabs.insertTab("Agenda de pagos", null, miControlador.crearControladorAgendaDePagosP(), null, 2);
+        tabs.remove(4);
+        tabs.insertTab("Global de pagos", null, miControlador.crearControladorGlobalPagosP(), null, 4);
         tabs.setSelectedIndex(2);
     }
 }
