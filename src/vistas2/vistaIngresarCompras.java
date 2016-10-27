@@ -628,6 +628,9 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
 
     private void comboMedioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboMedioActionPerformed
         switch(comboMedio.getSelectedIndex()){
+            case 1:
+                showTransferencia();
+                break;
             case 2:
                 showCheques();
                 break;
@@ -825,6 +828,28 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
         labelNumTC.setVisible(false);
         textoNumTC.setVisible(false);
         scrollDatos.setVisible(false);
+    }
+    
+    final public void showTransferencia(){
+        checkEstado.setEnabled(false);
+        labelCantidad.setText("Número de cuotas");
+        labelCantidad.setVisible(true);
+        spinnerCantidad.setVisible(true);
+        tc.setRowCount(Integer.parseInt(spinnerCantidad.getValue().toString()));
+        for(int i = 0; i < Integer.parseInt(spinnerCantidad.getValue().toString()); i++){
+            tc.setValueAt(i+1, i, 0);
+        }
+        
+        tablaDatos.setModel(tc);
+        TableColumn column = tablaDatos.getColumnModel().getColumn(1);
+        column.setCellEditor(new DatePickerCellEditor());
+        tablaDatos.getColumnModel().getColumn(2).setCellRenderer(new CurrencyTableCellRenderer());
+        scrollDatos.setVisible(true);
+        spinnerCantidad.setValue(spinnerNumCuotas.getValue());
+        labelBanco.setVisible(true);
+        textoBanco.setVisible(true);
+        labelNumTC.setVisible(true);
+        textoNumTC.setVisible(true);
     }
     
     final public void showCheques(){
@@ -1159,6 +1184,8 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
     
     public int getCuotas(){
         switch(comboMedio.getSelectedIndex()){
+            case 1:
+                return 3;
             case 2:
                 return 1;
             case 3:

@@ -237,8 +237,6 @@ public class vistaModificarCompras extends javax.swing.JDialog {
 
         labelNumTC.setText("Número de tarjeta de crédito");
 
-        textoNumTC.setEditable(false);
-
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalle"));
         jPanel3.setPreferredSize(new java.awt.Dimension(200, 176));
 
@@ -636,6 +634,9 @@ public class vistaModificarCompras extends javax.swing.JDialog {
 
     private void comboMedioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboMedioActionPerformed
         switch(comboMedio.getSelectedIndex()){
+            case 1:
+                showTR();
+                break;
             case 2:
                 showCheques();
                 break;
@@ -956,6 +957,8 @@ public class vistaModificarCompras extends javax.swing.JDialog {
     
     public int getCuotas(){
         switch(comboMedio.getSelectedIndex()){
+            case 1:
+                return 3;
             case 2:
                 return 1;
             case 3:
@@ -1039,6 +1042,27 @@ public class vistaModificarCompras extends javax.swing.JDialog {
         tablaDatos.setModel(tc);
         TableColumn column = tablaDatos.getColumnModel().getColumn(1);
         column.setCellEditor(new DatePickerCellEditor());
+        tablaDatos.getColumnModel().getColumn(2).setCellRenderer(new CurrencyTableCellRenderer());
+        scrollDatos.setVisible(true);
+        spinnerCantidad.setValue(spinnerNumCuotas.getValue());
+        labelBanco.setVisible(true);
+        textoBanco.setVisible(true);
+        labelNumTC.setVisible(true);
+        textoNumTC.setVisible(true);
+    }
+    
+    final public void showTR(){
+        labelCantidad.setText("Número de cuotas");
+        labelCantidad.setVisible(true);
+        spinnerCantidad.setVisible(true);
+        tc.setRowCount(Integer.parseInt(spinnerCantidad.getValue().toString()));
+        for(int i = 0; i < Integer.parseInt(spinnerCantidad.getValue().toString()); i++){
+            tc.setValueAt(i+1, i, 0);
+        }
+        tablaDatos.setModel(tc);
+        TableColumn column = tablaDatos.getColumnModel().getColumn(1);
+        column.setCellEditor(new DatePickerCellEditor());
+        tablaDatos.getColumnModel().getColumn(2).setCellRenderer(new CurrencyTableCellRenderer());
         scrollDatos.setVisible(true);
         spinnerCantidad.setValue(spinnerNumCuotas.getValue());
         labelBanco.setVisible(true);
@@ -1088,6 +1112,30 @@ public class vistaModificarCompras extends javax.swing.JDialog {
     }
     
     final public void showTC(String id) throws ParseException{
+        labelCantidad.setText("Número de cuotas");
+        labelCantidad.setVisible(true);
+        spinnerCantidad.setVisible(true);
+        modelos2.modeloCompras compra = new modeloCompras();
+        Object[][] data = compra.obtenerCuotasPorId(id);
+        tablaDatos.setModel(tc);
+        TableColumn column = tablaDatos.getColumnModel().getColumn(1);
+        column.setCellEditor(new DatePickerCellEditor());
+        spinnerCantidad.setValue(data.length);
+        tc.setRowCount(Integer.parseInt(spinnerCantidad.getValue().toString()));
+        for(int i = 0; i < Integer.parseInt(spinnerCantidad.getValue().toString()); i++){
+            tc.setValueAt(i+1, i, 0);
+        }
+        tablaDatos.setModel(tc);
+        agregarCuotas(data);
+        scrollDatos.setVisible(true);
+        spinnerNumCuotas.setValue(data.length);
+        labelBanco.setVisible(true);
+        textoBanco.setVisible(true);
+        labelNumTC.setVisible(true);
+        textoNumTC.setVisible(true);
+    }
+    
+    final public void showTR(String id) throws ParseException{
         labelCantidad.setText("Número de cuotas");
         labelCantidad.setVisible(true);
         spinnerCantidad.setVisible(true);

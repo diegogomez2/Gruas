@@ -48,6 +48,8 @@ public class controladorDetalleCompras {
         }
         else if(data[13].compareTo("Tarjeta de crédito") == 0){
             vistaDC.showTC(id);
+        }else if(data[13].compareTo("Transferencia") == 0){
+            vistaDC.showTR(id);
         }else{
             vistaDC.hideMedioPago();
         }

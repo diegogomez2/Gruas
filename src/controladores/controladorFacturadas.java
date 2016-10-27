@@ -32,10 +32,14 @@ public class controladorFacturadas {
         return miControlador.ingresarNotaCredito(id, razon, tipo);
     }
     
-    public String[] obtenerOtsPorIdNC(String id){
+    public String[] obtenerOtsPorIdNC(String id, String tipo){
         modelos.modeloFacturas nc = new modelos.modeloFacturas();
         String[] data;
-        data = nc.obtenerOtsPorIdNC(id);
+        if(tipo.compareTo("notadebito") == 0){
+            data = nc.obtenerOtsPorIdNDNC(id);
+        }else{
+            data = nc.obtenerOtsPorIdNC(id);
+        }
         return data;
     }
     
@@ -43,6 +47,13 @@ public class controladorFacturadas {
         modelos.modeloFacturas nc = new modelos.modeloFacturas();
         String valores[];
         valores = nc.obtenerValoresNC(id);
+        return valores;
+    }
+    
+    public String[] obtenerValoresNDNC(String id){
+        modelos.modeloFacturas nc = new modelos.modeloFacturas();
+        String valores[];
+        valores = nc.obtenerValoresNDNC(id);
         return valores;
     }
     

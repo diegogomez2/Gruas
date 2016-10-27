@@ -52,7 +52,10 @@ public class controladorModificarCompras {
         }
         else if(data[13].compareTo("Tarjeta de crédito") == 0){
             vistaMC.showTC(id);
-        }else{
+        }else if(data[13].compareTo("Transferencia") == 0){
+            vistaMC.showTR(id);
+        }
+        else{
             vistaMC.hideMedioPago();
         }
         vistaMC.agregarProductos(id);
@@ -102,6 +105,17 @@ public class controladorModificarCompras {
                         tabla.getValueAt(i, 2).toString(), vistaMC.getEstadoTablaTC(i)};
                 }
                 flag = miControlador.ingresarCuotas(dataTC, id);
+                if(!flag) return flag;
+                break;
+            case 3:
+                cuotas = vistaMC.getSpinnerCant();
+                String[][] dataTR = new String[cuotas][4];
+                tabla = vistaMC.getTablaCuotas();
+                for(int i = 0; i < cuotas; i++){
+                    dataTR[i] = new String[]{tabla.getValueAt(i, 0).toString(),vistaMC.getfechaTablaTC(i),
+                        tabla.getValueAt(i, 2).toString(), vistaMC.getEstadoTablaTC(i)};
+                }
+                flag = miControlador.ingresarCuotas(dataTR, id);
                 if(!flag) return flag;
                 break;
             default:

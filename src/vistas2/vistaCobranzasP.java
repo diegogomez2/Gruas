@@ -206,6 +206,7 @@ public class vistaCobranzasP extends javax.swing.JPanel {
 
     private void botonCobranzaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCobranzaActionPerformed
         controladorCobranzas miControlador = new controladorCobranzas();
+        
         boolean selected = tablaFacturadas.getSelectedRowCount() > 0;
         if(selected){
             int row = getFilaSeleccionada();
@@ -230,8 +231,10 @@ public class vistaCobranzasP extends javax.swing.JPanel {
         if(selected){
             int row = getFilaSeleccionada();
             String id = getIdFila(row);
+            String fol = getFacFila(row);
+            String tipo = getTipoFila(row);
             try {
-                miControlador.irVistaGestionPago(id);
+                miControlador.irVistaGestionPago(id, tipo);
             } catch (ParseException ex) {
                 Logger.getLogger(vistaCobranzasP.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -248,10 +251,10 @@ public class vistaCobranzasP extends javax.swing.JPanel {
         if(selected){
             int row = getFilaSeleccionada();
             String id = getIdFila(row);
-            String fac = getFacFila(row);
             String tipo = getTipoFila(row);
+            System.out.println(id);
             try {
-                miControlador.irVistaVerGestion(fac, tipo);
+                miControlador.irVistaVerGestion(id, tipo);
             } catch (ParseException ex) {
                 Logger.getLogger(vistaCobranzasP.class.getName()).log(Level.SEVERE, null, ex);
             }

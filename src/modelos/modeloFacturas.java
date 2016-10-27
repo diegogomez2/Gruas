@@ -88,28 +88,29 @@ public class modeloFacturas {
         Object[][] data = new String[registros][11];
         
         try{
-            PreparedStatement pstm = conn.prepareStatement("SELECT fol_fac as fol, raz_cli, gir_cli, dir_cli, \n" +
-            "ciu_cli, com_cli,tot_fac as tot, neto_fac as neto, iva_fac as iva"
-                    + ",fec_fac as fec, tipo_fac as tipo FROM facturas f INNER JOIN( " +
-            "SELECT  id_fac, rut_cli " +
-            "FROM jornadas GROUP BY id_fac) b ON b.id_fac = f.id_fac " +
-            "INNER JOIN clientes c on c.rut_cli = b.rut_cli " +
-            "UNION " +
-            "SELECT fol_nc as fol, raz_cli, gir_cli, dir_cli, " +
-            "ciu_cli, com_cli, tot_fac, neto_fac as neto, iva_fac as iva"
-                    + ", fec_nc as fec, tipo_nc as tipo FROM notacredito f " +
-            "INNER JOIN(SELECT  id_fac, rut_cli " +
-            "FROM jornadas GROUP BY id_fac) b ON b.id_fac = f.id_fac " +
-            "INNER JOIN clientes c on c.rut_cli = b.rut_cli " +
-            "INNER JOIN facturas on facturas.id_fac = f.id_fac " +
-            "UNION " +
-            "SELECT fol_nd as fol, raz_cli, gir_cli, dir_cli, " +
-            "ciu_cli, com_cli, tot_nd as tot, neto_nd as neto, iva_nd as iva"
-                    + ", fec_nd as fec, tipo_nd as tipo FROM notadebito f " +
-            "INNER JOIN(SELECT  id_fac, rut_cli " +
-            "FROM jornadas GROUP BY id_fac) b ON b.id_fac = f.id_fac " +
-            "INNER JOIN clientes c on c.rut_cli = b.rut_cli " +
-            "INNER JOIN facturas on facturas.id_fac = f.id_fac order by fec DESC");
+            PreparedStatement pstm = conn.prepareStatement("SELECT fol_fac fol, raz_cli, gir_cli, dir_cli, "
+                    + "ciu_cli, com_cli, tot_fac tot, neto_fac neto, iva_fac iva,fec_fac fec, tipo_fac tipo "
+                    + "FROM facturas f INNER JOIN("
+                    + "SELECT id_fac, rut_cli FROM jornadas GROUP BY id_fac) "
+                    + "b ON b.id_fac = f.id_fac INNER JOIN Clientes c ON c.rut_cli = b.rut_cli "
+                    + "UNION "
+                    + "SELECT fol_nc fol, raz_cli, gir_cli, dir_cli, ciu_cli, com_cli, tot_fac tot, "
+                    + "neto_fac neto, iva_fac iva, fec_nc fec, tipo_nc tipo FROM Notacredito f INNER JOIN("
+                    + "SELECT id_fac, rut_cli FROM Jornadas GROUP BY id_fac) "
+                    + "b ON b.id_fac = f.id_fac INNER JOIN Clientes c on c.rut_cli = b.rut_cli INNER JOIN "
+                    + "Facturas ON Facturas.id_fac = f.id_fac "
+                    + "UNION "
+                    + "SELECT fol_nc fol, raz_cli, gir_cli, dir_cli, ciu_cli, com_cli, tot_nd tot, "
+                    + "neto_nd neto, iva_nd iva, fec_nc fec, tipo_nc tipo FROM Notacredito f INNER JOIN("
+                    + "SELECT id_nd, rut_cli FROM Jornadas GROUP BY id_nd) "
+                    + "b ON b.id_nd = f.id_nd INNER JOIN Clientes c on c.rut_cli = b.rut_cli INNER JOIN "
+                    + "Notadebito ON Notadebito.id_nd = f.id_nd "
+                    + "UNION "
+                    + "SELECT fol_nd fol, raz_cli, gir_cli, dir_cli, ciu_cli, com_cli, tot_nd tot, "
+                    + "neto_nd as neto, iva_nd  iva, fec_nd as fec, tipo_nd  tipo FROM Notadebito f INNER JOIN( "
+                    + "SELECT id_fac, rut_cli FROM Jornadas GROUP BY id_fac) "
+                    + "b ON b.id_fac = f.id_fac INNER JOIN Clientes c on c.rut_cli = b.rut_cli INNER JOIN "
+                    + "Facturas ON Facturas.id_fac = f.id_fac order by fec DESC");
             ResultSet res = pstm.executeQuery();
             int i = 0;
             while(res.next()){
@@ -233,6 +234,50 @@ public class modeloFacturas {
         return data;
     }
     
+    public String[] obtenerOtsPorIdNDNC(String id) {
+        int registros = 0;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM notacredito nc INNER"
+                    + " JOIN notadebito n ON nc.id_nd = n.id_nd INNER JOIN jornadas ON "
+                    + "jornadas.id_nd = n.id_nd WHERE id_nc = ?");
+            pstm.setString(1, id);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+       }catch(SQLException e){
+            System.out.println("Error obtener ot por id nc");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        String[] data = new String[registros];
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT cod_ot FROM "
+                    + "jornadas INNER JOIN Notadebito n ON jornadas.id_nd = n.id_nd INNER JOIN "
+                    + "notacredito nc ON nc.id_nd = n.id_nd WHERE id_nc = ?");
+            pstm.setString(1, id);
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while(res.next()){
+                String estcod = res.getString("cod_ot");
+                data[i] = estcod;
+                i++;
+            }
+            
+        }catch(SQLException e){
+            System.out.println("Error obtener ots por id nc");
+            System.out.println(e);
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+        }
+        return data;
+    }
+    
     //OBTIENE LOS CODIGOS POR LA ID DE LA FACTURA
     public String[] obtenerOtsPorIdFacturada(String id) {
         int registros = 0;
@@ -301,23 +346,59 @@ public class modeloFacturas {
         return data;
     }
     
+    public String[] obtenerValoresNDNC(String id) {
+        String[] data = new String[]{};
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT n.id_nd, neto_nd, iva_nd, tot_nd FROM "
+                    + "Notadebito n INNER JOIN Notacredito nc ON n.id_nd = nc.id_nd "
+                    + "WHERE id_nc = ?");
+            pstm.setString(1, id);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            String estfac = res.getString("id_nd");
+            String estnet = res.getString("neto_nd");
+            String estiva = res.getString("iva_nd");
+            String esttot = res.getString("tot_nd");
+            data = new String[]{estfac, estnet, estiva, esttot};
+        }catch(SQLException e){
+            System.out.println("Error obtener valores ots por id nc");
+            System.out.println(e);
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+        }
+        return data;
+    }
+    
     public String ingresarNotaCredito(String id, String razon, String folio, String tipo){    
         String fecha = formatDate.format(new Date());
         String id_nc;
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("SELECT id_fac FROM facturas where fol_fac = ?"
+            PreparedStatement pstm;
+            if(tipo.compareTo("notadebito") == 0){
+                pstm = conn.prepareStatement("SELECT id_nd id FROM Notadebito where fol_nd = ?"
+                    + " AND tipo_nd = ?");
+            }else{
+                pstm = conn.prepareStatement("SELECT id_fac id FROM facturas where fol_fac = ?"
                     + " AND tipo_fac = ?");
+            }
             pstm.setString(1, id);
             pstm.setString(2, tipo);
             ResultSet res = pstm.executeQuery();
             res.next();
-            String id_fac = res.getString("id_fac");
+            String id_fac = res.getString("id");
             pstm.close();
             res.close();
-            pstm = conn.prepareStatement("insert into notacredito (fec_nc, raz_nc, id_fac, fol_nc, tipo_nc)"
+            if(tipo.compareTo("notadebito") == 0){
+                pstm = conn.prepareStatement("insert into notacredito (fec_nc, raz_nc, id_nd, fol_nc, tipo_nc)"
                     + " values (?, ?, ?, ?, 'notacredito')", PreparedStatement.RETURN_GENERATED_KEYS);
+            }else{
+                pstm = conn.prepareStatement("insert into notacredito (fec_nc, raz_nc, id_fac, fol_nc, tipo_nc)"
+                    + " values (?, ?, ?, ?, 'notacredito')", PreparedStatement.RETURN_GENERATED_KEYS);
+            }
             pstm.setString(1, fecha);
             pstm.setString(2, razon);
             pstm.setInt(3, Integer.parseInt(id_fac));
@@ -621,6 +702,31 @@ public class modeloFacturas {
         return fec;
     }
     
+    public String obtenerFechaND(String id, String tipo){
+        String fec = "";
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT fec_nd from Notadebito WHERE fol_nd = ? and"
+                    + " tipo_nd = ?");
+            pstm.setString(1, id);
+            pstm.setString(2, tipo);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            String estfec = res.getString("fec_nd");
+            fec = estfec;
+            pstm.close();
+        }catch(SQLException e){
+            System.out.println("Error obtener fecha nd");
+            System.out.println(e);
+            return "incorrecto";
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+            return "incorrecto";
+        }
+        return fec;
+    }
+    
     public String[] obtenerResumenMes(String mes){
        int registros = 0;
        String[] datos = new String[4];
@@ -638,7 +744,7 @@ public class modeloFacturas {
             pstm.close();
             datos[0] = String.valueOf(registros);
             
-            pstm = conn.prepareStatement("SELECT sum(neto_fac) neto FROM facturas where MONTH(fec_fac)"
+            pstm = conn.prepareStatement("SELECT coalesce(sum(neto_fac), 0) neto FROM facturas where MONTH(fec_fac)"
                     + " = ? and tipo_fac = ?");
             pstm.setString(1, mes);
             pstm.setString(2, "factura");
@@ -648,7 +754,7 @@ public class modeloFacturas {
             res.close();
             pstm.close();
             
-            pstm = conn.prepareStatement("SELECT sum(iva_fac) iva FROM facturas where MONTH(fec_fac)"
+            pstm = conn.prepareStatement("SELECT coalesce(sum(iva_fac), 0) iva FROM facturas where MONTH(fec_fac)"
                     + " = ? and tipo_fac = ?");
             pstm.setString(1, mes);
             pstm.setString(2, "factura");
@@ -658,7 +764,7 @@ public class modeloFacturas {
             res.close();
             pstm.close();
             
-            pstm = conn.prepareStatement("SELECT sum(tot_fac) tot FROM facturas where MONTH(fec_fac)"
+            pstm = conn.prepareStatement("SELECT coalesce(sum(tot_fac), 0) tot FROM facturas where MONTH(fec_fac)"
                     + " = ? and tipo_fac = ?");
             pstm.setString(1, mes);
             pstm.setString(2, "factura");
@@ -834,4 +940,66 @@ public class modeloFacturas {
        }
        return datos;
    }
+    
+    public String obtenerRazonFactura(String id, String tipo){
+        String razon = "";
+       try{
+           Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+           PreparedStatement pstm = conn.prepareStatement("SELECT raz_cli FROM Facturas INNER JOIN jornadas "
+                   + "ON Facturas.id_fac = Jornadas.id_fac INNER JOIN Clientes on Clientes.rut_cli = Jornadas.rut_cli "
+                   + "WHERE fol_fac=? and tipo_fac=? LIMIT 1");
+           pstm.setString(1, id);
+           pstm.setString(2, tipo);
+           ResultSet res = pstm.executeQuery();
+           res.next();
+           razon = res.getString("raz_cli");
+           pstm.close();
+           res.close();
+       }catch(Exception e){
+           e.printStackTrace();
+       }
+       return razon;
+   }
+    
+    public boolean verificarExisteFactura(String id, String tipo){
+       try{
+           Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+           PreparedStatement pstm = conn.prepareStatement("SELECT COUNT(1) as total FROM Facturas WHERE fol_fac=?"
+                   + " and tipo_fac=?");
+           pstm.setString(1, id);
+           pstm.setString(2, tipo);
+           ResultSet res = pstm.executeQuery();
+           res.next();
+           int total = res.getInt("total");
+           pstm.close();
+           res.close();
+           if(total > 0) return true;
+           return false;
+       }catch(Exception e){
+           e.printStackTrace();
+           return false;
+       }
+   }
+    
+    public int tipoNC(String id){
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Notacredito "
+                    + "WHERE fol_nc = ? and id_fac is null");
+            pstm.setString(1, id);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            int total = res.getInt("total");
+            return total;
+       }catch(SQLException e){
+            System.out.println("Error obtener forma pago por id");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        return -1;
+    }
 }

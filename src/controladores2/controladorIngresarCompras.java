@@ -72,6 +72,17 @@ public class controladorIngresarCompras {
                 flag = miControlador.ingresarCuotas(dataTC, id);
                 if(!flag) return flag;
                 break;
+            case 3:
+                cuotas = vistaIC.getSpinnerCant();
+                String[][] dataTR = new String[cuotas][4];
+                tabla = vistaIC.getTablaCuotas();
+                for(int i = 0; i < cuotas; i++){
+                    dataTR[i] = new String[]{tabla.getValueAt(i, 0).toString(),vistaIC.getfechaTablaTC(i),
+                        tabla.getValueAt(i, 2).toString(), vistaIC.getEstadoTablaTC(i)};
+                }
+                flag = miControlador.ingresarCuotas(dataTR, id);
+                if(!flag) return flag;
+                break;
             default:
                 break;
         }

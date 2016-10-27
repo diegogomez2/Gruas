@@ -18,6 +18,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+import modelos.modeloFacturas;
 
 /**
  *
@@ -264,27 +265,37 @@ public class vistaFacturasP extends javax.swing.JPanel {
                 if(resp == JOptionPane.OK_OPTION){
                     id_fac = idfac.getText().toString();
                     tiponc = combo.getSelectedItem().toString();
-                    String[] idOts = new String[filas];
-                    int neto = 0, iva = 0, total = 0;
-                    for (int i = 0; i < filas; i++) {
-                        idOts[i] = getIdFact(i);
-                        neto += getNetoFact(i);
-                        iva += getIvaFact(i);
-                        total += getTotalFact(i);
-                    }
-                    controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
-                    String id = micontroladorFacturas.archivarFacturas(idOts, neto, iva, total, "nota debito", id_fac, tiponc);
-                    if(id.compareTo("incorrecto") != 0){
-                        try {
-                            if ((miControlador.crearNotaDebXML(idOts, Integer.toString(neto), Integer.toString(iva),
-                                    Integer.toString(total), id, id_fac).compareTo("correcto") == 0)) {
-                                JTabbedPane tabs = (JTabbedPane) this.getParent();
-                                micontroladorOts.crearControladorPrincipal(tabs);
-                                miControlador.crearControladorPrincipal(tabs);
+                    boolean existe = verificarExisteFactura(id_fac, tiponc);
+                    if(existe){
+                        String razonFac = verificarRazonFactura(id_fac, tiponc);
+                        if(razonFac.compareTo(getRazonFila(0)) == 0){
+                            String[] idOts = new String[filas];
+                            int neto = 0, iva = 0, total = 0;
+                            for (int i = 0; i < filas; i++) {
+                                idOts[i] = getIdFact(i);
+                                neto += getNetoFact(i);
+                                iva += getIvaFact(i);
+                                total += getTotalFact(i);
                             }
-                        } catch (ParseException ex) {
-                            Logger.getLogger(vistaFacturasP.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                            controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
+                            String id = micontroladorFacturas.archivarFacturas(idOts, neto, iva, total, "nota debito", id_fac, tiponc);
+                            if(id.compareTo("incorrecto") != 0){
+                                try {
+                                    if ((miControlador.crearNotaDebXML(idOts, Integer.toString(neto), Integer.toString(iva),
+                                            Integer.toString(total), id, id_fac).compareTo("correcto") == 0)) {
+                                        JTabbedPane tabs = (JTabbedPane) this.getParent();
+                                        micontroladorOts.crearControladorPrincipal(tabs);
+                                        miControlador.crearControladorPrincipal(tabs);
+                                    }
+                                } catch (ParseException ex) {
+                                    Logger.getLogger(vistaFacturasP.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                        }else{
+                            JOptionPane.showMessageDialog(null, "No se puede generar una nota de débito para una factura con clientes distintos");
+                        }  
+                    }else{
+                        JOptionPane.showMessageDialog(null, "La " + tiponc + " con folio " + id_fac + " no existe.");
                     }
                 }
             }else{
@@ -382,14 +393,22 @@ public class vistaFacturasP extends javax.swing.JPanel {
 
     public String verificarRazon() {
         String razon = getRazonFila(0);
-        System.out.println(razon);
         for (int i = 1; i < tablaFacturas.getRowCount(); i++) {
-            System.out.println(getRazonFila(i));
             if (razon.compareTo(getRazonFila(i)) != 0) {
                 return "incorrecto";
             }
         }
         return "correcto";
+    }
+    
+    public String verificarRazonFactura(String fol, String tipo) {
+        modelos.modeloFacturas factura = new modeloFacturas();
+        return factura.obtenerRazonFactura(fol, tipo.toLowerCase());
+    }
+    
+    public boolean verificarExisteFactura(String fol, String tipo){
+        modelos.modeloFacturas factura = new modeloFacturas();
+        return factura.verificarExisteFactura(fol, tipo);
     }
 
     public String getRazonFila(int row) {

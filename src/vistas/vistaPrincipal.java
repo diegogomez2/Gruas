@@ -62,6 +62,7 @@ public class vistaPrincipal extends javax.swing.JFrame {
         menuLibros = new javax.swing.JMenu();
         itemLibroCompras = new javax.swing.JMenuItem();
         itemLibroVentas = new javax.swing.JMenuItem();
+        itemLibroAtrasado = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu Principal");
@@ -187,6 +188,14 @@ public class vistaPrincipal extends javax.swing.JFrame {
         });
         menuLibros.add(itemLibroVentas);
 
+        itemLibroAtrasado.setText("Generar libro atrasado");
+        itemLibroAtrasado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemLibroAtrasadoActionPerformed(evt);
+            }
+        });
+        menuLibros.add(itemLibroAtrasado);
+
         MenuPrincipal.add(menuLibros);
 
         setJMenuBar(MenuPrincipal);
@@ -297,6 +306,11 @@ public class vistaPrincipal extends javax.swing.JFrame {
         miControlador.generarLibroVentas();
     }//GEN-LAST:event_itemLibroVentasActionPerformed
 
+    private void itemLibroAtrasadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemLibroAtrasadoActionPerformed
+        controladorPrincipal miControlador = new controladorPrincipal();
+        miControlador.crearControladorGenerarLibroAtrasado();
+    }//GEN-LAST:event_itemLibroAtrasadoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -340,6 +354,7 @@ public class vistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemCobranzas;
     private javax.swing.JMenuItem itemCompras;
     private javax.swing.JMenuItem itemGenerarReporte;
+    private javax.swing.JMenuItem itemLibroAtrasado;
     private javax.swing.JMenuItem itemLibroCompras;
     private javax.swing.JMenuItem itemLibroVentas;
     private javax.swing.JMenuItem itemOperaciones;

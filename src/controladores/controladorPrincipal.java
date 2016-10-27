@@ -562,10 +562,17 @@ public class controladorPrincipal {
         micontroladorGC.mostrarVistaGestionCobranza(id, tipo);
     }
     
-    public void crearControladorGestionPago(String id) {
+    public void crearControladorGestionPago(String fol, String tipo) {
         controladorGestionPago micontroladorGP;
         micontroladorGP= new controladorGestionPago();
-        micontroladorGP.mostrarVistaGestionPago(id);
+        micontroladorGP.mostrarVistaGestionPago(fol, tipo);
+    }
+    
+    //LIBROS
+    
+    public void crearControladorGenerarLibroAtrasado() {
+        controladorGenerarLibroAtrasado micontrolador = new controladorGenerarLibroAtrasado();
+        micontrolador.mostrarVistaGenerarLibroAtrasado();
     }
     
     public void crearControladorVerGestion(String id, String tipo) {
@@ -891,12 +898,18 @@ public class controladorPrincipal {
     public Object[][] obtenerOtPorIdFacturada(String id, String tipo) {
         modelos.modeloOts ot = new modelos.modeloOts();
         Object[][] datos;
+        int tiponc;
         switch(tipo){
             case("notadebito"):
                 datos = ot.obtenerOtPorIdFacturadaND(id);
                 break;
             case("notacredito"):
-                datos = ot.obtenerOtPorIdFacturadaNC(id);
+                tiponc = ot.tipoNC(id);
+                if(tiponc == 0){
+                    datos = ot.obtenerOtPorIdFacturadaNC(id); 
+                }else{
+                    datos = ot.obtenerOtPorIdNDNC(id);
+                } 
                 break;
             default:
                 datos = ot.obtenerOtPorIdFacturada(id, tipo);
@@ -1077,9 +1090,9 @@ public class controladorPrincipal {
         }
     }
     
-    public boolean gestionPago(String id, String monto){
+    public boolean gestionPago(String id, String tipo, String monto){
         modeloCobranzas cobranza = new modeloCobranzas();
-        if(cobranza.gestionPago(id, monto).compareTo("correcto") == 0){
+        if(cobranza.gestionPago(id, tipo, monto).compareTo("correcto") == 0){
             return true;
         }else{
             JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al gestionar el pago", "Error", JOptionPane.ERROR_MESSAGE);
@@ -1182,6 +1195,17 @@ public class controladorPrincipal {
         controladorCrearLibros miControlador = new controladorCrearLibros();
         miControlador.crearLibroVentas();
         return true;
+    }
+    
+    public boolean generarLibroAtrasado(String libro, String year, String mes){
+        controladorCrearLibros miControlador = new controladorCrearLibros();
+        if(libro.compareTo("Compra") == 0){
+            miControlador.crearLibroCompras(year, mes);
+            return true;
+        }else{
+            miControlador.crearLibroVentas(year, mes);
+            return true;
+        }
     }
     //Funciones agenda de otros pagos
 //    public boolean cambiarEstadoOtrosPago(String estado, String id){

@@ -11,6 +11,7 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -63,7 +64,7 @@ public class vistaAgendaDePagosP extends javax.swing.JPanel {
     /**
      * Creates new form vistaAgendaDePagosP
      */
-    DefaultTableModel datos;
+    MyTableModel datos;
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
     DateFormat newFormat = new SimpleDateFormat("dd-MM-yyyy");
     NumberFormat FORMAT = NumberFormat.getCurrencyInstance();
@@ -72,20 +73,17 @@ public class vistaAgendaDePagosP extends javax.swing.JPanel {
      
     public vistaAgendaDePagosP(String tipo, Object[][] data) {
         initComponents();
-        String[] columNames = {"Medio de pago", "Rut proveedor", "Razón social", "Folio", 
-            "N° de cheque/cuota", "Fecha de pago", "Estado", "Id", "Fac"};
-        datos = new DefaultTableModel(data, columNames){
-            @Override
-            public boolean isCellEditable(int row, int column){
-                return false;
-            }
-        };
+        dfs.setCurrencySymbol("$");
+        dfs.setGroupingSeparator('.');
+        dfs.setMonetaryDecimalSeparator('.');
+        ((DecimalFormat) FORMAT).setDecimalFormatSymbols(dfs);
+        datos = new MyTableModel(data);
         
         tablaPagos.setModel(datos);
         TableColumnModel tcm = tablaPagos.getColumnModel();
-        tcm.removeColumn(tcm.getColumn(6));
-        tcm.removeColumn(tcm.getColumn(6));
-        tcm.removeColumn(tcm.getColumn(6));
+        tcm.removeColumn(tcm.getColumn(7));
+        tcm.removeColumn(tcm.getColumn(7));
+        tcm.removeColumn(tcm.getColumn(7));
         tablaPagos.setAutoCreateRowSorter(true);
         if(tablaPagos.getRowCount() > 0) tablaPagos.setRowSelectionInterval(0, 0);
         tablaPagos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -250,7 +248,7 @@ public class vistaAgendaDePagosP extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
     
     public void filtrar(String query){
-        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(datos);
+        TableRowSorter<MyTableModel> sorter = new TableRowSorter<>(datos);
         tablaPagos.setRowSorter(sorter);
         sorter.setRowFilter(RowFilter.regexFilter("(?i)"+query));
     }   
@@ -260,11 +258,56 @@ public class vistaAgendaDePagosP extends javax.swing.JPanel {
     }
     
     public String getIdFila(int row){
-        return tablaPagos.getModel().getValueAt(tablaPagos.convertColumnIndexToModel(row), 7).toString();
+        return tablaPagos.getModel().getValueAt(tablaPagos.convertColumnIndexToModel(row), 8).toString();
     }
     
     public String getIdFac(int row){
-        return tablaPagos.getModel().getValueAt(tablaPagos.convertColumnIndexToModel(row), 8).toString();
+        return tablaPagos.getModel().getValueAt(tablaPagos.convertColumnIndexToModel(row), 9).toString();
+    }
+    
+    public class MyTableModel extends DefaultTableModel{
+        public MyTableModel() {
+          super(new String[]{"Medio de pago", "Rut proveedor", "Razón social", "Folio", 
+            "N° de cheque/cuota", "Monto", "Fecha de pago", "Estado", "Id", "Fac"}, 0);
+        }
+        public MyTableModel(Object[][] data){
+            super(new String[]{"Medio de pago", "Rut proveedor", "Razón social", "Folio", 
+            "N° de cheque/cuota", "Monto", "Fecha de pago", "Estado", "Id", "Fac"}, 0);
+            
+            int i = 0;
+            this.setRowCount(data.length);
+            for(Object[] data1 : data){
+                int monto = Integer.parseInt(data1[5].toString());
+                this.setValueAt(data1[0], i, 0);
+                this.setValueAt(data1[1], i, 1);
+                this.setValueAt(data1[2], i, 2);
+                this.setValueAt(data1[3], i, 3);
+                this.setValueAt(data1[4], i, 4);
+                this.setValueAt(monto, i, 5);
+                this.setValueAt(data1[6], i, 6);
+                this.setValueAt(data1[7], i, 7);
+                this.setValueAt(data1[8], i, 8);
+                this.setValueAt(data1[9], i, 9);
+                i++;
+        }
+        }
+
+        @Override
+        public Class getColumnClass(int column) {
+          switch (column) {
+            case 4:
+                return Integer.class;
+            case 7:
+                return Integer.class;
+            default:
+                return String.class;
+          }
+        }
+        
+        @Override
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }
     }
 
 public class OwnTableCellRenderer extends DefaultTableCellRenderer {
@@ -283,7 +326,7 @@ public class OwnTableCellRenderer extends DefaultTableCellRenderer {
         setHorizontalAlignment(SwingConstants.LEFT);
         setBackground(Color.white);
         setForeground(Color.black);
-        String valor = table.getModel().getValueAt(table.convertRowIndexToModel(row),5).toString();
+        String valor = table.getModel().getValueAt(table.convertRowIndexToModel(row),6).toString();
         Date fec;
         try{
 //            fec = formatDate.parse(valor);
@@ -303,7 +346,7 @@ public class OwnTableCellRenderer extends DefaultTableCellRenderer {
             setForeground(Color.black);
             setBackground(Color.white);
         }
-        valor = table.getModel().getValueAt(table.convertRowIndexToModel(row), 6).toString();
+        valor = table.getModel().getValueAt(table.convertRowIndexToModel(row), 7).toString();
         if(valor.compareTo("Pagado") == 0){
             setForeground(Color.black);
             setBackground(Color.GREEN);
@@ -313,6 +356,7 @@ public class OwnTableCellRenderer extends DefaultTableCellRenderer {
             setBackground((new java.awt.Color(184,207,229)));
         }
         if(value instanceof Number){
+            setHorizontalAlignment(SwingConstants.RIGHT);
             Number num = (Number)value;
             String text = FORMAT.format(num);
             setText(text);

@@ -71,6 +71,9 @@ public class modeloCompras {
                 i++;
             }
             res.close();
+//            CallableStatement cstmt = conn.prepareCall("{call update_pagos}");
+//            cstmt.execute();
+//            cstmt.close();
         }catch(SQLException e){
             System.out.println(e);
         }catch (ParseException e){
@@ -560,7 +563,7 @@ public class modeloCompras {
         
         try{
             PreparedStatement pstm = conn.prepareStatement("SELECT med_com, Cuotas.id_com, Compras_fac.rut_pro, dig_pro,"
-                    + " raz_pro, coalesce(fol_cuo, '') as fol_cuo, num_cuo, fec_cuo, est_cuo, id_cuo FROM Cuotas INNER JOIN Compras_fac ON Cuotas.id_com"
+                    + " raz_pro, coalesce(fol_cuo, '') as fol_cuo, num_cuo, fec_cuo, est_cuo, id_cuo, mon_cuo FROM Cuotas INNER JOIN Compras_fac ON Cuotas.id_com"
                     + "= Compras_fac.id_com INNER JOIN Proveedores ON Compras_fac.rut_pro = Proveedores.rut_pro"
                     + " WHERE MONTH(fec_cuo) = MONTH(curdate()) and not form_com = 'Otros pagos' ORDER BY fec_cuo");
             ResultSet res = pstm.executeQuery();
@@ -579,8 +582,9 @@ public class modeloCompras {
                 String estest = res.getString("est_cuo");
                 String estid = res.getString("id_cuo");
                 String estfac = res.getString("Cuotas.id_com");
+                String estmon = res.getString("mon_cuo");
                 //String estid = res.getString("Cuotas.id_com");
-                data[i] = new String[]{estmed, estrut + "-" + estdig, estraz, estfol, estnum, estfec, estest, estid, estfac};
+                data[i] = new String[]{estmed, estrut + "-" + estdig, estraz, estfol, estnum, estmon, estfec, estest, estid, estfac};
                 i++;
             }
             res.close();
@@ -933,7 +937,7 @@ public class modeloCompras {
             pstm.close();
             datos[0] = String.valueOf(registros);
             
-            pstm = conn.prepareStatement("SELECT sum(neto_com) neto FROM Compras_fac where MONTH(fec_in_com)"
+            pstm = conn.prepareStatement("SELECT coalesce(sum(neto_com), 0) neto FROM Compras_fac where MONTH(fec_in_com)"
                     + " = ?");
             pstm.setString(1, mes);
             res = pstm.executeQuery();
@@ -942,7 +946,7 @@ public class modeloCompras {
             res.close();
             pstm.close();
             
-            pstm = conn.prepareStatement("SELECT sum(iva_com) iva FROM Compras_fac where MONTH(fec_in_com)"
+            pstm = conn.prepareStatement("SELECT coalesce(sum(iva_com), 0) iva FROM Compras_fac where MONTH(fec_in_com)"
                     + " = ?");
             pstm.setString(1, mes);
             res = pstm.executeQuery();
@@ -951,7 +955,7 @@ public class modeloCompras {
             res.close();
             pstm.close();
             
-            pstm = conn.prepareStatement("SELECT sum(tot_com) tot FROM Compras_fac where MONTH(fec_in_com)"
+            pstm = conn.prepareStatement("SELECT coalesce(sum(tot_com), 0) tot FROM Compras_fac where MONTH(fec_in_com)"
                     + " = ?");
             pstm.setString(1, mes);
             res = pstm.executeQuery();

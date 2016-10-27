@@ -931,6 +931,27 @@ public class vistaDetalleCompras extends javax.swing.JDialog {
         textoNumTC.setVisible(true);
     }
     
+    final public void showTR(String id) throws ParseException{
+        labelCantidad.setText("Número de cuotas");
+        labelCantidad.setVisible(true);
+        spinnerCantidad.setVisible(true);
+        modelos2.modeloCompras compra = new modeloCompras();
+        Object[][] data = compra.obtenerCuotasPorId(id);
+        tc.setRowCount(data.length);
+        tablaDatos.setModel(tc);
+        tablaDatos.getColumnModel().getColumn(2).setCellRenderer(new CurrencyTableCellRenderer());
+        agregarCuotas(data);
+//        TableColumn column = tablaDatos.getColumnModel().getColumn(1);
+//        column.setCellEditor(new DatePickerCellEditor());
+        scrollDatos.setVisible(true);
+        spinnerCantidad.setValue(data.length);
+        spinnerNumCuotas.setValue(data.length);
+        labelBanco.setVisible(true);
+        textoBanco.setVisible(true);
+        labelNumTC.setVisible(true);
+        textoNumTC.setVisible(true);
+    }
+    
     public void agregarCuotas(Object[][] data) throws ParseException{
         int i = 0;
         for(Object[] data1 : data){

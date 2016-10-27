@@ -9,11 +9,8 @@ import controladores2.controladorGestionPago;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
-import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
 /**
  *
@@ -26,6 +23,7 @@ public class vistaGestionPago extends javax.swing.JDialog {
      */
     int saldo;
     String folio;
+    String tipo;
     NumberFormat FORMAT = NumberFormat.getCurrencyInstance();
     DecimalFormatSymbols dfs = new DecimalFormatSymbols();
     
@@ -38,6 +36,7 @@ public class vistaGestionPago extends javax.swing.JDialog {
         dfs.setMonetaryDecimalSeparator('.');
         ((DecimalFormat) FORMAT).setDecimalFormatSymbols(dfs);
         textoSaldo.setText(FORMAT.format(saldo));
+        this.setPagoTotal();
     }
 
     /**
@@ -71,6 +70,11 @@ public class vistaGestionPago extends javax.swing.JDialog {
         jLabel1.setText("Opción de pago");
 
         comboOpcionPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pago total", "Abono", "Pago de cuota" }));
+        comboOpcionPago.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboOpcionPagoActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Monto");
 
@@ -203,6 +207,7 @@ public class vistaGestionPago extends javax.swing.JDialog {
         try{
             Object value = Integer.parseInt(textoMonto.getText());
             if (value instanceof Number) {
+                if(((Number) value).intValue() > saldo) value = saldo;
                 textoMonto.setHorizontalAlignment(JLabel.RIGHT);
                 textoMonto.setText(FORMAT.format(value));
                 textoSaldo.setText(FORMAT.format(saldo - (int)value));
@@ -218,6 +223,15 @@ public class vistaGestionPago extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void comboOpcionPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboOpcionPagoActionPerformed
+        int op = getComboOpcionPago();
+        if(op == 0){
+            setPagoTotal();
+        }else if(op == 1){
+            setAbono();
+        }
+    }//GEN-LAST:event_comboOpcionPagoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -280,13 +294,22 @@ public class vistaGestionPago extends javax.swing.JDialog {
     public void setFolio(String folio){
         this.folio = folio;
     }
+    
+    public String getTipo(){
+        return tipo;
+    }
+    
+    public void setTipo(String tipo){
+        this.tipo = tipo;
+    }
 
     public String getComboMedio() {
         return comboMedio.getSelectedItem().toString();
     }
 
-    public String getComboOpcionPago() {
-        return comboOpcionPago.getSelectedItem().toString();
+    public int getComboOpcionPago() {
+        return comboOpcionPago.getSelectedIndex();
+        //return comboOpcionPago.getSelectedItem().toString();
     }
 
     public String getTextoBanco() {
@@ -302,6 +325,28 @@ public class vistaGestionPago extends javax.swing.JDialog {
 
     public String getTextoSaldo() {
         return textoSaldo.getValue().toString();
+    }
+    
+    public void setPagoTotal(){
+        textoMonto.setEnabled(false);
+        textoMonto.setText(String.valueOf(saldo));
+        try{
+            Object value = Integer.parseInt(textoMonto.getText());
+            if (value instanceof Number) {
+                textoMonto.setHorizontalAlignment(JLabel.RIGHT);
+                textoMonto.setText(FORMAT.format(value));
+                textoSaldo.setText(FORMAT.format(saldo - (int)value));
+            } else {
+                textoMonto.setText("");
+                textoSaldo.setText(FORMAT.format(saldo));
+            }
+        }catch(NumberFormatException e){
+            textoMonto.setText("");
+        }
+    }
+    
+    public void setAbono(){
+        textoMonto.setEnabled(true);
     }
 }
 

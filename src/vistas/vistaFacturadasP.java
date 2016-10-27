@@ -186,14 +186,31 @@ public class vistaFacturadasP extends javax.swing.JPanel {
             int row = getFilaSeleccionada();
             id = getIdFila(row);
             tipo = getTipoFila(row);
-            if(tipo.compareTo("notacredito") == 0 || tipo.compareTo("notadebito") == 0){
+            if(tipo.compareTo("notacredito") == 0){
                 JOptionPane.showMessageDialog(null, "No se puede generar una nota de crédito para una " + tipo);
+            }else if(tipo.compareTo("notadebito") == 0){
+                String razon = JOptionPane.showInputDialog("Razón: ");
+                if(razon != null){
+                    String id_nc = miControlador.ingresarNotaCredito(id, razon, tipo);
+                    String[] valores_nc = miControlador.obtenerValoresNDNC(id_nc);
+                    String[] ots = miControlador.obtenerOtsPorIdNC(id_nc, tipo);
+                    try {
+                        if((miControladorC.crearNotaCredNDXML(id_nc, valores_nc, ots, razon, id, tipo).compareTo("correcto") == 0)){
+                            JTabbedPane tabs = (JTabbedPane)this.getParent();
+                            miControlador.crearControladorPrincipal(tabs); 
+                        }
+                    } catch (ParseException ex) {
+                        Logger.getLogger(vistaFacturadasP.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, "Debe ingresar una razón para anular el documento");
+                }
             }else{
                 String razon = JOptionPane.showInputDialog("Razón: ");
                 if(razon != null){
                    String id_nc = miControlador.ingresarNotaCredito(id, razon, tipo);
                     String[] valores_nc = miControlador.obtenerValoresNC(id_nc);
-                    String[] ots = miControlador.obtenerOtsPorIdNC(id_nc);
+                    String[] ots = miControlador.obtenerOtsPorIdNC(id_nc, tipo);
                     try {
                         if((miControladorC.crearNotaCredXML(id_nc, valores_nc, ots, razon, id, tipo).compareTo("correcto") == 0)){
                             JTabbedPane tabs = (JTabbedPane)this.getParent();
@@ -202,6 +219,8 @@ public class vistaFacturadasP extends javax.swing.JPanel {
                     } catch (ParseException ex) {
                         Logger.getLogger(vistaFacturadasP.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                }else{
+                    JOptionPane.showMessageDialog(null, "Debe ingresar una razón para anular el documento");
                 }
             }
         }else{
