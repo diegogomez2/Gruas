@@ -13,27 +13,20 @@ import java.awt.event.MouseEvent;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.text.Format;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
 import javax.swing.SwingConstants;
-import javax.swing.event.RowSorterEvent;
-import javax.swing.event.RowSorterListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 /**
@@ -56,15 +49,8 @@ public class vistaAgendaDeOtrosPagosP extends javax.swing.JPanel {
         dfs.setGroupingSeparator('.');
         dfs.setMonetaryDecimalSeparator('.');
         ((DecimalFormat) FORMAT).setDecimalFormatSymbols(dfs);
-        String[] columNames = {"Medio de pago", "Asunto", "Rut proveedor", "Razón social", "Folio", 
-            "Observaciones de pago", "N° de cheque/cuota", "Monto", "Fecha de pago", "Estado", "Id"};
-        datos = new MyTableModel(data){
-            @Override
-            public boolean isCellEditable(int row, int column){
-                return false;
-            }
-        };
-        
+        datos = new MyTableModel(data);
+       
         tablaPagos.setModel(datos);
         /***ALINEAR IZQUIERA, NO FUNCIONA CON $***/
         
@@ -75,10 +61,12 @@ public class vistaAgendaDeOtrosPagosP extends javax.swing.JPanel {
         TableColumnModel tcm = tablaPagos.getColumnModel();
         tcm.removeColumn(tcm.getColumn(9));
         tcm.removeColumn(tcm.getColumn(9));
+        tcm.removeColumn(tcm.getColumn(9));
         tablaPagos.setAutoCreateRowSorter(true);
         //tablaPagos.setDefaultRenderer(Object.class, new OwnTableCellRenderer());
         if(tablaPagos.getRowCount() > 0) tablaPagos.setRowSelectionInterval(0, 0);
         tablaPagos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+//        tablaPagos.getColumnModel().getColumn(7).setCellRenderer(new CurrencyTableCellRenderer());
         tablaPagos.setDefaultRenderer(Object.class, new OwnTableCellRenderer());
         tablaPagos.setDefaultRenderer(Integer.class, new OwnTableCellRenderer());
     }
@@ -195,7 +183,8 @@ public class vistaAgendaDeOtrosPagosP extends javax.swing.JPanel {
         if(selected){
             int row = getFilaSeleccionada();
             String id = getIdFila(row);
-            miControlador.irVistaCambiarEstado(id);
+            String fac = getIdFac(row);
+            miControlador.irVistaCambiarEstado(id, fac);
             JTabbedPane tabs = (JTabbedPane)this.getParent();
             miControlador.crearControladorPrincipal(tabs);
         }else{
@@ -238,13 +227,17 @@ public class vistaAgendaDeOtrosPagosP extends javax.swing.JPanel {
         return tablaPagos.getModel().getValueAt(tablaPagos.convertRowIndexToModel(row), 10).toString();
     }
     
+    public String getIdFac(int row){
+        return tablaPagos.getModel().getValueAt(tablaPagos.convertRowIndexToModel(row), 11).toString();
+    }
+    
     public class CurrencyTableCellRenderer extends DefaultTableCellRenderer {
         @Override
         public final Component getTableCellRendererComponent(JTable table, Object value,
             boolean isSelected, boolean hasFocus, int row, int column) {
                 final Component result = super.getTableCellRendererComponent(table, value,
                     isSelected, hasFocus, row, column);
-                if (value instanceof Number) {
+                if (value instanceof Number){
                     setHorizontalAlignment(JLabel.RIGHT);
                     setText(FORMAT.format(value));
                 } else {
@@ -257,11 +250,11 @@ public class vistaAgendaDeOtrosPagosP extends javax.swing.JPanel {
     public class MyTableModel extends DefaultTableModel{
         public MyTableModel() {
           super(new String[]{"Medio de pago", "Asunto", "Rut proveedor", "Razón social", "Folio", 
-            "Observaciones de pago", "N° de cheque/cuota", "Monto", "Fecha de pago", "Estado", "Id"}, 0);
+            "Observaciones de pago", "N° de cheque/cuota", "Monto", "Fecha de pago", "Estado", "Id", "Fac"}, 0);
         }
         public MyTableModel(Object[][] data){
             super(new String[]{"Medio de pago", "Asunto", "Rut proveedor", "Razón social", "Folio", 
-            "Observaciones de pago", "N° de cheque/cuota", "Monto", "Fecha de pago", "Estado", "Id"}, 0);
+            "Observaciones de pago", "N° de cheque/cuota", "Monto", "Fecha de pago", "Estado", "Id", "Fac"}, 0);
             
             int i = 0;
             this.setRowCount(data.length);
@@ -278,6 +271,7 @@ public class vistaAgendaDeOtrosPagosP extends javax.swing.JPanel {
                 this.setValueAt(data1[8], i, 8);
                 this.setValueAt(data1[9], i, 9);
                 this.setValueAt(data1[10], i, 10);
+                this.setValueAt(data1[11], i, 11);
                 i++;
         }
         }
@@ -285,12 +279,19 @@ public class vistaAgendaDeOtrosPagosP extends javax.swing.JPanel {
         @Override
         public Class getColumnClass(int column) {
           switch (column) {
+            case 4:
+                return Integer.class;
             case 7:
                 return Integer.class;
             default:
                 return String.class;
           }
         }
+        
+        @Override
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }
     }
     
     public class OwnTableCellRenderer extends DefaultTableCellRenderer {
@@ -306,7 +307,7 @@ public class vistaAgendaDeOtrosPagosP extends javax.swing.JPanel {
         Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         
         setFont(getFont().deriveFont(Font.PLAIN));
-        setHorizontalAlignment(SwingConstants.LEFT);
+//        setHorizontalAlignment(SwingConstants.LE);
         setBackground(Color.white);
         setForeground(Color.black);
         String valor = table.getModel().getValueAt(table.convertRowIndexToModel(row),8).toString();
@@ -318,23 +319,33 @@ public class vistaAgendaDeOtrosPagosP extends javax.swing.JPanel {
         }
         Date cur = new Date();
         long dias = Math.round((fec.getTime() - cur.getTime()) / (double) 86400000);
-        if (dias <= 7) {
+        if(dias < 0){
+            setBackground(Color.red);
+            setForeground(Color.white);
+        }
+        else if (dias <= 7) {
+            setForeground(Color.black);
             setBackground(Color.ORANGE);
         }  else {
+            setForeground(Color.black);
             setBackground(Color.white);
         }
         valor = table.getModel().getValueAt(table.convertRowIndexToModel(row), 9).toString();
         if(valor.compareTo("Pagado") == 0){
+            setForeground(Color.BLACK);
             setBackground(Color.GREEN);
         }
         if(isSelected){
+            setForeground(Color.black);
             setBackground((new java.awt.Color(184,207,229)));
         }
         if(value instanceof Number){
+            setHorizontalAlignment(SwingConstants.RIGHT);
             Number num = (Number)value;
             String text = FORMAT.format(num);
             setText(text);
         }else{
+            System.out.println("texto " + value);
             setText(value != null ? value.toString() : "");
         }
         return this;

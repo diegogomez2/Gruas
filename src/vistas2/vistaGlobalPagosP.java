@@ -15,6 +15,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.basic.BasicListUI;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 
 /**
@@ -31,7 +32,7 @@ public class vistaGlobalPagosP extends javax.swing.JPanel {
         initComponents();
         //Object[][] data = new Object[0][0];
         String[] columNames = {"Medio de pago", "Rut proveedor", "Razón social", "Folio", 
-            "N° de cheque/cuota", "Fecha de pago", "Estado", "Id"};
+            "N° de cheque/cuota", "Fecha de pago", "Estado", "Id", "Fac"};
         datos = new DefaultTableModel(noPagados, columNames){
             @Override
             public boolean isCellEditable(int row, int column){
@@ -46,6 +47,14 @@ public class vistaGlobalPagosP extends javax.swing.JPanel {
         };
         tablaNoPagos.setModel(datos);
         tablaPagos.setModel(datos2);
+        TableColumnModel tcm = tablaNoPagos.getColumnModel();
+        TableColumnModel tcm2 = tablaPagos.getColumnModel();
+        tcm.removeColumn(tcm.getColumn(6));
+        tcm.removeColumn(tcm.getColumn(6));
+        tcm.removeColumn(tcm.getColumn(6));
+        tcm2.removeColumn(tcm2.getColumn(6));
+        tcm2.removeColumn(tcm2.getColumn(6));
+        tcm2.removeColumn(tcm2.getColumn(6));
         tablaNoPagos.setAutoCreateRowSorter(true);
         tablaPagos.setAutoCreateRowSorter(true);
         tablaNoPagos.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
@@ -223,13 +232,17 @@ public class vistaGlobalPagosP extends javax.swing.JPanel {
         if(selectedNoPagos){
                 int row = getFilaSeleccionada(0);
                 String id = getIdFila(row, 0);
-                miControlador.irVistaCambiarEstado(id);
+                String fac = getIdFac(row, 0);
+                System.out.println(fac);
+                miControlador.irVistaCambiarEstado(id, fac);
                 JTabbedPane tabs = (JTabbedPane)this.getParent();
                 miControlador.crearControladorPrincipal(tabs);
             }else if(selectedPagos){
                 int row = getFilaSeleccionada(1);
                 String id = getIdFila(row, 1);
-                miControlador.irVistaCambiarEstado(id);
+                String fac = getIdFac(row, 1);
+                System.out.println(fac);
+                miControlador.irVistaCambiarEstado(id, fac);
                 JTabbedPane tabs = (JTabbedPane)this.getParent();
                 miControlador.crearControladorPrincipal(tabs);
             }
@@ -273,9 +286,17 @@ public class vistaGlobalPagosP extends javax.swing.JPanel {
     
     public String getIdFila(int row, int tabla){
         if(tabla == 0){
-            return tablaNoPagos.getModel().getValueAt(tablaPagos.convertRowIndexToModel(row), 7).toString();
+            return tablaNoPagos.getModel().getValueAt(tablaNoPagos.convertRowIndexToModel(row), 7).toString();
         }else{
             return tablaPagos.getModel().getValueAt(tablaPagos.convertRowIndexToModel(row), 7).toString();
+        }
+    }
+    
+    public String getIdFac(int row, int tabla){
+        if(tabla == 0){
+            return tablaNoPagos.getModel().getValueAt(tablaNoPagos.convertRowIndexToModel(row), 8).toString();
+        }else{
+            return tablaPagos.getModel().getValueAt(tablaPagos.convertRowIndexToModel(row), 8).toString();
         }
     }
     

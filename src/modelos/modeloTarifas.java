@@ -61,7 +61,7 @@ public class modeloTarifas {
                 }else{
                     estdia = "Domingo";
                 }
-                data[i] = new String[]{estpes, estdia, esthin+"-"+ esthfin, estprec};
+                data[i] = new String[]{estpes, estdia, esthin+" - "+ esthfin, estprec};
                 i++;
             }
             res.close();

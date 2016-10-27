@@ -32,10 +32,10 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
-              <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
-              <Component id="jPanel2" max="32767" attributes="0"/>
-              <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -47,21 +47,21 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="569" max="32767" attributes="0"/>
+                  <EmptySpace pref="589" max="32767" attributes="0"/>
                   <Component id="botonAceptar" linkSize="4" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="botonCancelar" linkSize="4" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
               <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane1" alignment="0" pref="739" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" alignment="0" pref="759" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="551" max="32767" attributes="0"/>
+                  <EmptySpace pref="486" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="botonCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="botonAceptar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -70,8 +70,8 @@
               </Group>
               <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jScrollPane1" pref="536" max="32767" attributes="0"/>
-                      <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" min="-2" pref="464" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="56" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -90,8 +90,8 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <Component id="scrollObs" max="32767" attributes="0"/>
@@ -100,12 +100,13 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="scrollDatos" max="32767" attributes="0"/>
-                                      <Component id="jPanel3" pref="703" max="32767" attributes="0"/>
+                                      <Component id="jPanel3" pref="723" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="7" pref="7" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="1" attributes="0">
+                                      <Component id="jComboBox1" alignment="0" max="32767" attributes="0"/>
                                       <Component id="textoGiro" max="32767" attributes="0"/>
                                       <Component id="labelMedio" alignment="1" max="32767" attributes="0"/>
                                       <Component id="comboTipoDTE" alignment="1" max="32767" attributes="0"/>
@@ -116,10 +117,15 @@
                                       <Component id="comboForma" alignment="0" max="32767" attributes="0"/>
                                       <Component id="textoAsunto" alignment="0" max="32767" attributes="0"/>
                                       <Component id="comboMedio" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="labelTipoDTE" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="labelRut" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="labelBanco" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="labelContacto" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="1" attributes="0">
+                                              <Component id="labelTipoDTE" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="labelRut" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="labelBanco" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="labelContacto" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                      </Group>
                                   </Group>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
@@ -168,12 +174,33 @@
                               </Group>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="textoTot" min="-2" pref="225" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                                              <Component id="textoIva" min="-2" pref="225" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="textoNeto" min="-2" pref="229" max="-2" attributes="0"/>
+                                              <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
                                       <Component id="labelGiro" min="-2" max="-2" attributes="0"/>
                                       <Component id="labelOrden" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="labelForma" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="labelAsunto" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="labelObs" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
+                                  <EmptySpace pref="23" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="botonActualizarMontos" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
@@ -223,6 +250,10 @@
                               <Component id="textoFechaIngreso" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="textoContacto" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                          <Component id="jComboBox1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="labelOrden" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -281,7 +312,21 @@
                           <Component id="scrollDatos" min="-2" pref="89" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jPanel3" min="-2" pref="161" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="textoTot" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="textoIva" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="textoNeto" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="botonActualizarMontos" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -499,7 +544,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="jScrollPane2" pref="681" max="32767" attributes="0"/>
+                                  <Component id="jScrollPane2" max="32767" attributes="0"/>
                                   <Group type="102" attributes="0">
                                       <EmptySpace max="32767" attributes="0"/>
                                       <Component id="botonMas" linkSize="1" min="-2" max="-2" attributes="0"/>
@@ -691,6 +736,82 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Pagada"/>
                   </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel2">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Clasificaci&#xf3;n de compra"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JComboBox" name="jComboBox1">
+                  <Properties>
+                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                      <StringArray count="13">
+                        <StringItem index="0" value="Activo fijo (maquinaria)"/>
+                        <StringItem index="1" value="Activo vehiculo"/>
+                        <StringItem index="2" value="Combustibles (petr&#xf3;leo/gas)"/>
+                        <StringItem index="3" value="Respuestos"/>
+                        <StringItem index="4" value="Neum&#xe1;ticos"/>
+                        <StringItem index="5" value="Aceite y lubricantes"/>
+                        <StringItem index="6" value="Mantenciones"/>
+                        <StringItem index="7" value="Gastos de oficina"/>
+                        <StringItem index="8" value="Gastos generales"/>
+                        <StringItem index="9" value="Arriendo leasing"/>
+                        <StringItem index="10" value="Salud y seguridad"/>
+                        <StringItem index="11" value="Molymet"/>
+                        <StringItem index="12" value="Otros"/>
+                      </StringArray>
+                    </Property>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel3">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Total"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JFormattedTextField" name="textoTot">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(FORMAT)"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel4">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Iva"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JFormattedTextField" name="textoIva">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(FORMAT)"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel5">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Neto"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JFormattedTextField" name="textoNeto">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(FORMAT)"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JButton" name="botonActualizarMontos">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Actualizar montos"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonActualizarMontosActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>

@@ -65,6 +65,7 @@ public class vistaAgendaDePagosP extends javax.swing.JPanel {
      */
     DefaultTableModel datos;
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+    DateFormat newFormat = new SimpleDateFormat("dd-MM-yyyy");
     NumberFormat FORMAT = NumberFormat.getCurrencyInstance();
     DecimalFormatSymbols dfs = new DecimalFormatSymbols();
     
@@ -72,7 +73,7 @@ public class vistaAgendaDePagosP extends javax.swing.JPanel {
     public vistaAgendaDePagosP(String tipo, Object[][] data) {
         initComponents();
         String[] columNames = {"Medio de pago", "Rut proveedor", "Razón social", "Folio", 
-            "N° de cheque/cuota", "Fecha de pago", "Estado", "Id"};
+            "N° de cheque/cuota", "Fecha de pago", "Estado", "Id", "Fac"};
         datos = new DefaultTableModel(data, columNames){
             @Override
             public boolean isCellEditable(int row, int column){
@@ -82,6 +83,7 @@ public class vistaAgendaDePagosP extends javax.swing.JPanel {
         
         tablaPagos.setModel(datos);
         TableColumnModel tcm = tablaPagos.getColumnModel();
+        tcm.removeColumn(tcm.getColumn(6));
         tcm.removeColumn(tcm.getColumn(6));
         tcm.removeColumn(tcm.getColumn(6));
         tablaPagos.setAutoCreateRowSorter(true);
@@ -217,7 +219,8 @@ public class vistaAgendaDePagosP extends javax.swing.JPanel {
         if(selected){
             int row = getFilaSeleccionada();
             String id = getIdFila(row);
-            miControlador.irVistaCambiarEstado(id);
+            String fac = getIdFac(row);
+            miControlador.irVistaCambiarEstado(id, fac);
             JTabbedPane tabs = (JTabbedPane)this.getParent();
             miControlador.crearControladorPrincipal(tabs);
         }else{
@@ -259,6 +262,10 @@ public class vistaAgendaDePagosP extends javax.swing.JPanel {
     public String getIdFila(int row){
         return tablaPagos.getModel().getValueAt(tablaPagos.convertColumnIndexToModel(row), 7).toString();
     }
+    
+    public String getIdFac(int row){
+        return tablaPagos.getModel().getValueAt(tablaPagos.convertColumnIndexToModel(row), 8).toString();
+    }
 
 public class OwnTableCellRenderer extends DefaultTableCellRenderer {
         
@@ -279,22 +286,30 @@ public class OwnTableCellRenderer extends DefaultTableCellRenderer {
         String valor = table.getModel().getValueAt(table.convertRowIndexToModel(row),5).toString();
         Date fec;
         try{
-            fec = formatDate.parse(valor);
+//            fec = formatDate.parse(valor);
+            fec = newFormat.parse(valor);
         }catch(ParseException p){
             fec = new Date();
         }
         Date cur = new Date();
         long dias = Math.round((fec.getTime() - cur.getTime()) / (double) 86400000);
-        if (dias <= 7) {
+        if(dias < 0){
+            setBackground(Color.red);
+            setForeground(Color.white);
+        }else if (dias <= 7) {
+            setForeground(Color.black);
             setBackground(Color.ORANGE);
-        }  else {
+        }else {
+            setForeground(Color.black);
             setBackground(Color.white);
         }
         valor = table.getModel().getValueAt(table.convertRowIndexToModel(row), 6).toString();
         if(valor.compareTo("Pagado") == 0){
+            setForeground(Color.black);
             setBackground(Color.GREEN);
         }
         if(isSelected){
+            setForeground(Color.black);
             setBackground((new java.awt.Color(184,207,229)));
         }
         if(value instanceof Number){

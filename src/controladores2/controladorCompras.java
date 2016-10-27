@@ -44,10 +44,18 @@ public class controladorCompras {
         return vistaComprasP;
     }
 
-    public void crearControladorPrincipal(JTabbedPane tabs) {
+    public void crearControladorPrincipal(JTabbedPane tabs)  {
         controladorPrincipal miControlador = new controladorPrincipal();
         tabs.remove(1);
+        tabs.remove(1);
+        tabs.remove(1);
+        tabs.remove(1);
+        tabs.remove(1);
         tabs.insertTab("Compras", null, miControlador.crearControladorComprasP(), null, 1);
+        tabs.insertTab("Agenda de pagos", null, miControlador.crearControladorAgendaDePagosP(), null, 2);
+        tabs.insertTab("Agenda de otros pagos", null, miControlador.crearControladorAgendaDeOtrosPagosP(), null, 3);
+        tabs.insertTab("Global de pagos", null, miControlador.crearControladorGlobalPagosP(), null, 4);
+        tabs.insertTab("Global otros pagos", null, miControlador.crearControladorGlobalOtrosPagosP(), null, 5);
         tabs.setSelectedIndex(1);
     }
 }

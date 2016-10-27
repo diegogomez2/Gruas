@@ -6,6 +6,7 @@
 package controladores;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -293,12 +294,18 @@ public class controladorCrearFactura {
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
             DOMSource source = new DOMSource(doc);
-            StreamResult result =   new StreamResult(new File("C:/AppServ/www/eugcomdte/entregas/XML_pre/33_"+fol_fac+"_normal.xml"));
-            
-            transformer.transform(source, result);
-            JOptionPane.showMessageDialog(vistaF, "Documento realizado con éxito");
-            return "correcto";
-            
+            File f = new File("C:/AppSersv/www/eugcomdte/entregas/XML_pre");
+            if(f.exists()){
+                StreamResult result =   new StreamResult(new File("C:/AppServ/www/eugcomdte/entregas/XML_pre/33_"+fol_fac+"_normal.xml"));
+                transformer.transform(source, result);
+                JOptionPane.showMessageDialog(vistaF, "Documento realizado con éxito");
+                return "correcto";
+            }else{
+                StreamResult result =   new StreamResult(new File("33_"+fol_fac+"_normal.xml"));
+                transformer.transform(source, result);
+                JOptionPane.showMessageDialog(vistaF, "Documento realizado con éxito en ruta por defecto");
+                return "correcto";
+            }            
         }catch(ParserConfigurationException pce){
             pce.printStackTrace();
             return "incorrecto";
@@ -483,11 +490,18 @@ public class controladorCrearFactura {
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
             DOMSource source = new DOMSource(doc);
-            StreamResult result =   new StreamResult(new File("C:/AppServ/www/eugcomdte/entregas/XML_pre/34_"+fol_facex+"_exenta.xml"));
-            
-            transformer.transform(source, result);
-            JOptionPane.showMessageDialog(vistaF, "Documento realizado con éxito");
-            return "correcto";
+            File f = new File("C:/AppSersv/www/eugcomdte/entregas/XML_pre");
+            if(f.exists()){
+                StreamResult result =   new StreamResult(new File("C:/AppServ/www/eugcomdte/entregas/XML_pre/34_"+fol_facex+"_exenta.xml"));
+                transformer.transform(source, result);
+                JOptionPane.showMessageDialog(vistaF, "Documento realizado con éxito");
+                return "correcto";
+            }else{
+                StreamResult result =   new StreamResult(new File("34_"+fol_facex+"_exenta.xml"));
+                transformer.transform(source, result);
+                JOptionPane.showMessageDialog(vistaF, "Documento realizado con éxito en ruta por defecto");
+                return "correcto";
+            }
             
         }catch(ParserConfigurationException pce){
             pce.printStackTrace();
@@ -808,11 +822,19 @@ public class controladorCrearFactura {
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
             DOMSource source = new DOMSource(doc);
-            StreamResult result =   new StreamResult(new File("C:/AppServ/www/eugcomdte/entregas/XML_pre/61_"+fol_nc+"_anula_33.xml"));
-            
-            transformer.transform(source, result);
-            JOptionPane.showMessageDialog(vistaF, "Documento realizado con éxito");
-            return "correcto";
+            File f = new File("C:/AppSersv/www/eugcomdte/entregas/XML_pre");
+            if(f.exists()){
+                StreamResult result =   new StreamResult(new File("C:/AppServ/www/eugcomdte/entregas/XML_pre/61_"+fol_nc+"_anula_33.xml"));
+                transformer.transform(source, result);
+                JOptionPane.showMessageDialog(vistaF, "Documento realizado con éxito");
+                return "correcto"; 
+            }
+            else{
+                StreamResult result =   new StreamResult(new File("61_"+fol_nc+"_anula_33.xml"));
+                transformer.transform(source, result);
+                JOptionPane.showMessageDialog(vistaF, "Documento realizado con éxito en ruta por defecto");
+                return "correcto";
+            }
             
         }catch(ParserConfigurationException pce){
             pce.printStackTrace();
@@ -1127,11 +1149,18 @@ public class controladorCrearFactura {
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
             DOMSource source = new DOMSource(doc);
-            StreamResult result =   new StreamResult(new File("C:/AppServ/www/eugcomdte/entregas/XML_pre/56_"+fol_nd+"_normal.xml"));
-            
-            transformer.transform(source, result);
-            JOptionPane.showMessageDialog(vistaF, "Documento realizado con éxito");
-            return "correcto";
+            File f = new File("C:/AppSersv/www/eugcomdte/entregas/XML_pre");
+            if(f.exists()){
+                StreamResult result =   new StreamResult(new File("C:/AppServ/www/eugcomdte/entregas/XML_pre/56_"+fol_nd+"_normal.xml"));
+                transformer.transform(source, result);
+                JOptionPane.showMessageDialog(vistaF, "Documento realizado con éxito");
+                return "correcto";
+            }else{
+                StreamResult result =   new StreamResult(new File("56_"+fol_nd+"_normal.xml"));
+                transformer.transform(source, result);
+                JOptionPane.showMessageDialog(vistaF, "Documento realizado con éxito en ruta por defecto");
+                return "correcto";   
+            }
             
         }catch(ParserConfigurationException pce){
             pce.printStackTrace();
@@ -1311,12 +1340,18 @@ public class controladorCrearFactura {
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
             DOMSource source = new DOMSource(doc);
-            StreamResult result =   new StreamResult(new File("C:/AppServ/www/eugcomdte/entregas/XML_pre/boleta_39_"+fac+".xml"));
-            
-            transformer.transform(source, result);
-            JOptionPane.showMessageDialog(vistaF, "Documento realizado con éxito");
-            return "correcto";
-            
+            File f = new File("C:/AppSersv/www/eugcomdte/entregas/XML_pre");
+            if(f.exists()){
+                StreamResult result =   new StreamResult(new File("C:/AppServ/www/eugcomdte/entregas/XML_pre/boleta_39_"+fac+".xml"));
+                transformer.transform(source, result);
+                JOptionPane.showMessageDialog(vistaF, "Documento realizado con éxito");
+                return "correcto";
+            }else{
+                StreamResult result =   new StreamResult(new File("boleta_39_"+fac+".xml"));
+                transformer.transform(source, result);
+                JOptionPane.showMessageDialog(vistaF, "Documento realizado con éxito en ruta por defecto");
+                return "correcto";
+            }
         }catch(ParserConfigurationException pce){
             pce.printStackTrace();
             return "incorrecto";
@@ -1486,12 +1521,18 @@ public class controladorCrearFactura {
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
             DOMSource source = new DOMSource(doc);
-            StreamResult result =   new StreamResult(new File("C:/AppServ/www/eugcomdte/entregas/XML_pre/33_"+num_fol+"_REF_GUIA.xml"));
-            
-            transformer.transform(source, result);
-            JOptionPane.showMessageDialog(vistaF, "Documento realizado con éxito");
-            return "correcto";
-            
+            File f = new File("C:/AppSersv/www/eugcomdte/entregas/XML_pre");
+            if(f.exists()){
+                StreamResult result =   new StreamResult(new File("C:/AppServ/www/eugcomdte/entregas/XML_pre/33_"+num_fol+"_REF_GUIA.xml"));
+                transformer.transform(source, result);
+                JOptionPane.showMessageDialog(vistaF, "Documento realizado con éxito");
+                return "correcto";
+            }else{
+                StreamResult result =   new StreamResult(new File("33_"+num_fol+"_REF_GUIA.xml"));
+                transformer.transform(source, result);
+                JOptionPane.showMessageDialog(vistaF, "Documento realizado con éxito en ruta por defecto");
+                return "correcto";  
+            }
         }catch(ParserConfigurationException pce){
             pce.printStackTrace();
             return "incorrecto";

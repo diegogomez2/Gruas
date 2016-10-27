@@ -6,6 +6,7 @@
 package controladores2;
 
 import controladores.controladorPrincipal;
+import java.text.ParseException;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import vistas2.vistaGlobalPagosP;
@@ -17,9 +18,9 @@ import vistas2.vistaGlobalPagosP;
 public class controladorGlobalPagos {
     static vistaGlobalPagosP vistaGlobalPagosP;
 
-    public void irVistaCambiarEstado(String id) {
+    public void irVistaCambiarEstado(String id, String fac) {
         controladorPrincipal miControlador = new controladorPrincipal();
-        miControlador.crearControladorCambiarEstadoPago(id);
+        miControlador.crearControladorCambiarEstadoPago(id, fac);
     }
     
 //    public void irVistaIngresarCompras() {
@@ -47,9 +48,13 @@ public class controladorGlobalPagos {
         return vistaGlobalPagosP;
     }
 
-    public void crearControladorPrincipal(JTabbedPane tabs) {
+    public void crearControladorPrincipal(JTabbedPane tabs)  {
         controladorPrincipal miControlador = new controladorPrincipal();
-        tabs.remove(4);
+        tabs.remove(1);
+        tabs.insertTab("Compras", null, miControlador.crearControladorComprasP(), null, 1);
+        tabs.remove(2);
+        tabs.remove(3);
+        tabs.insertTab("Agenda de pagos", null, miControlador.crearControladorAgendaDePagosP(), null, 2);
         tabs.insertTab("Global de pagos", null, miControlador.crearControladorGlobalPagosP(), null, 4);
         tabs.setSelectedIndex(4);
     }

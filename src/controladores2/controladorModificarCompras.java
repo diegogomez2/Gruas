@@ -39,6 +39,11 @@ public class controladorModificarCompras {
         vistaMC.setComboMedio(data[13]);
         vistaMC.setTextoBanco(data[14]);
         vistaMC.setTextoNumTC(data[15]);
+        vistaMC.setCheckEstado(data[16]);
+        vistaMC.setComboClas(data[17]);
+        vistaMC.setTextoTot(data[18]);
+        vistaMC.setTextoIva(data[19]);
+        vistaMC.setTextoNeto(data[20]);
         if(data[10].compareTo("Otros pagos") != 0){
             vistaMC.hideOtrosPagos();
         }
@@ -61,11 +66,13 @@ public class controladorModificarCompras {
         String folioInterno = compra.folioFac();
         boolean flag;
         String id = vistaMC.getId();
+        vistaMC.calTotales();
         String[] rut_dv = vistaMC.getComboRut().split("-");
         String[] data = {rut_dv[0], vistaMC.getComboTipoDTE(), vistaMC.getTextoFolio(), folioInterno, 
             vistaMC.getTextoFechaIngreso(), vistaMC.getTextoOrden(), vistaMC.getTextoFechaPago(),
             vistaMC.getComboForma(), vistaMC.getTextoAsunto(), vistaMC.getTextoObs(), 
-            vistaMC.getComboMedio(), vistaMC.getTextoBanco(), vistaMC.getTextoNumTC()};
+            vistaMC.getComboMedio(), vistaMC.getTextoBanco(), vistaMC.getTextoNumTC(), vistaMC.getCheckEstado(), 
+            vistaMC.getComboClas(), vistaMC.getTextoTot(), vistaMC.getTextoIva(), vistaMC.getTextoNeto()};
         if(!miControlador.modificarCompra(data, id)){
             return false;
         }

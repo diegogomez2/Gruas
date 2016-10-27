@@ -35,6 +35,11 @@ public class controladorDetalleCompras {
         vistaDC.setComboMedio(data[13]);
         vistaDC.setTextoBanco(data[14]);
         vistaDC.setTextoNumTC(data[15]);
+        vistaDC.setCheckEstado(data[16]);
+        vistaDC.setComboClas(data[17]);
+        vistaDC.setTextoTot(data[18]);
+        vistaDC.setTextoIva(data[19]);
+        vistaDC.setTextoNeto(data[20]);
         if(data[10].compareTo("Otros pagos") != 0){
             vistaDC.hideOtrosPagos();
         }

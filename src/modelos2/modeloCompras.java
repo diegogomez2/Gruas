@@ -11,6 +11,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import modelos.Connector;
 
 /**
@@ -23,8 +26,10 @@ public class modeloCompras {
     String password = conector.getPassword();
     String url = conector.getUrl();
     Connection conn = null;
+    DateFormat newFormat = new SimpleDateFormat("dd-MM-yyyy");
+    DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
     
-    public Object[][] listarCompras(){
+    public Object[][] listarCompras() {
         int registros = 0;
         try{
             Class.forName("com.mysql.jdbc.Driver");
@@ -58,6 +63,8 @@ public class modeloCompras {
                 String estfol = res.getString("fol_com");
                 String estfolin = res.getString("fol_int_com");
                 String estfecpag = res.getString("fec_pag_com");
+                java.util.Date fecha = formatDate.parse(estfecpag);
+                estfecpag = newFormat.format(fecha);
                 String estest = res.getString("est_com");
                 String estid = res.getString("id_com");
                 data[i] = new String[]{estid, esttip, estfol, estfolin, estrut + "-" + estdig, estraz, estfecpag, estest};
@@ -66,6 +73,8 @@ public class modeloCompras {
             res.close();
         }catch(SQLException e){
             System.out.println(e);
+        }catch (ParseException e){
+            
         }
         return data;
     }
@@ -77,7 +86,8 @@ public class modeloCompras {
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("INSERT into Compras_fac (rut_pro,"
                     + "tipo_com, fol_com, fol_int_com, fec_in_com, ord_com, fec_pag_com, form_com, asun_com, obs_com,"
-                    + "med_com, ban_com, num_tc_com, est_com) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                    + "med_com, ban_com, num_tc_com, est_com, clas_com, tot_com, iva_com, neto_com) values "
+                    + "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                     PreparedStatement.RETURN_GENERATED_KEYS);
             pstm.setInt(1, Integer.parseInt(data[0]));
             pstm.setString(2, data[1]);
@@ -93,6 +103,10 @@ public class modeloCompras {
             pstm.setString(12, data[11]);
             pstm.setString(13, data[12]);
             pstm.setString(14, data[13]);
+            pstm.setString(15, data[14]);
+            pstm.setInt(16, Integer.parseInt(data[15]));
+            pstm.setInt(17, Integer.parseInt(data[16]));
+            pstm.setInt(18, Integer.parseInt(data[17]));
             pstm.execute();
             ResultSet res = pstm.getGeneratedKeys();
             res.next();
@@ -134,7 +148,8 @@ public class modeloCompras {
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("UPDATE Compras_fac set rut_pro=?, tipo_com=?, fol_com=?, "
                     + "fol_int_com=?, fec_in_com=?, ord_com=?, fec_pag_com=?, form_com=?, asun_com=?, obs_com=?,"
-                    + "med_com=?, ban_com=?, num_tc_com=? WHERE id_com = ?");
+                    + "med_com=?, ban_com=?, num_tc_com=?, est_com=?, clas_com=?, tot_com=?, iva_com=?, "
+                    + "neto_com=? WHERE id_com = ?");
             pstm.setInt(1, Integer.parseInt(data[0]));
             pstm.setString(2, data[1]);
             pstm.setString(3, data[2]);
@@ -148,7 +163,12 @@ public class modeloCompras {
             pstm.setString(11, data[10]);
             pstm.setString(12, data[11]);
             pstm.setString(13, data[12]);
-            pstm.setString(14, id);
+            pstm.setString(14, data[13]);
+            pstm.setString(15, data[14]);
+            pstm.setString(16, data[15]);
+            pstm.setString(17, data[16]);
+            pstm.setString(18, data[17]);
+            pstm.setString(19, id);
             pstm.executeUpdate();
             pstm.close();
         }catch(SQLException e){
@@ -342,8 +362,14 @@ public class modeloCompras {
             String estmed = res.getString("med_com");
             String estban = res.getString("ban_com");
             String estntc = res.getString("num_tc_com");
+            String estest = res.getString("est_com");
+            String estclas = res.getString("clas_com");
+            String esttot = res.getString("tot_com");
+            String estiva = res.getString("iva_com");
+            String estnet = res.getString("neto_com");
             data = new String[]{esttip, estfol, estrut + "-" + estdig , estraz, estgir, estdir, estcon, 
-                estfecin, estord, estfecpag, estfor, estasu, estobs, estmed, estban, estntc};
+                estfecin, estord, estfecpag, estfor, estasu, estobs, estmed, estban, estntc, estest, estclas, 
+                esttot, estiva, estnet};
         }catch(SQLException e){
             System.out.println("Error al obtener proveedor por rut");
             System.out.println(e);
@@ -511,7 +537,7 @@ public class modeloCompras {
         return data;
     }
    
-   public Object[][] listarAgendaDePagos(){
+   public Object[][] listarAgendaDePagos() {
         int registros = 0;
         try{
             Class.forName("com.mysql.jdbc.Driver");
@@ -547,21 +573,26 @@ public class modeloCompras {
 //                String esttip = res.getString("tipo_com");
                 String estfol = res.getString("fol_cuo");
                 String estfec = res.getString("fec_cuo");
+                java.util.Date fecha = formatDate.parse(estfec);
+                estfec = newFormat.format(fecha);
                 String estnum = res.getString("num_cuo");
                 String estest = res.getString("est_cuo");
                 String estid = res.getString("id_cuo");
+                String estfac = res.getString("Cuotas.id_com");
                 //String estid = res.getString("Cuotas.id_com");
-                data[i] = new String[]{estmed, estrut + "-" + estdig, estraz, estfol, estnum, estfec, estest, estid};
+                data[i] = new String[]{estmed, estrut + "-" + estdig, estraz, estfol, estnum, estfec, estest, estid, estfac};
                 i++;
             }
             res.close();
         }catch(SQLException e){
             System.out.println(e);
+        }catch(ParseException e){
+            
         }
         return data;
     }
    
-   public Object[][] listarAgendaDeOtrosPagos(){
+   public Object[][] listarAgendaDeOtrosPagos() {
         int registros = 0;
         try{
             Class.forName("com.mysql.jdbc.Driver");
@@ -601,23 +632,28 @@ public class modeloCompras {
                 String estfol = res.getString("fol_cuo");
                 String estobs = res.getString("obs_com");
                 String estfec = res.getString("fec_cuo");
+                java.util.Date fecha = formatDate.parse(estfec);
+                estfec = newFormat.format(fecha);
                 String estnum = res.getString("num_cuo");
                 String estmon = res.getString("mon_cuo");
                 String estest = res.getString("est_cuo");
                 String estid = res.getString("id_cuo");
+                String estfac = res.getString("id_com");
                 //String estid = res.getString("Cuotas.id_com");
                 data[i] = new String[]{estmed, estasu, estrut + "-" + estdig, estraz, estfol, estobs, estnum, estmon,
-                    estfec, estest, estid};
+                    estfec, estest, estid, estfac};
                 i++;
             }
             res.close();
         }catch(SQLException e){
             System.out.println(e);
+        }catch(ParseException e){
+            
         }
         return data;
     }
    
-   public String cambiarEstadoPago(String estado, String id){
+   public String cambiarEstadoPago(String estado, String id, String fac){
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
@@ -626,6 +662,9 @@ public class modeloCompras {
             pstm.setString(2, id);
             pstm.executeUpdate();
             pstm.close();
+            CallableStatement cstmt = conn.prepareCall("{call set_estado_compra(?)}");
+            cstmt.setString(1, fac);
+            cstmt.execute();
         }catch(SQLException e){
             System.out.println("Error al cambiar estado");
             System.out.println(e);
@@ -637,7 +676,7 @@ public class modeloCompras {
         return "correcto";
     }
    
-   public Object[][] listarGlobalNoPagados(){
+   public Object[][] listarGlobalNoPagados() {
         int registros = 0;
         try{
             Class.forName("com.mysql.jdbc.Driver");
@@ -673,21 +712,26 @@ public class modeloCompras {
 //                String esttip = res.getString("tipo_com");
                 String estfol = res.getString("fol_cuo");
                 String estfec = res.getString("fec_cuo");
+                java.util.Date fecha = formatDate.parse(estfec);
+                estfec = newFormat.format(fecha);
                 String estnum = res.getString("num_cuo");
                 String estest = res.getString("est_cuo");
                 String estid = res.getString("id_cuo");
+                String estfac = res.getString("id_com");
                 //String estid = res.getString("Cuotas.id_com");
-                data[i] = new String[]{estmed, estrut + "-" + estdig, estraz, estfol, estnum, estfec, estest, estid};
+                data[i] = new String[]{estmed, estrut + "-" + estdig, estraz, estfol, estnum, estfec, estest, estid, estfac};
                 i++;
             }
             res.close();
         }catch(SQLException e){
             System.out.println(e);
+        }catch(ParseException e){
+            
         }
         return data;
     }
    
-   public Object[][] listarGlobalPagados(){
+   public Object[][] listarGlobalPagados() {
         int registros = 0;
         try{
             Class.forName("com.mysql.jdbc.Driver");
@@ -723,21 +767,26 @@ public class modeloCompras {
 //                String esttip = res.getString("tipo_com");
                 String estfol = res.getString("fol_cuo");
                 String estfec = res.getString("fec_cuo");
+                java.util.Date fecha = formatDate.parse(estfec);
+                estfec = newFormat.format(fecha);
                 String estnum = res.getString("num_cuo");
                 String estest = res.getString("est_cuo");
                 String estid = res.getString("id_cuo");
+                String estfac = res.getString("id_com");
                 //String estid = res.getString("Cuotas.id_com");
-                data[i] = new String[]{estmed, estrut + "-" + estdig, estraz, estfol, estnum, estfec, estest, estid};
+                data[i] = new String[]{estmed, estrut + "-" + estdig, estraz, estfol, estnum, estfec, estest, estid, estfac};
                 i++;
             }
             res.close();
         }catch(SQLException e){
             System.out.println(e);
+        }catch(ParseException e){
+            
         }
         return data;
     }
    
-   public Object[][] listarGlobalOtrosNoPagados(){
+   public Object[][] listarGlobalOtrosNoPagados() {
         int registros = 0;
         try{
             Class.forName("com.mysql.jdbc.Driver");
@@ -773,21 +822,26 @@ public class modeloCompras {
 //                String esttip = res.getString("tipo_com");
                 String estfol = res.getString("fol_cuo");
                 String estfec = res.getString("fec_cuo");
+                java.util.Date fecha = formatDate.parse(estfec);
+                estfec = newFormat.format(fecha);
                 String estnum = res.getString("num_cuo");
                 String estest = res.getString("est_cuo");
                 String estid = res.getString("id_cuo");
+                String estfac = res.getString("id_com");
                 //String estid = res.getString("Cuotas.id_com");
-                data[i] = new String[]{estmed, estrut + "-" + estdig, estraz, estfol, estnum, estfec, estest, estid};
+                data[i] = new String[]{estmed, estrut + "-" + estdig, estraz, estfol, estnum, estfec, estest, estid, estfac};
                 i++;
             }
             res.close();
         }catch(SQLException e){
             System.out.println(e);
+        }catch(ParseException e){
+            
         }
         return data;
     }
    
-   public Object[][] listarGlobalOtrosPagados(){
+   public Object[][] listarGlobalOtrosPagados() {
         int registros = 0;
         try{
             Class.forName("com.mysql.jdbc.Driver");
@@ -823,17 +877,145 @@ public class modeloCompras {
 //                String esttip = res.getString("tipo_com");
                 String estfol = res.getString("fol_cuo");
                 String estfec = res.getString("fec_cuo");
+                java.util.Date fecha = formatDate.parse(estfec);
+                estfec = newFormat.format(fecha);
                 String estnum = res.getString("num_cuo");
                 String estest = res.getString("est_cuo");
                 String estid = res.getString("id_cuo");
+                String estfac = res.getString("id_com");
                 //String estid = res.getString("Cuotas.id_com");
-                data[i] = new String[]{estmed, estrut + "-" + estdig, estraz, estfol, estnum, estfec, estest, estid};
+                data[i] = new String[]{estmed, estrut + "-" + estdig, estraz, estfol, estnum, estfec, estest, estid, estfac};
                 i++;
             }
             res.close();
         }catch(SQLException e){
             System.out.println(e);
+        }catch(ParseException e){
+            
         }
         return data;
     }
+   
+   public int obtenerCantFacturasMes(String mes){
+       int registros = 0;
+       try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Compras_fac where "
+                    + " MONTH(fec_in_com) = ?");
+            pstm.setString(1, mes);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+       }catch(SQLException e){
+            System.out.println("Error al contar compras");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+       return registros;
+   }
+   
+   public String[] obtenerResumenMes(String mes){
+       int registros = 0;
+       String[] datos = new String[4];
+       try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Compras_fac where "
+                    + " MONTH(fec_in_com) = ?");
+            pstm.setString(1, mes);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+            pstm.close();
+            datos[0] = String.valueOf(registros);
+            
+            pstm = conn.prepareStatement("SELECT sum(neto_com) neto FROM Compras_fac where MONTH(fec_in_com)"
+                    + " = ?");
+            pstm.setString(1, mes);
+            res = pstm.executeQuery();
+            res.next();
+            datos[1] = res.getString("neto");
+            res.close();
+            pstm.close();
+            
+            pstm = conn.prepareStatement("SELECT sum(iva_com) iva FROM Compras_fac where MONTH(fec_in_com)"
+                    + " = ?");
+            pstm.setString(1, mes);
+            res = pstm.executeQuery();
+            res.next();
+            datos[2] = res.getString("iva");
+            res.close();
+            pstm.close();
+            
+            pstm = conn.prepareStatement("SELECT sum(tot_com) tot FROM Compras_fac where MONTH(fec_in_com)"
+                    + " = ?");
+            pstm.setString(1, mes);
+            res = pstm.executeQuery();
+            res.next();
+            datos[3] = res.getString("tot");
+            res.close();
+            pstm.close();
+       }catch(SQLException e){
+            System.out.println("Error al contar compras");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+       return datos;
+   }
+   
+   public String[][] obtenerFacturasMes(String mes){
+       int registros = 0;
+       try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Compras_fac where "
+                    + " MONTH(fec_in_com) = ?");
+            pstm.setString(1, mes);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+            pstm.close();            
+       }catch(SQLException e){
+            System.out.println("Error al obtener compras mes");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+       
+       String[][] datos = new String[registros][8];
+       
+       try{
+           PreparedStatement pstm = conn.prepareStatement("SELECT fol_com, fol_int_com, fec_in_com, "
+                   + "proveedores.rut_pro, dig_pro, raz_pro, neto_com, iva_com, tot_com FROM compras_fac "
+                   + "INNER JOIN proveedores on proveedores.rut_pro = compras_fac.rut_pro WHERE "
+                   + "MONTH(fec_in_com) = ?");
+           pstm.setString(1, mes);
+           ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while(res.next()){
+                String estfol = res.getString("fol_com");
+                String estfolin = res.getString("fol_int_com");
+                String estfec = res.getString("fec_in_com");
+                String estrut = res.getString("proveedores.rut_pro");
+                String estdig = res.getString("dig_pro");
+                String estraz = res.getString("raz_pro");
+                String estnet = res.getString("neto_com");
+                String estiva = res.getString("iva_com");
+                String esttot = res.getString("tot_com");
+                datos[i] = new String[]{estfol, estfolin, estfec, estrut + "-" + estdig, estraz, estnet, 
+                    estiva, esttot};
+                i++;
+            }
+            res.close();
+       }catch(Exception e){
+           
+       }
+       return datos;
+   }
 }

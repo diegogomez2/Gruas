@@ -35,11 +35,13 @@ public class controladorIngresarCompras {
         modelos2.modeloCompras compra = new modeloCompras();
         String folioInterno = compra.folioFac();
         boolean flag;
+        vistaIC.calTotales();
         String[] rut_dv = vistaIC.getComboRut().split("-");
         String[] data = {rut_dv[0], vistaIC.getComboTipoDTE(), vistaIC.getTextoFolio(), folioInterno, 
             vistaIC.getTextoFechaIngreso(), vistaIC.getTextoOrden(), vistaIC.getTextoFechaPago(),
             vistaIC.getComboForma(), vistaIC.getTextoAsunto(), vistaIC.getTextoObs(), 
-            vistaIC.getComboMedio(), vistaIC.getTextoBanco(), vistaIC.getTextoNumTC(), vistaIC.getCheckEstado()};
+            vistaIC.getComboMedio(), vistaIC.getTextoBanco(), vistaIC.getTextoNumTC(), vistaIC.getCheckEstado(), 
+            vistaIC.getComboClas(), vistaIC.getTextoTot(), vistaIC.getTextoIva(), vistaIC.getTextoNeto()};
         String id = miControlador.ingresarCompra(data);
         if(id.compareTo("incorrecto") == 0){
             return false;

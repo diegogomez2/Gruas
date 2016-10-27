@@ -82,8 +82,8 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="scrollObs" max="32767" attributes="0"/>
@@ -96,8 +96,9 @@
                                   </Group>
                                   <EmptySpace min="7" pref="7" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="0" attributes="0">
+                              <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="1" attributes="0">
+                                      <Component id="comboClasificacion" alignment="0" max="32767" attributes="0"/>
                                       <Component id="textoGiro" alignment="1" max="32767" attributes="0"/>
                                       <Component id="labelMedio" alignment="1" max="32767" attributes="0"/>
                                       <Component id="comboTipoDTE" alignment="1" max="32767" attributes="0"/>
@@ -108,10 +109,15 @@
                                       <Component id="comboForma" alignment="0" max="32767" attributes="0"/>
                                       <Component id="textoAsunto" alignment="0" max="32767" attributes="0"/>
                                       <Component id="comboMedio" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="labelTipoDTE" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="labelRut" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="labelBanco" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="labelContacto" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="1" attributes="0">
+                                              <Component id="labelTipoDTE" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="labelRut" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="labelBanco" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="labelContacto" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                      </Group>
                                   </Group>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
@@ -146,19 +152,43 @@
                                                   </Group>
                                                   <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                                               </Group>
+                                              <Group type="102" attributes="0">
+                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                      <Component id="checkEstado" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                              </Group>
                                           </Group>
                                       </Group>
                                   </Group>
                                   <EmptySpace min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="0" attributes="0">
+                              <Group type="102" alignment="1" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="labelGiro" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="labelOrden" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="labelForma" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="labelAsunto" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="labelObs" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="textoTot" alignment="0" max="32767" attributes="0"/>
                                   </Group>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                                      <Component id="textoIva" min="-2" pref="238" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="textoNeto" min="-2" pref="259" max="-2" attributes="0"/>
+                                      <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
@@ -209,6 +239,10 @@
                               <Component id="textoContacto" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="comboClasificacion" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="labelOrden" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="labelFechaPago" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -219,9 +253,15 @@
                               <Component id="textoFechaPago" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="labelForma" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="labelForma" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="comboForma" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="comboForma" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="checkEstado" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="labelAsunto" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -260,7 +300,25 @@
                           <Component id="scrollDatos" min="-2" pref="89" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jPanel3" min="-2" pref="161" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="textoTot" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="textoNeto" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Component id="textoIva" min="-2" pref="20" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -607,6 +665,83 @@
                     </Component>
                   </SubComponents>
                 </Container>
+                <Component class="javax.swing.JLabel" name="jLabel1">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Clasificaci&#xf3;n de compra"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JComboBox" name="comboClasificacion">
+                  <Properties>
+                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                      <StringArray count="13">
+                        <StringItem index="0" value="Activo fijo (maquinaria)"/>
+                        <StringItem index="1" value="Activo vehiculo"/>
+                        <StringItem index="2" value="Combustibles (petr&#xf3;leo/gas)"/>
+                        <StringItem index="3" value="Respuestos"/>
+                        <StringItem index="4" value="Neum&#xe1;ticos"/>
+                        <StringItem index="5" value="Aceite y lubricantes"/>
+                        <StringItem index="6" value="Mantenciones"/>
+                        <StringItem index="7" value="Gastos de oficina"/>
+                        <StringItem index="8" value="Gastos generales"/>
+                        <StringItem index="9" value="Arriendo leasing"/>
+                        <StringItem index="10" value="Salud y seguridad"/>
+                        <StringItem index="11" value="Molymet"/>
+                        <StringItem index="12" value="Otros"/>
+                      </StringArray>
+                    </Property>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel2">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Estado"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JCheckBox" name="checkEstado">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Pagada"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel3">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Total"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JFormattedTextField" name="textoTot">
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(FORMAT)"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel4">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Iva"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JFormattedTextField" name="textoIva">
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(FORMAT)"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel5">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Neto"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JFormattedTextField" name="textoNeto">
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(FORMAT)"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JButton" name="jButton1">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Actualizar montos"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+                  </Events>
+                </Component>
               </SubComponents>
             </Container>
           </SubComponents>

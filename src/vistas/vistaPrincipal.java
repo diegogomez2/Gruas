@@ -5,6 +5,7 @@
  */
 package vistas;
 
+import controladores.controladorPrincipal;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
@@ -53,8 +54,14 @@ public class vistaPrincipal extends javax.swing.JFrame {
         menuAgregarTarifa = new javax.swing.JMenuItem();
         menuOperaciones = new javax.swing.JMenu();
         itemOperaciones = new javax.swing.JMenuItem();
+        menuCobranza = new javax.swing.JMenu();
+        itemCobranzas = new javax.swing.JMenuItem();
+        itemGenerarReporte = new javax.swing.JMenuItem();
         menuCompras = new javax.swing.JMenu();
         itemCompras = new javax.swing.JMenuItem();
+        menuLibros = new javax.swing.JMenu();
+        itemLibroCompras = new javax.swing.JMenuItem();
+        itemLibroVentas = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu Principal");
@@ -130,6 +137,26 @@ public class vistaPrincipal extends javax.swing.JFrame {
 
         MenuPrincipal.add(menuOperaciones);
 
+        menuCobranza.setText("Cobranzas");
+
+        itemCobranzas.setText("Mostrar cobranzas");
+        itemCobranzas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemCobranzasActionPerformed(evt);
+            }
+        });
+        menuCobranza.add(itemCobranzas);
+
+        itemGenerarReporte.setText("Generar reporte");
+        itemGenerarReporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemGenerarReporteActionPerformed(evt);
+            }
+        });
+        menuCobranza.add(itemGenerarReporte);
+
+        MenuPrincipal.add(menuCobranza);
+
         menuCompras.setText("Compras");
 
         itemCompras.setText("Mostrar compras");
@@ -141,6 +168,26 @@ public class vistaPrincipal extends javax.swing.JFrame {
         menuCompras.add(itemCompras);
 
         MenuPrincipal.add(menuCompras);
+
+        menuLibros.setText("Libros");
+
+        itemLibroCompras.setText("Generar libro de compras");
+        itemLibroCompras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemLibroComprasActionPerformed(evt);
+            }
+        });
+        menuLibros.add(itemLibroCompras);
+
+        itemLibroVentas.setText("Generar libro de ventas");
+        itemLibroVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemLibroVentasActionPerformed(evt);
+            }
+        });
+        menuLibros.add(itemLibroVentas);
+
+        MenuPrincipal.add(menuLibros);
 
         setJMenuBar(MenuPrincipal);
 
@@ -229,6 +276,27 @@ public class vistaPrincipal extends javax.swing.JFrame {
         vistaPrincipal.add("Global otros pagos", miControlador.crearControladorGlobalOtrosPagosP());
     }//GEN-LAST:event_itemComprasActionPerformed
 
+    private void itemCobranzasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCobranzasActionPerformed
+        vistaPrincipal.removeAll();
+        controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
+        vistaPrincipal.addTab("Cobranza", miControlador.crearControladorCobranzasP());
+    }//GEN-LAST:event_itemCobranzasActionPerformed
+
+    private void itemGenerarReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemGenerarReporteActionPerformed
+        controladorPrincipal miControlador = new controladorPrincipal();
+        miControlador.generarReporte();
+    }//GEN-LAST:event_itemGenerarReporteActionPerformed
+
+    private void itemLibroComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemLibroComprasActionPerformed
+        controladorPrincipal miControlador = new controladorPrincipal();
+        miControlador.generarLibroCompras();
+    }//GEN-LAST:event_itemLibroComprasActionPerformed
+
+    private void itemLibroVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemLibroVentasActionPerformed
+        controladorPrincipal miControlador = new controladorPrincipal();
+        miControlador.generarLibroVentas();
+    }//GEN-LAST:event_itemLibroVentasActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -269,12 +337,18 @@ public class vistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar MenuPrincipal;
     private javax.swing.JMenuItem itemAgregarUsuario;
     private javax.swing.JMenuItem itemCambiarContraseña;
+    private javax.swing.JMenuItem itemCobranzas;
     private javax.swing.JMenuItem itemCompras;
+    private javax.swing.JMenuItem itemGenerarReporte;
+    private javax.swing.JMenuItem itemLibroCompras;
+    private javax.swing.JMenuItem itemLibroVentas;
     private javax.swing.JMenuItem itemOperaciones;
     private javax.swing.JMenuItem itemUsuarios;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem menuAgregarTarifa;
+    private javax.swing.JMenu menuCobranza;
     private javax.swing.JMenu menuCompras;
+    private javax.swing.JMenu menuLibros;
     private javax.swing.JMenu menuOperaciones;
     private javax.swing.JMenuItem menuTarifas;
     public javax.swing.JTabbedPane vistaPrincipal;

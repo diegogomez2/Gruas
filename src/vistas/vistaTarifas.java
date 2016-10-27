@@ -5,6 +5,13 @@
  */
 package vistas;
 
+import java.awt.Component;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -13,18 +20,27 @@ import javax.swing.table.DefaultTableModel;
  */
 public class vistaTarifas extends javax.swing.JPanel {
 
-    DefaultTableModel datos;
+//    DefaultTableModel datos;
+    MyTableModel datos;
+    NumberFormat FORMAT = NumberFormat.getCurrencyInstance();
+    DecimalFormatSymbols dfs = new DecimalFormatSymbols();
     
     public vistaTarifas(String tipo, Object[][] data) {
         initComponents();
-        Object[] columnNames = {"Tonalaje", "Dia", "Hora", "Tarifa"}; 
-        datos = new DefaultTableModel(data, columnNames) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
+//        Object[] columnNames = {"Tonalaje", "Dia", "Hora", "Tarifa"}; 
+        datos = new MyTableModel(data);
+        dfs.setCurrencySymbol("$");
+        dfs.setGroupingSeparator('.');
+        dfs.setMonetaryDecimalSeparator('.');
+        ((DecimalFormat) FORMAT).setDecimalFormatSymbols(dfs);
+//                new DefaultTableModel(data, columnNames) {
+//            @Override
+//            public boolean isCellEditable(int row, int column) {
+//                return false;
+//            }
+//        };
         tablaTarifas.setModel(datos);
+        tablaTarifas.getColumnModel().getColumn(3).setCellRenderer(new CurrencyTableCellRenderer());
     }
 
     /**
@@ -107,4 +123,57 @@ public class vistaTarifas extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaTarifas;
     // End of variables declaration//GEN-END:variables
+
+    public class MyTableModel extends DefaultTableModel{
+        public MyTableModel() {
+          super(new String[]{"Tonelaje", "Día", "Hora", "Tarifa"}, 0);
+        }
+        public MyTableModel(Object[][] data){
+            super(new String[]{"Tonelaje", "Día", "Hora", "Tarifa"}, 0);
+            int i = 0;
+            this.setRowCount(data.length);
+            for(Object[] data1 : data){
+                int ton = Integer.parseInt(data1[0].toString());
+                int tar = Integer.parseInt(data1[3].toString());
+                //this.setValueAt(ot, i, 0);
+                this.setValueAt(ton, i, 0);
+                this.setValueAt(data1[1], i, 1);
+                this.setValueAt(data1[2], i, 2);
+                this.setValueAt(tar, i, 3);
+                i++;
+            }
+        }
+        @Override
+        public Class getColumnClass(int column) {
+            switch (column) {
+                case 0:
+                    return Integer.class;
+                case 3:
+                    return Integer.class;
+                default:
+                    return String.class;
+          }
+        }
+        
+        @Override
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }
+    }
+    
+    public class CurrencyTableCellRenderer extends DefaultTableCellRenderer {
+        @Override
+        public final Component getTableCellRendererComponent(JTable table, Object value,
+            boolean isSelected, boolean hasFocus, int row, int column) {
+                final Component result = super.getTableCellRendererComponent(table, value,
+                    isSelected, hasFocus, row, column);
+                if (value instanceof Number) {
+                    setHorizontalAlignment(JLabel.RIGHT);
+                    setText(FORMAT.format(value));
+                } else {
+                    setText("");
+                }
+                return result;
+            }
+    }
 }

@@ -620,4 +620,218 @@ public class modeloFacturas {
         }
         return fec;
     }
+    
+    public String[] obtenerResumenMes(String mes){
+       int registros = 0;
+       String[] datos = new String[4];
+       try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM facturas where "
+                    + " MONTH(fec_fac) = ? and tipo_fac = ?");
+            pstm.setString(1, mes);
+            pstm.setString(2, "factura");
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+            pstm.close();
+            datos[0] = String.valueOf(registros);
+            
+            pstm = conn.prepareStatement("SELECT sum(neto_fac) neto FROM facturas where MONTH(fec_fac)"
+                    + " = ? and tipo_fac = ?");
+            pstm.setString(1, mes);
+            pstm.setString(2, "factura");
+            res = pstm.executeQuery();
+            res.next();
+            datos[1] = res.getString("neto");
+            res.close();
+            pstm.close();
+            
+            pstm = conn.prepareStatement("SELECT sum(iva_fac) iva FROM facturas where MONTH(fec_fac)"
+                    + " = ? and tipo_fac = ?");
+            pstm.setString(1, mes);
+            pstm.setString(2, "factura");
+            res = pstm.executeQuery();
+            res.next();
+            datos[2] = res.getString("iva");
+            res.close();
+            pstm.close();
+            
+            pstm = conn.prepareStatement("SELECT sum(tot_fac) tot FROM facturas where MONTH(fec_fac)"
+                    + " = ? and tipo_fac = ?");
+            pstm.setString(1, mes);
+            pstm.setString(2, "factura");
+            res = pstm.executeQuery();
+            res.next();
+            datos[3] = res.getString("tot");
+            res.close();
+            pstm.close();
+       }catch(SQLException e){
+            System.out.println("Error al contar facturas");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+       return datos;
+   }
+    
+    public String[] obtenerResumenNCMes(String mes){
+       int registros = 0;
+       String[] datos = new String[4];
+       try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM facturas where "
+                    + " MONTH(fec_fac) = ? and tipo_fac = ?");
+            pstm.setString(1, mes);
+            pstm.setString(2, "notacredito");
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+            pstm.close();
+            datos[0] = String.valueOf(registros);
+            
+            pstm = conn.prepareStatement("SELECT coalesce(sum(neto_fac), 0) neto FROM facturas where MONTH(fec_fac)"
+                    + " = ? and tipo_fac = ?");
+            pstm.setString(1, mes);
+            pstm.setString(2, "notacredito");
+            res = pstm.executeQuery();
+            res.next();
+            datos[1] = res.getString("neto");
+            res.close();
+            pstm.close();
+            
+            pstm = conn.prepareStatement("SELECT coalesce(sum(iva_fac), 0) iva FROM facturas where MONTH(fec_fac)"
+                    + " = ? and tipo_fac = ?");
+            pstm.setString(1, mes);
+            pstm.setString(2, "notacredito");
+            res = pstm.executeQuery();
+            res.next();
+            datos[2] = res.getString("iva");
+            res.close();
+            pstm.close();
+            
+            pstm = conn.prepareStatement("SELECT coalesce(sum(tot_fac), 0) tot FROM facturas where MONTH(fec_fac)"
+                    + " = ? and tipo_fac = ?");
+            pstm.setString(1, mes);
+            pstm.setString(2, "notacredito");
+            res = pstm.executeQuery();
+            res.next();
+            datos[3] = res.getString("tot");
+            res.close();
+            pstm.close();
+       }catch(SQLException e){
+            System.out.println("Error al contar facturas");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+       return datos;
+   }
+    
+    public String[][] obtenerFacturasMes(String mes){
+       int registros = 0;
+       try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Facturas where "
+                    + " MONTH(fec_fac) = ? and tipo_fac = ?");
+            pstm.setString(1, mes);
+            pstm.setString(2, "factura");
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+            pstm.close();            
+       }catch(SQLException e){
+            System.out.println("Error al obtener ventas mes");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+       
+       String[][] datos = new String[registros][8];
+       
+       try{
+           PreparedStatement pstm = conn.prepareStatement("SELECT fol_fac, fec_fac, "
+                   + "clientes.rut_cli, dig_cli, raz_cli, neto_fac, iva_fac, tot_fac FROM Facturas "
+                   + "INNER JOIN Jornadas on Jornadas.id_fac = Facturas.id_fac INNER JOIN Clientes ON "
+                   + "Clientes.rut_cli = Jornadas.rut_cli WHERE MONTH(fec_fac) = ? and tipo_fac = ?");
+           pstm.setString(1, mes);
+           pstm.setString(2, "factura");
+           ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while(res.next()){
+                String estfol = res.getString("fol_fac");
+                String estfec = res.getString("fec_fac");
+                String estrut = res.getString("Clientes.rut_cli");
+                String estdig = res.getString("dig_cli");
+                String estraz = res.getString("raz_cli");
+                String estnet = res.getString("neto_fac");
+                String estiva = res.getString("iva_fac");
+                String esttot = res.getString("tot_fac");
+                datos[i] = new String[]{estfol, estfec, estrut + "-" + estdig, estraz, estnet, 
+                    estiva, esttot};
+                i++;
+            }
+            res.close();
+       }catch(Exception e){
+           
+       }
+       return datos;
+   }
+    
+    public String[][] obtenerNCMes(String mes){
+       int registros = 0;
+       try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Facturas where "
+                    + " MONTH(fec_fac) = ? and tipo_fac = ?");
+            pstm.setString(1, mes);
+            pstm.setString(2, "notacredito");
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+            pstm.close();            
+       }catch(SQLException e){
+            System.out.println("Error al obtener ventas mes");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+       
+       String[][] datos = new String[registros][8];
+       
+       try{
+           PreparedStatement pstm = conn.prepareStatement("SELECT fol_fac, fec_fac, "
+                   + "clientes.rut_cli, dig_cli, raz_cli, neto_fac, iva_fac, tot_fac FROM Facturas "
+                   + "INNER JOIN Jornadas on Jornadas.id_fac = Facturas.id_fac INNER JOIN Clientes ON "
+                   + "Clientes.rut_cli = Jornadas.rut_cli WHERE MONTH(fec_fac) = ? and tipo_fac = ?");
+           pstm.setString(1, mes);
+           pstm.setString(2, "notacredito");
+           ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while(res.next()){
+                String estfol = res.getString("fol_fac");
+                String estfec = res.getString("fec_fac");
+                String estrut = res.getString("Clientes.rut_cli");
+                String estdig = res.getString("dig_cli");
+                String estraz = res.getString("raz_cli");
+                String estnet = res.getString("neto_fac");
+                String estiva = res.getString("iva_fac");
+                String esttot = res.getString("tot_fac");
+                datos[i] = new String[]{estfol, estfec, estrut + "-" + estdig, estraz, estnet, 
+                    estiva, esttot};
+                i++;
+            }
+            res.close();
+       }catch(Exception e){
+           
+       }
+       return datos;
+   }
 }

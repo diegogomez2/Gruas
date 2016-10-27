@@ -17,14 +17,30 @@ import vistas.vistaLogin;
 import modelos.modeloUsuarios;
 import vistas.vistaPrincipal;
 import controladores2.*;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import modelos.modeloFacturas;
+import modelos2.modeloCobranzas;
 import modelos2.modeloCompras;
 import modelos2.modeloProveedores;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
 
 /**
  *
  * @author Diego
  */
 public class controladorPrincipal {
+    DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
     static String tipo;
     public static String user;
     static controladorClientes micontroladorClientes;
@@ -44,6 +60,7 @@ public class controladorPrincipal {
     static controladorAgendaDeOtrosPagos micontroladorAgendaDeOtrosPagos;
     static controladorGlobalPagos micontroladorGlobalPagos;
     static controladorGlobalOtrosPagos micontroladorGlobalOtrosPagos;
+    static controladorCobranzas micontroladorCobranzas;
     static vistaLogin miVistaL;
     static vistaPrincipal mivistaP;
     static vistas.vistaJornadasP mivistaJP;
@@ -482,7 +499,7 @@ public class controladorPrincipal {
     }
     
     //AGENDA DE PAGOS
-    public JPanel crearControladorAgendaDePagosP() {
+    public JPanel crearControladorAgendaDePagosP()  {
         modelos2.modeloCompras compras;
         compras = new modelos2.modeloCompras();
         Object[][] data;
@@ -491,10 +508,10 @@ public class controladorPrincipal {
         return micontroladorAgendaDePagos.mostrarTabControlAgendaDePagos(tipo, data);
     }
     
-    public void crearControladorCambiarEstadoPago(String id) {
+    public void crearControladorCambiarEstadoPago(String id, String fac) {
         controladorCambiarEstadoPago micontroladorCEP;
         micontroladorCEP = new controladorCambiarEstadoPago();
-        micontroladorCEP.mostrarVistaCambiarEstadoPago(id);
+        micontroladorCEP.mostrarVistaCambiarEstadoPago(id, fac);
     }
     
     //AGENDA DE OTROS PAGOS
@@ -508,7 +525,7 @@ public class controladorPrincipal {
     }
     
     //GLOBAL DE PAGOS
-    public JPanel crearControladorGlobalPagosP() {
+    public JPanel crearControladorGlobalPagosP()  {
         modelos2.modeloCompras compras;
         compras = new modelos2.modeloCompras();
         Object[][] noPagados, pagados;
@@ -519,7 +536,7 @@ public class controladorPrincipal {
     }
     
     //GLOBAL OTROS PAGOS
-    public JPanel crearControladorGlobalOtrosPagosP() {
+    public JPanel crearControladorGlobalOtrosPagosP()  {
         modelos2.modeloCompras compras;
         compras = new modelos2.modeloCompras();
         Object[][] noPagados, pagados;
@@ -527,6 +544,34 @@ public class controladorPrincipal {
         pagados = compras.listarGlobalOtrosPagados();
         micontroladorGlobalOtrosPagos = new controladorGlobalOtrosPagos();
         return micontroladorGlobalOtrosPagos.mostrarTabControlGlobalOtrosPagos(tipo, noPagados, pagados);
+    }
+    
+    //COBRANZAS
+    public JPanel crearControladorCobranzasP() {
+        modelos2.modeloCobranzas cobranzas;
+        cobranzas = new modelos2.modeloCobranzas();
+        Object[][] data;
+        data = cobranzas.listarFacturadas();
+        micontroladorCobranzas = new controladorCobranzas();
+        return micontroladorCobranzas.mostrarTabControlCobranzasP(tipo, data);
+    }
+    
+    public void crearControladorGestionCobranza(String id, String tipo) {
+        controladorGestionCobranza micontroladorGC;
+        micontroladorGC = new controladorGestionCobranza();
+        micontroladorGC.mostrarVistaGestionCobranza(id, tipo);
+    }
+    
+    public void crearControladorGestionPago(String id) {
+        controladorGestionPago micontroladorGP;
+        micontroladorGP= new controladorGestionPago();
+        micontroladorGP.mostrarVistaGestionPago(id);
+    }
+    
+    public void crearControladorVerGestion(String id, String tipo) {
+        controladorVerGestion micontroladorVG;
+        micontroladorVG = new controladorVerGestion();
+        micontroladorVG.mostrarVistaVerGestion(id, tipo);
     }
     
     //Funciones
@@ -1011,9 +1056,9 @@ public class controladorPrincipal {
     }
     
     //Funciones agenda de pagos
-    public boolean cambiarEstadoPago(String estado, String id){
+    public boolean cambiarEstadoPago(String estado, String id, String fac){
         modeloCompras compra = new modeloCompras();
-        if(compra.cambiarEstadoPago(estado, id).compareTo("correcto") == 0){
+        if(compra.cambiarEstadoPago(estado, id, fac).compareTo("correcto") == 0){
             return true;
         }else{
             JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al cambiar el estado de pago de la cuota selecionada", "Error", JOptionPane.ERROR_MESSAGE);
@@ -1021,6 +1066,123 @@ public class controladorPrincipal {
         }
     }
     
+    //Funciones cobranza
+    public boolean gestionCobranza(String id, String tipo, String ges, String res, String fec, String obs){
+        modeloCobranzas cobranza = new modeloCobranzas();
+        if(cobranza.gestionCobranza(id, tipo, ges, res, fec, obs).compareTo("correcto") == 0){
+            return true;
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al gestionar la cobranza", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+    
+    public boolean gestionPago(String id, String monto){
+        modeloCobranzas cobranza = new modeloCobranzas();
+        if(cobranza.gestionPago(id, monto).compareTo("correcto") == 0){
+            return true;
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al gestionar el pago", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+    
+    public Object[][] obtenerGestion(String id, String tipo){
+        modeloCobranzas cobranza = new modeloCobranzas();
+        Object[][] data = cobranza.obtenerGestion(id, tipo);
+        return data;
+    }
+    
+//    public boolean gestionPago(String id){
+//        modeloCobranzas cobranza = new modeloCobranzas();
+//        if(cobranza.gestionCobranza(id).compareTo("correcto") == 0){
+//            return true;
+//        }else{
+//            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al gestionar la cobranza", "Error", JOptionPane.ERROR_MESSAGE);
+//            return false;
+//        }
+//    }
+    
+    public boolean generarReporte(){
+        try{
+            modeloCobranzas cobranza = new modeloCobranzas();
+            Object[][] facturas = cobranza.listarFacturadasGestion();
+            String file = "Reporte_cobranza_"+formatDate.format(new Date())+".xls";
+            HSSFWorkbook workbook = new HSSFWorkbook();
+            HSSFSheet sheet = workbook.createSheet("FirstSheet"); 
+            HSSFRow rowhead = sheet.createRow((short)0);
+            rowhead.createCell(0).setCellValue("Folio");
+            rowhead.createCell(1).setCellValue("Rut");
+            rowhead.createCell(2).setCellValue("Razón social");
+            rowhead.createCell(3).setCellValue("Fecha emisión");
+            rowhead.createCell(4).setCellValue("Días emisión");
+            rowhead.createCell(5).setCellValue("Neto");
+            rowhead.createCell(6).setCellValue("Iva");
+            rowhead.createCell(7).setCellValue("Total");
+            rowhead.createCell(8).setCellValue("Forma de pago");
+            rowhead.createCell(9).setCellValue("Medio de pago");
+            rowhead.createCell(10).setCellValue("Abono");
+            rowhead.createCell(11).setCellValue("Monto abono");
+            rowhead.createCell(12).setCellValue("Contacto");
+            rowhead.createCell(13).setCellValue("Teléfono");
+            rowhead.createCell(14).setCellValue("N° de gestiones");
+            rowhead.createCell(15).setCellValue("Tipo gestión");
+            rowhead.createCell(16).setCellValue("Resultado");
+            rowhead.createCell(17).setCellValue("Fecha gestión");
+            rowhead.createCell(18).setCellValue("Observaciones");
+            int i = 1;
+            for(Object[] fac:facturas){
+                rowhead = sheet.createRow(i);
+                i++;
+                rowhead.createCell(0).setCellValue(fac[0].toString());
+                rowhead.createCell(1).setCellValue(fac[1].toString());
+                rowhead.createCell(2).setCellValue(fac[2].toString());
+                rowhead.createCell(3).setCellValue(fac[3].toString());
+                rowhead.createCell(4).setCellValue(fac[4].toString());
+                rowhead.createCell(5).setCellValue(fac[5].toString());
+                rowhead.createCell(6).setCellValue(fac[6].toString());
+                rowhead.createCell(7).setCellValue(fac[7].toString());
+                rowhead.createCell(8).setCellValue(fac[8].toString());
+                rowhead.createCell(9).setCellValue(fac[9].toString());
+                rowhead.createCell(10).setCellValue(fac[10].toString());
+                rowhead.createCell(11).setCellValue(fac[11].toString());
+                rowhead.createCell(12).setCellValue(fac[12].toString());
+                rowhead.createCell(13).setCellValue(fac[13].toString());
+                rowhead.createCell(14).setCellValue(fac[14].toString());
+                rowhead.createCell(15).setCellValue(fac[15].toString());
+                rowhead.createCell(16).setCellValue(fac[16].toString());
+                rowhead.createCell(17).setCellValue(fac[17].toString());
+                rowhead.createCell(18).setCellValue(fac[18].toString());
+                FileOutputStream fileOut;
+                fileOut = new FileOutputStream(file);
+                workbook.write(fileOut);
+                fileOut.close();
+            }
+        }catch (IOException ex) {
+            Logger.getLogger(controladorPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR", JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }
+        JOptionPane.showMessageDialog(null, "Reporte generado con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+        return true;
+    }
+    
+    //Funciones generacion de libros
+    
+    public boolean generarLibroCompras(){
+        controladorCrearLibros miControlador = new controladorCrearLibros();
+        miControlador.crearLibroCompras();
+        return true;
+    }
+    
+    public boolean generarLibroVentas(){
+        controladorCrearLibros miControlador = new controladorCrearLibros();
+        miControlador.crearLibroVentas();
+        return true;
+    }
     //Funciones agenda de otros pagos
 //    public boolean cambiarEstadoOtrosPago(String estado, String id){
 //        modeloCompras compra = new modeloCompras();

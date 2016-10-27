@@ -153,6 +153,17 @@ public class vistaModificarCompras extends javax.swing.JDialog {
         labelObs = new javax.swing.JLabel();
         scrollObs = new javax.swing.JScrollPane();
         textoObs = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
+        comboClasificacion = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        checkEstado = new javax.swing.JCheckBox();
+        jLabel3 = new javax.swing.JLabel();
+        textoTot = new javax.swing.JFormattedTextField(FORMAT);
+        jLabel4 = new javax.swing.JLabel();
+        textoIva = new javax.swing.JFormattedTextField(FORMAT);
+        jLabel5 = new javax.swing.JLabel();
+        textoNeto = new javax.swing.JFormattedTextField(FORMAT);
+        jButton1 = new javax.swing.JButton();
         botonOK = new javax.swing.JButton();
         botonAceptar = new javax.swing.JButton();
 
@@ -202,7 +213,7 @@ public class vistaModificarCompras extends javax.swing.JDialog {
             }
         });
 
-        spinnerCantidad.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
+        spinnerCantidad.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
         spinnerCantidad.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 spinnerCantidadStateChanged(evt);
@@ -312,6 +323,27 @@ public class vistaModificarCompras extends javax.swing.JDialog {
         textoObs.setRows(5);
         scrollObs.setViewportView(textoObs);
 
+        jLabel1.setText("Clasificación de compra");
+
+        comboClasificacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activo fijo (maquinaria)", "Activo vehiculo", "Combustibles (petróleo/gas)", "Respuestos", "Neumáticos", "Aceite y lubricantes", "Mantenciones", "Gastos de oficina", "Gastos generales", "Arriendo leasing", "Salud y seguridad", "Molymet", "Otros" }));
+
+        jLabel2.setText("Estado");
+
+        checkEstado.setText("Pagada");
+
+        jLabel3.setText("Total");
+
+        jLabel4.setText("Iva");
+
+        jLabel5.setText("Neto");
+
+        jButton1.setText("Actualizar montos");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -329,6 +361,7 @@ public class vistaModificarCompras extends javax.swing.JDialog {
                         .addGap(7, 7, 7))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(comboClasificacion, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(textoGiro)
                             .addComponent(labelMedio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(comboTipoDTE, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -339,10 +372,13 @@ public class vistaModificarCompras extends javax.swing.JDialog {
                             .addComponent(comboForma, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(textoAsunto, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(comboMedio, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(labelTipoDTE, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelRut, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelBanco, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelContacto, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(labelTipoDTE, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(labelRut, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(labelBanco, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(labelContacto, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(20, 20, 20)
@@ -370,15 +406,34 @@ public class vistaModificarCompras extends javax.swing.JDialog {
                                             .addComponent(labelFechaIngreso)
                                             .addComponent(labelDireccion)
                                             .addComponent(spinnerNumCuotas))
-                                        .addGap(2, 2, 2)))))
+                                        .addGap(2, 2, 2))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(checkEstado)
+                                            .addComponent(jLabel2))
+                                        .addGap(0, 0, Short.MAX_VALUE)))))
                         .addContainerGap())
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(labelGiro)
                             .addComponent(labelOrden)
                             .addComponent(labelForma)
                             .addComponent(labelAsunto)
-                            .addComponent(labelObs))
+                            .addComponent(labelObs)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel3)
+                            .addComponent(textoTot))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(textoIva, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(textoNeto, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton1)
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -417,6 +472,10 @@ public class vistaModificarCompras extends javax.swing.JDialog {
                     .addComponent(textoFechaIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textoContacto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(comboClasificacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelOrden)
                     .addComponent(labelFechaPago))
@@ -425,9 +484,13 @@ public class vistaModificarCompras extends javax.swing.JDialog {
                     .addComponent(textoOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textoFechaPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(labelForma)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelForma)
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(comboForma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(comboForma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(checkEstado))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelAsunto)
@@ -460,7 +523,21 @@ public class vistaModificarCompras extends javax.swing.JDialog {
                 .addComponent(scrollDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(textoTot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(textoNeto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(textoIva, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1)
+                .addGap(9, 9, 9))
         );
 
         jScrollPane1.setViewportView(jPanel1);
@@ -592,6 +669,10 @@ public class vistaModificarCompras extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_botonAceptarActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        calTotales();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -631,10 +712,18 @@ public class vistaModificarCompras extends javax.swing.JDialog {
     private javax.swing.JButton botonMas;
     private javax.swing.JButton botonMenos;
     private javax.swing.JButton botonOK;
+    private javax.swing.JCheckBox checkEstado;
+    private javax.swing.JComboBox<String> comboClasificacion;
     private javax.swing.JComboBox comboForma;
     private javax.swing.JComboBox comboMedio;
     private javax.swing.JComboBox comboRut;
     private javax.swing.JComboBox comboTipoDTE;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -672,10 +761,13 @@ public class vistaModificarCompras extends javax.swing.JDialog {
     private org.jdesktop.swingx.JXDatePicker textoFechaPago;
     private javax.swing.JTextField textoFolio;
     private javax.swing.JTextField textoGiro;
+    private javax.swing.JFormattedTextField textoIva;
+    private javax.swing.JFormattedTextField textoNeto;
     private javax.swing.JTextField textoNumTC;
     private javax.swing.JTextArea textoObs;
     private javax.swing.JTextField textoOrden;
     private javax.swing.JTextField textoRazon;
+    private javax.swing.JFormattedTextField textoTot;
     // End of variables declaration//GEN-END:variables
     
     public void setComboForma(String comboForma) {
@@ -750,6 +842,30 @@ public class vistaModificarCompras extends javax.swing.JDialog {
         this.textoAsunto.setText(textoAsunto);
     }
     
+    public void setComboClas(String comboClas){
+        this.comboClasificacion.setSelectedItem(comboClas);
+    }
+    
+    public void setTextoTot(String textoTot){
+        this.textoTot.setValue(Integer.parseInt(textoTot));
+    }
+    
+    public void setTextoIva(String textoIva){
+        this.textoIva.setValue(Integer.parseInt(textoIva));
+    }
+    
+    public void setTextoNeto(String textoNeto){
+        this.textoNeto.setValue(Integer.parseInt(textoNeto));
+    }
+    
+    public void setCheckEstado(String checkEstado){
+        if(checkEstado.compareTo("Pagado") == 0){
+            this.checkEstado.setSelected(true);
+        }else{
+            this.checkEstado.setSelected(false);
+        }
+    }
+    
     public String getComboForma() {
         return comboForma.getSelectedItem().toString();
     }
@@ -814,6 +930,28 @@ public class vistaModificarCompras extends javax.swing.JDialog {
     
     public int getSpinnerCant(){
         return Integer.parseInt(spinnerCantidad.getValue().toString());
+    }
+    
+    public String getComboClas(){
+        return comboClasificacion.getSelectedItem().toString();
+    }
+    
+    public String getTextoTot(){
+        return textoTot.getValue().toString();
+    }
+    
+    public String getTextoIva(){
+        return textoIva.getValue().toString();
+    }
+    
+    public String getTextoNeto(){
+        return textoNeto.getValue().toString();
+    }
+    
+    public String getCheckEstado(){
+        if(!checkEstado.isEnabled()) return "No pagado";
+        if(checkEstado.isSelected()) return "Pagado";
+        return "No pagado";
     }
     
     public int getCuotas(){
@@ -1202,4 +1340,33 @@ public class vistaModificarCompras extends javax.swing.JDialog {
         }
     }
     
+    public void calTotales(){
+        int tot = 0;
+        int net = 0;
+        int iva = 0;
+        try{
+            for(int i = 0; i < tablaDetalle.getRowCount(); i++){
+                if(tablaDetalle.getValueAt(i, 4) == Boolean.FALSE){
+                    int totParcial = Integer.valueOf(tablaDetalle.getValueAt(i, 2).toString()) * 
+                            Integer.valueOf(tablaDetalle.getValueAt(i, 3).toString());
+                    tot += totParcial;
+                    net += totParcial;
+                }else{
+                    int ivaParcial = 0;
+                    int totParcial = Integer.valueOf(tablaDetalle.getValueAt(i, 2).toString()) * 
+                            Integer.valueOf(tablaDetalle.getValueAt(i, 3).toString());
+                    double ivaFloat = totParcial * 0.19;
+                    ivaParcial = (int)Math.round(ivaFloat);
+                    tot += totParcial;
+                    net += totParcial + ivaParcial;
+                    iva += ivaParcial;
+                }
+            }
+        }catch(NullPointerException e){
+            
+        }
+        textoTot.setValue(tot);
+        textoIva.setValue(iva);
+        textoNeto.setValue(net);
+    }
 }
