@@ -18,7 +18,6 @@ public class controladorGestionPago {
     static vistaGestionPago vistaGP;
     
     public void mostrarVistaGestionPago(String fol, String tipo){
-        controladorPrincipal miControlador = new controladorPrincipal();
         modelos2.modeloCobranzas cobranza = new modeloCobranzas();
         int saldo = cobranza.getSaldo(fol, tipo);
         vistaGP = new vistaGestionPago(new javax.swing.JFrame(), true, saldo);

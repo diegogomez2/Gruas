@@ -17,23 +17,23 @@ import vistas.vistaLogin;
 import modelos.modeloUsuarios;
 import vistas.vistaPrincipal;
 import controladores2.*;
-import java.io.FileNotFoundException;
+import controladores3.controladorEditarSueldos;
+import controladores3.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import modelos.modeloFacturas;
+import modelos.modeloEmpleados;
 import modelos2.modeloCobranzas;
 import modelos2.modeloCompras;
 import modelos2.modeloProveedores;
+import modelos3.modeloRemuneraciones;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Row;
 
 /**
  *
@@ -579,6 +579,18 @@ public class controladorPrincipal {
         controladorVerGestion micontroladorVG;
         micontroladorVG = new controladorVerGestion();
         micontroladorVG.mostrarVistaVerGestion(id, tipo);
+    }
+    
+    //REMUNERACIONES
+    public void crearControladorEditarSueldos() {
+        controladorEditarSueldos micontrolador = new controladorEditarSueldos();
+        micontrolador.mostrarVistaEditarSueldos();
+    }
+    
+    void crearControladorRemuneracionesEmpleado(String rut){
+        controladorRemuneracionEmpleado micontroladorRE;
+        micontroladorRE = new controladorRemuneracionEmpleado();
+        micontroladorRE.mostrarVistaRemuneracionEmpleado(rut);
     }
     
     //Funciones
@@ -1206,6 +1218,54 @@ public class controladorPrincipal {
             miControlador.crearLibroVentas(year, mes);
             return true;
         }
+    }
+    
+    //Funciones remuneraciones
+    
+    public int obtenerSueldoMin(){
+        modelos3.modeloRemuneraciones sueldos = new modeloRemuneraciones();
+        int sueldo_min = sueldos.obtenerSueldoMin();
+        return sueldo_min;
+    }
+    
+    public int obtenerSueldoBase(){
+        modelos3.modeloRemuneraciones sueldos = new modeloRemuneraciones();
+        int sueldo_base = sueldos.obtenerSueldoBase();
+        return sueldo_base;
+    }
+    
+    public boolean editarSueldos(String min, String base){
+        modeloRemuneraciones sueldos = new modeloRemuneraciones();
+        if(sueldos.editarSueldos(min, base) > 0){
+            return true;
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al cambiar el valor de sueldo", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+    
+    public String[] obtenerRemuneracionEmpleadoPorRut(String rut){
+        modelos.modeloEmpleados sueldos = new modeloEmpleados();
+        String[] data = sueldos.obtenerRemuneracionPorRut(rut);
+        return data;
+    }
+    
+    public int obtenerBonoAnt(String ant){
+        modelos3.modeloRemuneraciones sueldos = new modeloRemuneraciones();
+        int bono = sueldos.obtenerBonoAnt(ant);
+        return bono;
+    }
+    
+    public int obtenerDescAFP(String afp){
+        modelos3.modeloRemuneraciones afps = new modeloRemuneraciones();
+        int desc = afps.obtenerDescAFP(afp);
+        return desc;
+    }
+    
+    public int obtenerDescSalud(String nom){
+        modelos3.modeloRemuneraciones salud = new modeloRemuneraciones();
+        int desc = salud.obtenerDescSalud(nom);
+        return desc;
     }
     //Funciones agenda de otros pagos
 //    public boolean cambiarEstadoOtrosPago(String estado, String id){

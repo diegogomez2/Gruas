@@ -204,20 +204,7 @@ public class vistaGestionPago extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void textoMontoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textoMontoFocusLost
-        try{
-            Object value = Integer.parseInt(textoMonto.getText());
-            if (value instanceof Number) {
-                if(((Number) value).intValue() > saldo) value = saldo;
-                textoMonto.setHorizontalAlignment(JLabel.RIGHT);
-                textoMonto.setText(FORMAT.format(value));
-                textoSaldo.setText(FORMAT.format(saldo - (int)value));
-            } else {
-                textoMonto.setText("");
-                textoSaldo.setText(FORMAT.format(saldo));
-            }
-        }catch(NumberFormatException e){
-            textoMonto.setText("");
-        }
+        setTextoMonto(getTextoMonto());
     }//GEN-LAST:event_textoMontoFocusLost
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -321,6 +308,27 @@ public class vistaGestionPago extends javax.swing.JDialog {
         monto = monto.replace(".", "");
         return monto;
         
+    }
+    
+    public void setTextoMonto(String monto){
+        try{
+            Object value = Integer.parseInt(monto);
+            if (value instanceof Number) {
+                if(((Number) value).intValue() > saldo) value = saldo;
+                textoMonto.setHorizontalAlignment(JLabel.RIGHT);
+                textoMonto.setText(FORMAT.format(value));
+                textoSaldo.setText(FORMAT.format(saldo - (int)value));
+            } else {
+                textoMonto.setHorizontalAlignment(JLabel.RIGHT);
+                textoMonto.setText("");
+                textoSaldo.setText(FORMAT.format(saldo));
+            }
+        }catch(NumberFormatException e){
+            textoMonto.setHorizontalAlignment(JLabel.RIGHT);
+            textoMonto.setText("");
+            textoMonto.setText(FORMAT.format(0));
+            textoSaldo.setText(FORMAT.format(saldo));
+        }
     }
 
     public String getTextoSaldo() {

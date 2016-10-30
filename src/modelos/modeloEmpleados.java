@@ -382,4 +382,45 @@ public class modeloEmpleados {
        }
         return registros;
     }
+    
+    public String[] obtenerRemuneracionPorRut(String rut) {
+        String[] data = new String[5];
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT rut_emp, dig_emp, nom_emp, apP_emp, "
+                    + "sueldo_emp, afp_emp, sal_emp, TIMESTAMPDIFf(YEAR, fin_emp, CURDATE()) ant, colacion_emp col, transporte_emp trans"
+                    + " FROM empleados WHERE rut_emp = ?");
+            pstm.setString(1, rut);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            String estrut = res.getString("rut_emp");
+            String estfrut = "";
+            int cont = 0;
+            for(int i = estrut.length() - 1; i >= 0; i--){
+                estfrut = estrut.substring(i , i+1) + estfrut;
+                cont ++;
+                if(cont == 3 && i != 0){
+                    estfrut = "." + estfrut;
+                    cont = 0;
+                }
+            }
+            String estdig = res.getString("dig_emp");
+            String estnom = res.getString("nom_emp");
+            String estapP = res.getString("apP_emp");
+            String estsueldo = res.getString("sueldo_emp");
+            String estafp = res.getString("afp_emp");
+            String estsal = res.getString("sal_emp");
+            String estant = res.getString("ant");
+            String estcol = res.getString("col");
+            String esttrans = res.getString("trans");
+            data = new String[]{estfrut + "-" + estdig , estnom + " " + estapP, estsueldo, estafp, estsal, estant, estcol, esttrans};
+        }catch(SQLException e){
+            System.out.println("Error al obtener empleado por rut");
+            System.out.println(e);
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+        }
+        return data;
+    }
 }

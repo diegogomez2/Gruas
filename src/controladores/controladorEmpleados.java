@@ -25,6 +25,11 @@ public class controladorEmpleados {
         controladorPrincipal miControlador = new controladorPrincipal();
         miControlador.crearControladorDetalleEmpleado(rut); 
     }
+    
+    public void irVistaRemuneraciones(String rut) {
+        controladorPrincipal miControlador = new controladorPrincipal();
+        miControlador.crearControladorRemuneracionesEmpleado(rut); 
+    }
 
     public void crearControladorPrincipal(JTabbedPane tabs) {
         controladorPrincipal miControlador = new controladorPrincipal();

@@ -63,6 +63,8 @@ public class vistaPrincipal extends javax.swing.JFrame {
         itemLibroCompras = new javax.swing.JMenuItem();
         itemLibroVentas = new javax.swing.JMenuItem();
         itemLibroAtrasado = new javax.swing.JMenuItem();
+        menuRemuneraciones = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu Principal");
@@ -198,6 +200,18 @@ public class vistaPrincipal extends javax.swing.JFrame {
 
         MenuPrincipal.add(menuLibros);
 
+        menuRemuneraciones.setText("Remuneraciones");
+
+        jMenuItem1.setText("Editar sueldos");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        menuRemuneraciones.add(jMenuItem1);
+
+        MenuPrincipal.add(menuRemuneraciones);
+
         setJMenuBar(MenuPrincipal);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -311,6 +325,11 @@ public class vistaPrincipal extends javax.swing.JFrame {
         miControlador.crearControladorGenerarLibroAtrasado();
     }//GEN-LAST:event_itemLibroAtrasadoActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        controladorPrincipal miControlador = new controladorPrincipal();
+        miControlador.crearControladorEditarSueldos();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -360,11 +379,13 @@ public class vistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemOperaciones;
     private javax.swing.JMenuItem itemUsuarios;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem menuAgregarTarifa;
     private javax.swing.JMenu menuCobranza;
     private javax.swing.JMenu menuCompras;
     private javax.swing.JMenu menuLibros;
     private javax.swing.JMenu menuOperaciones;
+    private javax.swing.JMenu menuRemuneraciones;
     private javax.swing.JMenuItem menuTarifas;
     public javax.swing.JTabbedPane vistaPrincipal;
     // End of variables declaration//GEN-END:variables

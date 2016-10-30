@@ -27,7 +27,7 @@ public class vistaIngresarClientes extends javax.swing.JDialog {
         for(int i = 0; i < regiones.length; i++){
             listaRegiones[i] = regiones[i][1].toString();
         }
-        comboRegion.setModel(new DefaultComboBoxModel<String>(listaRegiones));
+        comboRegion.setModel(new DefaultComboBoxModel<>(listaRegiones));
         cargarComunas(regiones);
         cargarCiudades(regiones);
         comboRegion.addActionListener(new ActionListener() {
@@ -44,7 +44,6 @@ public class vistaIngresarClientes extends javax.swing.JDialog {
         controladores.controladorIngresarClientes miControlador = new controladorIngresarClientes();
         int index = comboRegion.getSelectedIndex();
         int region = Integer.parseInt(regiones[index][0].toString());
-        System.out.println(index+" "+region);
         Object[] comunas = miControlador.cargarComunas(region);
         String[] listaComunas = new String[comunas.length];
         for(int i = 0; i < comunas.length; i++){

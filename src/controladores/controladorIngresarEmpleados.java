@@ -6,6 +6,7 @@
 package controladores;
 
 import javax.swing.JOptionPane;
+import modelos3.modeloRemuneraciones;
 import vistas.vistaIngresarEmpleados;
 
 /**
@@ -17,7 +18,12 @@ public class controladorIngresarEmpleados {
     static vistas.vistaIngresarEmpleados vistaIE;
     
     public void mostrarVistaIngresarEmpleados(Object[][] dataRegiones) {
+        controladorPrincipal miControlador = new controladorPrincipal();
+        int sueldo_min = miControlador.obtenerSueldoMin();
+        int sueldo_base = miControlador.obtenerSueldoBase();
         vistaIE = new vistaIngresarEmpleados(new javax.swing.JFrame(), true, dataRegiones);
+        vistaIE.setSueldoMin(sueldo_min);
+        vistaIE.setSueldoBase(sueldo_base);
         vistaIE.setLocationRelativeTo(null);
         vistaIE.setVisible(true);
     }
@@ -87,12 +93,6 @@ public class controladorIngresarEmpleados {
         if (vistaIE.getTextoFechaNac().compareTo("") == 0) {
             respuesta += "-Fecha de Nacimiento.\n";
         }
-//        if (vistaIE.getTextoTelefono().compareTo("") == 0) {
-//            respuesta += "-Teléfono.\n";
-//        }
-//        if (vistaIE.getTextoCorreo().compareTo("") == 0) {
-//            respuesta += "-Correo.\n";
-//        }
         if (vistaIE.getComboCargo().compareTo("") == 0) {
             respuesta += "-Cargo.\n";
         }

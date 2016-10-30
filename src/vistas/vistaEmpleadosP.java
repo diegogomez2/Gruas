@@ -89,6 +89,7 @@ public class vistaEmpleadosP extends javax.swing.JPanel {
         textoFiltro = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         botonActualizar = new javax.swing.JButton();
+        botonVistaRemuneracion = new javax.swing.JButton();
 
         tablaEmpleados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -140,6 +141,13 @@ public class vistaEmpleadosP extends javax.swing.JPanel {
             }
         });
 
+        botonVistaRemuneracion.setText("Ver remuneración");
+        botonVistaRemuneracion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonVistaRemuneracionActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -156,6 +164,8 @@ public class vistaEmpleadosP extends javax.swing.JPanel {
                         .addComponent(textoFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(botonVistaRemuneracion)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botonAgregar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botonEliminar)
@@ -164,7 +174,7 @@ public class vistaEmpleadosP extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {botonAgregar, botonEliminar, botonModificar});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {botonAgregar, botonEliminar, botonModificar, botonVistaRemuneracion});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -180,7 +190,8 @@ public class vistaEmpleadosP extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonModificar)
                     .addComponent(botonEliminar)
-                    .addComponent(botonAgregar))
+                    .addComponent(botonAgregar)
+                    .addComponent(botonVistaRemuneracion))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -226,7 +237,7 @@ public class vistaEmpleadosP extends javax.swing.JPanel {
             JTabbedPane tabs = (JTabbedPane)this.getParent();
             miControlador.crearControladorPrincipal(tabs);
         }else{
-            JOptionPane.showMessageDialog(tablaEmpleados, "Debe seleccionar un empleado para ser modificado");
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un empleado para ser modificado");
         }
     }//GEN-LAST:event_botonModificarActionPerformed
 
@@ -241,12 +252,26 @@ public class vistaEmpleadosP extends javax.swing.JPanel {
         miControlador.crearControladorPrincipal(tabs);
     }//GEN-LAST:event_botonActualizarActionPerformed
 
+    private void botonVistaRemuneracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonVistaRemuneracionActionPerformed
+        controladores.controladorEmpleados miControlador = new controladores.controladorEmpleados();
+        boolean selected = tablaEmpleados.getSelectedRowCount() > 0;
+        if(selected){
+            int row = getFilaSeleccionada();
+            String rut = getRutFila(row);
+            String[] rut_dv = rut.split("-");
+            miControlador.irVistaRemuneraciones(rut_dv[0]);
+        }else{
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un empleado para ver su remuneración");
+        }
+    }//GEN-LAST:event_botonVistaRemuneracionActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonActualizar;
     private javax.swing.JButton botonAgregar;
     private javax.swing.JButton botonEliminar;
     private javax.swing.JButton botonModificar;
+    private javax.swing.JButton botonVistaRemuneracion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaEmpleados;
