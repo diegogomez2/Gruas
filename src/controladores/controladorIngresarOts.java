@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.regex.Pattern;
 import javax.swing.JTabbedPane;
 import vistas.vistaIngresarOts;
-import vistas.vistaJornadasP;
 
 /**
  *
@@ -49,6 +48,8 @@ public class controladorIngresarOts {
         vistaIO.setSpinnerHoraLlegada(data[3]);
         vistaIO.setTon(data[14]);
         vistaIO.setTextoCiudad(data[15]);
+        System.out.println(data[17]);
+        vistaIO.setRutEmp(data[17]);
         vistaIO.setTextoFechaOt();
         List<List<String>> valores = calcularTarifa(data[0], data[2], data[1], data[3], data[14]);
         int size = valores.size();
@@ -57,7 +58,7 @@ public class controladorIngresarOts {
         vistaIO.setTextoBruto(String.format("%,d", Integer.parseInt(valores.get(size - 1).get(2))));
         vistaIO.setHoras((int)Float.parseFloat(valores.get(size - 1).get(3)));
         vistaIO.setLocationRelativeTo(null);
-        vistaIO.setVisible(true);        
+        vistaIO.setVisible(true); 
     }
     
     public void crearControladorPrincipal(JTabbedPane tabs){

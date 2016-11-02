@@ -131,6 +131,50 @@ public class modeloRemuneraciones {
         return desc;
     }
     
+    public int obtenerDescIsapre(String rut){
+        int desc = 0;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT val_isa_emp val FROM Empleados WHERE "
+                    + "rut_emp = ?");
+            pstm.setString(1, rut);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            desc = res.getInt("val");
+            res.close();
+            pstm.close();
+       }catch(SQLException e){
+            System.out.println("Error obtener val isapre empleado");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        return desc;
+    }
+    
+    public String obtenerIsapreEmpleado(String rut){
+        String desc = "";
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT isa_emp isa FROM Empleados WHERE "
+                    + "rut_emp = ?");
+            pstm.setString(1, rut);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            desc = res.getString("isa");
+            res.close();
+            pstm.close();
+       }catch(SQLException e){
+            System.out.println("Error obtener isapre empleado");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        return desc;
+    }
+    
     public int obtenerDescSalud(String salud){
         int desc = 0;
         try{
@@ -144,7 +188,28 @@ public class modeloRemuneraciones {
             res.close();
             pstm.close();
        }catch(SQLException e){
-            System.out.println("Error obtener desc afp");
+            System.out.println("Error obtener desc salud");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        return desc;
+    }
+    
+    public int obtenerBono300(){
+        int desc = 0;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT val_bon val FROM Bonos WHERE tie_bon = ?");
+            pstm.setString(1, "300");
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            desc = res.getInt("val");
+            res.close();
+            pstm.close();
+       }catch(SQLException e){
+            System.out.println("Error obtener bono 300");
             System.out.println(e);
        }catch(ClassNotFoundException e){
             System.out.println(e);

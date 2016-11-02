@@ -146,7 +146,8 @@ public class modeloJornadas {
             PreparedStatement pstm = conn.prepareStatement("SELECT fsal_jor, horsal_jor, freg_jor, horlleg_jor,"
                     + "coalesce(des_gru,'') as des_gru, raz_cli, coalesce(nom_emp,'') as nom_emp, "
                     + "coalesce(apP_emp,'') as apP_emp, coalesce(apM_emp,'') as apM_emp, freg_jor, obs_jor, clientes.rut_cli, clientes.dig_cli,"
-                    + "gir_cli, dir_cli, tel_cli, ton_gru, ciu_cli, coalesce(obs_cli,'') as obs_cli FROM jornadas INNER JOIN clientes ON "
+                    + "gir_cli, dir_cli, tel_cli, ton_gru, ciu_cli, coalesce(obs_cli,'') as obs_cli, "
+                    + "Empleados.rut_emp FROM jornadas INNER JOIN clientes ON "
                     + "jornadas.rut_cli = clientes.rut_cli LEFT JOIN gruas ON gruas.pat_gru = jornadas.pat_gru "
                     + "LEFT JOIN empleados ON empleados.rut_emp = jornadas.rut_emp WHERE id_jor = ?");
             pstm.setString(1, id);
@@ -169,8 +170,9 @@ public class modeloJornadas {
             String estton = res.getString("ton_gru");
             String estciu = res.getString("ciu_cli");
             String estobscli = res.getString("obs_cli");
+            String estrutemp = res.getString("Empleados.rut_emp");
             data = new String[]{estfsal, esthorsal, estfreg, esthorlleg, estdes, estnom, estobs
-                    , estrutcli, estdigcli, estraz, estgir, estdir, esttel, id, estton, estciu, estobscli};
+                    , estrutcli, estdigcli, estraz, estgir, estdir, esttel, id, estton, estciu, estobscli, estrutemp};
         }catch(SQLException e){
             System.out.println("Error obtener jornada por id");
             System.out.println(e);

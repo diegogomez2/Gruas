@@ -6,7 +6,6 @@
 package controladores;
 
 import javax.swing.JOptionPane;
-import modelos3.modeloRemuneraciones;
 import vistas.vistaIngresarEmpleados;
 
 /**
@@ -24,6 +23,7 @@ public class controladorIngresarEmpleados {
         vistaIE = new vistaIngresarEmpleados(new javax.swing.JFrame(), true, dataRegiones);
         vistaIE.setSueldoMin(sueldo_min);
         vistaIE.setSueldoBase(sueldo_base);
+        vistaIE.setTextoSueldoBase(sueldo_min);
         vistaIE.setLocationRelativeTo(null);
         vistaIE.setVisible(true);
     }
@@ -35,7 +35,8 @@ public class controladorIngresarEmpleados {
             vistaIE.getTextoApMaterno(), vistaIE.getTextoFechaNac(), vistaIE.getTextoTelefono(), 
             vistaIE.getTextoCorreo(), vistaIE.getComboCargo(), vistaIE.getTextoSueldo(), vistaIE.getComboAFP(),
             vistaIE.getComboSalud(), vistaIE.getTextoFechaIn(), vistaIE.getTextoDir(), vistaIE.getComboRegion(),
-            vistaIE.getComboComuna()};
+            vistaIE.getComboComuna(), vistaIE.getIsapre(), vistaIE.getValorIsapre(), vistaIE.getTextoColacion(), 
+            vistaIE.getTextoTransporte()};
         boolean flag = miControlador.ingresarEmpleado(data);
         return flag;    
     }

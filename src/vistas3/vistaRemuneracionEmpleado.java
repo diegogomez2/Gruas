@@ -62,6 +62,8 @@ public class vistaRemuneracionEmpleado extends javax.swing.JDialog {
         jLabel8 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         textoAnticipo = new javax.swing.JTextField();
+        jLabel19 = new javax.swing.JLabel();
+        textoCesantia = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         textoDescSalud = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
@@ -77,6 +79,8 @@ public class vistaRemuneracionEmpleado extends javax.swing.JDialog {
         textoNombre = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         textoTransporte = new javax.swing.JTextField();
+        jLabel20 = new javax.swing.JLabel();
+        textoBonoColacion = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         textoSueldoLiquido = new javax.swing.JTextField();
 
@@ -90,17 +94,47 @@ public class vistaRemuneracionEmpleado extends javax.swing.JDialog {
             }
         });
 
+        jPanel1.setEnabled(false);
+
         jLabel1.setText("Rut");
 
         jLabel15.setText("Total tributable");
+
+        textoTotalImponible.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        textoTotalImponible.setEnabled(false);
 
         jLabel7.setText("Otros bonos");
 
         jLabel14.setText("Total imponible");
 
+        textoAFP.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        textoAFP.setEnabled(false);
+
+        textoTotalTrib.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        textoTotalTrib.setEnabled(false);
+
         jLabel10.setText("Colación");
 
+        textoOtrosBonos.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        textoOtrosBonos.setEnabled(false);
+
+        textoSueldoBase.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        textoSueldoBase.setEnabled(false);
+
+        textoSalud.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        textoSalud.setEnabled(false);
+
+        textoRut.setForeground(new java.awt.Color(255, 51, 51));
+        textoRut.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        textoRut.setEnabled(false);
+
+        textoColacion.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        textoColacion.setEnabled(false);
+
         jLabel4.setText("Bono años trabajados");
+
+        textoBonoAntiguedad.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        textoBonoAntiguedad.setEnabled(false);
 
         jLabel12.setText("Salud");
 
@@ -109,6 +143,14 @@ public class vistaRemuneracionEmpleado extends javax.swing.JDialog {
         jLabel8.setText("AFP");
 
         jLabel18.setText("Anticipo");
+
+        textoAnticipo.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        textoAnticipo.setEnabled(false);
+
+        jLabel19.setText("Cesantía");
+
+        textoCesantia.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        textoCesantia.setEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -126,7 +168,8 @@ public class vistaRemuneracionEmpleado extends javax.swing.JDialog {
                     .addComponent(jLabel3)
                     .addComponent(jLabel7)
                     .addComponent(jLabel14)
-                    .addComponent(jLabel18))
+                    .addComponent(jLabel18)
+                    .addComponent(jLabel19))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(textoRut, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
@@ -138,11 +181,12 @@ public class vistaRemuneracionEmpleado extends javax.swing.JDialog {
                     .addComponent(textoSalud, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
                     .addComponent(textoTotalTrib, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
                     .addComponent(textoColacion)
-                    .addComponent(textoAnticipo))
+                    .addComponent(textoAnticipo)
+                    .addComponent(textoCesantia))
                 .addContainerGap())
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {textoAFP, textoBonoAntiguedad, textoColacion, textoOtrosBonos, textoRut, textoSalud, textoSueldoBase, textoTotalImponible, textoTotalTrib});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {textoAFP, textoBonoAntiguedad, textoCesantia, textoColacion, textoOtrosBonos, textoRut, textoSalud, textoSueldoBase, textoTotalImponible, textoTotalTrib});
 
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,6 +221,10 @@ public class vistaRemuneracionEmpleado extends javax.swing.JDialog {
                     .addComponent(textoSalud, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel19)
+                    .addComponent(textoCesantia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
                     .addComponent(textoTotalTrib, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -187,29 +235,55 @@ public class vistaRemuneracionEmpleado extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel18)
                     .addComponent(textoAnticipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap())
         );
+
+        textoDescSalud.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        textoDescSalud.setEnabled(false);
 
         jLabel16.setText("Impuesto renta");
 
         jLabel5.setText("Bono 300");
 
+        textoImpRenta.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        textoImpRenta.setEnabled(false);
+
+        textoGratLegal.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        textoGratLegal.setEnabled(false);
+
         jLabel2.setText("Trabajador");
 
         jLabel11.setText("Transporte");
+
+        textoDescAFP.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        textoDescAFP.setEnabled(false);
 
         jLabel13.setText("Descuento salud");
 
         jLabel6.setText("Gratificación legal");
 
+        textoBono300.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        textoBono300.setEnabled(false);
+
+        textoNombre.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        textoNombre.setEnabled(false);
+
         jLabel9.setText("Descuento afp");
+
+        textoTransporte.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        textoTransporte.setEnabled(false);
+
+        jLabel20.setText("Bono colación");
+
+        textoBonoColacion.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        textoBonoColacion.setEnabled(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
@@ -219,10 +293,6 @@ public class vistaRemuneracionEmpleado extends javax.swing.JDialog {
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(textoGratLegal, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(textoBono300, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -239,7 +309,15 @@ public class vistaRemuneracionEmpleado extends javax.swing.JDialog {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(textoTransporte, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(textoTransporte, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel20))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(textoBono300, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
+                            .addComponent(textoBonoColacion))))
                 .addContainerGap())
         );
 
@@ -260,7 +338,11 @@ public class vistaRemuneracionEmpleado extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(textoBono300, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(73, 73, 73)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel20)
+                    .addComponent(textoBonoColacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(45, 45, 45)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(textoDescAFP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -281,6 +363,9 @@ public class vistaRemuneracionEmpleado extends javax.swing.JDialog {
 
         jLabel17.setText("Sueldo líquido");
 
+        textoSueldoLiquido.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        textoSueldoLiquido.setEnabled(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -295,13 +380,13 @@ public class vistaRemuneracionEmpleado extends javax.swing.JDialog {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(53, 53, 53))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(28, 28, 28)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(43, 43, 43))))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(43, 43, 43))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -310,15 +395,14 @@ public class vistaRemuneracionEmpleado extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(38, 38, 38)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel17)
-                            .addComponent(textoSueldoLiquido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(91, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17)
+                    .addComponent(textoSueldoLiquido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addGap(37, 37, 37))
         );
 
         pack();
@@ -383,7 +467,9 @@ public class vistaRemuneracionEmpleado extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -397,6 +483,8 @@ public class vistaRemuneracionEmpleado extends javax.swing.JDialog {
     private javax.swing.JTextField textoAnticipo;
     private javax.swing.JTextField textoBono300;
     private javax.swing.JTextField textoBonoAntiguedad;
+    private javax.swing.JTextField textoBonoColacion;
+    private javax.swing.JTextField textoCesantia;
     private javax.swing.JTextField textoColacion;
     private javax.swing.JTextField textoDescAFP;
     private javax.swing.JTextField textoDescSalud;
@@ -487,5 +575,15 @@ public class vistaRemuneracionEmpleado extends javax.swing.JDialog {
     public void setTextoSueldoLiquido(String textoSueldoLiquido){
         this.textoSueldoLiquido.setHorizontalAlignment(JLabel.RIGHT);
         this.textoSueldoLiquido.setText(FORMAT.format(Integer.parseInt(textoSueldoLiquido)));
+    }
+    
+    public void setTextoCesantia(String textoCesantia){
+        this.textoCesantia.setHorizontalAlignment(JLabel.RIGHT);
+        this.textoCesantia.setText(FORMAT.format(Integer.parseInt(textoCesantia)));
+    }
+    
+    public void setTextoBonoCol(String textoBonoCol){
+        this.textoBonoColacion.setHorizontalAlignment(JLabel.RIGHT);
+        this.textoBonoColacion.setText(FORMAT.format(Integer.parseInt(textoBonoCol)));
     }
 }

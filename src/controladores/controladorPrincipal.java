@@ -1256,6 +1256,12 @@ public class controladorPrincipal {
         return bono;
     }
     
+    public int obtenerBono300(){
+        modelos3.modeloRemuneraciones sueldos = new modeloRemuneraciones();
+        int bono = sueldos.obtenerBono300();
+        return bono;
+    }
+    
     public int obtenerDescAFP(String afp){
         modelos3.modeloRemuneraciones afps = new modeloRemuneraciones();
         int desc = afps.obtenerDescAFP(afp);
@@ -1265,6 +1271,18 @@ public class controladorPrincipal {
     public int obtenerDescSalud(String nom){
         modelos3.modeloRemuneraciones salud = new modeloRemuneraciones();
         int desc = salud.obtenerDescSalud(nom);
+        return desc;
+    }
+    
+    public int obtenerDescIsapre(String rut){
+        modelos3.modeloRemuneraciones salud = new modeloRemuneraciones();
+        int desc = salud.obtenerDescIsapre(rut);
+        return desc;
+    }
+    
+    public String obtenerIsapreEmpleado(String rut){
+        modelos3.modeloRemuneraciones salud = new modeloRemuneraciones();
+        String desc = salud.obtenerIsapreEmpleado(rut);
         return desc;
     }
     //Funciones agenda de otros pagos

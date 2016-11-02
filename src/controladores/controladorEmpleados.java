@@ -51,4 +51,13 @@ public class controladorEmpleados {
         miControlador.crearControladorModificarEmpleados(rut, nombres);
     }
     
+    public void agregarColacion(String rut, int horas){
+        modelos.modeloEmpleados empleado = new modelos.modeloEmpleados();
+        empleado.agregarColacion(rut, horas);
+    }
+    
+    public void agregarHoras(String rut, int horas){
+        modelos.modeloEmpleados emp = new modelos.modeloEmpleados();
+        emp.actualizarHorasMes(rut, horas);
+    }
 }

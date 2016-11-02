@@ -17,18 +17,11 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.UIManager;
-import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
-import org.jdesktop.swingx.JXDatePicker;
-import org.jdesktop.swingx.plaf.basic.CalendarHeaderHandler;
-import org.jdesktop.swingx.plaf.basic.SpinningCalendarHeaderHandler;
 
 /**
  *
@@ -60,6 +53,10 @@ public class vistaIngresarEmpleados extends javax.swing.JDialog {
     public vistaIngresarEmpleados(java.awt.Frame parent, boolean modal, final Object[][] regiones) {
         super(parent, modal);
         initComponents();
+        labelIsapre.setVisible(false);
+        labelValorPlan.setVisible(false);
+        textoIsapre.setVisible(false);
+        textoValorPlan.setVisible(false);
         dfs.setCurrencySymbol("$");
         dfs.setGroupingSeparator('.');
         dfs.setMonetaryDecimalSeparator('.');
@@ -114,6 +111,14 @@ public class vistaIngresarEmpleados extends javax.swing.JDialog {
         labelFechaIngreso = new javax.swing.JLabel();
         textoFechaIn = new org.jdesktop.swingx.JXDatePicker();
         jButton1 = new javax.swing.JButton();
+        labelIsapre = new javax.swing.JLabel();
+        textoIsapre = new javax.swing.JTextField();
+        labelValorPlan = new javax.swing.JLabel();
+        textoValorPlan = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        textoColacion = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        textoTransporte = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         labelDir = new javax.swing.JLabel();
         textoDir = new javax.swing.JTextField();
@@ -170,6 +175,11 @@ public class vistaIngresarEmpleados extends javax.swing.JDialog {
         labelSalud.setText("Salud");
 
         comboSalud.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Fonasa", "Isapre" }));
+        comboSalud.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboSaludActionPerformed(evt);
+            }
+        });
 
         labelFechaIngreso.setText("Fecha de ingreso");
 
@@ -177,6 +187,32 @@ public class vistaIngresarEmpleados extends javax.swing.JDialog {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        labelIsapre.setText("Isapre");
+
+        labelValorPlan.setText("Valor plan");
+
+        textoValorPlan.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                textoValorPlanFocusLost(evt);
+            }
+        });
+
+        jLabel2.setText("Colación");
+
+        textoColacion.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                textoColacionFocusLost(evt);
+            }
+        });
+
+        jLabel3.setText("Transporte");
+
+        textoTransporte.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                textoTransporteFocusLost(evt);
             }
         });
 
@@ -193,15 +229,35 @@ public class vistaIngresarEmpleados extends javax.swing.JDialog {
                         .addComponent(comboCargo, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(labelAFP, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(comboAFP, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(labelFechaIngreso))
+                    .addComponent(labelFechaIngreso)
+                    .addComponent(jLabel2)
+                    .addComponent(textoColacion, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(labelSueldo)
-                    .addComponent(labelSalud)
-                    .addComponent(textoSueldo)
-                    .addComponent(comboSalud, 0, 136, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(labelSueldo, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelSalud, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(textoSueldo, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(comboSalud, javax.swing.GroupLayout.Alignment.LEADING, 0, 136, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(labelIsapre)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(textoIsapre))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(labelValorPlan)
+                                .addGap(20, 20, 20))
+                            .addComponent(textoValorPlan)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(textoTransporte))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -226,9 +282,23 @@ public class vistaIngresarEmpleados extends javax.swing.JDialog {
                     .addComponent(comboAFP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(comboSalud, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(labelFechaIngreso)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelFechaIngreso)
+                    .addComponent(labelIsapre)
+                    .addComponent(labelValorPlan))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(textoFechaIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(textoFechaIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textoIsapre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textoValorPlan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(textoColacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textoTransporte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -259,7 +329,7 @@ public class vistaIngresarEmpleados extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(textoDir)
-                    .addComponent(comboRegion, 0, 259, Short.MAX_VALUE)
+                    .addComponent(comboRegion, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(comboComuna, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -374,18 +444,21 @@ public class vistaIngresarEmpleados extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(botonAceptar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(botonCancelar)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botonAceptar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botonCancelar)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -395,8 +468,9 @@ public class vistaIngresarEmpleados extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -449,6 +523,68 @@ public class vistaIngresarEmpleados extends javax.swing.JDialog {
         textoSueldo.setText(FORMAT.format(sueldo_base));
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void comboSaludActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboSaludActionPerformed
+        if(comboSalud.getSelectedIndex() == 0){
+            labelIsapre.setVisible(false);
+            labelValorPlan.setVisible(false);
+            textoIsapre.setVisible(false);
+            textoValorPlan.setVisible(false);
+        }else{
+            labelIsapre.setVisible(true);
+            labelValorPlan.setVisible(true);
+            textoIsapre.setVisible(true);
+            textoValorPlan.setVisible(true);
+        }
+    }//GEN-LAST:event_comboSaludActionPerformed
+
+    private void textoValorPlanFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textoValorPlanFocusLost
+        try{
+            Object value = Integer.parseInt(textoValorPlan.getText());
+            if (value instanceof Number) {
+                textoValorPlan.setHorizontalAlignment(JLabel.RIGHT);
+                textoValorPlan.setText(FORMAT.format(value));
+            } else {
+                textoValorPlan.setHorizontalAlignment(JLabel.RIGHT);
+                textoValorPlan.setText("");
+            }
+        }catch(NumberFormatException e){
+            textoValorPlan.setHorizontalAlignment(JLabel.RIGHT);
+            textoValorPlan.setText("");
+        }
+    }//GEN-LAST:event_textoValorPlanFocusLost
+
+    private void textoTransporteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textoTransporteFocusLost
+        try{
+            Object value = Integer.parseInt(textoTransporte.getText());
+            if (value instanceof Number) {
+                textoTransporte.setHorizontalAlignment(JLabel.RIGHT);
+                textoTransporte.setText(FORMAT.format(value));
+            } else {
+                textoTransporte.setHorizontalAlignment(JLabel.RIGHT);
+                textoTransporte.setText("");
+            }
+        }catch(NumberFormatException e){
+            textoTransporte.setHorizontalAlignment(JLabel.RIGHT);
+            textoTransporte.setText("");
+        }
+    }//GEN-LAST:event_textoTransporteFocusLost
+
+    private void textoColacionFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textoColacionFocusLost
+        try{
+            Object value = Integer.parseInt(textoColacion.getText());
+            if (value instanceof Number) {
+                textoColacion.setHorizontalAlignment(JLabel.RIGHT);
+                textoColacion.setText(FORMAT.format(value));
+            } else {
+                textoColacion.setHorizontalAlignment(JLabel.RIGHT);
+                textoColacion.setText("");
+            }
+        }catch(NumberFormatException e){
+            textoColacion.setHorizontalAlignment(JLabel.RIGHT);
+            textoColacion.setText("");
+        }
+    }//GEN-LAST:event_textoColacionFocusLost
+
     /**
      * @param args the command line arguments
      */
@@ -493,6 +629,8 @@ public class vistaIngresarEmpleados extends javax.swing.JDialog {
     private javax.swing.JComboBox comboSalud;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -506,22 +644,28 @@ public class vistaIngresarEmpleados extends javax.swing.JDialog {
     private javax.swing.JLabel labelDir;
     private javax.swing.JLabel labelFechaIngreso;
     private javax.swing.JLabel labelFechaNac;
+    private javax.swing.JLabel labelIsapre;
     private javax.swing.JLabel labelNombres;
     private javax.swing.JLabel labelRegion;
     private javax.swing.JLabel labelRut;
     private javax.swing.JLabel labelSalud;
     private javax.swing.JLabel labelSueldo;
     private javax.swing.JLabel labelTelefono;
+    private javax.swing.JLabel labelValorPlan;
     private javax.swing.JTextField textoApMaterno;
     private javax.swing.JTextField textoApPaterno;
+    private javax.swing.JTextField textoColacion;
     private javax.swing.JTextField textoCorreo;
     private javax.swing.JTextField textoDir;
     private org.jdesktop.swingx.JXDatePicker textoFechaIn;
     private org.jdesktop.swingx.JXDatePicker textoFechaNac;
+    private javax.swing.JTextField textoIsapre;
     private javax.swing.JTextField textoNombres;
     private javax.swing.JTextField textoRut;
     private javax.swing.JTextField textoSueldo;
     private javax.swing.JTextField textoTelefono;
+    private javax.swing.JTextField textoTransporte;
+    private javax.swing.JTextField textoValorPlan;
     // End of variables declaration//GEN-END:variables
 
     public String getComboAFP() {
@@ -585,7 +729,29 @@ public class vistaIngresarEmpleados extends javax.swing.JDialog {
     }
 
     public String getTextoSueldo() {
-        return textoSueldo.getText();
+        String sueldo = textoSueldo.getText();
+        sueldo = sueldo.replace("$", "");
+        sueldo = sueldo.replace(".", "");
+        return sueldo;
+    }
+    
+    public String getTextoColacion() {
+        if(textoColacion.getText().compareTo("") == 0){
+            return "0";
+        }
+        String colacion = textoColacion.getText();
+        colacion = colacion.replace("$", "");
+        colacion = colacion.replace(".", "");
+        return colacion;
+    }
+    public String getTextoTransporte() {
+        if(textoTransporte.getText().compareTo("") == 0){
+            return "0";
+        }
+        String transporte = textoTransporte.getText();
+        transporte = transporte.replace("$", "");
+        transporte = transporte.replace(".", "");
+        return transporte;
     }
 
     public String getTextoTelefono() {
@@ -606,5 +772,25 @@ public class vistaIngresarEmpleados extends javax.swing.JDialog {
     
     public int getSueldoBase(){
         return sueldo_base;
+    }
+    
+    public String getIsapre(){
+        return textoIsapre.getText();
+    }
+    
+    public String getValorIsapre(){
+        String valor = textoValorPlan.getText();
+        if(valor.compareTo("") == 0){
+            return "0";
+        }
+        valor = valor.replace("$", "");
+        valor = valor.replace(".", "");
+        return valor;
+    }
+    
+    public void setTextoSueldoBase(int base){
+        textoSueldo.setText(String.valueOf(base));
+        textoSueldo.setHorizontalAlignment(JLabel.RIGHT);
+        textoSueldo.setText(FORMAT.format(base));
     }
 }

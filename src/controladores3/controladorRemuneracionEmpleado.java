@@ -24,28 +24,43 @@ public class controladorRemuneracionEmpleado {
         int grat = (int)(base * 0.25);
         //BONO ANTIGUEDAD
         int bonoAnt = miControlador.obtenerBonoAnt(data[5]);
+        //BONO 300
+        int bono300 = miControlador.obtenerBono300();
+        int totalBon300 = bono300 * Integer.parseInt(data[9]);
         //BONO RESPONSABILIDAD
         int bonoResp = 0;
         //BONO ASIGNACION VOLUNTARIA
         int bonoAV = 0;
         //BONO COLACION
-        int bonoCol = 0;
+        int bonoCol = Integer.parseInt(data[8]);
+        int totalBonCol = (int)(((double) base * 0.0077777) * ((double)bonoCol / 2));
         //HORAS EXTRA
         int horasEx = 0;
         //TOTAL IMPONIBLE
-        int totImp = base + grat + bonoAnt + bonoResp + bonoAV + bonoCol + horasEx;
+        int totImp = base + grat + bonoAnt + bonoResp + bonoAV + totalBonCol + totalBon300 + horasEx;
         //DESCUENTO AFP
         int descAFP = miControlador.obtenerDescAFP(data[3]);
         int totalAFP = (int)(totImp * ((double)descAFP / 1000));
         //DESCUENTO SALUD
-        int descSalud = miControlador.obtenerDescSalud(data[4]);
-        int totalSalud = (int)(totImp * ((double)descSalud / 10000));
+        int descSalud = 0, totalSalud = 0;
+        String salud;
+        if(data[4].toLowerCase().compareTo("fonasa") == 0){
+            salud = "FONASA";
+            descSalud = miControlador.obtenerDescSalud(data[4]);
+            totalSalud = (int)(totImp * ((double)descSalud / 10000));
+        }else{
+            salud = miControlador.obtenerIsapreEmpleado(rut);
+            descSalud = miControlador.obtenerDescIsapre(rut);
+            totalSalud = descSalud;
+        }
+        //DESCUENTO CESANTIA
+        int ces = (int)(totImp * 0.006);
         //COLACION 
         int col = Integer.parseInt(data[6]);
         //TRANSPORTE
         int trans = Integer.parseInt(data[7]);
         //TOTAL TRIBUTABLE
-        int totTrib = totImp - totalAFP - totalSalud + col + trans;
+        int totTrib = totImp - totalAFP - totalSalud - ces + col + trans;
         //LIQUIDO
         int liq = totTrib;
         vistaRE = new vistaRemuneracionEmpleado(new javax.swing.JFrame(), true);
@@ -54,13 +69,15 @@ public class controladorRemuneracionEmpleado {
         vistaRE.setTextoSueldoBase(data[2]);
         vistaRE.setTextoGratLegal(String.valueOf(grat));
         vistaRE.setTextoBonoAntiguedad(String.valueOf(bonoAnt));
-        vistaRE.setTextoBono300(String.valueOf(0));
+        vistaRE.setTextoBono300(String.valueOf(totalBon300));
+        vistaRE.setTextoBonoCol(String.valueOf(totalBonCol));
         vistaRE.setTextoOtrosBonos(String.valueOf(0));
         vistaRE.setTextoTotalImponible(String.valueOf(totImp));
         vistaRE.setTextoAFP(data[3]);
-        vistaRE.setTextoSalud(data[4]);
+        vistaRE.setTextoSalud(salud);
         vistaRE.setTextoDescAFP(String.valueOf(totalAFP));
         vistaRE.setTextoDescSalud(String.valueOf(totalSalud));
+        vistaRE.setTextoCesantia(String.valueOf(ces));
         vistaRE.setTextoColacion(data[6]);
         vistaRE.setTextoTransporte(data[7]);
         vistaRE.setTextoTotalTributable(String.valueOf(totTrib));
