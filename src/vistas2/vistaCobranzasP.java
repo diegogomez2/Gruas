@@ -43,8 +43,8 @@ public class vistaCobranzasP extends javax.swing.JPanel {
     
     
     public vistaCobranzasP(String tipo, Object[][] data) {
-        datos = new MyTableModel(data);
         initComponents();
+        datos = new MyTableModel(data);
         dfs.setCurrencySymbol("$");
         dfs.setGroupingSeparator('.');
         dfs.setMonetaryDecimalSeparator('.');
@@ -52,12 +52,13 @@ public class vistaCobranzasP extends javax.swing.JPanel {
         
         tablaFacturadas.setModel(datos);
         TableColumnModel tcm = tablaFacturadas.getColumnModel();
-        tcm.removeColumn(tcm.getColumn(14));
-        tcm.removeColumn(tcm.getColumn(14));
+        tcm.removeColumn(tcm.getColumn(15));
+        tcm.removeColumn(tcm.getColumn(15));
         tablaFacturadas.getColumnModel().getColumn(5).setCellRenderer(new CurrencyTableCellRenderer());
         tablaFacturadas.getColumnModel().getColumn(6).setCellRenderer(new CurrencyTableCellRenderer());
         tablaFacturadas.getColumnModel().getColumn(7).setCellRenderer(new CurrencyTableCellRenderer());
         tablaFacturadas.getColumnModel().getColumn(11).setCellRenderer(new CurrencyTableCellRenderer());
+        tablaFacturadas.getColumnModel().getColumn(12).setCellRenderer(new CurrencyTableCellRenderer());
         tablaFacturadas.setAutoCreateRowSorter(true);
         if(tablaFacturadas.getRowCount() > 0) tablaFacturadas.setRowSelectionInterval(0, 0);
         tablaFacturadas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -97,6 +98,7 @@ public class vistaCobranzasP extends javax.swing.JPanel {
         botonCobranza = new javax.swing.JButton();
         botonPago = new javax.swing.JButton();
         botonVer = new javax.swing.JButton();
+        botonVerPagos = new javax.swing.JButton();
 
         tablaFacturadas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -148,11 +150,18 @@ public class vistaCobranzasP extends javax.swing.JPanel {
             }
         });
 
+        botonVerPagos.setText("Ver pagos");
+        botonVerPagos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonVerPagosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 684, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,6 +173,8 @@ public class vistaCobranzasP extends javax.swing.JPanel {
                         .addComponent(textoFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(botonVerPagos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botonVer)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botonPago)
@@ -172,7 +183,7 @@ public class vistaCobranzasP extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {botonCobranza, botonPago, botonVer});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {botonCobranza, botonPago, botonVer, botonVerPagos});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,7 +199,8 @@ public class vistaCobranzasP extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonCobranza)
                     .addComponent(botonPago)
-                    .addComponent(botonVer))
+                    .addComponent(botonVer)
+                    .addComponent(botonVerPagos))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -231,10 +243,10 @@ public class vistaCobranzasP extends javax.swing.JPanel {
         if(selected){
             int row = getFilaSeleccionada();
             String id = getIdFila(row);
-            String fol = getFacFila(row);
+            String fac = getFacFila(row);
             String tipo = getTipoFila(row);
             try {
-                miControlador.irVistaGestionPago(id, tipo);
+                miControlador.irVistaGestionPago(fac, id, tipo);
             } catch (ParseException ex) {
                 Logger.getLogger(vistaCobranzasP.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -250,9 +262,9 @@ public class vistaCobranzasP extends javax.swing.JPanel {
         boolean selected = tablaFacturadas.getSelectedRowCount() > 0;
         if(selected){
             int row = getFilaSeleccionada();
-            String id = getIdFila(row);
+//            String id = getIdFila(row);
+            String id = getFacFila(row);
             String tipo = getTipoFila(row);
-            System.out.println(id);
             try {
                 miControlador.irVistaVerGestion(id, tipo);
             } catch (ParseException ex) {
@@ -265,12 +277,33 @@ public class vistaCobranzasP extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_botonVerActionPerformed
 
+    private void botonVerPagosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonVerPagosActionPerformed
+        controladorCobranzas miControlador = new controladorCobranzas();
+        boolean selected = tablaFacturadas.getSelectedRowCount() > 0;
+        if(selected){
+            int row = getFilaSeleccionada();
+//            String id = getIdFila(row);
+            String id = getFacFila(row);
+            String tipo = getTipoFila(row);
+            try {
+                miControlador.irVistaVerPagos(id, tipo);
+            } catch (ParseException ex) {
+                Logger.getLogger(vistaCobranzasP.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            JTabbedPane tabs = (JTabbedPane)this.getParent();
+            miControlador.crearControladorPrincipal(tabs);
+        }else{
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una factura para visualizar sus pagos");
+        }
+    }//GEN-LAST:event_botonVerPagosActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonActualizar;
     private javax.swing.JButton botonCobranza;
     private javax.swing.JButton botonPago;
     private javax.swing.JButton botonVer;
+    private javax.swing.JButton botonVerPagos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaFacturadas;
@@ -285,11 +318,11 @@ public class vistaCobranzasP extends javax.swing.JPanel {
     }
     
     public String getTipoFila(int row){
-        return tablaFacturadas.getModel().getValueAt(tablaFacturadas.convertColumnIndexToModel(row), 14).toString();
+        return tablaFacturadas.getModel().getValueAt(tablaFacturadas.convertColumnIndexToModel(row), 15).toString();
     }
     
     public String getFacFila(int row){
-        return tablaFacturadas.getModel().getValueAt(tablaFacturadas.convertColumnIndexToModel(row), 15).toString();
+        return tablaFacturadas.getModel().getValueAt(tablaFacturadas.convertColumnIndexToModel(row), 16).toString();
     }
     
     public void filtrar(String query) {
@@ -301,11 +334,11 @@ public class vistaCobranzasP extends javax.swing.JPanel {
     public class MyTableModel extends DefaultTableModel{
         public MyTableModel() {
           super(new String[]{"N°Folio", "Rut", "Razon", "Fecha", "Días emisión", "Neto", "IVA", 
-             "Total", "Forma pago", "Medio pago", "Abono", "Monto abono", "Contacto", "Telefono", "Tipo", "Fac"}, 0);
+             "Total", "Forma pago", "Medio pago", "Abono", "Monto abono", "Saldo", "Contacto", "Telefono", "Tipo", "Fac"}, 0);
         }
         public MyTableModel(Object[][] data){
             super(new String[]{"N°Folio", "Rut", "Razon", "Fecha", "Días emisión", "Neto", "IVA", 
-             "Total", "Forma pago", "Medio pago", "Abono", "Monto abono", "Contacto", "Telefono", "Tipo", "Fac"}, 0);
+             "Total", "Forma pago", "Medio pago", "Abono", "Monto abono", "Saldo", "Contacto", "Telefono", "Tipo", "Fac"}, 0);
             
             int i = 0;
             this.setRowCount(data.length);
@@ -317,6 +350,7 @@ public class vistaCobranzasP extends javax.swing.JPanel {
                 int iva = Integer.parseInt(data1[6].toString());
                 int tot = Integer.parseInt(data1[7].toString());
                 int mon = Integer.parseInt(data1[11].toString());
+                int saldo = tot - mon;
                 //this.setValueAt(ot, i, 0);
                 this.setValueAt(fol, i, 0);
                 this.setValueAt(data1[1], i, 1);
@@ -330,10 +364,11 @@ public class vistaCobranzasP extends javax.swing.JPanel {
                 this.setValueAt(data1[9], i, 9);
                 this.setValueAt(data1[10], i, 10);
                 this.setValueAt(mon, i, 11);
-                this.setValueAt(data1[12], i, 12);
-                this.setValueAt(data1[13], i, 13);
-                this.setValueAt(data1[14], i, 14);
-                this.setValueAt(data1[15], i, 15);
+                this.setValueAt(saldo, i, 12);
+                this.setValueAt(data1[12], i, 13);
+                this.setValueAt(data1[13], i, 14);
+                this.setValueAt(data1[14], i, 15);
+                this.setValueAt(data1[15], i, 16);
                 i++;
             }
         }
@@ -351,6 +386,8 @@ public class vistaCobranzasP extends javax.swing.JPanel {
                 case 7:
                     return Integer.class;
                 case 11:
+                    return Integer.class;
+                case 12:
                     return Integer.class;
                 default:
                     return String.class;

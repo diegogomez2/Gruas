@@ -11,7 +11,6 @@ import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
 /**
  *

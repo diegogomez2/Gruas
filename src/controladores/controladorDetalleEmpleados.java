@@ -20,6 +20,9 @@ class controladorDetalleEmpleados {
         controladorPrincipal miControlador = new controladorPrincipal();
         String data[] = miControlador.obtenerEmpleadoPorRut(rut);
         vistaDE = new vistaDetalleEmpleados(new javax.swing.JFrame(), true);
+        if(data[10].toLowerCase().compareTo("fonasa") == 0){
+            vistaDE.hideIsapre();
+        }
         vistaDE.setTextoRut(data[0]);
         vistaDE.setTextoNombres(data[1]);
         vistaDE.setTextoApPaterno(data[2]);
@@ -35,6 +38,14 @@ class controladorDetalleEmpleados {
         vistaDE.setTextoDir(data[12]);
         vistaDE.setComboRegion(data[13]);
         vistaDE.setComboComuna(data[14]);
+        vistaDE.setTextoColacion(data[15]);
+        vistaDE.setTextoTransporte(data[16]);
+        vistaDE.setTextoIsapre(data[17]);
+        vistaDE.setTextoValorPlan(data[18]);
+        vistaDE.setTextoBonoAd(data[19]);
+        vistaDE.setTextoValorBonoAd(data[20]);
+        vistaDE.setTextoCaja(data[21]);
+        vistaDE.setTextoAF(data[22]);
         vistaDE.setLocationRelativeTo(null);
         vistaDE.setVisible(true);
     }

@@ -40,6 +40,8 @@ public class controladorDetalleCompras {
         vistaDC.setTextoTot(data[18]);
         vistaDC.setTextoIva(data[19]);
         vistaDC.setTextoNeto(data[20]);
+        vistaDC.setTextoImpuestoEsp(data[21]);
+        vistaDC.setTextoImpuestoVar(data[22]);
         if(data[10].compareTo("Otros pagos") != 0){
             vistaDC.hideOtrosPagos();
         }
@@ -54,6 +56,7 @@ public class controladorDetalleCompras {
             vistaDC.hideMedioPago();
         }
         vistaDC.agregarProductos(id);
+        vistaDC.agregarImpuestos(id);
         vistaDC.setLocationRelativeTo(null);
         vistaDC.setVisible(true);
     }

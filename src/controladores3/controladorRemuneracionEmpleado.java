@@ -27,17 +27,22 @@ public class controladorRemuneracionEmpleado {
         //BONO 300
         int bono300 = miControlador.obtenerBono300();
         int totalBon300 = bono300 * Integer.parseInt(data[9]);
+        //BONO ADICIONAL
+        int bonoAd = Integer.parseInt(data[10]);
         //BONO RESPONSABILIDAD
         int bonoResp = 0;
         //BONO ASIGNACION VOLUNTARIA
-        int bonoAV = 0;
+        int bonoAV = Integer.parseInt(data[13]);
+        int totalBonoAV = (int)((double) base * 0.0077777 * bonoAV);
         //BONO COLACION
         int bonoCol = Integer.parseInt(data[8]);
         int totalBonCol = (int)(((double) base * 0.0077777) * ((double)bonoCol / 2));
         //HORAS EXTRA
-        int horasEx = 0;
+        int horasEx = Integer.parseInt(data[11]);
+        int cantHorEx = Integer.parseInt(data[12]);
+        int totalHorEx = (int)((double) base * 0.0077777 * horasEx);
         //TOTAL IMPONIBLE
-        int totImp = base + grat + bonoAnt + bonoResp + bonoAV + totalBonCol + totalBon300 + horasEx;
+        int totImp = base + grat + bonoAnt + bonoAd + bonoResp + totalBonoAV + totalBonCol + totalBon300 + totalHorEx;
         //DESCUENTO AFP
         int descAFP = miControlador.obtenerDescAFP(data[3]);
         int totalAFP = (int)(totImp * ((double)descAFP / 1000));
@@ -55,14 +60,29 @@ public class controladorRemuneracionEmpleado {
         }
         //DESCUENTO CESANTIA
         int ces = (int)(totImp * 0.006);
+        //TOTAL TRIBUTABLE
+        int totTrib = totImp - totalAFP - totalSalud - ces;
+        //CAJA COMPENSACION
+        int caja = Integer.parseInt(data[14]);
+        //ASIGNACION FAMILIAR
+        int af = Integer.parseInt(data[15]);
+        //LIQ ALCANZADO
+        int liqAl = totTrib - caja;
         //COLACION 
         int col = Integer.parseInt(data[6]);
         //TRANSPORTE
         int trans = Integer.parseInt(data[7]);
-        //TOTAL TRIBUTABLE
-        int totTrib = totImp - totalAFP - totalSalud - ces + col + trans;
+        //ANTICIPO ADELANTO PRESTAMOS
+        int antic = Integer.parseInt(data[16]);
+        int adel = Integer.parseInt(data[17]);
+        int pres = Integer.parseInt(data[18]);
+        int cuo = Integer.parseInt(data[19]);
+        int cuoPres = 0;
+        if(cuo != 0){
+            cuoPres = pres / cuo;
+        }
         //LIQUIDO
-        int liq = totTrib;
+        int liq = liqAl + col + trans + af - antic - adel - cuoPres;
         vistaRE = new vistaRemuneracionEmpleado(new javax.swing.JFrame(), true);
         vistaRE.setTextoRut(data[0]);
         vistaRE.setTextoNombre(data[1]);
@@ -70,8 +90,10 @@ public class controladorRemuneracionEmpleado {
         vistaRE.setTextoGratLegal(String.valueOf(grat));
         vistaRE.setTextoBonoAntiguedad(String.valueOf(bonoAnt));
         vistaRE.setTextoBono300(String.valueOf(totalBon300));
+        vistaRE.setTextoBonoAV(String.valueOf(totalBonoAV));
         vistaRE.setTextoBonoCol(String.valueOf(totalBonCol));
-        vistaRE.setTextoOtrosBonos(String.valueOf(0));
+        vistaRE.setTextoOtrosBonos(String.valueOf(bonoAd));
+        vistaRE.setTextoHorEx(String.valueOf(totalHorEx));
         vistaRE.setTextoTotalImponible(String.valueOf(totImp));
         vistaRE.setTextoAFP(data[3]);
         vistaRE.setTextoSalud(salud);
@@ -81,7 +103,13 @@ public class controladorRemuneracionEmpleado {
         vistaRE.setTextoColacion(data[6]);
         vistaRE.setTextoTransporte(data[7]);
         vistaRE.setTextoTotalTributable(String.valueOf(totTrib));
+        vistaRE.setTextoCaja(String.valueOf(caja));
+        vistaRE.setTextoAF(String.valueOf(af));
+        vistaRE.setTextoAnticipo(String.valueOf(antic));
+        vistaRE.setTextoAdelanto(String.valueOf(adel));
+        vistaRE.setTextoPrestamo(String.valueOf(cuoPres));
         vistaRE.setTextoSueldoLiquido(String.valueOf(liq));
+        vistaRE.setCantHorEx(String.valueOf(cantHorEx));
         vistaRE.setLocationRelativeTo(null);
         vistaRE.setVisible(true);
     }

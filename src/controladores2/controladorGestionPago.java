@@ -17,10 +17,12 @@ import vistas2.vistaGestionPago;
 public class controladorGestionPago {
     static vistaGestionPago vistaGP;
     
-    public void mostrarVistaGestionPago(String fol, String tipo){
+    public void mostrarVistaGestionPago(String id, String fol, String tipo){
         modelos2.modeloCobranzas cobranza = new modeloCobranzas();
         int saldo = cobranza.getSaldo(fol, tipo);
         vistaGP = new vistaGestionPago(new javax.swing.JFrame(), true, saldo);
+        vistaGP.hideMedioPago();
+        vistaGP.setIdFac(id);
         vistaGP.setFolio(fol);
         vistaGP.setTipo(tipo);
         vistaGP.setLocationRelativeTo(null);
@@ -29,10 +31,18 @@ public class controladorGestionPago {
     
     public boolean irVistaCobranzasP() {
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
+        String id = vistaGP.getIdFac();
         String folio = vistaGP.getFolio();
         String tipo = vistaGP.getTipo();
+        String tipoPag = vistaGP.getTextoOpcionPago();
         String monto = vistaGP.getTextoMonto();
-        if(!miControlador.gestionPago(folio, tipo, monto)){
+        String fec = vistaGP.getFecha();
+        String med = vistaGP.getComboMedio();
+        String ban = vistaGP.getTextoBanco();
+        String num = vistaGP.getTextoNum();
+//        System.out.println("id " + id + "\nfolio " + folio + " \ntipo " + tipo + " \ntipoPag " + tipoPag
+//         + " \nmonto " + monto + " \nfec " +fec+"\nmed " +med+"\nban "+ban+"\nnum "+num );
+        if(!miControlador.gestionPago(id, folio, tipo, tipoPag, monto, fec, med, ban, num)){
             return false;
         }
         return true;

@@ -44,6 +44,8 @@ public class controladorModificarCompras {
         vistaMC.setTextoTot(data[18]);
         vistaMC.setTextoIva(data[19]);
         vistaMC.setTextoNeto(data[20]);
+        vistaMC.setTextoImpuestoEsp(data[21]);
+        vistaMC.setTextoImpuestoVar(data[22]);
         if(data[10].compareTo("Otros pagos") != 0){
             vistaMC.hideOtrosPagos();
         }
@@ -59,6 +61,7 @@ public class controladorModificarCompras {
             vistaMC.hideMedioPago();
         }
         vistaMC.agregarProductos(id);
+        vistaMC.agregarImpuestos(id);
         vistaMC.setLocationRelativeTo(null);
         vistaMC.setVisible(true);
     }
@@ -75,13 +78,15 @@ public class controladorModificarCompras {
             vistaMC.getTextoFechaIngreso(), vistaMC.getTextoOrden(), vistaMC.getTextoFechaPago(),
             vistaMC.getComboForma(), vistaMC.getTextoAsunto(), vistaMC.getTextoObs(), 
             vistaMC.getComboMedio(), vistaMC.getTextoBanco(), vistaMC.getTextoNumTC(), vistaMC.getCheckEstado(), 
-            vistaMC.getComboClas(), vistaMC.getTextoTot(), vistaMC.getTextoIva(), vistaMC.getTextoNeto()};
+            vistaMC.getComboClas(), vistaMC.getTextoTot(), vistaMC.getTextoIva(), vistaMC.getTextoNeto(), 
+            vistaMC.getTextoImpuestoEsp(), vistaMC.getTextoImpuestoVar()};
         if(!miControlador.modificarCompra(data, id)){
             return false;
         }
         int cuotas;
         miControlador.borrarCheques(id);
         miControlador.borrarProductos(id);
+        miControlador.borrarImpuestos(id);
         JTable tabla;
         switch(vistaMC.getCuotas()){
             case 1:
@@ -122,7 +127,10 @@ public class controladorModificarCompras {
                 break;
         }
         tabla = vistaMC.getTablaDetalle();
-        if(tabla.getRowCount() > 0) return ingresarProductos(tabla, id);
+//        if(tabla.getRowCount() > 0) return ingresarProductos(tabla, id);
+        if(tabla.getRowCount() > 0) ingresarProductos(tabla, id);
+        tabla = vistaMC.getTablaImpuestos();
+        if(tabla.getRowCount() > 0) return ingresarImpuestos(tabla, id);
         return true;
     }
         
@@ -150,5 +158,15 @@ public class controladorModificarCompras {
                         vistaMC.getIva(i)};
         }
         return miControlador.ingresarProductos(dataDetalle, id);
+    }
+    
+    public boolean ingresarImpuestos(JTable tabla, String id){
+        controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
+        int cant = tabla.getRowCount();
+        String[][] dataImpuestos = new String[cant][2];
+        for(int i = 0; i < cant; i++){
+            dataImpuestos[i] = new String[]{tabla.getValueAt(i, 0).toString(), tabla.getValueAt(i, 1).toString()};
+        }
+        return miControlador.ingresarImpuestos(dataImpuestos, id);
     }
 }

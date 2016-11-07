@@ -90,6 +90,7 @@ public class vistaEmpleadosP extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         botonActualizar = new javax.swing.JButton();
         botonVistaRemuneracion = new javax.swing.JButton();
+        botonPresAdelanto = new javax.swing.JButton();
 
         tablaEmpleados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -148,6 +149,13 @@ public class vistaEmpleadosP extends javax.swing.JPanel {
             }
         });
 
+        botonPresAdelanto.setText("Préstamo/Adelanto");
+        botonPresAdelanto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonPresAdelantoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -164,6 +172,8 @@ public class vistaEmpleadosP extends javax.swing.JPanel {
                         .addComponent(textoFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(botonPresAdelanto)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botonVistaRemuneracion)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botonAgregar)
@@ -191,7 +201,8 @@ public class vistaEmpleadosP extends javax.swing.JPanel {
                     .addComponent(botonModificar)
                     .addComponent(botonEliminar)
                     .addComponent(botonAgregar)
-                    .addComponent(botonVistaRemuneracion))
+                    .addComponent(botonVistaRemuneracion)
+                    .addComponent(botonPresAdelanto))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -265,12 +276,26 @@ public class vistaEmpleadosP extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_botonVistaRemuneracionActionPerformed
 
+    private void botonPresAdelantoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonPresAdelantoActionPerformed
+        controladores.controladorEmpleados miControlador = new controladores.controladorEmpleados();
+        boolean selected = tablaEmpleados.getSelectedRowCount() > 0;
+        if(selected){
+            int row = getFilaSeleccionada();
+            String rut = getRutFila(row);
+            String[] rut_dv = rut.split("-");
+            miControlador.irVistaPresAdelanto(rut_dv[0]);
+        }else{
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un empleado para generar un préstamo o anticipo");
+        }
+    }//GEN-LAST:event_botonPresAdelantoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonActualizar;
     private javax.swing.JButton botonAgregar;
     private javax.swing.JButton botonEliminar;
     private javax.swing.JButton botonModificar;
+    private javax.swing.JButton botonPresAdelanto;
     private javax.swing.JButton botonVistaRemuneracion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;

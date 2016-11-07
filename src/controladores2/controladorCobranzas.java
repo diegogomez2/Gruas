@@ -33,9 +33,14 @@ public class controladorCobranzas {
         miControlador.crearControladorVerGestion(id, tipo);
     }
     
-    public void irVistaGestionPago(String fol, String tipo) throws ParseException{
+    public void irVistaGestionPago(String id, String fol, String tipo) throws ParseException{
         controladorPrincipal miControlador = new controladorPrincipal();
-        miControlador.crearControladorGestionPago(fol, tipo);
+        miControlador.crearControladorGestionPago(id, fol, tipo);
+    }
+    
+    public void irVistaVerPagos(String id, String tipo) throws ParseException{
+        controladorPrincipal miControlador = new controladorPrincipal();
+        miControlador.crearControladorVerPagos(id, tipo);
     }
 
 //    

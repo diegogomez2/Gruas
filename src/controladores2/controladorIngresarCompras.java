@@ -41,7 +41,8 @@ public class controladorIngresarCompras {
             vistaIC.getTextoFechaIngreso(), vistaIC.getTextoOrden(), vistaIC.getTextoFechaPago(),
             vistaIC.getComboForma(), vistaIC.getTextoAsunto(), vistaIC.getTextoObs(), 
             vistaIC.getComboMedio(), vistaIC.getTextoBanco(), vistaIC.getTextoNumTC(), vistaIC.getCheckEstado(), 
-            vistaIC.getComboClas(), vistaIC.getTextoTot(), vistaIC.getTextoIva(), vistaIC.getTextoNeto()};
+            vistaIC.getComboClas(), vistaIC.getTextoTot(), vistaIC.getTextoIva(), vistaIC.getTextoNeto(), 
+            vistaIC.getTextoImpuestoEsp(), vistaIC.getTextoImpuestoVar()};
         String id = miControlador.ingresarCompra(data);
         if(id.compareTo("incorrecto") == 0){
             return false;
@@ -87,7 +88,10 @@ public class controladorIngresarCompras {
                 break;
         }
         tabla = vistaIC.getTablaDetalle();
-        if(tabla.getRowCount() > 0) return ingresarProductos(tabla, id);
+//        if(tabla.getRowCount() > 0) return ingresarProductos(tabla, id);
+        if(tabla.getRowCount() > 0) ingresarProductos(tabla, id);
+        tabla = vistaIC.getTablaImpuestos();
+        if(tabla.getRowCount() > 0) return ingresarImpuestos(tabla, id);
         return true;
     }
 
@@ -171,5 +175,15 @@ public class controladorIngresarCompras {
                         vistaIC.getIva(i)};
         }
         return miControlador.ingresarProductos(dataDetalle, id);
+    }
+    
+    public boolean ingresarImpuestos(JTable tabla, String id){
+        controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
+        int cant = tabla.getRowCount();
+        String[][] dataImpuestos = new String[cant][2];
+        for(int i = 0; i < cant; i++){
+            dataImpuestos[i] = new String[]{tabla.getValueAt(i, 0).toString(), tabla.getValueAt(i, 1).toString()};
+        }
+        return miControlador.ingresarImpuestos(dataImpuestos, id);
     }
 }

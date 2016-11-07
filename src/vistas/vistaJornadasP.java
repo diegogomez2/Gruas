@@ -78,7 +78,22 @@ public class vistaJornadasP extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaJornadas = new javax.swing.JTable();
+        tablaJornadas = new javax.swing.JTable(){
+            public String getToolTipText(MouseEvent e) {
+                String tip = null;
+                java.awt.Point p = e.getPoint();
+                int rowIndex = rowAtPoint(p);
+                int colIndex = columnAtPoint(p);
+
+                try {
+                    tip = getValueAt(rowIndex, colIndex).toString();
+                } catch (RuntimeException e1) {
+                    //catch null pointer exception if mouse is over an empty line
+                }
+
+                return tip;
+            }
+        };
         botonModificar = new javax.swing.JButton();
         botonEliminar = new javax.swing.JButton();
         botonAgregar = new javax.swing.JButton();

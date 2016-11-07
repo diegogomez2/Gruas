@@ -30,6 +30,11 @@ public class controladorEmpleados {
         controladorPrincipal miControlador = new controladorPrincipal();
         miControlador.crearControladorRemuneracionesEmpleado(rut); 
     }
+    
+    public void irVistaPresAdelanto(String rut) {
+        controladorPrincipal miControlador = new controladorPrincipal();
+        miControlador.crearControladorPresAdelanto(rut); 
+    }
 
     public void crearControladorPrincipal(JTabbedPane tabs) {
         controladorPrincipal miControlador = new controladorPrincipal();
@@ -60,4 +65,11 @@ public class controladorEmpleados {
         modelos.modeloEmpleados emp = new modelos.modeloEmpleados();
         emp.actualizarHorasMes(rut, horas);
     }
+    
+    public void agregarHorasExtra(String rut, int horas, int horasCalc){
+        modelos.modeloEmpleados empleado = new modelos.modeloEmpleados();
+        empleado.agregarHorasExtra(rut, horas, horasCalc);
+    }
+    
+    
 }

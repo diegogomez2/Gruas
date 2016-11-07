@@ -157,6 +157,7 @@
           <SubComponents>
             <Component class="javax.swing.JTextField" name="textoDescripcion">
               <Properties>
+                <Property name="editable" type="boolean" value="false"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Cursor de Texto"/>
                 </Property>
@@ -178,8 +179,14 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="textoPatente">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+              </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="textoModelo">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="labelMarca">
               <Properties>
@@ -187,6 +194,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="textoMarca">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="labelNumeroMotor">
               <Properties>
@@ -194,6 +204,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="textoNumeroMotor">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="labelNumeroSerie">
               <Properties>
@@ -201,6 +214,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="textoNumeroSerie">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="labelNChasis">
               <Properties>
@@ -208,6 +224,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="textoNChasis">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="labelObservaciones">
               <Properties>
@@ -223,8 +242,11 @@
               <SubComponents>
                 <Component class="javax.swing.JTextArea" name="textoObs">
                   <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
                     <Property name="columns" type="int" value="20"/>
+                    <Property name="lineWrap" type="boolean" value="true"/>
                     <Property name="rows" type="int" value="5"/>
+                    <Property name="wrapStyleWord" type="boolean" value="true"/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -342,8 +364,14 @@
               </Layout>
               <SubComponents>
                 <Component class="javax.swing.JTextField" name="textoNeumaticosDelanteros">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="textoKMH">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="labelToneladas">
                   <Properties>
@@ -356,10 +384,19 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="textoAncho">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="textoToneladas">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="textoKMHUM">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="labelNeumaticosDelanteros">
                   <Properties>
@@ -408,22 +445,26 @@
                   <SubComponents>
                     <Component class="javax.swing.JComboBox" name="comboTipoNeumaticos">
                       <Properties>
+                        <Property name="editable" type="boolean" value="true"/>
                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                           <StringArray count="2">
                             <StringItem index="0" value="Tubular"/>
                             <StringItem index="1" value="S&#xf3;lido"/>
                           </StringArray>
                         </Property>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JComboBox" name="comboTipoNeumaticos2">
                       <Properties>
+                        <Property name="editable" type="boolean" value="true"/>
                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                           <StringArray count="2">
                             <StringItem index="0" value="Simple"/>
                             <StringItem index="1" value="Doble"/>
                           </StringArray>
                         </Property>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -442,6 +483,9 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="textoLargo">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                  </Properties>
                 </Component>
               </SubComponents>
             </Container>
@@ -546,6 +590,9 @@
               </Layout>
               <SubComponents>
                 <Component class="javax.swing.JTextField" name="textoHorasPM">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="labelPesoGrua">
                   <Properties>
@@ -553,8 +600,14 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="textoNeumaticosTraseros">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="textoPesoGrua">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="labelMastil">
                   <Properties>
@@ -568,18 +621,23 @@
                 </Component>
                 <Component class="javax.swing.JComboBox" name="comboTipoCombustible">
                   <Properties>
+                    <Property name="editable" type="boolean" value="true"/>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                       <StringArray count="2">
                         <StringItem index="0" value="Diesel"/>
                         <StringItem index="1" value="Gas"/>
                       </StringArray>
                     </Property>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                   </AuxValues>
                 </Component>
                 <Component class="javax.swing.JTextField" name="textoLargoUnas">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="labelNeumaticosTraseros">
                   <Properties>
@@ -588,12 +646,14 @@
                 </Component>
                 <Component class="javax.swing.JComboBox" name="comboMastil">
                   <Properties>
+                    <Property name="editable" type="boolean" value="true"/>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                       <StringArray count="2">
                         <StringItem index="0" value="Simple"/>
                         <StringItem index="1" value="Doble"/>
                       </StringArray>
                     </Property>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -610,6 +670,9 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="textoAlturaMastil">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="labelTipoCombustible">
                   <Properties>
@@ -617,6 +680,9 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="textoAlturaLevante">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="labelAlturaLevante">
                   <Properties>
@@ -706,12 +772,24 @@
                   </Properties>
                 </Component>
                 <Component class="org.jdesktop.swingx.JXDatePicker" name="textoFechaIngreso">
+                  <Properties>
+                    <Property name="enabled" type="boolean" value="false"/>
+                  </Properties>
                 </Component>
                 <Component class="org.jdesktop.swingx.JXDatePicker" name="textoFechaUM">
+                  <Properties>
+                    <Property name="enabled" type="boolean" value="false"/>
+                  </Properties>
                 </Component>
                 <Component class="org.jdesktop.swingx.JXDatePicker" name="textoFechaBaja">
+                  <Properties>
+                    <Property name="enabled" type="boolean" value="false"/>
+                  </Properties>
                 </Component>
                 <Component class="org.jdesktop.swingx.JXDatePicker" name="textoFechaRT">
+                  <Properties>
+                    <Property name="enabled" type="boolean" value="false"/>
+                  </Properties>
                 </Component>
               </SubComponents>
             </Container>

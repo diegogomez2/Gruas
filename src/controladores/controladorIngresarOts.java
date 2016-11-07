@@ -53,9 +53,12 @@ public class controladorIngresarOts {
         vistaIO.setTextoFechaOt();
         List<List<String>> valores = calcularTarifa(data[0], data[2], data[1], data[3], data[14]);
         int size = valores.size();
-        vistaIO.setTextoNeto(String.format("%,d", Integer.parseInt(valores.get(size - 1).get(0))));
-        vistaIO.setTextoIva(String.format("%,d", Integer.parseInt(valores.get(size - 1).get(1))));
-        vistaIO.setTextoBruto(String.format("%,d", Integer.parseInt(valores.get(size - 1).get(2))));
+//        vistaIO.setTextoNeto(String.format("%,d", Integer.parseInt(valores.get(size - 1).get(0))));
+//        vistaIO.setTextoIva(String.format("%,d", Integer.parseInt(valores.get(size - 1).get(1))));
+//        vistaIO.setTextoBruto(String.format("%,d", Integer.parseInt(valores.get(size - 1).get(2))));
+        vistaIO.setTextoNeto(valores.get(size - 1).get(0));
+        vistaIO.setTextoIva(valores.get(size - 1).get(1));
+        vistaIO.setTextoBruto(valores.get(size - 1).get(2));
         vistaIO.setHoras((int)Float.parseFloat(valores.get(size - 1).get(3)));
         vistaIO.setLocationRelativeTo(null);
         vistaIO.setVisible(true); 
@@ -75,13 +78,19 @@ public class controladorIngresarOts {
             int valor = Integer.parseInt(vistaIO.getTextoDespacho());
             int iva = (int)(valor * 0.19);
             int bruto = (int)(valor * 1.19);
-            textoNeto = Integer.toString(valor + Integer.parseInt(removeDots(vistaIO.getTextoNeto())));
-            textoIva = Integer.toString(iva + Integer.parseInt(removeDots(vistaIO.getTextoIva())));
-            textoBruto = Integer.toString(bruto + Integer.parseInt(removeDots(vistaIO.getTextoBruto())));
+//            textoNeto = Integer.toString(valor + Integer.parseInt(removeDots(vistaIO.getTextoNeto())));
+//            textoIva = Integer.toString(iva + Integer.parseInt(removeDots(vistaIO.getTextoIva())));
+//            textoBruto = Integer.toString(bruto + Integer.parseInt(removeDots(vistaIO.getTextoBruto())));
+            textoNeto = Integer.toString(valor + Integer.parseInt(vistaIO.getTextoNeto()));
+            textoIva = Integer.toString(iva + Integer.parseInt(vistaIO.getTextoIva()));
+            textoBruto = Integer.toString(bruto + Integer.parseInt(vistaIO.getTextoBruto()));
         }else{
-            textoNeto = removeDots(vistaIO.getTextoNeto());
-            textoIva = removeDots(vistaIO.getTextoIva());
-            textoBruto = removeDots(vistaIO.getTextoBruto());
+//            textoNeto = removeDots(vistaIO.getTextoNeto());
+//            textoIva = removeDots(vistaIO.getTextoIva());
+//            textoBruto = removeDots(vistaIO.getTextoBruto());
+            textoNeto = vistaIO.getTextoNeto();
+            textoIva = vistaIO.getTextoIva();
+            textoBruto = vistaIO.getTextoBruto();
         }
         String[] data = {vistaIO.getTextoContacto(), vistaIO.getTextoFechaOt(), vistaIO.getComboFormaPago(),
             vistaIO.getComboCondPago(), vistaIO.getTextoDespachado(), id, vistaIO.getTextoCodigo(),
@@ -233,23 +242,23 @@ public class controladorIngresarOts {
         }
     }
     
-    public String addDots(StringBuilder str){
-        int idx = str.length() - 3;
-        while(idx > 0){
-            str.insert(idx, ".");
-            idx -= 3;
-        }
-        return str.toString();
-    }
-    
-    public String removeDots(String data){
-        String new_data = "";
-        String[] data_dev = data.split(Pattern.quote("."));
-        for(int i = 0; i < data_dev.length; i++){
-            new_data = new_data + data_dev[i];
-        }
-        return new_data;
-    }
+//    public String addDots(StringBuilder str){
+//        int idx = str.length() - 3;
+//        while(idx > 0){
+//            str.insert(idx, ".");
+//            idx -= 3;
+//        }
+//        return str.toString();
+//    }
+//    
+//    public String removeDots(String data){
+//        String new_data = "";
+//        String[] data_dev = data.split(Pattern.quote("."));
+//        for(int i = 0; i < data_dev.length; i++){
+//            new_data = new_data + data_dev[i];
+//        }
+//        return new_data;
+//    }
     
     public void actualizarHorometro(int horas, String desc){
         modelos.modeloGruas grua = new modelos.modeloGruas();

@@ -562,10 +562,10 @@ public class controladorPrincipal {
         micontroladorGC.mostrarVistaGestionCobranza(id, tipo);
     }
     
-    public void crearControladorGestionPago(String fol, String tipo) {
+    public void crearControladorGestionPago(String id, String fol, String tipo) {
         controladorGestionPago micontroladorGP;
         micontroladorGP= new controladorGestionPago();
-        micontroladorGP.mostrarVistaGestionPago(fol, tipo);
+        micontroladorGP.mostrarVistaGestionPago(id, fol, tipo);
     }
     
     //LIBROS
@@ -581,6 +581,12 @@ public class controladorPrincipal {
         micontroladorVG.mostrarVistaVerGestion(id, tipo);
     }
     
+    public void crearControladorVerPagos(String id, String tipo) {
+        controladorVerPagos micontroladorVP;
+        micontroladorVP = new controladorVerPagos();
+        micontroladorVP.mostrarVistaVerPagos(id, tipo);
+    }
+    
     //REMUNERACIONES
     public void crearControladorEditarSueldos() {
         controladorEditarSueldos micontrolador = new controladorEditarSueldos();
@@ -591,6 +597,17 @@ public class controladorPrincipal {
         controladorRemuneracionEmpleado micontroladorRE;
         micontroladorRE = new controladorRemuneracionEmpleado();
         micontroladorRE.mostrarVistaRemuneracionEmpleado(rut);
+    }
+    
+    void crearControladorPresAdelanto(String rut){
+        controladorPresAdelanto micontroladorPA;
+        micontroladorPA = new controladorPresAdelanto();
+        micontroladorPA.mostrarVistaPresAdelanto(rut);
+    }
+    
+    public void crearControladorGenerarLiquidaciones() {
+        controladorGenerarLiquidaciones micontrolador = new controladorGenerarLiquidaciones();
+        micontrolador.generarLiquidaciones();
     }
     
     //Funciones
@@ -1048,6 +1065,16 @@ public class controladorPrincipal {
         }
     }
     
+    public boolean borrarImpuestos(String id){
+        modeloCompras compra = new modeloCompras();
+        if(compra.borrarImpuestos(id).compareTo("correcto") == 0){
+            return true;
+        }else{
+            System.out.println("Error al borrar impuestos");
+            return false;
+        }
+    }
+    
     public boolean ingresarCuotas(String[][] data, String id){
         modeloCompras compra = new modeloCompras();
         if(compra.ingresarCuotas(data, id).compareTo("correcto") == 0){
@@ -1064,6 +1091,16 @@ public class controladorPrincipal {
             return true;
         }else{
             System.out.println("Error al ingresar productos");
+            return false;
+        }
+    }
+    
+    public boolean ingresarImpuestos(String[][] data, String id){
+        modeloCompras compra = new modeloCompras();
+        if(compra.ingresarImpuestos(data, id).compareTo("correcto") == 0){
+            return true;
+        }else{
+            System.out.println("Error al ingresar impuestos");
             return false;
         }
     }
@@ -1102,9 +1139,10 @@ public class controladorPrincipal {
         }
     }
     
-    public boolean gestionPago(String id, String tipo, String monto){
+    public boolean gestionPago(String id, String fol, String tipo, String tipoPag, String monto, String fec, String med, 
+            String ban, String num){
         modeloCobranzas cobranza = new modeloCobranzas();
-        if(cobranza.gestionPago(id, tipo, monto).compareTo("correcto") == 0){
+        if(cobranza.gestionPago(id, fol, tipo, tipoPag, monto, fec, med, ban, num).compareTo("correcto") == 0){
             return true;
         }else{
             JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al gestionar el pago", "Error", JOptionPane.ERROR_MESSAGE);
@@ -1115,6 +1153,12 @@ public class controladorPrincipal {
     public Object[][] obtenerGestion(String id, String tipo){
         modeloCobranzas cobranza = new modeloCobranzas();
         Object[][] data = cobranza.obtenerGestion(id, tipo);
+        return data;
+    }
+    
+    public Object[][] obtenerPagos(String id, String tipo){
+        modeloCobranzas cobranza = new modeloCobranzas();
+        Object[][] data = cobranza.obtenerPagos(id, tipo);
         return data;
     }
     
@@ -1250,6 +1294,12 @@ public class controladorPrincipal {
         return data;
     }
     
+    public String[] obtenerPresAdelantoEmpleadoPorRut(String rut){
+        modelos.modeloEmpleados sueldos = new modeloEmpleados();
+        String[] data = sueldos.obtenerPresAdelantoEmpleadoPorRut(rut);
+        return data;
+    }
+    
     public int obtenerBonoAnt(String ant){
         modelos3.modeloRemuneraciones sueldos = new modeloRemuneraciones();
         int bono = sueldos.obtenerBonoAnt(ant);
@@ -1284,6 +1334,17 @@ public class controladorPrincipal {
         modelos3.modeloRemuneraciones salud = new modeloRemuneraciones();
         String desc = salud.obtenerIsapreEmpleado(rut);
         return desc;
+    }
+    
+    public boolean ingresarPresAdelanto(String rut, String[] data){
+        modelos.modeloEmpleados empleado = new modeloEmpleados();
+        String respuesta = empleado.ingresarPresAdelanto(rut, data);
+        if(respuesta.compareTo("correcto") == 0){
+            return true;
+        }else{
+//            JOptionPane.showMessageDialog(null, "Error al ingresar el préstamo/adelanto", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
     }
     //Funciones agenda de otros pagos
 //    public boolean cambiarEstadoOtrosPago(String estado, String id){

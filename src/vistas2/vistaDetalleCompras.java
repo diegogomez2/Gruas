@@ -40,13 +40,16 @@ public class vistaDetalleCompras extends javax.swing.JDialog {
     DecimalFormatSymbols dfs = new DecimalFormatSymbols();
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
     MyTableModel detalles = new MyTableModel();
+    MyTableModelImpuestos impuestos = new MyTableModelImpuestos();
     MyTableModelCheques cheques = new MyTableModelCheques();
     MyTableModelTC tc = new MyTableModelTC();
     public vistaDetalleCompras(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         tablaDetalle.setModel(detalles);
+        tablaImpuestos.setModel(impuestos);
         tablaDetalle.getColumnModel().getColumn(3).setCellRenderer(new CurrencyTableCellRenderer());
+        tablaImpuestos.getColumnModel().getColumn(1).setCellRenderer(new CurrencyTableCellRenderer());
         dfs.setCurrencySymbol("$");
         dfs.setGroupingSeparator('.');
         dfs.setMonetaryDecimalSeparator('.');
@@ -119,6 +122,16 @@ public class vistaDetalleCompras extends javax.swing.JDialog {
         textoIva = new javax.swing.JFormattedTextField(FORMAT);
         jLabel4 = new javax.swing.JLabel();
         textoNeto = new javax.swing.JFormattedTextField(FORMAT);
+        textoImpuestoEsp = new javax.swing.JTextField();
+        textoImpuestoVar = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        checkImpuestos = new javax.swing.JCheckBox();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tablaImpuestos = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         botonOK = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -155,11 +168,11 @@ public class vistaDetalleCompras extends javax.swing.JDialog {
 
         labelFolio.setText("Folio documento");
 
-        textoFolio.setEnabled(false);
+        textoFolio.setEditable(false);
 
         labelOrden.setText("Orden de compra");
 
-        textoOrden.setEnabled(false);
+        textoOrden.setEditable(false);
 
         labelFechaPago.setText("Fecha de pago");
 
@@ -177,7 +190,7 @@ public class vistaDetalleCompras extends javax.swing.JDialog {
 
         labelBanco.setText("Banco");
 
-        textoBanco.setEnabled(false);
+        textoBanco.setEditable(false);
 
         tablaDatos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -196,7 +209,6 @@ public class vistaDetalleCompras extends javax.swing.JDialog {
         labelNumTC.setText("Número de tarjeta de crédito");
 
         textoNumTC.setEditable(false);
-        textoNumTC.setEnabled(false);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalle"));
         jPanel3.setPreferredSize(new java.awt.Dimension(200, 176));
@@ -247,7 +259,7 @@ public class vistaDetalleCompras extends javax.swing.JDialog {
                     .addComponent(botonMas)))
         );
 
-        textoAsunto.setEnabled(false);
+        textoAsunto.setEditable(false);
 
         labelAsunto.setText("Asunto");
 
@@ -260,21 +272,18 @@ public class vistaDetalleCompras extends javax.swing.JDialog {
         textoGiro.setEditable(false);
         textoGiro.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         textoGiro.setDisabledTextColor(new java.awt.Color(102, 102, 102));
-        textoGiro.setEnabled(false);
 
         labelDireccion.setText("Dirección");
 
         textoDireccion.setEditable(false);
         textoDireccion.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         textoDireccion.setDisabledTextColor(new java.awt.Color(102, 102, 102));
-        textoDireccion.setEnabled(false);
 
         labelContacto.setText("Contacto");
 
         textoContacto.setEditable(false);
         textoContacto.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         textoContacto.setDisabledTextColor(new java.awt.Color(102, 102, 102));
-        textoContacto.setEnabled(false);
 
         labelObs.setText("Observaciones de pago");
 
@@ -286,7 +295,6 @@ public class vistaDetalleCompras extends javax.swing.JDialog {
         textoRut.setEditable(false);
         textoRut.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         textoRut.setDisabledTextColor(new java.awt.Color(102, 102, 102));
-        textoRut.setEnabled(false);
 
         labelClasificacion.setText("Clasificación de compra");
 
@@ -300,15 +308,75 @@ public class vistaDetalleCompras extends javax.swing.JDialog {
 
         jLabel2.setText("Total");
 
-        textoTot.setEnabled(false);
+        textoTot.setEditable(false);
 
         jLabel3.setText("Iva");
 
-        textoIva.setEnabled(false);
+        textoIva.setEditable(false);
 
         jLabel4.setText("Neto");
 
-        textoNeto.setEnabled(false);
+        textoNeto.setEditable(false);
+
+        textoImpuestoEsp.setEditable(false);
+
+        textoImpuestoVar.setEditable(false);
+
+        jLabel5.setText("Impuesto específico");
+
+        jLabel6.setText("Impuesto variable");
+
+        checkImpuestos.setText("Otros impuestos");
+        checkImpuestos.setEnabled(false);
+
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Otros impuestos"));
+
+        tablaImpuestos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tablaImpuestos.setEnabled(false);
+        jScrollPane3.setViewportView(tablaImpuestos);
+
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jButton1.setText("-");
+        jButton1.setEnabled(false);
+
+        jButton2.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jButton2.setText("+");
+        jButton2.setEnabled(false);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)))
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addGap(0, 13, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -381,27 +449,42 @@ public class vistaDetalleCompras extends javax.swing.JDialog {
                         .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(textoTot, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textoIva, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
-                        .addGap(10, 10, 10)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(textoNeto))
-                        .addContainerGap())
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(labelGiro)
                             .addComponent(labelOrden)
                             .addComponent(labelForma)
                             .addComponent(labelAsunto)
                             .addComponent(labelObs)
                             .addComponent(labelClasificacion))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(textoImpuestoEsp, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(textoTot, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE))
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(textoIva, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+                                    .addComponent(jLabel3)
+                                    .addComponent(textoImpuestoVar))
+                                .addGap(10, 10, 10)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(textoNeto))
+                                .addContainerGap())))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(checkImpuestos)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
@@ -491,6 +574,18 @@ public class vistaDetalleCompras extends javax.swing.JDialog {
                 .addComponent(scrollDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(textoImpuestoEsp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textoImpuestoVar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(checkImpuestos)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -608,19 +703,26 @@ public class vistaDetalleCompras extends javax.swing.JDialog {
     private javax.swing.JButton botonMenos;
     private javax.swing.JButton botonOK;
     private javax.swing.JCheckBox checkEstado;
+    private javax.swing.JCheckBox checkImpuestos;
     private javax.swing.JComboBox<String> comboClasificacion;
     private javax.swing.JComboBox comboForma;
     private javax.swing.JComboBox comboMedio;
     private javax.swing.JComboBox comboTipoDTE;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel labelAsunto;
     private javax.swing.JLabel labelBanco;
     private javax.swing.JLabel labelCantidad;
@@ -646,6 +748,7 @@ public class vistaDetalleCompras extends javax.swing.JDialog {
     private javax.swing.JSpinner spinnerNumCuotas;
     private javax.swing.JTable tablaDatos;
     private javax.swing.JTable tablaDetalle;
+    private javax.swing.JTable tablaImpuestos;
     private javax.swing.JTextField textoAsunto;
     private javax.swing.JTextField textoBanco;
     private javax.swing.JTextField textoContacto;
@@ -654,6 +757,8 @@ public class vistaDetalleCompras extends javax.swing.JDialog {
     private org.jdesktop.swingx.JXDatePicker textoFechaPago;
     private javax.swing.JTextField textoFolio;
     private javax.swing.JTextField textoGiro;
+    private javax.swing.JTextField textoImpuestoEsp;
+    private javax.swing.JTextField textoImpuestoVar;
     private javax.swing.JFormattedTextField textoIva;
     private javax.swing.JFormattedTextField textoNeto;
     private javax.swing.JTextField textoNumTC;
@@ -724,6 +829,22 @@ public class vistaDetalleCompras extends javax.swing.JDialog {
                 return Integer.class;
             default:
                 return Boolean.class;
+          }
+        }
+    }
+    
+    public class MyTableModelImpuestos extends DefaultTableModel{
+        public MyTableModelImpuestos() {
+          super(new String[]{"Nombre del impuesto", "Monto"}, 0);
+        }
+
+        @Override
+        public Class getColumnClass(int column) {
+          switch (column) {
+            case 0:
+                return String.class;
+            default:
+                return Integer.class;
           }
         }
     }
@@ -810,6 +931,39 @@ public class vistaDetalleCompras extends javax.swing.JDialog {
     
     public void setTextoIva(String textoIva){
         this.textoIva.setValue(Integer.parseInt(textoIva));
+    }
+    
+    public void setTextoImpuestoEsp(String val){
+        try{
+            Object value = Integer.parseInt(val);
+            if (value instanceof Number) {
+                textoImpuestoEsp.setHorizontalAlignment(JLabel.RIGHT);
+                textoImpuestoEsp.setText(FORMAT.format(value));
+            } else {
+                textoImpuestoEsp.setHorizontalAlignment(JLabel.RIGHT);
+                textoImpuestoEsp.setText("");
+            }
+        }catch(NumberFormatException e){
+            textoImpuestoEsp.setHorizontalAlignment(JLabel.RIGHT);
+            textoImpuestoEsp.setText("");
+        }
+    
+    }
+    
+    public void setTextoImpuestoVar(String val){
+        try{
+            Object value = Integer.parseInt(val);
+            if (value instanceof Number) {
+                textoImpuestoVar.setHorizontalAlignment(JLabel.RIGHT);
+                textoImpuestoVar.setText(FORMAT.format(value));
+            } else {
+                textoImpuestoVar.setHorizontalAlignment(JLabel.RIGHT);
+                textoImpuestoVar.setText("");
+            }
+        }catch(NumberFormatException e){
+            textoImpuestoVar.setHorizontalAlignment(JLabel.RIGHT);
+            textoImpuestoVar.setText("");
+        }
     }
     
     public void setTextoNeto(String textoNeto){
@@ -906,6 +1060,19 @@ public class vistaDetalleCompras extends javax.swing.JDialog {
             tablaDetalle.setValueAt(data1[2], i, 2);
             tablaDetalle.setValueAt(Integer.parseInt(data1[3].toString()), i, 3);
             tablaDetalle.setValueAt(flag, i, 4);
+            i++;
+        }
+    }
+    
+    public void agregarImpuestos(String id) throws ParseException{
+        int i = 0;
+        modelos2.modeloCompras compra = new modeloCompras();
+        Object[][] data = compra.obtenerImpuestosPorId(id);
+        impuestos.setRowCount(data.length);
+        if(data.length > 0) checkImpuestos.setSelected(true);
+        for(Object[] data1 : data){
+            tablaImpuestos.setValueAt(data1[0], i, 0);
+            tablaImpuestos.setValueAt(Integer.parseInt(data1[1].toString()), i, 1);
             i++;
         }
     }

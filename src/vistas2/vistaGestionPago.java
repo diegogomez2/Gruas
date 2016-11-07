@@ -6,9 +6,12 @@
 package vistas2;
 
 import controladores2.controladorGestionPago;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -21,7 +24,9 @@ public class vistaGestionPago extends javax.swing.JDialog {
     /**
      * Creates new form vistaGestionPago
      */
+    DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
     int saldo;
+    String id;
     String folio;
     String tipo;
     NumberFormat FORMAT = NumberFormat.getCurrencyInstance();
@@ -30,6 +35,7 @@ public class vistaGestionPago extends javax.swing.JDialog {
     public vistaGestionPago(java.awt.Frame parent, boolean modal, int saldo) {
         super(parent, modal);
         initComponents();
+        textoFecha.setDate(new Date());
         this.saldo = saldo;
         dfs.setCurrencySymbol("$");
         dfs.setGroupingSeparator('.');
@@ -52,13 +58,13 @@ public class vistaGestionPago extends javax.swing.JDialog {
         comboOpcionPago = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jXDatePicker1 = new org.jdesktop.swingx.JXDatePicker();
+        textoFecha = new org.jdesktop.swingx.JXDatePicker();
         jLabel4 = new javax.swing.JLabel();
         comboMedio = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         textoBanco = new javax.swing.JTextField();
-        jTextField1 = new javax.swing.JTextField();
+        textoNumCuenta = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         textoSaldo = new javax.swing.JFormattedTextField();
         jButton1 = new javax.swing.JButton();
@@ -82,11 +88,16 @@ public class vistaGestionPago extends javax.swing.JDialog {
 
         jLabel4.setText("Medio de pago");
 
-        comboMedio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Efectivo", "Transferencia", "Cheque" }));
+        comboMedio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Efectivo", "Transferencia", "Cheque", "Depósito" }));
+        comboMedio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboMedioActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("Banco");
 
-        jLabel6.setText("N° de cuenta");
+        jLabel6.setText("N° de cuenta/cheque");
 
         jLabel7.setText("Saldo");
 
@@ -128,7 +139,7 @@ public class vistaGestionPago extends javax.swing.JDialog {
                             .addComponent(textoBanco)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jXDatePicker1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(textoFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(comboOpcionPago, 0, 225, Short.MAX_VALUE))
                                 .addComponent(jLabel3)
@@ -136,7 +147,7 @@ public class vistaGestionPago extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(comboMedio, 0, 245, Short.MAX_VALUE)
-                            .addComponent(jTextField1)
+                            .addComponent(textoNumCuenta)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel6)
@@ -171,7 +182,7 @@ public class vistaGestionPago extends javax.swing.JDialog {
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jXDatePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textoFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(comboMedio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -180,7 +191,7 @@ public class vistaGestionPago extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textoBanco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textoNumCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -219,6 +230,14 @@ public class vistaGestionPago extends javax.swing.JDialog {
             setAbono();
         }
     }//GEN-LAST:event_comboOpcionPagoActionPerformed
+
+    private void comboMedioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboMedioActionPerformed
+        if(comboMedio.getSelectedIndex() == 0){
+            hideMedioPago();
+        }else{
+            showMedioPago();
+        }
+    }//GEN-LAST:event_comboMedioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -267,10 +286,10 @@ public class vistaGestionPago extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JTextField jTextField1;
-    private org.jdesktop.swingx.JXDatePicker jXDatePicker1;
     private javax.swing.JTextField textoBanco;
+    private org.jdesktop.swingx.JXDatePicker textoFecha;
     private javax.swing.JTextField textoMonto;
+    private javax.swing.JTextField textoNumCuenta;
     private javax.swing.JFormattedTextField textoSaldo;
     // End of variables declaration//GEN-END:variables
     
@@ -280,6 +299,14 @@ public class vistaGestionPago extends javax.swing.JDialog {
     
     public void setFolio(String folio){
         this.folio = folio;
+    }
+    
+    public String getIdFac(){
+        return id;
+    }
+    
+    public void setIdFac(String id){
+        this.id = id;
     }
     
     public String getTipo(){
@@ -298,9 +325,17 @@ public class vistaGestionPago extends javax.swing.JDialog {
         return comboOpcionPago.getSelectedIndex();
         //return comboOpcionPago.getSelectedItem().toString();
     }
+    
+    public String getTextoOpcionPago(){
+        return comboOpcionPago.getSelectedItem().toString();
+    }
 
     public String getTextoBanco() {
         return textoBanco.getText();
+    }
+    
+    public String getTextoNum(){
+        return textoNumCuenta.getText();
     }
 
     public String getTextoMonto() {
@@ -355,6 +390,23 @@ public class vistaGestionPago extends javax.swing.JDialog {
     
     public void setAbono(){
         textoMonto.setEnabled(true);
+    }
+    
+    public void hideMedioPago(){
+        textoBanco.setEnabled(false);
+        textoNumCuenta.setEnabled(false);
+    }
+    
+    public void showMedioPago(){
+        textoBanco.setEnabled(true);
+        textoNumCuenta.setEnabled(true);
+    }
+    
+    public String getFecha(){
+        Date fecha = textoFecha.getDate();
+        if(fecha == null) return "";
+        String dateString = formatDate.format(textoFecha.getDate());
+        return dateString;
     }
 }
 

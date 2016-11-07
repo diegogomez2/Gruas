@@ -5,13 +5,12 @@
  */
 package vistas;
 
+import java.awt.Color;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.swing.JOptionPane;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerDateModel;
+import javax.swing.JTextField;
 
 /**
  *
@@ -71,7 +70,7 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
         labelLargo = new javax.swing.JLabel();
         panelTipoNeumaticos = new javax.swing.JPanel();
         comboTipoNeumaticos = new javax.swing.JComboBox();
-        comboTipoNeumaticos2 = new javax.swing.JComboBox<String>();
+        comboTipoNeumaticos2 = new javax.swing.JComboBox<>();
         labelKMH = new javax.swing.JLabel();
         labelKMHUM = new javax.swing.JLabel();
         textoLargo = new javax.swing.JTextField();
@@ -82,10 +81,10 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
         textoPesoGrua = new javax.swing.JTextField();
         labelMastil = new javax.swing.JLabel();
         labelAlturaMastil = new javax.swing.JLabel();
-        comboTipoCombustible = new javax.swing.JComboBox<String>();
+        comboTipoCombustible = new javax.swing.JComboBox<>();
         textoLargoUnas = new javax.swing.JTextField();
         labelNeumaticosTraseros = new javax.swing.JLabel();
-        comboMastil = new javax.swing.JComboBox<String>();
+        comboMastil = new javax.swing.JComboBox<>();
         labelHorasPM = new javax.swing.JLabel();
         labelLargoUnas = new javax.swing.JLabel();
         textoAlturaMastil = new javax.swing.JTextField();
@@ -112,6 +111,7 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
             }
         });
 
+        textoDescripcion.setEditable(false);
         textoDescripcion.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
         labelPatente.setText("Patente");
@@ -120,18 +120,33 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
 
         labelModelo.setText("Modelo");
 
+        textoPatente.setEditable(false);
+
+        textoModelo.setEditable(false);
+
         labelMarca.setText("Marca");
+
+        textoMarca.setEditable(false);
 
         labelNumeroMotor.setText("Número motor");
 
+        textoNumeroMotor.setEditable(false);
+
         labelNumeroSerie.setText("Número de serie");
+
+        textoNumeroSerie.setEditable(false);
 
         labelNChasis.setText("Número Chasis");
 
+        textoNChasis.setEditable(false);
+
         labelObservaciones.setText("Observaciones");
 
+        textoObs.setEditable(false);
         textoObs.setColumns(20);
+        textoObs.setLineWrap(true);
         textoObs.setRows(5);
+        textoObs.setWrapStyleWord(true);
         jscroll.setViewportView(textoObs);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -197,9 +212,19 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        textoNeumaticosDelanteros.setEditable(false);
+
+        textoKMH.setEditable(false);
+
         labelToneladas.setText("Toneladas");
 
         labelAncho.setText("Ancho (cm)");
+
+        textoAncho.setEditable(false);
+
+        textoToneladas.setEditable(false);
+
+        textoKMHUM.setEditable(false);
 
         labelNeumaticosDelanteros.setText("Medidas neumáticos delanteros");
 
@@ -207,9 +232,13 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
 
         panelTipoNeumaticos.setBorder(javax.swing.BorderFactory.createTitledBorder("Tipo Neumáticos"));
 
+        comboTipoNeumaticos.setEditable(true);
         comboTipoNeumaticos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tubular", "Sólido" }));
+        comboTipoNeumaticos.setEnabled(false);
 
-        comboTipoNeumaticos2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Simple", "Doble" }));
+        comboTipoNeumaticos2.setEditable(true);
+        comboTipoNeumaticos2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Simple", "Doble" }));
+        comboTipoNeumaticos2.setEnabled(false);
 
         javax.swing.GroupLayout panelTipoNeumaticosLayout = new javax.swing.GroupLayout(panelTipoNeumaticos);
         panelTipoNeumaticos.setLayout(panelTipoNeumaticosLayout);
@@ -235,6 +264,8 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
         labelKMH.setText("Horómetro");
 
         labelKMHUM.setText("KM/H ult mantencion");
+
+        textoLargo.setEditable(false);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -298,23 +329,39 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
+        textoHorasPM.setEditable(false);
+
         labelPesoGrua.setText("Peso Grúa (kilos)");
+
+        textoNeumaticosTraseros.setEditable(false);
+
+        textoPesoGrua.setEditable(false);
 
         labelMastil.setText("Mástil");
 
         labelAlturaMastil.setText("Altura Mástil (cm)");
 
-        comboTipoCombustible.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Diesel", "Gas" }));
+        comboTipoCombustible.setEditable(true);
+        comboTipoCombustible.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Diesel", "Gas" }));
+        comboTipoCombustible.setEnabled(false);
+
+        textoLargoUnas.setEditable(false);
 
         labelNeumaticosTraseros.setText("Medidas neumáticos traseros");
 
-        comboMastil.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Simple", "Doble" }));
+        comboMastil.setEditable(true);
+        comboMastil.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Simple", "Doble" }));
+        comboMastil.setEnabled(false);
 
         labelHorasPM.setText("Horas próxima mantención");
 
         labelLargoUnas.setText("Largo Uñas (cm)");
 
+        textoAlturaMastil.setEditable(false);
+
         labelTipoCombustible.setText("Tipo Combustible");
+
+        textoAlturaLevante.setEditable(false);
 
         labelAlturaLevante.setText("Al. levante (cm)");
 
@@ -405,6 +452,14 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
         labelFechaRT.setText("Fecha revisión técnica");
 
         labelFechaUM.setText("Fecha última mantención");
+
+        textoFechaIngreso.setEnabled(false);
+
+        textoFechaUM.setEnabled(false);
+
+        textoFechaBaja.setEnabled(false);
+
+        textoFechaRT.setEnabled(false);
 
         javax.swing.GroupLayout fechasLayout = new javax.swing.GroupLayout(fechas);
         fechas.setLayout(fechasLayout);
@@ -675,6 +730,7 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
     public void setTextoFechaBaja(String textoFechaBaja) throws ParseException {
         if(textoFechaBaja.compareTo("") != 0){
             this.textoFechaBaja.setDate(formatDate.parse(textoFechaBaja));
+            this.textoFechaBaja.getEditor().setDisabledTextColor(Color.BLACK);
         }
     }
 
@@ -688,6 +744,7 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
     public void setTextoFechaIngreso(String textoFechaIngreso) throws ParseException {
         if(textoFechaIngreso.compareTo("") != 0){
             this.textoFechaIngreso.setDate(formatDate.parse(textoFechaIngreso));
+            this.textoFechaIngreso.getEditor().setDisabledTextColor(Color.BLACK);
         }
     }
 
@@ -701,6 +758,7 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
     public void setTextoFechaRT(String textoFechaRT) throws ParseException {
         if(textoFechaRT.compareTo("") != 0){
             this.textoFechaRT.setDate(formatDate.parse(textoFechaRT));
+            this.textoFechaRT.getEditor().setDisabledTextColor(Color.BLACK);
         }
     }
 
@@ -714,6 +772,7 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
     public void setTextoFechaUM(String textoFechaUM) throws ParseException {
         if(textoFechaUM.compareTo("") != 0){
             this.textoFechaUM.setDate(formatDate.parse(textoFechaUM));
+            this.textoFechaUM.getEditor().setDisabledTextColor(Color.BLACK);
         }
     }
 
@@ -843,6 +902,7 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
 
     public void setComboTipoNeumaticos(String textoTipoNeumaticos) {
         this.comboTipoNeumaticos.setSelectedItem(textoTipoNeumaticos);
+        ((JTextField)this.comboTipoNeumaticos.getEditor().getEditorComponent()).setDisabledTextColor(Color.black);
     }
 
     public String getTextoToneladas() {
@@ -858,6 +918,7 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
     }
 
     public void setComboMastil(String comboMastil) {
+        ((JTextField)this.comboMastil.getEditor().getEditorComponent()).setDisabledTextColor(Color.black);
         this.comboMastil.setSelectedItem(comboMastil);
     }
 
@@ -866,6 +927,7 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
     }
 
     public void setComboTipoCombustible(String comboTipoCombustible) {
+        ((JTextField)this.comboTipoCombustible.getEditor().getEditorComponent()).setDisabledTextColor(Color.black);
         this.comboTipoCombustible.setSelectedItem(comboTipoCombustible);
     }
 
@@ -874,6 +936,7 @@ public class vistaDetalleGruas extends javax.swing.JDialog {
     }
 
     public void setComboTipoNeumaticos2(String comboTipoNeumaticos) {
+        ((JTextField)this.comboTipoNeumaticos2.getEditor().getEditorComponent()).setDisabledTextColor(Color.black);
         this.comboTipoNeumaticos2.setSelectedItem(comboTipoNeumaticos);
     }
 }

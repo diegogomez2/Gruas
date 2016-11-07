@@ -52,9 +52,9 @@ public class vistaDetalleClientes extends javax.swing.JDialog {
         labelDireccion = new javax.swing.JLabel();
         textoDireccion = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        comboRegion = new javax.swing.JComboBox<String>();
+        comboRegion = new javax.swing.JComboBox<>();
         labelComuna = new javax.swing.JLabel();
-        comboComuna = new javax.swing.JComboBox<String>();
+        comboComuna = new javax.swing.JComboBox<>();
         labelCiudad = new javax.swing.JLabel();
         comboCiudad = new javax.swing.JComboBox();
         jPanel3 = new javax.swing.JPanel();

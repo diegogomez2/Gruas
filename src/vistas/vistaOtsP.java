@@ -6,25 +6,26 @@
 package vistas;
 
 import java.awt.Color;
-import java.util.regex.PatternSyntaxException;
+import java.awt.Component;
 import javax.swing.RowFilter;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import org.jdesktop.swingx.sort.TableSortController;
 
 /**
  *
@@ -35,22 +36,33 @@ public class vistaOtsP extends javax.swing.JPanel {
     /**
      * Creates new form vistaOtsP
      */
-    DefaultTableModel datos;
+//    DefaultTableModel datos;
+    MyTableModel datos;
+    NumberFormat FORMAT = NumberFormat.getCurrencyInstance();
+    DecimalFormatSymbols dfs = new DecimalFormatSymbols();
 
     public vistaOtsP(String tipo, Object[][] data) {
         initComponents();
+        dfs.setCurrencySymbol("$");
+        dfs.setGroupingSeparator('.');
+        dfs.setMonetaryDecimalSeparator('.');
+        ((DecimalFormat) FORMAT).setDecimalFormatSymbols(dfs);
 
         jScrollPane1.setViewportView(tablaOts);
-        String[] columnNames = {"Código OT", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
-            "Neto", "IVA", "Total", "Estado"};
-        datos = new DefaultTableModel(data, columnNames) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
+//        String[] columnNames = {"Código OT", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
+//            "Neto", "IVA", "Total", "Estado"};
+//        datos = new DefaultTableModel(data, columnNames) {
+//            @Override
+//            public boolean isCellEditable(int row, int column) {
+//                return false;
+//            }
+//        };
+        datos = new MyTableModel(data);
 
         tablaOts.setModel(datos);
+        tablaOts.getColumnModel().getColumn(7).setCellRenderer(new CurrencyTableCellRenderer());
+        tablaOts.getColumnModel().getColumn(8).setCellRenderer(new CurrencyTableCellRenderer());
+        tablaOts.getColumnModel().getColumn(9).setCellRenderer(new CurrencyTableCellRenderer());
         tablaOts.setAutoCreateRowSorter(true);
         if (tablaOts.getRowCount() > 0) {
             tablaOts.setRowSelectionInterval(0, 0);
@@ -85,6 +97,20 @@ public class vistaOtsP extends javax.swing.JPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaOts = new javax.swing.JTable(){
+            public String getToolTipText(MouseEvent e) {
+                String tip = null;
+                java.awt.Point p = e.getPoint();
+                int rowIndex = rowAtPoint(p);
+                int colIndex = columnAtPoint(p);
+
+                try {
+                    tip = getValueAt(rowIndex, colIndex).toString();
+                } catch (RuntimeException e1) {
+                    //catch null pointer exception if mouse is over an empty line
+                }
+
+                return tip;
+            }
             @Override
             public java.awt.Component prepareRenderer(TableCellRenderer renderer, int row, int col) {
                 java.awt.Component comp = super.prepareRenderer(renderer, row, col);
@@ -279,6 +305,75 @@ public class vistaOtsP extends javax.swing.JPanel {
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<DefaultTableModel>(datos);
         tablaOts.setRowSorter(sorter);
         sorter.setRowFilter(RowFilter.regexFilter(query));
+    }
+    
+    public class MyTableModel extends DefaultTableModel{
+        public MyTableModel() {
+          super(new String[]{"Código OT", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
+            "Neto", "IVA", "Total", "Estado"}, 0);
+        }
+        public MyTableModel(Object[][] data){
+            super(new String[]{"Código OT", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
+            "Neto", "IVA", "Total", "Estado"}, 0);
+            
+            int i = 0;
+            this.setRowCount(data.length);
+            for(Object[] data1 : data){
+                int cod = Integer.parseInt(data1[0].toString());
+                int neto = Integer.parseInt(data1[7].toString());
+                int iva = Integer.parseInt(data1[8].toString());
+                int tot = Integer.parseInt(data1[9].toString());
+                this.setValueAt(cod, i, 0);
+                this.setValueAt(data1[1], i, 1);
+                this.setValueAt(data1[2], i, 2);
+                this.setValueAt(data1[3], i, 3);
+                this.setValueAt(data1[4], i, 4);
+                this.setValueAt(data1[5], i, 5);
+                this.setValueAt(data1[6], i, 6);
+                this.setValueAt(neto, i, 7);
+                this.setValueAt(iva, i, 8);
+                this.setValueAt(tot, i, 9);
+                this.setValueAt(data1[10], i, 10);
+                i++;
+        }
+        }
+
+        @Override
+        public Class getColumnClass(int column) {
+          switch (column) {
+            case 0:
+                return Integer.class;
+            case 7:
+                return Integer.class;
+            case 8:
+                return Integer.class;
+            case 9:
+                return Integer.class;
+            default:
+                return String.class;
+          }
+        }
+        
+        @Override
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }
+    }
+    
+    public class CurrencyTableCellRenderer extends DefaultTableCellRenderer {
+        @Override
+        public final Component getTableCellRendererComponent(JTable table, Object value,
+            boolean isSelected, boolean hasFocus, int row, int column) {
+                final Component result = super.getTableCellRendererComponent(table, value,
+                    isSelected, hasFocus, row, column);
+                if (value instanceof Number) {
+                    setHorizontalAlignment(JLabel.RIGHT);
+                    setText(FORMAT.format(value));
+                } else {
+                    setText("");
+                }
+                return result;
+            }
     }
 
 }

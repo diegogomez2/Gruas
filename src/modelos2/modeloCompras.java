@@ -89,8 +89,8 @@ public class modeloCompras {
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("INSERT into Compras_fac (rut_pro,"
                     + "tipo_com, fol_com, fol_int_com, fec_in_com, ord_com, fec_pag_com, form_com, asun_com, obs_com,"
-                    + "med_com, ban_com, num_tc_com, est_com, clas_com, tot_com, iva_com, neto_com) values "
-                    + "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                    + "med_com, ban_com, num_tc_com, est_com, clas_com, tot_com, iva_com, neto_com, impes_com, impvar_com) "
+                    + "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                     PreparedStatement.RETURN_GENERATED_KEYS);
             pstm.setInt(1, Integer.parseInt(data[0]));
             pstm.setString(2, data[1]);
@@ -110,6 +110,8 @@ public class modeloCompras {
             pstm.setInt(16, Integer.parseInt(data[15]));
             pstm.setInt(17, Integer.parseInt(data[16]));
             pstm.setInt(18, Integer.parseInt(data[17]));
+            pstm.setString(19, data[18]);
+            pstm.setString(20, data[19]);
             pstm.execute();
             ResultSet res = pstm.getGeneratedKeys();
             res.next();
@@ -152,7 +154,7 @@ public class modeloCompras {
             PreparedStatement pstm = conn.prepareStatement("UPDATE Compras_fac set rut_pro=?, tipo_com=?, fol_com=?, "
                     + "fol_int_com=?, fec_in_com=?, ord_com=?, fec_pag_com=?, form_com=?, asun_com=?, obs_com=?,"
                     + "med_com=?, ban_com=?, num_tc_com=?, est_com=?, clas_com=?, tot_com=?, iva_com=?, "
-                    + "neto_com=? WHERE id_com = ?");
+                    + "neto_com=?, impes_com=?, impvar_com=? WHERE id_com = ?");
             pstm.setInt(1, Integer.parseInt(data[0]));
             pstm.setString(2, data[1]);
             pstm.setString(3, data[2]);
@@ -171,7 +173,9 @@ public class modeloCompras {
             pstm.setString(16, data[15]);
             pstm.setString(17, data[16]);
             pstm.setString(18, data[17]);
-            pstm.setString(19, id);
+            pstm.setString(19, data[18]);
+            pstm.setString(20, data[19]);
+            pstm.setString(21, id);
             pstm.executeUpdate();
             pstm.close();
         }catch(SQLException e){
@@ -270,6 +274,31 @@ public class modeloCompras {
         return "correcto";
     }
    
+   public String ingresarImpuestos(String[][] data, String id){
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            int iva;
+            for (String[] data1 : data) {
+                PreparedStatement pstm = conn.prepareStatement("INSERT INTO Impuestos (id_com, nom_imp, mon_imp) "
+                        + "values (?, ?, ?)");
+                pstm.setInt(1, Integer.parseInt(id));
+                pstm.setString(2, data1[0]);
+                pstm.setInt(3, Integer.parseInt(data1[1]));
+                pstm.execute();
+                pstm.close();
+            }
+        }catch(SQLException e){
+            System.out.println("Error al ingresar impuesto");
+            System.out.println(e);
+            return "incorrecto";
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+            return "incorrecto";
+        }
+        return "correcto";
+    }
+   
    public String ingresarCuotas(String[][] data, String id){
         try{
             Class.forName("com.mysql.jdbc.Driver");
@@ -338,12 +367,32 @@ public class modeloCompras {
         }
     }
    
+   public String borrarImpuestos(String id){
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("DELETE FROM Impuestos WHERE id_com = ?");
+            pstm.setString(1, id);
+            pstm.execute();
+            pstm.close();
+            return "correcto";
+        }catch(SQLException e){
+            System.out.println("Error al eliminar impuestos");
+            System.out.println(e);
+            return "incorrecto";
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+            return "incorrecto";
+        }
+    }
+   
    public String[] obtenerCompraPorId(String id){
         String data[] = new String[]{};
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("SELECT * FROM Compras_fac INNER JOIN Proveedores "
+            PreparedStatement pstm = conn.prepareStatement("SELECT *, coalesce(impes_com, 0) impes, coalesce(impvar_com, 0) "
+                    + "impvar FROM Compras_fac INNER JOIN Proveedores "
                     + "ON Compras_fac.rut_pro = Proveedores.rut_pro WHERE id_com = ?");
             pstm.setString(1, id);
             ResultSet res = pstm.executeQuery();
@@ -370,9 +419,11 @@ public class modeloCompras {
             String esttot = res.getString("tot_com");
             String estiva = res.getString("iva_com");
             String estnet = res.getString("neto_com");
+            String estimpes = res.getString("impes");
+            String estimpvar = res.getString("impvar");
             data = new String[]{esttip, estfol, estrut + "-" + estdig , estraz, estgir, estdir, estcon, 
                 estfecin, estord, estfecpag, estfor, estasu, estobs, estmed, estban, estntc, estest, estclas, 
-                esttot, estiva, estnet};
+                esttot, estiva, estnet, estimpes, estimpvar};
         }catch(SQLException e){
             System.out.println("Error al obtener proveedor por rut");
             System.out.println(e);
@@ -533,6 +584,48 @@ public class modeloCompras {
             }
         }catch(SQLException e){
             System.out.println("Error al obtener prod por id");
+            System.out.println(e);
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+        }
+        return data;
+    }
+   
+    public Object[][] obtenerImpuestosPorId(String id){
+       int registros = 0;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Impuestos WHERE id_com = ?");
+            pstm.setString(1, id);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+       }catch(SQLException e){
+            System.out.println("Error al contar impuestos");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        
+        Object[][] data = new String[registros][2];
+        
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT * FROM Impuestos WHERE id_com = ? Order by id_imp");
+            pstm.setString(1, id);
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while(res.next()){
+                String estnom = res.getString("nom_imp");
+                String estmon = res.getString("mon_imp");
+                data[i] = new String[]{estnom, estmon};
+                i++;
+            }
+        }catch(SQLException e){
+            System.out.println("Error al obtener imp por id");
             System.out.println(e);
         }catch(ClassNotFoundException e){
             System.out.println(e);

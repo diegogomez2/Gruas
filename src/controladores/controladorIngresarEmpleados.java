@@ -23,7 +23,7 @@ public class controladorIngresarEmpleados {
         vistaIE = new vistaIngresarEmpleados(new javax.swing.JFrame(), true, dataRegiones);
         vistaIE.setSueldoMin(sueldo_min);
         vistaIE.setSueldoBase(sueldo_base);
-        vistaIE.setTextoSueldoBase(sueldo_min);
+        vistaIE.setTextoSueldo(String.valueOf(sueldo_min));
         vistaIE.setLocationRelativeTo(null);
         vistaIE.setVisible(true);
     }
@@ -36,7 +36,8 @@ public class controladorIngresarEmpleados {
             vistaIE.getTextoCorreo(), vistaIE.getComboCargo(), vistaIE.getTextoSueldo(), vistaIE.getComboAFP(),
             vistaIE.getComboSalud(), vistaIE.getTextoFechaIn(), vistaIE.getTextoDir(), vistaIE.getComboRegion(),
             vistaIE.getComboComuna(), vistaIE.getIsapre(), vistaIE.getValorIsapre(), vistaIE.getTextoColacion(), 
-            vistaIE.getTextoTransporte()};
+            vistaIE.getTextoTransporte(), vistaIE.getTextoBonoAd(), vistaIE.getTextoValorBonoAd(), vistaIE.getTextoCaja(),
+            vistaIE.getTextoAF()};
         boolean flag = miControlador.ingresarEmpleado(data);
         return flag;    
     }

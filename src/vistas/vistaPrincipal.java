@@ -65,6 +65,7 @@ public class vistaPrincipal extends javax.swing.JFrame {
         itemLibroAtrasado = new javax.swing.JMenuItem();
         menuRemuneraciones = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu Principal");
@@ -210,6 +211,14 @@ public class vistaPrincipal extends javax.swing.JFrame {
         });
         menuRemuneraciones.add(jMenuItem1);
 
+        jMenuItem2.setText("Generar liquidaciones de sueldo");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        menuRemuneraciones.add(jMenuItem2);
+
         MenuPrincipal.add(menuRemuneraciones);
 
         setJMenuBar(MenuPrincipal);
@@ -330,6 +339,11 @@ public class vistaPrincipal extends javax.swing.JFrame {
         miControlador.crearControladorEditarSueldos();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        controladorPrincipal miconPrincipal = new controladorPrincipal();
+        miconPrincipal.crearControladorGenerarLiquidaciones();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -380,6 +394,7 @@ public class vistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemUsuarios;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem menuAgregarTarifa;
     private javax.swing.JMenu menuCobranza;
     private javax.swing.JMenu menuCompras;

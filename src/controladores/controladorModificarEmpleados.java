@@ -20,7 +20,12 @@ public class controladorModificarEmpleados {
     void mostrarVistaModificarEmpleados(String rut, String nombres, Object[][] dataRegiones) throws ParseException {
         controladorPrincipal miControlador = new controladorPrincipal();
         String data[] = miControlador.obtenerEmpleadoPorRut(rut);
+        int sueldo_min = miControlador.obtenerSueldoMin();
+        int sueldo_base = miControlador.obtenerSueldoBase();
         vistaME = new vistaModificarEmpleados(new javax.swing.JFrame(), true, dataRegiones);
+        System.out.println(sueldo_min);
+        vistaME.setSueldoMin(sueldo_min);
+        vistaME.setSueldoBase(sueldo_base);
         vistaME.setTextoRut(data[0]);
         vistaME.setTextoNombres(data[1]);
         vistaME.setTextoApPaterno(data[2]);
@@ -29,13 +34,21 @@ public class controladorModificarEmpleados {
         vistaME.setTextoTelefono(data[5]);
         vistaME.setTextoCorreo(data[6]);
         vistaME.setComboCargo(data[7]);
-        vistaME.setTextoSueldo(data[8]);
+        vistaME.setTextoSueldoBase(data[8]);
         vistaME.setComboAFP(data[9]);
         vistaME.setComboSalud(data[10]);
         vistaME.setTextoFechaIn(data[11]);
         vistaME.setTextoDir(data[12]);
         vistaME.setComboRegion(data[13]);
         vistaME.setComboComuna(data[14]);
+        vistaME.setTextoColacion(data[15]);
+        vistaME.setTextoTransporte(data[16]);
+        vistaME.setTextoIsapre(data[17]);
+        vistaME.setTextoValorPlan(data[18]);
+        vistaME.setTextoBonoAd(data[19]);
+        vistaME.setTextoValorBonoAd(data[20]);
+        vistaME.setTextoCaja(data[21]);
+        vistaME.setTextoAF(data[22]);
         vistaME.setRut(Integer.parseInt(data[0].split("-")[0]));
         vistaME.setLocationRelativeTo(null);
         vistaME.setVisible(true);
@@ -134,7 +147,9 @@ public class controladorModificarEmpleados {
             vistaME.getTextoApMaterno(), vistaME.getTextoFechaNac(), vistaME.getTextoTelefono(),
             vistaME.getTextoCorreo(), vistaME.getComboCargo(), vistaME.getTextoSueldo(), vistaME.getComboAFP(),
             vistaME.getComboSalud(), vistaME.getTextoFechaIn(), vistaME.getTextoDir(), vistaME.getComboRegion(),
-            vistaME.getComboComuna()};
+            vistaME.getComboComuna(), vistaME.getIsapre(), vistaME.getValorIsapre(), vistaME.getTextoColacion(), 
+            vistaME.getTextoTransporte(), vistaME.getTextoBonoAd(), vistaME.getValorBonoAd(), vistaME.getTextoCaja(),
+            vistaME.getTextoAF()};
         boolean flag = miControlador.modificarEmpleado(data, vistaME.getRut());
         return flag;
     }    
