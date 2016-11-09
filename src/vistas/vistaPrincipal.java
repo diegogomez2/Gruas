@@ -6,8 +6,13 @@
 package vistas;
 
 import controladores.controladorPrincipal;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.xml.transform.TransformerException;
+import org.apache.fop.apps.FOPException;
 
 /**
  *
@@ -341,7 +346,15 @@ public class vistaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         controladorPrincipal miconPrincipal = new controladorPrincipal();
-        miconPrincipal.crearControladorGenerarLiquidaciones();
+        try {
+            miconPrincipal.crearControladorGenerarLiquidaciones();
+        } catch (TransformerException ex) {
+            Logger.getLogger(vistaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(vistaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (FOPException ex) {
+            Logger.getLogger(vistaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**

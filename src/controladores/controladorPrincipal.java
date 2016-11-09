@@ -19,6 +19,7 @@ import vistas.vistaPrincipal;
 import controladores2.*;
 import controladores3.controladorEditarSueldos;
 import controladores3.*;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -26,11 +27,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.xml.transform.TransformerException;
 import modelos.modeloEmpleados;
 import modelos2.modeloCobranzas;
 import modelos2.modeloCompras;
 import modelos2.modeloProveedores;
 import modelos3.modeloRemuneraciones;
+import org.apache.fop.apps.FOPException;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -605,7 +608,7 @@ public class controladorPrincipal {
         micontroladorPA.mostrarVistaPresAdelanto(rut);
     }
     
-    public void crearControladorGenerarLiquidaciones() {
+    public void crearControladorGenerarLiquidaciones() throws TransformerException, IOException, FileNotFoundException, FOPException {
         controladorGenerarLiquidaciones micontrolador = new controladorGenerarLiquidaciones();
         micontrolador.generarLiquidaciones();
     }

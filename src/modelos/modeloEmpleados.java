@@ -415,7 +415,7 @@ public class modeloEmpleados {
     }
     
     public String[] obtenerRemuneracionPorRut(String rut) {
-        String[] data = new String[5];
+        String[] data = new String[20];
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
@@ -463,6 +463,91 @@ public class modeloEmpleados {
             data = new String[]{estfrut + "-" + estdig , estnom + " " + estapP, estsueldo, estafp, estsal, 
                 estant, estcol, esttrans, esthorcol, esthormes, estvalbono, esthorex, estcanthor, estbonohorex, 
                 estcaja, estaf, estantic, estadel, estpres, estcuo};
+        }catch(SQLException e){
+            System.out.println("Error al obtener rem empleado por rut");
+            System.out.println(e);
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+        }
+        return data;
+    }
+    
+    public String[][] obtenerRemuneraciones() {
+        
+        int registros = 0;
+        
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Empleados");
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+        }catch(SQLException e){
+             System.out.println("Error al remuneracionesempleados");
+             System.out.println(e);
+        }catch(ClassNotFoundException e){
+             System.out.println(e);
+        }
+        
+        String[][] data = new String[registros][24];
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT rut_emp, dig_emp, nom_emp, apP_emp, "
+                    + "sueldo_emp, afp_emp, sal_emp, TIMESTAMPDIFf(YEAR, fin_emp, CURDATE()) ant, colacion_emp col, transporte_emp trans, "
+                    + " horcol_emp, coalesce(hormes_emp,0) hormes, coalesce(valbonoad_emp, 0) valbono "
+                    + ", coalesce(horexcalc_emp, 0) horex, coalesce(horex_emp, 0) canthor, coalesce(bonohorexcalc_emp, 0) bonohorex, "
+                    + "coalesce(caja_emp, 0) caja, coalesce(af_emp, 0) af, coalesce(anticipo_emp, 0) antic, "
+                    + "coalesce(adel_emp, 0) adel, coalesce(pres_emp, 0) pres, coalesce(cuo_emp, 0) cuo, coalesce(des_afp, 0) "
+                    + "des, coalesce(des_sal, 0) dessal, coalesce(isa_emp, '') isa, coalesce(val_isa_emp, 0) valisa "
+                    + "FROM Empleados LEFT JOIN Afps ON afp_emp = nom_afp LEFT JOIN Salud ON sal_emp = nom_sal "
+                    + "ORDER BY rut_emp");
+            ResultSet res = pstm.executeQuery();
+            int j = 0;
+            while(res.next()){
+                String estrut = res.getString("rut_emp");
+                String estfrut = "";
+                int cont = 0;
+                for(int i = estrut.length() - 1; i >= 0; i--){
+                    estfrut = estrut.substring(i , i+1) + estfrut;
+                    cont ++;
+                    if(cont == 3 && i != 0){
+                        estfrut = "." + estfrut;
+                        cont = 0;
+                    }
+                }
+                String estdig = res.getString("dig_emp");
+                String estnom = res.getString("nom_emp");
+                String estapP = res.getString("apP_emp");
+                String estsueldo = res.getString("sueldo_emp");
+                String estafp = res.getString("afp_emp");
+                String estsal = res.getString("sal_emp");
+                String estant = res.getString("ant");
+                String estcol = res.getString("col");
+                String esttrans = res.getString("trans");
+                String esthorcol = res.getString("horcol_emp");
+                String esthormes = res.getString("hormes");
+                String estvalbono = res.getString("valbono");
+                String esthorex = res.getString("horex");
+                String estcanthor = res.getString("canthor");
+                String estbonohorex = res.getString("bonohorex");
+                String estcaja = res.getString("caja");
+                String estaf = res.getString("af");
+                String estantic = res.getString("antic");
+                String estadel = res.getString("adel");
+                String estpres = res.getString("pres");
+                String estcuo = res.getString("cuo");
+                String estdes = res.getString("des");
+                String estdessal = res.getString("dessal");
+                String estisa = res.getString("isa");
+                String estvalisa = res.getString("valisa");
+                data[j] = new String[]{estfrut + "-" + estdig , estnom + " " + estapP, estsueldo, estafp, estsal, 
+                    estant, estcol, esttrans, esthorcol, esthormes, estvalbono, esthorex, estcanthor, estbonohorex, 
+                    estcaja, estaf, estantic, estadel, estpres, estcuo, estdes, estdessal, estisa, estvalisa};
+                j++;
+            }
         }catch(SQLException e){
             System.out.println("Error al obtener rem empleado por rut");
             System.out.println(e);
@@ -607,5 +692,42 @@ public class modeloEmpleados {
             System.out.println(e);
             return "incorrecto";
         }
+    }
+    
+    public String[] obtenerRutEmpleados(){
+        int registros = 0;
+        
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Empleados");
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+       }catch(SQLException e){
+            System.out.println("Error al obtener rut empleados");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        
+        String[] data = new String[registros];
+        
+        try{
+            PreparedStatement pstm = conn.prepareStatement("SELECT rut_emp FROM Empleados ORDER BY rut_emp");
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while(res.next()){
+                String estrut = res.getString("rut_emp");
+                data[i] = estrut;
+                i++;
+            }
+            res.close();
+        }catch(SQLException e){
+            System.out.println("Error al obtener rut empleados");
+            System.out.println(e);
+        }
+        return data;
     }
 }
