@@ -596,6 +596,11 @@ public class controladorPrincipal {
         micontrolador.mostrarVistaEditarSueldos();
     }
     
+    public void crearControladorCambiarUTM() {
+        controladorCambiarUTM micontrolador = new controladorCambiarUTM();
+        micontrolador.mostrarVistaCambiarUTM();
+    }
+    
     void crearControladorRemuneracionesEmpleado(String rut){
         controladorRemuneracionEmpleado micontroladorRE;
         micontroladorRE = new controladorRemuneracionEmpleado();
@@ -1286,6 +1291,12 @@ public class controladorPrincipal {
         return sueldo_base;
     }
     
+    public int obtenerUTM(){
+        modelos3.modeloRemuneraciones valores = new modeloRemuneraciones();
+        int utm = valores.obtenerUTM();
+        return utm;
+    }
+    
     public boolean editarSueldos(String min, String base){
         modeloRemuneraciones sueldos = new modeloRemuneraciones();
         if(sueldos.editarSueldos(min, base) > 0){
@@ -1296,9 +1307,25 @@ public class controladorPrincipal {
         }
     }
     
+    public boolean cambiarUTM(String utm){
+        modeloRemuneraciones valores = new modeloRemuneraciones();
+        if(valores.cambiarUTM(utm) > 0){
+            return true;
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al cambiar el valor de la UTM", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+    
     public String[] obtenerRemuneracionEmpleadoPorRut(String rut){
         modelos.modeloEmpleados sueldos = new modeloEmpleados();
         String[] data = sueldos.obtenerRemuneracionPorRut(rut);
+        return data;
+    }
+    
+    public String[][] obtenerTablaImpuesto(){
+        modelos3.modeloRemuneraciones tablaImp = new modeloRemuneraciones();
+        String[][] data = tablaImp.obtenerTablaImpuesto();
         return data;
     }
     

@@ -48,12 +48,14 @@ public class controladorGenerarLiquidaciones {
                     ((DecimalFormat) FORMAT).setDecimalFormatSymbols(dfs);
                     controladores.controladorPrincipal miControlador = new controladorPrincipal();
                     modelos.modeloEmpleados liquidaciones = new modeloEmpleados();
+                    modelos3.modeloRemuneraciones remuneraciones = new modeloRemuneraciones();
                     String[][] data = liquidaciones.obtenerRemuneraciones();
+                    String[][] imp2cat = remuneraciones.obtenerTablaImpuesto();
                     int numEmp = data.length;
                     String path = "Liquidaciones " + per;
                     File dir = new File(path);
                     dir.mkdir();
-                    int bono300 = miControlador.obtenerBono300();
+//                    int bono300 = miControlador.obtenerBono300();
                     for(int i = 0; i < numEmp; i++){
                         String fileName = path+"/"+data[i][0]+".pdf"; // name of our file
                         try{
@@ -67,7 +69,8 @@ public class controladorGenerarLiquidaciones {
                             //BONO ANTIGUEDAD
                             int bonoAnt = miControlador.obtenerBonoAnt(data[i][5]);
                             //BONO 300
-                            int totalBon300 = bono300 * Integer.parseInt(data[i][9]);
+//                            int totalBon300 = bono300 * Integer.parseInt(data[i][9]);
+                            int totalBon300 = Integer.parseInt(data[i][26]);
                             //BONO ADICIONAL
                             int bonoAd = Integer.parseInt(data[i][10]);
                             //BONO RESPONSABILIDAD
@@ -108,12 +111,21 @@ public class controladorGenerarLiquidaciones {
                             int ces = (int)(totImp * 0.006);
                             //TOTAL TRIBUTABLE
                             int totTrib = totImp - totalAFP - totalSalud - ces;
+                            int descRenta = 0;
+                            int totAux = 0;
+                            for(String[] imp2cat1: imp2cat){
+                                if(totTrib > Float.parseFloat(imp2cat1[0]) / 10 && totTrib <= Float.parseFloat(imp2cat1[1]) / 10){
+                                    descRenta = (int) (totTrib * Float.parseFloat(imp2cat1[2]) / 1000 - Float.parseFloat(imp2cat1[3]) / 100);
+                                    totAux = totTrib - descRenta;
+                                    break;
+                                }
+                            }
                             //CAJA COMPENSACION
                             int caja = Integer.parseInt(data[i][14]);
                             //ASIGNACION FAMILIAR
                             int af = Integer.parseInt(data[i][15]);
                             //LIQ ALCANZADO
-                            int liqAl = totTrib - caja;
+                            int liqAl = totAux - caja;
                             //COLACION 
                             int col = Integer.parseInt(data[i][6]);
                             //TRANSPORTE
@@ -124,6 +136,7 @@ public class controladorGenerarLiquidaciones {
                             int pres = Integer.parseInt(data[i][18]);
                             int cuo = Integer.parseInt(data[i][19]);
                             int cuoPres = 0;
+                            int cuores = Math.max(0, Integer.parseInt(data[i][25]) - 1);
                             if(cuo != 0){
                                 cuoPres = pres / cuo;
                             }
@@ -229,7 +242,7 @@ public class controladorGenerarLiquidaciones {
                             content.newLine();
                             content.showText("Impuesto a la renta");
                             content.newLineAtOffset(150, 0);
-                            content.showText(FORMAT.format(0));
+                            content.showText(FORMAT.format(descRenta));
                 //            content.newLineAtOffset(-150, -15);
 
                             content.endText();
@@ -270,7 +283,7 @@ public class controladorGenerarLiquidaciones {
                             content.newLineAtOffset(-150, -15);
                             content.showText("Cuotas restantes");
                             content.newLineAtOffset(150, 0);
-                            content.showText(String.valueOf(cuo));
+                            content.showText(String.valueOf(cuores));
                             content.newLine();
                             content.showText("----------------------------");
                             content.newLineAtOffset(-150, -15);
@@ -300,10 +313,10 @@ public class controladorGenerarLiquidaciones {
                     }
                     JOptionPane.showMessageDialog(null, "Liquidaciones de sueldo generadas con éxito", "Operación exitosa", 
                                     JOptionPane.INFORMATION_MESSAGE);
+                    liquidaciones.limpiarRemuneraciones();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
             }
         };
         runnable.run();

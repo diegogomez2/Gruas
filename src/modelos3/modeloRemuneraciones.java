@@ -216,4 +216,84 @@ public class modeloRemuneraciones {
        }
         return desc;
     }
+    
+
+    
+    public String[][] obtenerTablaImpuesto(){
+        int registros = 0;
+        
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM impuesto_renta");
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+       }catch(SQLException e){
+            System.out.println("Error obtener tabla impuesto");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        
+        String[][] data = new String[registros][4];
+        
+        try{
+            PreparedStatement pstm = conn.prepareStatement("SELECT val_val * men_ren as men, val_val * may_ren as may, "
+                    + "fac_ren fac, val_val * des_ren as des FROM impuesto_renta, valores");
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while(res.next()){
+                String estmen = res.getString("men");
+                String estmay = res.getString("may");
+                String estfac = res.getString("fac");
+                String estdes = res.getString("des");
+                data[i] = new String[]{estmen, estmay, estfac, estdes};
+                i++;
+            }
+            res.close();
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+        return data;
+    }
+    
+    public int obtenerUTM(){
+        int utm = 0;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT val_val val FROM valores WHERE nom_val = 'UTM'");
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            utm = res.getInt("val");
+            res.close();
+            pstm.close();
+       }catch(SQLException e){
+            System.out.println("Error obtener valor utm");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        return utm;
+    }
+    
+    public int cambiarUTM(String utm){
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("UPDATE Valores set val_val=? WHERE nom_val = 'UTM'");
+            pstm.setString(1, utm);
+            pstm.executeUpdate();
+            return 1;
+       }catch(SQLException e){
+            System.out.println("Error cambiar utm");
+            System.out.println(e);
+            return 0;
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+            return 0;
+       }
+    }
 }

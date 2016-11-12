@@ -399,32 +399,61 @@ public class controladorCrearLibros {
                 resumen.appendChild(totales);
             }
             
+            datos = modelo.obtenerResumenNDMes(mes);
+            
+            Element totales = doc.createElement("TotalesPeriodo");
+
+            Element tipoDoc = doc.createElement("TpoDoc");
+            Element totDoc = doc.createElement("TotDoc");
+            Element totEx = doc.createElement("TotMntExe");
+            Element totNet = doc.createElement("TotMntNeto");
+            Element totIva = doc.createElement("TotMntIVA");
+            Element totTot = doc.createElement("TotMntTotal");
+
+            tipoDoc.appendChild(doc.createTextNode("56"));
+            totDoc.appendChild(doc.createTextNode(datos[0]));
+            totEx.appendChild(doc.createTextNode("0"));
+            totNet.appendChild(doc.createTextNode(datos[1]));
+            totIva.appendChild(doc.createTextNode(datos[2]));
+            totTot.appendChild(doc.createTextNode(datos[3]));
+
+            totales.appendChild(tipoDoc);
+            totales.appendChild(totDoc);
+            totales.appendChild(totEx);
+            totales.appendChild(totNet);
+            totales.appendChild(totIva);
+            totales.appendChild(totTot);
+
+            resumen.appendChild(totales);
+            
+            
             datos = modelo.obtenerResumenNCMes(mes);
 
-            Element totales = doc.createElement("TotalesPeriodo");
+            totales = doc.createElement("TotalesPeriodo");
+
+            tipoDoc = doc.createElement("TpoDoc");
+            totDoc = doc.createElement("TotDoc");
+            totEx = doc.createElement("TotMntExe");
+            totNet = doc.createElement("TotMntNeto");
+            totIva = doc.createElement("TotMntIVA");
+            totTot = doc.createElement("TotMntTotal");
+
+            tipoDoc.appendChild(doc.createTextNode("61"));
+            totDoc.appendChild(doc.createTextNode(datos[0]));
+            totEx.appendChild(doc.createTextNode("0"));
+            totNet.appendChild(doc.createTextNode(datos[1]));
+            totIva.appendChild(doc.createTextNode(datos[2]));
+            totTot.appendChild(doc.createTextNode(datos[3]));
+
+            totales.appendChild(tipoDoc);
+            totales.appendChild(totDoc);
+            totales.appendChild(totEx);
+            totales.appendChild(totNet);
+            totales.appendChild(totIva);
+            totales.appendChild(totTot);
+
+            resumen.appendChild(totales);
                 
-                Element tipoDoc = doc.createElement("TpoDoc");
-                Element totDoc = doc.createElement("TotDoc");
-                Element totEx = doc.createElement("TotMntExe");
-                Element totNet = doc.createElement("TotMntNeto");
-                Element totIva = doc.createElement("TotMntIVA");
-                Element totTot = doc.createElement("TotMntTotal");
-                
-                tipoDoc.appendChild(doc.createTextNode("61"));
-                totDoc.appendChild(doc.createTextNode(datos[0]));
-                totEx.appendChild(doc.createTextNode("0"));
-                totNet.appendChild(doc.createTextNode(datos[1]));
-                totIva.appendChild(doc.createTextNode(datos[2]));
-                totTot.appendChild(doc.createTextNode(datos[3]));
-                
-                totales.appendChild(tipoDoc);
-                totales.appendChild(totDoc);
-                totales.appendChild(totEx);
-                totales.appendChild(totNet);
-                totales.appendChild(totIva);
-                totales.appendChild(totTot);
-                
-                resumen.appendChild(totales);
             
             //FACTURAS
             
@@ -474,6 +503,55 @@ public class controladorCrearLibros {
                 
                 envio.appendChild(detalle);
             }
+            
+            //NOTADEBITO
+
+            String [][] nd = modelo.obtenerNDMes(mes);
+            for(int i = 0; i < nd.length; i++){
+                Element detalle = doc.createElement("Detalle");
+                
+                tipoDoc = doc.createElement("TpoDoc");
+                Element numDoc = doc.createElement("NroDoc");
+                Element tipoImp = doc.createElement("TpoImp");
+                Element tasaImp = doc.createElement("TasaImp");
+                Element numInt = doc.createElement("NumInt");
+                Element fecDoc = doc.createElement("FchDoc");
+                Element rut = doc.createElement("RUTDoc");
+                Element raz = doc.createElement("RznSoc");
+                Element ex = doc.createElement("MntExe");
+                Element neto = doc.createElement("MntNeto");
+                Element iva = doc.createElement("MntIVA");
+                Element total = doc.createElement("MntTotal");
+                
+                tipoDoc.appendChild(doc.createTextNode("56"));
+                numDoc.appendChild(doc.createTextNode(nd[i][0]));
+                tipoImp.appendChild(doc.createTextNode("1"));
+                tasaImp.appendChild(doc.createTextNode("19"));
+                numInt.appendChild(doc.createTextNode(String.valueOf(i+1)));
+                fecDoc.appendChild(doc.createTextNode(nd[i][1]));
+                rut.appendChild(doc.createTextNode(nd[i][2]));
+                raz.appendChild(doc.createTextNode(nd[i][3]));
+                ex.appendChild(doc.createTextNode("0"));
+                neto.appendChild(doc.createTextNode(nd[i][4]));
+                iva.appendChild(doc.createTextNode(nd[i][5]));
+                total.appendChild(doc.createTextNode(nd[i][6]));
+                
+                detalle.appendChild(tipoDoc);
+                detalle.appendChild(numDoc);
+                detalle.appendChild(tipoImp);
+                detalle.appendChild(tasaImp);
+                detalle.appendChild(numInt);
+                detalle.appendChild(fecDoc);
+                detalle.appendChild(rut);
+                detalle.appendChild(raz);
+                detalle.appendChild(ex);
+                detalle.appendChild(neto);
+                detalle.appendChild(iva);
+                detalle.appendChild(total);
+                
+                envio.appendChild(detalle);
+            }
+            
             //NOTACREDITO
             String [][] nc = modelo.obtenerNCMes(mes);
             for(int i = 0; i < nc.length; i++){
@@ -493,17 +571,17 @@ public class controladorCrearLibros {
                 Element total = doc.createElement("MntTotal");
                 
                 tipoDoc.appendChild(doc.createTextNode("61"));
-                numDoc.appendChild(doc.createTextNode(facturas[i][0]));
+                numDoc.appendChild(doc.createTextNode(nc[i][0]));
                 tipoImp.appendChild(doc.createTextNode("1"));
                 tasaImp.appendChild(doc.createTextNode("19"));
                 numInt.appendChild(doc.createTextNode(String.valueOf(i+1)));
-                fecDoc.appendChild(doc.createTextNode(facturas[i][1]));
-                rut.appendChild(doc.createTextNode(facturas[i][2]));
-                raz.appendChild(doc.createTextNode(facturas[i][3]));
+                fecDoc.appendChild(doc.createTextNode(nc[i][1]));
+                rut.appendChild(doc.createTextNode(nc[i][2]));
+                raz.appendChild(doc.createTextNode(nc[i][3]));
                 ex.appendChild(doc.createTextNode("0"));
-                neto.appendChild(doc.createTextNode(facturas[i][4]));
-                iva.appendChild(doc.createTextNode(facturas[i][5]));
-                total.appendChild(doc.createTextNode(facturas[i][6]));
+                neto.appendChild(doc.createTextNode(nc[i][4]));
+                iva.appendChild(doc.createTextNode(nc[i][5]));
+                total.appendChild(doc.createTextNode(nc[i][6]));
                 
                 detalle.appendChild(tipoDoc);
                 detalle.appendChild(numDoc);
@@ -520,6 +598,7 @@ public class controladorCrearLibros {
                 
                 envio.appendChild(detalle);
             }
+            
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");

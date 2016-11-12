@@ -718,7 +718,8 @@ public class vistaIngresarOts extends javax.swing.JDialog {
                 controladores.controladorGruas micontroladorGruas = new controladorGruas();
                 controladores.controladorEmpleados micontroladorEmpleados = new controladorEmpleados();
                 micontroladorGruas.agregarHoras(textoGrua.getText(), horas);
-                micontroladorEmpleados.agregarHoras(getRutEmp(), horas); //agregar tonelaje
+//                micontroladorEmpleados.agregarHoras(getRutEmp(), horas); //agregar tonelaje
+                micontroladorEmpleados.agregarHoras(getRutEmp(), horas, ton);
                 micontroladorEmpleados.agregarColacion(getRutEmp(), getSpinnerColacion());
                 micontroladorEmpleados.agregarHorasExtra(getRutEmp(), getSpinnerHorasExtra(), getHorasExCal());
             }

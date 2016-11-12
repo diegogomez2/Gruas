@@ -9,6 +9,7 @@ import controladores.controladorPrincipal;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.xml.transform.TransformerException;
@@ -71,6 +72,7 @@ public class vistaPrincipal extends javax.swing.JFrame {
         menuRemuneraciones = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu Principal");
@@ -224,6 +226,14 @@ public class vistaPrincipal extends javax.swing.JFrame {
         });
         menuRemuneraciones.add(jMenuItem2);
 
+        jMenuItem3.setText("Cambiar valor UTM");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        menuRemuneraciones.add(jMenuItem3);
+
         MenuPrincipal.add(menuRemuneraciones);
 
         setJMenuBar(MenuPrincipal);
@@ -347,7 +357,11 @@ public class vistaPrincipal extends javax.swing.JFrame {
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         controladorPrincipal miconPrincipal = new controladorPrincipal();
         try {
-            miconPrincipal.crearControladorGenerarLiquidaciones();
+            int dialogResult = JOptionPane.showOptionDialog(null, "Esta seguro que desea generar las liquidaciones de "
+                    + "sueldo", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, 0);
+            if(dialogResult == JOptionPane.YES_OPTION){
+                miconPrincipal.crearControladorGenerarLiquidaciones(); 
+            }
         } catch (TransformerException ex) {
             Logger.getLogger(vistaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -356,6 +370,11 @@ public class vistaPrincipal extends javax.swing.JFrame {
             Logger.getLogger(vistaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        controladorPrincipal miControlador = new controladorPrincipal();
+        miControlador.crearControladorCambiarUTM();
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -408,6 +427,7 @@ public class vistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem menuAgregarTarifa;
     private javax.swing.JMenu menuCobranza;
     private javax.swing.JMenu menuCompras;

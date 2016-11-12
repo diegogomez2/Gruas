@@ -61,9 +61,9 @@ public class controladorEmpleados {
         empleado.agregarColacion(rut, horas);
     }
     
-    public void agregarHoras(String rut, int horas){
+    public void agregarHoras(String rut, int horas, String ton){
         modelos.modeloEmpleados emp = new modelos.modeloEmpleados();
-        emp.actualizarHorasMes(rut, horas); //agregar ton
+        emp.actualizarHorasMes(rut, horas, ton); //agregar ton
     }
     
     public void agregarHorasExtra(String rut, int horas, int horasCalc){
