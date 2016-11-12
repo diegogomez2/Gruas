@@ -48,7 +48,7 @@ public class controladorIngresarOts {
         vistaIO.setSpinnerHoraLlegada(data[3]);
         vistaIO.setTon(data[14]);
         vistaIO.setTextoCiudad(data[15]);
-        System.out.println(data[17]);
+//        System.out.println(data[17]);
         vistaIO.setRutEmp(data[17]);
         vistaIO.setTextoFechaOt();
         List<List<String>> valores = calcularTarifa(data[0], data[2], data[1], data[3], data[14]);

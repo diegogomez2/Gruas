@@ -6,16 +6,13 @@
 package controladores;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
-import javax.xml.crypto.dsig.TransformException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -225,7 +222,7 @@ public class controladorCrearFactura {
                     prcItem.appendChild(doc.createTextNode(valores.get(j).get(0)));
                     detalle.appendChild(prcItem);
                     
-                    Element mtoItem = doc.createElement("MtoItem");
+                    Element mtoItem = doc.createElement("MontoItem");
                     mtoItem.appendChild(doc.createTextNode(Float.toString(Float.parseFloat(valores.get(j).get(0))
                             * Float.parseFloat(valores.get(j).get(3)))));
                     detalle.appendChild(mtoItem);
@@ -267,7 +264,7 @@ public class controladorCrearFactura {
                     prcItem.appendChild(doc.createTextNode(infoDespacho[1]));
                     detalle.appendChild(prcItem);
                     
-                    Element mtoItem = doc.createElement("MtoItem");
+                    Element mtoItem = doc.createElement("MontoItem");
                     mtoItem.appendChild(doc.createTextNode(infoDespacho[1]));
                     detalle.appendChild(mtoItem);
                     
@@ -466,7 +463,7 @@ public class controladorCrearFactura {
                 nomItem.appendChild(doc.createTextNode(data[11]+" HORAS DE GRUA HORQUILLA O.T.:"+data[10]));
                 detalle.appendChild(nomItem);
                 
-                Element mtoItem = doc.createElement("MtoItem");
+                Element mtoItem = doc.createElement("MontoItem");
                 mtoItem.appendChild(doc.createTextNode(data[7]));
                 detalle.appendChild(mtoItem);
             }
@@ -698,7 +695,7 @@ public class controladorCrearFactura {
                     prcItem.appendChild(doc.createTextNode(valores.get(j).get(0)));
                     detalle.appendChild(prcItem);
                     
-                    Element mtoItem = doc.createElement("MtoItem");
+                    Element mtoItem = doc.createElement("MontoItem");
                     mtoItem.appendChild(doc.createTextNode(Float.toString(Float.parseFloat(valores.get(j).get(0))
                             * Float.parseFloat(valores.get(j).get(3)))));
                     detalle.appendChild(mtoItem);
@@ -740,7 +737,7 @@ public class controladorCrearFactura {
                     prcItem.appendChild(doc.createTextNode(infoDespacho[1]));
                     detalle.appendChild(prcItem);
                     
-                    Element mtoItem = doc.createElement("MtoItem");
+                    Element mtoItem = doc.createElement("MontoItem");
                     mtoItem.appendChild(doc.createTextNode(infoDespacho[1]));
                     detalle.appendChild(mtoItem);
                     
@@ -765,7 +762,7 @@ public class controladorCrearFactura {
 //                nomItem.appendChild(doc.createTextNode(data[11]+" HORAS DE GRUA HORQUILLA O.T.:"+data[10]));
 //                detalle.appendChild(nomItem);
 //                
-//                Element mtoItem = doc.createElement("MtoItem");
+//                Element mtoItem = doc.createElement("MontoItem");
 //                mtoItem.appendChild(doc.createTextNode(data[7]));
 //                detalle.appendChild(mtoItem);
 
@@ -1031,7 +1028,7 @@ public class controladorCrearFactura {
                     prcItem.appendChild(doc.createTextNode(valores.get(j).get(0)));
                     detalle.appendChild(prcItem);
                     
-                    Element mtoItem = doc.createElement("MtoItem");
+                    Element mtoItem = doc.createElement("MontoItem");
                     mtoItem.appendChild(doc.createTextNode(Float.toString(Float.parseFloat(valores.get(j).get(0))
                             * Float.parseFloat(valores.get(j).get(3)))));
                     detalle.appendChild(mtoItem);
@@ -1073,7 +1070,7 @@ public class controladorCrearFactura {
                     prcItem.appendChild(doc.createTextNode(infoDespacho[1]));
                     detalle.appendChild(prcItem);
                     
-                    Element mtoItem = doc.createElement("MtoItem");
+                    Element mtoItem = doc.createElement("MontoItem");
                     mtoItem.appendChild(doc.createTextNode(infoDespacho[1]));
                     detalle.appendChild(mtoItem);
                     
@@ -1337,7 +1334,7 @@ public class controladorCrearFactura {
                     prcItem.appendChild(doc.createTextNode(valores.get(j).get(0)));
                     detalle.appendChild(prcItem);
                     
-                    Element mtoItem = doc.createElement("MtoItem");
+                    Element mtoItem = doc.createElement("MontoItem");
                     mtoItem.appendChild(doc.createTextNode(Float.toString(Float.parseFloat(valores.get(j).get(0))
                             * Float.parseFloat(valores.get(j).get(3)))));
                     detalle.appendChild(mtoItem);
@@ -1364,7 +1361,7 @@ public class controladorCrearFactura {
 //                nomItem.appendChild(doc.createTextNode(data[11]+" HORAS DE GRUA HORQUILLA O.T.:"+data[10]));
 //                detalle.appendChild(nomItem);
 //                
-//                Element mtoItem = doc.createElement("MtoItem");
+//                Element mtoItem = doc.createElement("MontoItem");
 //                mtoItem.appendChild(doc.createTextNode(data[7]));
 //                detalle.appendChild(mtoItem);
                 
@@ -1402,7 +1399,7 @@ public class controladorCrearFactura {
                     prcItem.appendChild(doc.createTextNode(infoDespacho[1]));
                     detalle.appendChild(prcItem);
                     
-                    Element mtoItem = doc.createElement("MtoItem");
+                    Element mtoItem = doc.createElement("MontoItem");
                     mtoItem.appendChild(doc.createTextNode(infoDespacho[1]));
                     detalle.appendChild(mtoItem);
                     
@@ -1625,7 +1622,7 @@ public class controladorCrearFactura {
                 nomItem.appendChild(doc.createTextNode(data[11]+" HORAS DE GRUA HORQUILLA O.T.:"+data[10]));
                 detalle.appendChild(nomItem);
                 
-                Element mtoItem = doc.createElement("MtoItem");
+                Element mtoItem = doc.createElement("MontoItem");
                 mtoItem.appendChild(doc.createTextNode(data[7]));
                 detalle.appendChild(mtoItem);
                 
@@ -1843,11 +1840,8 @@ public class controladorCrearFactura {
                 JOptionPane.showMessageDialog(vistaF, "Documento realizado con éxito en ruta por defecto");
                 return "correcto";  
             }
-        }catch(ParserConfigurationException pce){
+        }catch(ParserConfigurationException | TransformerException pce){
             pce.printStackTrace();
-            return "incorrecto";
-        }catch(TransformerException tfe){
-            tfe.printStackTrace();
             return "incorrecto";
         }
     }
@@ -1857,7 +1851,7 @@ public class controladorCrearFactura {
         tabs.remove(5);
         tabs.remove(6);
         tabs.insertTab("A facturar", null, miControlador.crearControladorFacturasP(), null, 5);
-        tabs.insertTab("Histórico Ots", null, miControlador.crearControladorHistoricoP(), null, 7);
+        tabs.insertTab("Histórico", null, miControlador.crearControladorHistoricoP(), null, 7);
         tabs.setSelectedIndex(5);
     }
 }

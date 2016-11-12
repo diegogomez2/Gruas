@@ -46,8 +46,6 @@ public class vistaFacturadasP extends javax.swing.JPanel {
         dfs.setMonetaryDecimalSeparator('.');
         ((DecimalFormat) FORMAT).setDecimalFormatSymbols(dfs);
         botonGuiaDesp.setVisible(false);
-//         String[] columNames = {"N°Folio", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
-//             "Neto", "IVA", "Total", "Tipo"};
         datos = new MyTableModel(data);
         tablaFacturadas.setModel(datos);
         tablaFacturadas.getColumnModel().getColumn(7).setCellRenderer(new CurrencyTableCellRenderer());
@@ -192,15 +190,21 @@ public class vistaFacturadasP extends javax.swing.JPanel {
                 String razon = JOptionPane.showInputDialog("Razón: ");
                 if(razon != null){
                     String id_nc = miControlador.ingresarNotaCredito(id, razon, tipo);
-                    String[] valores_nc = miControlador.obtenerValoresNDNC(id_nc);
-                    String[] ots = miControlador.obtenerOtsPorIdNC(id_nc, tipo);
-                    try {
-                        if((miControladorC.crearNotaCredNDXML(id_nc, valores_nc, ots, razon, id, tipo).compareTo("correcto") == 0)){
-                            JTabbedPane tabs = (JTabbedPane)this.getParent();
-                            miControlador.crearControladorPrincipal(tabs); 
-                        }
-                    } catch (ParseException ex) {
-                        Logger.getLogger(vistaFacturadasP.class.getName()).log(Level.SEVERE, null, ex);
+                    if(id_nc.compareTo("ncduplicada") == 0){
+                        miControlador.borrarNCDuplicada(id_nc);
+                        JOptionPane.showMessageDialog(null, "No se puede generar una nota de crédito sobre una nota de débito"
+                                + " ya anulada", "Nota de crédito duplicada", JOptionPane.INFORMATION_MESSAGE);
+                    }else{
+                        String[] valores_nc = miControlador.obtenerValoresNDNC(id_nc);
+                        String[] ots = miControlador.obtenerOtsPorIdNC(id_nc, tipo);
+                        try {
+                            if((miControladorC.crearNotaCredNDXML(id_nc, valores_nc, ots, razon, id, tipo).compareTo("correcto") == 0)){
+                                JTabbedPane tabs = (JTabbedPane)this.getParent();
+                                miControlador.crearControladorPrincipal(tabs); 
+                            }
+                        } catch (ParseException ex) {
+                            Logger.getLogger(vistaFacturadasP.class.getName()).log(Level.SEVERE, null, ex);
+                        }   
                     }
                 }else{
                     JOptionPane.showMessageDialog(null, "Debe ingresar una razón para anular el documento");
@@ -208,16 +212,22 @@ public class vistaFacturadasP extends javax.swing.JPanel {
             }else{
                 String razon = JOptionPane.showInputDialog("Razón: ");
                 if(razon != null){
-                   String id_nc = miControlador.ingresarNotaCredito(id, razon, tipo);
-                    String[] valores_nc = miControlador.obtenerValoresNC(id_nc);
-                    String[] ots = miControlador.obtenerOtsPorIdNC(id_nc, tipo);
-                    try {
-                        if((miControladorC.crearNotaCredXML(id_nc, valores_nc, ots, razon, id, tipo).compareTo("correcto") == 0)){
-                            JTabbedPane tabs = (JTabbedPane)this.getParent();
-                            miControlador.crearControladorPrincipal(tabs); 
-                        }
-                    } catch (ParseException ex) {
-                        Logger.getLogger(vistaFacturadasP.class.getName()).log(Level.SEVERE, null, ex);
+                    String id_nc = miControlador.ingresarNotaCredito(id, razon, tipo);
+                    if(id_nc.compareTo("ncduplicada") == 0){
+                        miControlador.borrarNCDuplicada(id_nc);
+                        JOptionPane.showMessageDialog(null, "No se puede generar una nota de crédito sobre una factura "
+                                + "ya anulada", "Nota de crédito duplicada", JOptionPane.INFORMATION_MESSAGE);
+                    }else{
+                        String[] valores_nc = miControlador.obtenerValoresNC(id_nc);
+                        String[] ots = miControlador.obtenerOtsPorIdNC(id_nc, tipo);
+                        try {
+                            if((miControladorC.crearNotaCredXML(id_nc, valores_nc, ots, razon, id, tipo).compareTo("correcto") == 0)){
+                                JTabbedPane tabs = (JTabbedPane)this.getParent();
+                                miControlador.crearControladorPrincipal(tabs); 
+                            }
+                        } catch (ParseException ex) {
+                            Logger.getLogger(vistaFacturadasP.class.getName()).log(Level.SEVERE, null, ex);
+                        }   
                     }
                 }else{
                     JOptionPane.showMessageDialog(null, "Debe ingresar una razón para anular el documento");
@@ -294,27 +304,30 @@ public class vistaFacturadasP extends javax.swing.JPanel {
         public MyTableModel(Object[][] data){
             super(new String[]{"N°Folio", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
              "Neto", "IVA", "Total", "Tipo"}, 0);
-            
-            int i = 0;
-            this.setRowCount(data.length);
-            for(Object[] data1 : data){
-                int fol = Integer.parseInt(data1[0].toString());
-                int neto = Integer.parseInt(data1[7].toString());
-                int iva = Integer.parseInt(data1[8].toString());
-                int tot = Integer.parseInt(data1[9].toString());
-                this.setValueAt(fol, i, 0);
-                this.setValueAt(data1[1], i, 1);
-                this.setValueAt(data1[2], i, 2);
-                this.setValueAt(data1[3], i, 3);
-                this.setValueAt(data1[4], i, 4);
-                this.setValueAt(data1[5], i, 5);
-                this.setValueAt(data1[6], i, 6);
-                this.setValueAt(neto, i, 7);
-                this.setValueAt(iva, i, 8);
-                this.setValueAt(tot, i, 9);
-                this.setValueAt(data1[10], i, 10);
-                i++;
-        }
+                int i = 0;
+            try{
+                this.setRowCount(data.length);
+                for(Object[] data1 : data){
+                    int fol = Integer.parseInt(data1[0].toString());
+                    int neto = Integer.parseInt(data1[7].toString());
+                    int iva = Integer.parseInt(data1[8].toString());
+                    int tot = Integer.parseInt(data1[9].toString());
+                    this.setValueAt(fol, i, 0);
+                    this.setValueAt(data1[1], i, 1);
+                    this.setValueAt(data1[2], i, 2);
+                    this.setValueAt(data1[3], i, 3);
+                    this.setValueAt(data1[4], i, 4);
+                    this.setValueAt(data1[5], i, 5);
+                    this.setValueAt(data1[6], i, 6);
+                    this.setValueAt(neto, i, 7);
+                    this.setValueAt(iva, i, 8);
+                    this.setValueAt(tot, i, 9);
+                    this.setValueAt(data1[10], i, 10);
+                    i++;
+                }
+            }catch(NullPointerException e){
+                this.setRowCount(i);
+            }
         }
 
         @Override

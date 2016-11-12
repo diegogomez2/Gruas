@@ -32,6 +32,11 @@ public class controladorFacturadas {
         return miControlador.ingresarNotaCredito(id, razon, tipo);
     }
     
+    public String borrarNCDuplicada(String id){
+        controladorPrincipal miControlador = new controladorPrincipal();
+        return miControlador.borrarNCDuplicada(id);
+    }
+    
     public String[] obtenerOtsPorIdNC(String id, String tipo){
         modelos.modeloFacturas nc = new modelos.modeloFacturas();
         String[] data;

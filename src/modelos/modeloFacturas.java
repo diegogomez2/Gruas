@@ -58,6 +58,93 @@ public class modeloFacturas {
         return id;
     }
     
+    public String borrarFacturaDuplicada(String id) {
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("DELETE FROM Facturas WHERE id_fac = ?");
+            pstm.setString(1, id);
+            pstm.execute();
+            pstm.close();
+            return "correcto";
+        }catch(SQLException e){
+            System.out.println("Error al eliminar factura duplicada");
+            System.out.println(e);
+            return "incorrecto";
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+            return "incorrecto";
+        }
+    }    
+    
+    public String borrarNDDuplicada(String id) {
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("DELETE FROM Notadebito WHERE id_nd = ?");
+            pstm.setString(1, id);
+            pstm.execute();
+            pstm.close();
+            return "correcto";
+        }catch(SQLException e){
+            System.out.println("Error al eliminar nota debito duplicada");
+            System.out.println(e);
+            return "incorrecto";
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+            return "incorrecto";
+        }
+    }
+    
+    public String borrarNCDuplicada(String id) {
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("DELETE FROM Notacredito WHERE id_nc = ?");
+            pstm.setString(1, id);
+            pstm.execute();
+            pstm.close();
+            return "correcto";
+        }catch(SQLException e){
+            System.out.println("Error al eliminar nota credito duplicada");
+            System.out.println(e);
+            return "incorrecto";
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+            return "incorrecto";
+        }
+    }
+//    public String ingresarFacturadav2(String fec, int valorNeto, int valorIva, int valorTotal, String tipo, String folio, String[] idOts){        
+//        String id = "";
+//        try{
+//            Class.forName("com.mysql.jdbc.Driver");
+//            conn = DriverManager.getConnection(url, login, password);
+//            PreparedStatement pstm = conn.prepareStatement("insert into facturas (fec_fac, neto_fac,"
+//                    + "iva_fac, tot_fac, tipo_fac, fol_fac)"
+//                    + " values (?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+//            pstm.setString(1, fec);
+//            pstm.setInt(2, valorNeto);
+//            pstm.setInt(3, valorIva);
+//            pstm.setInt(4, valorTotal);
+//            pstm.setString(5, tipo);
+//            pstm.setInt(6, Integer.parseInt(folio));
+//            pstm.execute();
+//            ResultSet res = pstm.getGeneratedKeys();
+//            res.next();
+//            id = res.getString(1);
+//            String sql = "UPDATE Jornadas set fact_ot = 2, id_fact=? WHERE cod_ot"
+//            pstm.close();
+//        }catch(SQLException e){
+//            System.out.println("Error ingresar facturada");
+//            System.out.println(e);
+//            return "incorrecto";
+//        }catch(ClassNotFoundException e){
+//            System.out.println(e);
+//            return "incorrecto";
+//        }
+//        return id;
+//    }
+    
     public Object[][] listarFacturadas(){
         int registros = 0;
         try{
@@ -393,11 +480,33 @@ public class modeloFacturas {
             pstm.close();
             res.close();
             if(tipo.compareTo("notadebito") == 0){
-                pstm = conn.prepareStatement("insert into notacredito (fec_nc, raz_nc, id_nd, fol_nc, tipo_nc)"
-                    + " values (?, ?, ?, ?, 'notacredito')", PreparedStatement.RETURN_GENERATED_KEYS);
+                pstm = conn.prepareStatement("SELECT COUNT(*) as total From notacredito where id_nd = ?");
+                pstm.setString(1, id_fac);
+                res = pstm.executeQuery();
+                res.next();
+                int resp = res.getInt("total");
+                if(resp == 0){
+                    pstm = conn.prepareStatement("insert into notacredito (fec_nc, raz_nc, id_nd, fol_nc, tipo_nc)"
+                        + " values (?, ?, ?, ?, 'notacredito')", PreparedStatement.RETURN_GENERATED_KEYS);
+                }else{
+                    pstm.close();
+                    res.close();
+                    return "ncduplicada";
+                }
             }else{
-                pstm = conn.prepareStatement("insert into notacredito (fec_nc, raz_nc, id_fac, fol_nc, tipo_nc)"
-                    + " values (?, ?, ?, ?, 'notacredito')", PreparedStatement.RETURN_GENERATED_KEYS);
+                pstm = conn.prepareStatement("SELECT COUNT(*) as total From notacredito where id_fac = ?");
+                pstm.setString(1, id_fac);
+                res = pstm.executeQuery();
+                res.next();
+                int resp = res.getInt("total");
+                if(resp == 0){
+                    pstm = conn.prepareStatement("insert into notacredito (fec_nc, raz_nc, id_fac, fol_nc, tipo_nc)"
+                        + " values (?, ?, ?, ?, 'notacredito')", PreparedStatement.RETURN_GENERATED_KEYS);
+                }else{
+                    pstm.close();
+                    res.close();
+                    return "ncduplicada";
+                }
             }
             pstm.setString(1, fecha);
             pstm.setString(2, razon);
@@ -408,6 +517,7 @@ public class modeloFacturas {
             res.next();
             id_nc = res.getString(1);
             pstm.close();
+            res.close();
         }catch(SQLException e){
             System.out.println("Error ingresar nota credito");
             System.out.println(e);

@@ -37,6 +37,9 @@ public class controladorModificarEmpleados {
         vistaME.setTextoSueldoBase(data[8]);
         vistaME.setComboAFP(data[9]);
         vistaME.setComboSalud(data[10]);
+        if(data[10].toLowerCase().compareTo("fonasa") == 0){
+            vistaME.hideIsapre();
+        }
         vistaME.setTextoFechaIn(data[11]);
         vistaME.setTextoDir(data[12]);
         vistaME.setComboRegion(data[13]);

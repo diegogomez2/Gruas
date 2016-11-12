@@ -718,7 +718,7 @@ public class vistaIngresarOts extends javax.swing.JDialog {
                 controladores.controladorGruas micontroladorGruas = new controladorGruas();
                 controladores.controladorEmpleados micontroladorEmpleados = new controladorEmpleados();
                 micontroladorGruas.agregarHoras(textoGrua.getText(), horas);
-                micontroladorEmpleados.agregarHoras(getRutEmp(), horas);
+                micontroladorEmpleados.agregarHoras(getRutEmp(), horas); //agregar tonelaje
                 micontroladorEmpleados.agregarColacion(getRutEmp(), getSpinnerColacion());
                 micontroladorEmpleados.agregarHorasExtra(getRutEmp(), getSpinnerHorasExtra(), getHorasExCal());
             }
@@ -1001,7 +1001,7 @@ public class vistaIngresarOts extends javax.swing.JDialog {
     
     //Horas para el calculo // HoraEx al 50% = 1, al 100% = 2
     public int getHorasExCal(){
-        int horasEx = 2 * (Integer) spinnerHoraExNormales.getValue() + (Integer) spinnerHoraExFes.getValue();
+        int horasEx =  (Integer) spinnerHoraExNormales.getValue() + 2 * (Integer) spinnerHoraExFes.getValue();
         return horasEx;
     }
 

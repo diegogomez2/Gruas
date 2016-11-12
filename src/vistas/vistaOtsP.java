@@ -49,14 +49,7 @@ public class vistaOtsP extends javax.swing.JPanel {
         ((DecimalFormat) FORMAT).setDecimalFormatSymbols(dfs);
 
         jScrollPane1.setViewportView(tablaOts);
-//        String[] columnNames = {"Código OT", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
-//            "Neto", "IVA", "Total", "Estado"};
-//        datos = new DefaultTableModel(data, columnNames) {
-//            @Override
-//            public boolean isCellEditable(int row, int column) {
-//                return false;
-//            }
-//        };
+
         datos = new MyTableModel(data);
 
         tablaOts.setModel(datos);

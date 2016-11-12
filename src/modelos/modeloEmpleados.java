@@ -424,7 +424,8 @@ public class modeloEmpleados {
                     + " horcol_emp, coalesce(hormes_emp,0) hormes, coalesce(valbonoad_emp, 0) valbono "
                     + ", coalesce(horexcalc_emp, 0) horex, coalesce(horex_emp, 0) canthor, coalesce(bonohorexcalc_emp, 0) bonohorex, "
                     + "coalesce(caja_emp, 0) caja, coalesce(af_emp, 0) af, coalesce(anticipo_emp, 0) antic, "
-                    + "coalesce(adel_emp, 0) adel, coalesce(pres_emp, 0) pres, coalesce(cuo_emp, 0) cuo FROM empleados WHERE rut_emp = ?");
+                    + "coalesce(adel_emp, 0) adel, coalesce(pres_emp, 0) pres, coalesce(cuo_emp, 0) cuo, coalesce(cuores_emp,0) cuores"
+                    + " FROM empleados WHERE rut_emp = ?");
             pstm.setString(1, rut);
             ResultSet res = pstm.executeQuery();
             res.next();
@@ -460,9 +461,10 @@ public class modeloEmpleados {
             String estadel = res.getString("adel");
             String estpres = res.getString("pres");
             String estcuo = res.getString("cuo");
+            String estcuores = res.getString("cuores");
             data = new String[]{estfrut + "-" + estdig , estnom + " " + estapP, estsueldo, estafp, estsal, 
                 estant, estcol, esttrans, esthorcol, esthormes, estvalbono, esthorex, estcanthor, estbonohorex, 
-                estcaja, estaf, estantic, estadel, estpres, estcuo};
+                estcaja, estaf, estantic, estadel, estpres, estcuo, estcuores};
         }catch(SQLException e){
             System.out.println("Error al obtener rem empleado por rut");
             System.out.println(e);
@@ -501,7 +503,8 @@ public class modeloEmpleados {
                     + ", coalesce(horexcalc_emp, 0) horex, coalesce(horex_emp, 0) canthor, coalesce(bonohorexcalc_emp, 0) bonohorex, "
                     + "coalesce(caja_emp, 0) caja, coalesce(af_emp, 0) af, coalesce(anticipo_emp, 0) antic, "
                     + "coalesce(adel_emp, 0) adel, coalesce(pres_emp, 0) pres, coalesce(cuo_emp, 0) cuo, coalesce(des_afp, 0) "
-                    + "des, coalesce(des_sal, 0) dessal, coalesce(isa_emp, '') isa, coalesce(val_isa_emp, 0) valisa "
+                    + "des, coalesce(des_sal, 0) dessal, coalesce(isa_emp, '') isa, coalesce(val_isa_emp, 0) valisa, "
+                    + "coalesce(fin_emp, '') fin "
                     + "FROM Empleados LEFT JOIN Afps ON afp_emp = nom_afp LEFT JOIN Salud ON sal_emp = nom_sal "
                     + "ORDER BY rut_emp");
             ResultSet res = pstm.executeQuery();
@@ -543,9 +546,10 @@ public class modeloEmpleados {
                 String estdessal = res.getString("dessal");
                 String estisa = res.getString("isa");
                 String estvalisa = res.getString("valisa");
+                String estfin = res.getString("fin");
                 data[j] = new String[]{estfrut + "-" + estdig , estnom + " " + estapP, estsueldo, estafp, estsal, 
                     estant, estcol, esttrans, esthorcol, esthormes, estvalbono, esthorex, estcanthor, estbonohorex, 
-                    estcaja, estaf, estantic, estadel, estpres, estcuo, estdes, estdessal, estisa, estvalisa};
+                    estcaja, estaf, estantic, estadel, estpres, estcuo, estdes, estdessal, estisa, estvalisa, estfin};
                 j++;
             }
         }catch(SQLException e){
@@ -626,8 +630,8 @@ public class modeloEmpleados {
             }else{
                 pstm = conn.prepareStatement("UPDATE Empleados set horex_emp=horex_emp+? WHERE rut_emp = ?");
                 pstm.setInt(1, horas);
-                pstm.setInt(2, horasCalc);
-                pstm.setString(3, rut);
+//                pstm.setInt(2, horasCalc);
+                pstm.setString(2, rut);
                 pstm.executeUpdate();
             }
             int diffCalc = 90 - horasActCalc - horasCalc;
@@ -640,10 +644,10 @@ public class modeloEmpleados {
                 pstm.setString(2, rut);
                 pstm.executeUpdate();
             }else{
-                pstm = conn.prepareStatement("UPDATE Empleados set horex_emp=horex_emp+? WHERE rut_emp = ?");
-                pstm.setInt(1, horas);
-                pstm.setInt(2, horasCalc);
-                pstm.setString(3, rut);
+                pstm = conn.prepareStatement("UPDATE Empleados set horexcalc_emp=horexcalc_emp+? WHERE rut_emp = ?");
+//                pstm.setInt(1, horas);
+                pstm.setInt(1, horasCalc);
+                pstm.setString(2, rut);
                 pstm.executeUpdate();
             }
             pstm.close();
@@ -656,7 +660,24 @@ public class modeloEmpleados {
         }
     }
     
-    public void actualizarHorasMes(String rut, int horas){
+//    public void actualizarHorasMes(String rut, int horas, int ton){
+//        try{
+//            Class.forName("com.mysql.jdbc.Driver");
+//            conn = DriverManager.getConnection(url, login, password);
+//            PreparedStatement pstm = conn.prepareStatement("UPDATE Empleados set hormes_emp = hormes_emp + ? WHERE rut_emp = ?");
+//            pstm.setInt(1, horas);
+//            pstm.setString(2, rut);
+//            pstm.executeUpdate();
+//            pstm.close();
+//        }catch(SQLException e){
+//            System.out.println("Error al actualizar horas mes empleados");
+//            System.out.println(e);
+//        }catch(ClassNotFoundException e){
+//            System.out.println(e);
+//        }
+//    }
+    
+    public void actualizarHorasMes(String rut, int horas){ //agregar ton
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
@@ -664,6 +685,7 @@ public class modeloEmpleados {
             pstm.setInt(1, horas);
             pstm.setString(2, rut);
             pstm.executeUpdate();
+//            pstm 
             pstm.close();
         }catch(SQLException e){
             System.out.println("Error al actualizar horas mes empleados");
@@ -672,18 +694,19 @@ public class modeloEmpleados {
             System.out.println(e);
         }
     }
-    
+
     public String ingresarPresAdelanto(String rut, String[] data){
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("UPDATE Empleados set anticipo_emp=?, adel_emp=?, pres_emp=?,"
-                    + " cuo_emp=? WHERE rut_emp=?");
+                    + " cuo_emp=?, cuores_emp=? WHERE rut_emp=?");
             pstm.setString(1, data[0]);
             pstm.setString(2, data[1]);
             pstm.setString(3, data[2]);
             pstm.setString(4, data[3]);
-            pstm.setString(5, rut);
+            pstm.setString(5, data[3]);
+            pstm.setString(6, rut);
             pstm.executeUpdate();
             pstm.close();
             return "correcto";

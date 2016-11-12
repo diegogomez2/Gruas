@@ -843,6 +843,11 @@ public class controladorPrincipal {
         String folio = factura.folioNC();
         return factura.ingresarNotaCredito(id, razon, folio, tipo);
     }
+    
+    public String borrarNCDuplicada(String id){
+        modelos.modeloFacturas factura = new modelos.modeloFacturas();
+        return factura.borrarNCDuplicada(id);
+    }
 
     public Object[] cargarComunas(int region) {
         modelos.modeloRegiones comunas = new modelos.modeloRegiones();

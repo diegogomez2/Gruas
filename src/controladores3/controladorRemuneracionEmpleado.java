@@ -41,6 +41,9 @@ public class controladorRemuneracionEmpleado {
         int horasEx = Integer.parseInt(data[11]);
         int cantHorEx = Integer.parseInt(data[12]);
         int totalHorEx = (int)((double) base * 0.0077777 * horasEx);
+        System.out.println(horasEx);
+        System.out.println(cantHorEx);
+        System.out.println(totalHorEx);
         //TOTAL IMPONIBLE
         int totImp = base + grat + bonoAnt + bonoAd + bonoResp + totalBonoAV + totalBonCol + totalBon300 + totalHorEx;
         //DESCUENTO AFP
@@ -110,6 +113,7 @@ public class controladorRemuneracionEmpleado {
         vistaRE.setTextoPrestamo(String.valueOf(cuoPres));
         vistaRE.setTextoSueldoLiquido(String.valueOf(liq));
         vistaRE.setCantHorEx(String.valueOf(cantHorEx));
+        vistaRE.setCuotasRes(data[20]);
         vistaRE.setLocationRelativeTo(null);
         vistaRE.setVisible(true);
     }

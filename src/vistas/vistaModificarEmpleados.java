@@ -206,6 +206,12 @@ public class vistaModificarEmpleados extends javax.swing.JDialog {
 
         jLabel6.setText("Valor bono");
 
+        textoValorBonoAd.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                textoValorBonoAdFocusLost(evt);
+            }
+        });
+
         jLabel7.setText("Caja de compensación");
 
         jLabel8.setText("Asignación familiar");
@@ -570,6 +576,10 @@ public class vistaModificarEmpleados extends javax.swing.JDialog {
     private void textoCajaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textoCajaFocusLost
         setTextoCaja(getTextoCaja());
     }//GEN-LAST:event_textoCajaFocusLost
+
+    private void textoValorBonoAdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textoValorBonoAdFocusLost
+        setValorBonoAd(getValorBonoAd());
+    }//GEN-LAST:event_textoValorBonoAdFocusLost
 
     /**
      * @param args the command line arguments
@@ -1025,6 +1035,22 @@ public class vistaModificarEmpleados extends javax.swing.JDialog {
         }catch(NumberFormatException e){
             textoAF.setHorizontalAlignment(JLabel.RIGHT);
             textoAF.setText("");
+        }
+    }
+    
+    public void setValorBonoAd(String val){
+        try{
+            Object value = Integer.parseInt(val);
+            if (value instanceof Number) {
+                textoValorBonoAd.setHorizontalAlignment(JLabel.RIGHT);
+                textoValorBonoAd.setText(FORMAT.format(value));
+            } else {
+                textoValorBonoAd.setHorizontalAlignment(JLabel.RIGHT);
+                textoValorBonoAd.setText("");
+            }
+        }catch(NumberFormatException e){
+            textoValorBonoAd.setHorizontalAlignment(JLabel.RIGHT);
+            textoValorBonoAd.setText("");
         }
     }
     

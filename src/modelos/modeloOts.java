@@ -447,7 +447,7 @@ public class modeloOts {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("SELECT clientes.rut_cli, raz_cli, gir_cli,"
+            PreparedStatement pstm = conn.prepareStatement("SELECT clientes.rut_cli, dig_cli, raz_cli, gir_cli,"
                     + "dir_cli, ciu_cli, com_cli, total_ot, neto_ot, iva_ot, fact_ot, cod_ot, hortot_ot"
                     + " FROM jornadas INNER JOIN clientes"
                     + " ON clientes.rut_cli = jornadas.rut_cli where cod_ot = ?");
@@ -456,6 +456,7 @@ public class modeloOts {
             int i = 0;
             while(res.next()){
                 String estrut = res.getString("rut_cli");
+                String estdig = res.getString("dig_cli");
                 String estraz = res.getString("raz_cli");
                 String estgir = res.getString("gir_cli");
                 String estdir = res.getString("dir_cli");
@@ -467,7 +468,7 @@ public class modeloOts {
                 String estcodot = res.getString("cod_ot");
                 String estfact = res.getString("fact_ot");
                 String esthor = res.getString("hortot_ot");
-                data = new String[]{estrut, estraz, estgir, estdir, estciu, estcom, esttot, estnet,
+                data = new String[]{estrut + "-" + estdig, estraz, estgir, estdir, estciu, estcom, esttot, estnet,
                 estiva, estfact, estcodot, esthor};
                 i++;
             }
@@ -501,10 +502,22 @@ public class modeloOts {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("update jornadas set fact_ot = 2, id_fac = ? WHERE cod_ot = ?");
+            PreparedStatement pstm = conn.prepareStatement("SELECT coalesce(fact_ot, 0) fact_ot FROM jornadas WHERE cod_ot = ?");
+            pstm.setString(1, idOt);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            String facot = res.getString("fact_ot");
+            System.out.println(facot);
+            res.close();
+            if(facot.compareTo("2") == 0){
+                pstm.close();
+                return "yafacturada";
+            }
+            pstm = conn.prepareStatement("update jornadas set fact_ot = 2, id_fac = ? WHERE cod_ot = ?");
             pstm.setInt(1, Integer.parseInt(id));
             pstm.setInt(2, Integer.parseInt(idOt));
             pstm.executeUpdate();
+            pstm.close();
         }catch(SQLException e){
             System.out.println("Error archivar facturas");
             System.out.println(e);
@@ -520,7 +533,18 @@ public class modeloOts {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("update jornadas set fact_ot = 2, id_nd = ? WHERE cod_ot = ?");
+            PreparedStatement pstm = conn.prepareStatement("SELECT coalesce(fact_ot, 0) fact_ot FROM jornadas WHERE cod_ot = ?");
+            pstm.setString(1, idOt);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            String facot = res.getString("fact_ot");
+            System.out.println(facot);
+            res.close();
+            if(facot.compareTo("2") == 0){
+                pstm.close();
+                return "yafacturada";
+            }
+            pstm = conn.prepareStatement("update jornadas set fact_ot = 2, id_nd = ? WHERE cod_ot = ?");
             pstm.setInt(1, Integer.parseInt(id));
             pstm.setInt(2, Integer.parseInt(idOt));
             pstm.executeUpdate();

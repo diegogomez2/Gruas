@@ -63,7 +63,7 @@ public class controladorEmpleados {
     
     public void agregarHoras(String rut, int horas){
         modelos.modeloEmpleados emp = new modelos.modeloEmpleados();
-        emp.actualizarHorasMes(rut, horas);
+        emp.actualizarHorasMes(rut, horas); //agregar ton
     }
     
     public void agregarHorasExtra(String rut, int horas, int horasCalc){

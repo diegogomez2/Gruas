@@ -14,7 +14,6 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import modelos.modeloFacturas;
 import modelos.modeloOts;
-import vistas.vistaFacturasP;
 
 /**
  *
@@ -50,11 +49,16 @@ public class controladorFacturas {
         if(tipo.compareTo("nota debito") == 0){
             String folio = factura.folioND();
             id = factura.ingresarND(formatDate.format(new Date()), neto, iva, total, id_fac, folio, tiponc);
+            String resp = "";
             if(id.compareTo("incorrecto") == 0){
                 JOptionPane.showMessageDialog(null, "No se encontró la factura con el folio indicado");
             }else{
-                for(int i = 0; i < idOts.length; i++){
-                    ot.archivarFacturaND(idOts[i], id);
+                for (String idOt : idOts) {
+                    resp = ot.archivarFacturaND(idOt, id);
+                    if(resp.compareTo("yafacturada") == 0){
+                        factura.borrarNDDuplicada(id);
+                        return "-1";
+                    }
                 }  
             }
         }else{
@@ -67,8 +71,13 @@ public class controladorFacturas {
                 folio = factura.folioFacEx();
             }
             id = factura.ingresarFacturada(formatDate.format(new Date()), neto, iva, total, tipo, folio);
-            for(int i = 0; i < idOts.length; i++){
-                ot.archivarFactura(idOts[i], id);
+            String resp = "";
+            for (String idOt : idOts) {
+                resp = ot.archivarFactura(idOt, id);
+                if(resp.compareTo("yafacturada") == 0){
+                    factura.borrarFacturaDuplicada(id);
+                    return "-1";
+                }
             }
         }
         

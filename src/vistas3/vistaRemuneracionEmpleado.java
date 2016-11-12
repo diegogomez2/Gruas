@@ -65,7 +65,7 @@ public class vistaRemuneracionEmpleado extends javax.swing.JDialog {
         textoAF = new javax.swing.JTextField();
         jLabel25 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        textoCuotasRes = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
@@ -163,7 +163,7 @@ public class vistaRemuneracionEmpleado extends javax.swing.JDialog {
 
         jLabel28.setText("Cuotas restantes");
 
-        jTextField2.setEditable(false);
+        textoCuotasRes.setEditable(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -213,7 +213,7 @@ public class vistaRemuneracionEmpleado extends javax.swing.JDialog {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(textoTransporte, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
                             .addComponent(textoAF)
-                            .addComponent(jTextField2))))
+                            .addComponent(textoCuotasRes))))
                 .addContainerGap())
         );
 
@@ -265,7 +265,7 @@ public class vistaRemuneracionEmpleado extends javax.swing.JDialog {
                 .addGap(45, 45, 45)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel28)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textoCuotasRes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(56, 56, 56))
         );
 
@@ -604,7 +604,6 @@ public class vistaRemuneracionEmpleado extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField textoAF;
     private javax.swing.JTextField textoAFP;
     private javax.swing.JTextField textoAdelanto;
@@ -617,6 +616,7 @@ public class vistaRemuneracionEmpleado extends javax.swing.JDialog {
     private javax.swing.JTextField textoCantHorEx;
     private javax.swing.JTextField textoCesantia;
     private javax.swing.JTextField textoColacion;
+    private javax.swing.JTextField textoCuotasRes;
     private javax.swing.JTextField textoDescAFP;
     private javax.swing.JTextField textoDescSalud;
     private javax.swing.JTextField textoGratLegal;
@@ -732,6 +732,7 @@ public class vistaRemuneracionEmpleado extends javax.swing.JDialog {
     
     public void setCantHorEx(String cant){
         textoCantHorEx.setText(cant);
+        textoCantHorEx.setHorizontalAlignment(JLabel.RIGHT);
     }
     public void setTextoCaja(String val){
         this.textoCaja.setHorizontalAlignment(JLabel.RIGHT);
@@ -756,5 +757,10 @@ public class vistaRemuneracionEmpleado extends javax.swing.JDialog {
     public void setTextoPrestamo(String val){
         this.textoPrestamo.setHorizontalAlignment(JLabel.RIGHT);
         this.textoPrestamo.setText(FORMAT.format(Integer.parseInt(val)));
+    }
+    
+    public void setCuotasRes(String cuo){
+        textoCuotasRes.setText(cuo);
+        textoCuotasRes.setHorizontalAlignment(JLabel.RIGHT);
     }
 }

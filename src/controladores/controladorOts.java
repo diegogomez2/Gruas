@@ -8,7 +8,6 @@ package controladores;
 import java.text.ParseException;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import vistas.vistaOtsP;
 
 /**
  *

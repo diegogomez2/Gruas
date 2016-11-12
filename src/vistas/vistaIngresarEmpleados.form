@@ -368,7 +368,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Valor bono"/>
+            <Property name="text" type="java.lang.String" value="Valor bono adicional"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textoValorBonoAdicional">
@@ -382,6 +382,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textoCaja">
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="textoCajaFocusLost"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel8">
           <Properties>
@@ -389,6 +392,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textoAF">
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="textoAFFocusLost"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

@@ -226,7 +226,7 @@ public class vistaIngresarEmpleados extends javax.swing.JDialog {
 
         jLabel5.setText("Bono adicional");
 
-        jLabel6.setText("Valor bono");
+        jLabel6.setText("Valor bono adicional");
 
         textoValorBonoAdicional.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -236,7 +236,19 @@ public class vistaIngresarEmpleados extends javax.swing.JDialog {
 
         jLabel7.setText("Caja de compensación");
 
+        textoCaja.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                textoCajaFocusLost(evt);
+            }
+        });
+
         jLabel8.setText("Asignación familiar");
+
+        textoAF.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                textoAFFocusLost(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -576,6 +588,14 @@ public class vistaIngresarEmpleados extends javax.swing.JDialog {
         setTextoValorBonoAd(getTextoValorBonoAd());
     }//GEN-LAST:event_textoValorBonoAdicionalFocusLost
 
+    private void textoCajaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textoCajaFocusLost
+        setTextoCaja(getTextoCaja());
+    }//GEN-LAST:event_textoCajaFocusLost
+
+    private void textoAFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textoAFFocusLost
+        setTextoAF(getTextoAF());
+    }//GEN-LAST:event_textoAFFocusLost
+
     /**
      * @param args the command line arguments
      */
@@ -867,6 +887,38 @@ public class vistaIngresarEmpleados extends javax.swing.JDialog {
         }catch(NumberFormatException e){
             textoValorBonoAdicional.setHorizontalAlignment(JLabel.RIGHT);
             textoValorBonoAdicional.setText("");
+        }
+    }
+    
+    public void setTextoCaja(String caja){
+        try{
+            Object value = Integer.parseInt(caja);
+            if (value instanceof Number) {
+                textoCaja.setHorizontalAlignment(JLabel.RIGHT);
+                textoCaja.setText(FORMAT.format(value));
+            } else {
+                textoCaja.setHorizontalAlignment(JLabel.RIGHT);
+                textoCaja.setText("");
+            }
+        }catch(NumberFormatException e){
+            textoCaja.setHorizontalAlignment(JLabel.RIGHT);
+            textoCaja.setText("");
+        }
+    }
+    
+    public void setTextoAF(String af){
+        try{
+            Object value = Integer.parseInt(af);
+            if (value instanceof Number) {
+                textoAF.setHorizontalAlignment(JLabel.RIGHT);
+                textoAF.setText(FORMAT.format(value));
+            } else {
+                textoAF.setHorizontalAlignment(JLabel.RIGHT);
+                textoAF.setText("");
+            }
+        }catch(NumberFormatException e){
+            textoAF.setHorizontalAlignment(JLabel.RIGHT);
+            textoAF.setText("");
         }
     }
     

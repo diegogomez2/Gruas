@@ -31,7 +31,6 @@ public class vistaFacturasP extends javax.swing.JPanel {
      */
     public vistaFacturasP(String tipo, Object[][] data) {
         initComponents();
-        //final int rows = 5;
         String[] columNames = {"Código OT", "Razon", "Giro", "Dirección", "Región", "Comuna", "Fecha",
             "Neto", "IVA", "Total"};
         DefaultTableModel datos = new DefaultTableModel(data, columNames) {
@@ -198,15 +197,23 @@ public class vistaFacturasP extends javax.swing.JPanel {
                 }
                 controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
                 String id = micontroladorFacturas.archivarFacturas(idOts, neto, iva, total, "factura", "0", "0");
-                try {
-                    if ((miControlador.crearFacXML(idOts, Integer.toString(neto), Integer.toString(iva),
-                            Integer.toString(total), id).compareTo("correcto") == 0)) {
-                        JTabbedPane tabs = (JTabbedPane) this.getParent();
-                        micontroladorOts.crearControladorPrincipal(tabs);
-                        miControlador.crearControladorPrincipal(tabs);
-                    }
-                } catch (ParseException ex) {
-                    Logger.getLogger(vistaFacturasP.class.getName()).log(Level.SEVERE, null, ex);
+                if(id.compareTo("-1") == 0){
+                    JOptionPane.showMessageDialog(null, "La factura ya había sido ingresada al sistema", "Error factura duplicada",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    JTabbedPane tabs = (JTabbedPane) this.getParent();
+                    micontroladorOts.crearControladorPrincipal(tabs);
+                    miControlador.crearControladorPrincipal(tabs);
+                }else{
+                    try {
+                        if ((miControlador.crearFacXML(idOts, Integer.toString(neto), Integer.toString(iva),
+                                Integer.toString(total), id).compareTo("correcto") == 0)) {
+                            JTabbedPane tabs = (JTabbedPane) this.getParent();
+                            micontroladorOts.crearControladorPrincipal(tabs);
+                            miControlador.crearControladorPrincipal(tabs);
+                        }
+                    } catch (ParseException ex) {
+                        Logger.getLogger(vistaFacturasP.class.getName()).log(Level.SEVERE, null, ex);
+                    } 
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "No se puede generar una factura para clientes distintos");
@@ -280,15 +287,23 @@ public class vistaFacturasP extends javax.swing.JPanel {
                             controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
                             String id = micontroladorFacturas.archivarFacturas(idOts, neto, iva, total, "nota debito", id_fac, tiponc);
                             if(id.compareTo("incorrecto") != 0){
-                                try {
-                                    if ((miControlador.crearNotaDebXML(idOts, Integer.toString(neto), Integer.toString(iva),
-                                            Integer.toString(total), id, id_fac).compareTo("correcto") == 0)) {
-                                        JTabbedPane tabs = (JTabbedPane) this.getParent();
-                                        micontroladorOts.crearControladorPrincipal(tabs);
-                                        miControlador.crearControladorPrincipal(tabs);
-                                    }
-                                } catch (ParseException ex) {
-                                    Logger.getLogger(vistaFacturasP.class.getName()).log(Level.SEVERE, null, ex);
+                                if(id.compareTo("-1") == 0){
+                                    JOptionPane.showMessageDialog(null, "La nota de débito ya había sido ingresada al sistema", "Error nota de débito duplicada",
+                                            JOptionPane.INFORMATION_MESSAGE);
+                                    JTabbedPane tabs = (JTabbedPane) this.getParent();
+                                    micontroladorOts.crearControladorPrincipal(tabs);
+                                    miControlador.crearControladorPrincipal(tabs);
+                                }else{
+                                    try {
+                                        if ((miControlador.crearNotaDebXML(idOts, Integer.toString(neto), Integer.toString(iva),
+                                                Integer.toString(total), id, id_fac).compareTo("correcto") == 0)) {
+                                            JTabbedPane tabs = (JTabbedPane) this.getParent();
+                                            micontroladorOts.crearControladorPrincipal(tabs);
+                                            miControlador.crearControladorPrincipal(tabs);
+                                        }
+                                    } catch (ParseException ex) {
+                                        Logger.getLogger(vistaFacturasP.class.getName()).log(Level.SEVERE, null, ex);
+                                    }  
                                 }
                             }
                         }else{
