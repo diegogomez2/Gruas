@@ -58,6 +58,7 @@ public class vistaPrincipal extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         menuTarifas = new javax.swing.JMenuItem();
         menuAgregarTarifa = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
         menuOperaciones = new javax.swing.JMenu();
         itemOperaciones = new javax.swing.JMenuItem();
         menuCobranza = new javax.swing.JMenu();
@@ -128,6 +129,14 @@ public class vistaPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu1.add(menuAgregarTarifa);
+
+        jMenuItem4.setText("Tonelajes/Bono300");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem4);
 
         MenuPrincipal.add(jMenu1);
 
@@ -376,6 +385,11 @@ public class vistaPrincipal extends javax.swing.JFrame {
         miControlador.crearControladorCambiarUTM();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        controladorPrincipal miControlador = new controladorPrincipal();
+        miControlador.crearControladorTonelajeBono300();
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -428,6 +442,7 @@ public class vistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem menuAgregarTarifa;
     private javax.swing.JMenu menuCobranza;
     private javax.swing.JMenu menuCompras;

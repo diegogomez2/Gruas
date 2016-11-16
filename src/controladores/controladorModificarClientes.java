@@ -5,9 +5,7 @@
  */
 package controladores;
 
-import static controladores.controladorIngresarClientes.vistaIC;
 import javax.swing.JOptionPane;
-import vistas.vistaIngresarClientes;
 import vistas.vistaModificarClientes;
 
 /**

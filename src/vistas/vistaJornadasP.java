@@ -189,7 +189,7 @@ public class vistaJornadasP extends javax.swing.JPanel {
                         .addComponent(botonAgregar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botonEliminar)
-                        .addGap(2, 2, 2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botonModificar)))
                 .addContainerGap())
         );

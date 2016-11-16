@@ -408,6 +408,16 @@ public class controladorPrincipal {
         micontrolador.mostrarVistaAgregarTarifa(data);
     }
     
+    public void crearControladorAgregarTonelaje() {
+        controladores3.controladorCrearTonelaje micontrolador = new controladorCrearTonelaje();
+        micontrolador.mostrarVistaAgregarTonelaje();
+    }
+    
+    public void crearControladorModificarTonelaje(String pes) {
+        controladores3.controladorModificarTonelaje micontrolador = new controladorModificarTonelaje();
+        micontrolador.mostrarVistaModificarTonelaje(pes);
+    }
+    
     public boolean agregarTarifa(String dia, String ton, String horaInicio, String horaFin, String tar){
         modelos.modeloTarifas tarifa = new modelos.modeloTarifas();
         String res = tarifa.agregarTarifa(dia, ton, horaInicio, horaFin, tar);
@@ -599,6 +609,11 @@ public class controladorPrincipal {
     public void crearControladorCambiarUTM() {
         controladorCambiarUTM micontrolador = new controladorCambiarUTM();
         micontrolador.mostrarVistaCambiarUTM();
+    }
+    
+    public void crearControladorTonelajeBono300() {
+        controladorTonelajeBono300 micontrolador = new controladorTonelajeBono300();
+        micontrolador.mostrarVistaTonelajeBono300();
     }
     
     void crearControladorRemuneracionesEmpleado(String rut){
@@ -1378,6 +1393,44 @@ public class controladorPrincipal {
             return true;
         }else{
 //            JOptionPane.showMessageDialog(null, "Error al ingresar el préstamo/adelanto", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+    
+    public Object[][] obtenerTonelajeBono300(){
+        modelos.modeloTonelajes ton = new modeloTonelajes();
+        Object[][] data = ton.obtenerTonelajeBono300();
+        return data;
+    }
+    
+    public String[] obtenerTonelajeBono300PorPeso(String pes){
+        modelos.modeloTonelajes ton = new modeloTonelajes();
+        String[] data = ton.obtenerTonelajeBono300PorPeso(pes);
+        return data;
+    }
+    
+    public boolean ingresarTonelaje(String[] data) {
+        modelos.modeloTonelajes tonelaje = new modelos.modeloTonelajes();
+        String respuesta = tonelaje.ingresarTonelaje(data);
+        if(respuesta.compareTo("correcto") == 0){
+            JOptionPane.showMessageDialog(miVistaL, "Tonelaje ingresado con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al ingresar el tonelaje",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+    
+    public boolean modificarTonelaje(String[] data) {
+        modelos.modeloTonelajes tonelaje = new modelos.modeloTonelajes();
+        String respuesta = tonelaje.modificarTonelaje(data);
+        if(respuesta.compareTo("correcto") == 0){
+            JOptionPane.showMessageDialog(miVistaL, "Tonelaje modificado con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al modificar el tonelaje",
+                    "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }

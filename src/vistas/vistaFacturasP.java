@@ -8,6 +8,9 @@ package vistas;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -181,45 +184,57 @@ public class vistaFacturasP extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonFacturaActionPerformed
-        controladores.controladorCrearFactura miControlador = new controladores.controladorCrearFactura();
-        controladores.controladorOts micontroladorOts = new controladores.controladorOts();
-        int filas = tablaFacturas.getRowCount();
-        if(filas > 0){
-            String flag = verificarRazon();
-            if (flag.compareTo("correcto") == 0) {
-                String[] idOts = new String[filas];
-                int neto = 0, iva = 0, total = 0;
-                for (int i = 0; i < filas; i++) {
-                    idOts[i] = getIdFact(i);
-                    neto += getNetoFact(i);
-                    iva += getIvaFact(i);
-                    total += getTotalFact(i);
+        File file = new File("test.log");
+        PrintStream ps = null;
+        try {
+            ps = new PrintStream(file);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(vistaFacturasP.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try{
+            controladores.controladorCrearFactura miControlador = new controladores.controladorCrearFactura();
+            controladores.controladorOts micontroladorOts = new controladores.controladorOts();
+            int filas = tablaFacturas.getRowCount();
+            if(filas > 0){
+                String flag = verificarRazon();
+                if (flag.compareTo("correcto") == 0) {
+                    String[] idOts = new String[filas];
+                    int neto = 0, iva = 0, total = 0;
+                    for (int i = 0; i < filas; i++) {
+                        idOts[i] = getIdFact(i);
+                        neto += getNetoFact(i);
+                        iva += getIvaFact(i);
+                        total += getTotalFact(i);
+                    }
+                    controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
+                    String id = micontroladorFacturas.archivarFacturas(idOts, neto, iva, total, "factura", "0", "0");
+                    if(id.compareTo("-1") == 0){
+                        JOptionPane.showMessageDialog(null, "La factura ya había sido ingresada al sistema", "Error factura duplicada",
+                                JOptionPane.INFORMATION_MESSAGE);
+                        JTabbedPane tabs = (JTabbedPane) this.getParent();
+                        micontroladorOts.crearControladorPrincipal(tabs);
+                        miControlador.crearControladorPrincipal(tabs);
+                    }else{
+                        try {
+                            if ((miControlador.crearFacXML(idOts, Integer.toString(neto), Integer.toString(iva),
+                                    Integer.toString(total), id).compareTo("correcto") == 0)) {
+                                JTabbedPane tabs = (JTabbedPane) this.getParent();
+                                micontroladorOts.crearControladorPrincipal(tabs);
+                                miControlador.crearControladorPrincipal(tabs);
+                            }
+                        } catch (ParseException ex) {
+                            ex.printStackTrace(ps);
+                            Logger.getLogger(vistaFacturasP.class.getName()).log(Level.SEVERE, null, ex);
+                        } 
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se puede generar una factura para clientes distintos");
                 }
-                controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
-                String id = micontroladorFacturas.archivarFacturas(idOts, neto, iva, total, "factura", "0", "0");
-                if(id.compareTo("-1") == 0){
-                    JOptionPane.showMessageDialog(null, "La factura ya había sido ingresada al sistema", "Error factura duplicada",
-                            JOptionPane.INFORMATION_MESSAGE);
-                    JTabbedPane tabs = (JTabbedPane) this.getParent();
-                    micontroladorOts.crearControladorPrincipal(tabs);
-                    miControlador.crearControladorPrincipal(tabs);
-                }else{
-                    try {
-                        if ((miControlador.crearFacXML(idOts, Integer.toString(neto), Integer.toString(iva),
-                                Integer.toString(total), id).compareTo("correcto") == 0)) {
-                            JTabbedPane tabs = (JTabbedPane) this.getParent();
-                            micontroladorOts.crearControladorPrincipal(tabs);
-                            miControlador.crearControladorPrincipal(tabs);
-                        }
-                    } catch (ParseException ex) {
-                        Logger.getLogger(vistaFacturasP.class.getName()).log(Level.SEVERE, null, ex);
-                    } 
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "No se puede generar una factura para clientes distintos");
+            }else{
+                JOptionPane.showMessageDialog(null, "No hay ots para generar una factura");
             }
-        }else{
-            JOptionPane.showMessageDialog(null, "No hay ots para generar una factura");
+        }catch(Exception e){
+            e.printStackTrace(ps);
         }
     }//GEN-LAST:event_botonFacturaActionPerformed
 

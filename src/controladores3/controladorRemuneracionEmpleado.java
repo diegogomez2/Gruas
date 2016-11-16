@@ -51,7 +51,8 @@ public class controladorRemuneracionEmpleado {
         int totImp = base + grat + bonoAnt + bonoAd + bonoResp + totalBonoAV + totalBonCol + totalBon300 + totalHorEx;
         //DESCUENTO AFP
         int descAFP = miControlador.obtenerDescAFP(data[3]);
-        int totalAFP = (int)(totImp * ((double)descAFP / 1000));
+        int totalAFP = (int)(totImp * ((double)descAFP / 10000));
+        int sis = (int)(totImp * 0.0141);
         //DESCUENTO SALUD
         int descSalud = 0, totalSalud = 0;
         String salud;
@@ -66,6 +67,7 @@ public class controladorRemuneracionEmpleado {
         }
         //DESCUENTO CESANTIA
         int ces = (int)(totImp * 0.006);
+        int cesEmp = (int)(totImp * 0.024);
         //TOTAL TRIBUTABLE
         int totTrib = totImp - totalAFP - totalSalud - ces;
         int descRenta = 0;
@@ -97,6 +99,8 @@ public class controladorRemuneracionEmpleado {
             cuoPres = pres / cuo;
         }
         int cuoRes = Math.max(0, Integer.parseInt(data[20]) - 1);
+        //DESCUENTOS
+        int totalDesc = caja + antic + adel + cuoPres;
         //LIQUIDO
         int liq = liqAl + col + trans + af - antic - adel - cuoPres;
         vistaRE = new vistaRemuneracionEmpleado(new javax.swing.JFrame(), true);
@@ -128,6 +132,9 @@ public class controladorRemuneracionEmpleado {
         vistaRE.setCantHorEx(String.valueOf(cantHorEx));
         vistaRE.setCuotasRes(String.valueOf(cuoRes));
         vistaRE.setTextoImpRenta(String.valueOf(descRenta));
+        vistaRE.setTextoSIS(String.valueOf(sis));
+        vistaRE.setTextoCesantiaEmp(String.valueOf(cesEmp));
+        vistaRE.setTextoTotalDesc(String.valueOf(totalDesc));
         vistaRE.setLocationRelativeTo(null);
         vistaRE.setVisible(true);
     }

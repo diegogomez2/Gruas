@@ -6,6 +6,7 @@
 package controladores;
 
 import java.io.File;
+import java.io.PrintStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,6 +41,13 @@ public class controladorCrearFactura {
     
      public String crearFacXML(String[] idOts, String valorNeto, String valorIva, String valorTotal, String fac) throws ParseException{
         
+         File file = new File("test.log");
+            PrintStream ps = null;
+            try{
+                ps = new PrintStream(file);
+            }catch(Exception e){
+                
+            }
         String fecha = formatDate.format(new Date());
         
         try{
@@ -182,7 +190,7 @@ public class controladorCrearFactura {
                 data = ots.obtenerFacturaPorId(idOts[i]);
                 datosDias = ots.obtenerDiasPorIdOt(idOts[i]);
                 controladores.controladorIngresarOts miControlador = new controladores.controladorIngresarOts();
-                System.out.println("datos "+datosDias[0]);
+//                System.out.println("datos "+datosDias[0]);
                 List<List<String>> valores = miControlador.calcularTarifa(datosDias[0], datosDias[1], datosDias[2],
                         datosDias[3], datosDias[4]);
                 String[] infoDespacho = ots.obtenerValorDespachoOt(idOts[i]);
@@ -303,11 +311,8 @@ public class controladorCrearFactura {
                 JOptionPane.showMessageDialog(vistaF, "Documento realizado con éxito en ruta por defecto");
                 return "correcto";
             }            
-        }catch(ParserConfigurationException pce){
-            pce.printStackTrace();
-            return "incorrecto";
-        }catch(TransformerException tfe){
-            tfe.printStackTrace();
+        }catch(ParserConfigurationException | TransformerException pce){
+            pce.printStackTrace(ps);
             return "incorrecto";
         }
     }
@@ -349,8 +354,11 @@ public class controladorCrearFactura {
             fecEmision.appendChild(doc.createTextNode(fecha));
             id.appendChild(fecEmision);
             
+            modelos.modeloOts modOt = new modeloOts();
+            String form = modOt.obtenerFormaPago(idOts[0]);
+            
             Element fpago = doc.createElement("FmaPago");
-            fpago.appendChild(doc.createTextNode("VER FORMA"));
+            fpago.appendChild(doc.createTextNode(form));
             id.appendChild(fpago);
             
             Element mpago = doc.createElement("MedioPago");
@@ -512,7 +520,6 @@ public class controladorCrearFactura {
     public String crearNotaCredXML(String id_nc, String[] valores_nc, String[] ots_nc, String razon, String fac, String tipo_fac) throws ParseException{
         
         String fecha = formatDate.format(new Date());
-        
         try{
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -546,8 +553,11 @@ public class controladorCrearFactura {
             fecEmision.appendChild(doc.createTextNode(fecha));
             id.appendChild(fecEmision);
             
+            modelos.modeloOts modOt = new modeloOts();
+            String form = modOt.obtenerFormaPago(ots_nc[0]);
+            
             Element fpago = doc.createElement("FmaPago");
-            fpago.appendChild(doc.createTextNode("VER FORMA"));
+            fpago.appendChild(doc.createTextNode(form));
             id.appendChild(fpago);
             
             Element mpago = doc.createElement("MedioPago");
@@ -879,8 +889,11 @@ public class controladorCrearFactura {
             fecEmision.appendChild(doc.createTextNode(fecha));
             id.appendChild(fecEmision);
             
+            modelos.modeloOts modOt = new modeloOts();
+            String form = modOt.obtenerFormaPago(ots_nc[0]);
+            
             Element fpago = doc.createElement("FmaPago");
-            fpago.appendChild(doc.createTextNode("VER FORMA"));
+            fpago.appendChild(doc.createTextNode(form));
             id.appendChild(fpago);
             
             Element mpago = doc.createElement("MedioPago");
@@ -1189,8 +1202,11 @@ public class controladorCrearFactura {
             fecEmision.appendChild(doc.createTextNode(fecha));
             id.appendChild(fecEmision);
             
+            modelos.modeloOts modOt = new modeloOts();
+            String form = modOt.obtenerFormaPago(idOts[0]);
+            
             Element fpago = doc.createElement("FmaPago");
-            fpago.appendChild(doc.createTextNode("VER FORMA"));
+            fpago.appendChild(doc.createTextNode(form));
             id.appendChild(fpago);
             
             Element mpago = doc.createElement("MedioPago");
@@ -1704,6 +1720,7 @@ public class controladorCrearFactura {
             Element fecEmision = doc.createElement("FchEmis");
             fecEmision.appendChild(doc.createTextNode(fecha));
             id.appendChild(fecEmision);
+            
             
             Element fpago = doc.createElement("FmaPago");
             fpago.appendChild(doc.createTextNode("VER FORMA"));
