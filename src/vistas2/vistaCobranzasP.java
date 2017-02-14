@@ -6,7 +6,9 @@
 package vistas2;
 
 import controladores2.controladorCobranzas;
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import vistas.*;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
@@ -15,6 +17,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
@@ -23,6 +26,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
@@ -54,11 +58,13 @@ public class vistaCobranzasP extends javax.swing.JPanel {
         TableColumnModel tcm = tablaFacturadas.getColumnModel();
         tcm.removeColumn(tcm.getColumn(15));
         tcm.removeColumn(tcm.getColumn(15));
-        tablaFacturadas.getColumnModel().getColumn(5).setCellRenderer(new CurrencyTableCellRenderer());
-        tablaFacturadas.getColumnModel().getColumn(6).setCellRenderer(new CurrencyTableCellRenderer());
-        tablaFacturadas.getColumnModel().getColumn(7).setCellRenderer(new CurrencyTableCellRenderer());
-        tablaFacturadas.getColumnModel().getColumn(11).setCellRenderer(new CurrencyTableCellRenderer());
-        tablaFacturadas.getColumnModel().getColumn(12).setCellRenderer(new CurrencyTableCellRenderer());
+//        tablaFacturadas.getColumnModel().getColumn(5).setCellRenderer(new CurrencyTableCellRenderer());
+//        tablaFacturadas.getColumnModel().getColumn(6).setCellRenderer(new CurrencyTableCellRenderer());
+//        tablaFacturadas.getColumnModel().getColumn(7).setCellRenderer(new CurrencyTableCellRenderer());
+//        tablaFacturadas.getColumnModel().getColumn(11).setCellRenderer(new CurrencyTableCellRenderer());
+//        tablaFacturadas.getColumnModel().getColumn(12).setCellRenderer(new CurrencyTableCellRenderer());
+        tablaFacturadas.setDefaultRenderer(Object.class, new OwnTableCellRenderer());
+        tablaFacturadas.setDefaultRenderer(Integer.class, new OwnTableCellRenderer());
         tablaFacturadas.setAutoCreateRowSorter(true);
         if(tablaFacturadas.getRowCount() > 0) tablaFacturadas.setRowSelectionInterval(0, 0);
         tablaFacturadas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -71,7 +77,7 @@ public class vistaCobranzasP extends javax.swing.JPanel {
                     controladores.controladorFacturadas miControlador = new controladores.controladorFacturadas();
                     try {
                         miControlador.irVistaDetalleFacturadas(tablaFacturadas.getValueAt(row, 0).toString(),
-                                tablaFacturadas.getModel().getValueAt(tablaFacturadas.convertColumnIndexToModel(row), 14).toString());
+                                tablaFacturadas.getModel().getValueAt(tablaFacturadas.convertRowIndexToModel(row), 15).toString());
                     } catch (ParseException ex) {
                         Logger.getLogger(vistaJornadasP.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -318,11 +324,11 @@ public class vistaCobranzasP extends javax.swing.JPanel {
     }
     
     public String getTipoFila(int row){
-        return tablaFacturadas.getModel().getValueAt(tablaFacturadas.convertColumnIndexToModel(row), 15).toString();
+        return tablaFacturadas.getModel().getValueAt(tablaFacturadas.convertRowIndexToModel(row), 15).toString();
     }
     
     public String getFacFila(int row){
-        return tablaFacturadas.getModel().getValueAt(tablaFacturadas.convertColumnIndexToModel(row), 16).toString();
+        return tablaFacturadas.getModel().getValueAt(tablaFacturadas.convertRowIndexToModel(row), 16).toString();
     }
     
     public void filtrar(String query) {
@@ -415,4 +421,55 @@ public class vistaCobranzasP extends javax.swing.JPanel {
                 return result;
             }
     }
+    
+    public class OwnTableCellRenderer extends DefaultTableCellRenderer {
+        
+    public OwnTableCellRenderer() {
+        super();
+        setOpaque(true);
+    }
+
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+            int row, int column) {
+        Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        
+        setFont(getFont().deriveFont(Font.PLAIN));
+        setHorizontalAlignment(SwingConstants.LEFT);
+        setBackground(Color.white);
+        setForeground(Color.black);
+        String valor = table.getModel().getValueAt(table.convertRowIndexToModel(row),12).toString();
+//        Object val = -1;
+//        try{
+//            val = FORMAT.parse(valor);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+
+        if(Integer.parseInt(valor) == 0){
+            setBackground(Color.GREEN);
+            setForeground(Color.black);
+        }else {
+            setForeground(Color.black);
+            setBackground(Color.yellow);
+        }
+        if(isSelected){
+            setForeground(Color.black);
+            setBackground((new java.awt.Color(184,207,229)));
+        }
+        if(value instanceof Number){
+            setHorizontalAlignment(SwingConstants.RIGHT);
+            setText(value.toString());
+            if(column == 5 || column == 6 || column == 7 || column == 11 || column == 12){
+                Number num = (Number)value;
+                String text = FORMAT.format(num);
+                setText(text);
+            }
+        }else{
+            setText(value != null ? value.toString() : "");
+        }
+        return this;
+    }
+
+}
 }

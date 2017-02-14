@@ -1233,4 +1233,39 @@ public class modeloFacturas {
        }
         return -1;
     }
+    
+    public String obtenerRuta(){
+        String ruta = "";
+       try{
+           Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+           PreparedStatement pstm = conn.prepareStatement("SELECT car_ruta FROM rutas WHERE nom_ruta = 'carpeta'");
+           ResultSet res = pstm.executeQuery();
+           res.next();
+           ruta = res.getString("car_ruta");
+           pstm.close();
+           res.close();
+       }catch(Exception e){
+           e.printStackTrace();
+       }
+       return ruta;
+   }
+    
+    public int cambiarRuta(String ruta){
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("UPDATE Rutas set car_ruta=? WHERE nom_ruta = 'carpeta'");
+            pstm.setString(1, ruta);
+            pstm.executeUpdate();
+            return 1;
+       }catch(SQLException e){
+            System.out.println("Error cambiar ruta");
+            System.out.println(e);
+            return 0;
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+            return 0;
+       }
+    }
 }

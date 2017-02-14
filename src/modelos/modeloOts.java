@@ -45,8 +45,8 @@ public class modeloOts {
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("update jornadas set cont_ot = ?, fec_ot = ?, pag_ot = ?,"
                     + "cond_ot = ?, desp_ot = ?, cod_ot = ?, neto_ot = ?, iva_ot = ?, total_ot = ?, "
-                    + "horfin_ot=?, hortot_ot=?, horsal_jor=?, horlleg_jor=?, checkdesp_ot = ?, vdesp_ot = ?"
-                    + " where id_jor = ?");
+                    + "horfin_ot=?, hortot_ot=?, horsal_jor=?, horlleg_jor=?, checkdesp_ot = ?, vdesp_ot = ?, "
+                    + "checkhormin_ot=?, desc_ot=? where id_jor = ?");
             pstm.setString(1, data[0]);
             pstm.setString(2, data[1]);
             pstm.setString(3, data[2]);
@@ -66,7 +66,9 @@ public class modeloOts {
             }else{
                 pstm.setInt(15, 0);
             }
-            pstm.setInt(16, Integer.parseInt(data[5]));
+            pstm.setString(16, data[16]);
+            pstm.setInt(17, Integer.parseInt(data[17]));
+            pstm.setInt(18, Integer.parseInt(data[5]));
             pstm.execute();
             pstm.close();
         }catch(SQLException e){
@@ -214,7 +216,8 @@ public class modeloOts {
             PreparedStatement pstm = conn.prepareStatement("SELECT fsal_jor, horsal_jor, freg_jor, horlleg_jor,"
                     + "des_gru, raz_cli, ciu_cli, nom_emp, apP_emp, apM_emp, freg_jor, obs_jor, clientes.rut_cli, clientes.dig_cli,"
                     + "gir_cli, dir_cli, tel_cli, ton_gru, fec_ot, cod_ot, pag_ot, cond_ot, cont_ot, "
-                    + "total_ot, neto_ot, iva_ot, desp_ot, horfin_ot, checkdesp_ot, vdesp_ot"
+                    + "total_ot, neto_ot, iva_ot, desp_ot, horfin_ot, checkdesp_ot, vdesp_ot, desc_ot, checkhormin_ot, "
+                    + " horex_ot, horex2_ot "
                     + " FROM jornadas INNER JOIN clientes ON "
                     + "jornadas.rut_cli = clientes.rut_cli INNER JOIN gruas ON gruas.pat_gru = jornadas.pat_gru "
                     + "INNER JOIN empleados ON empleados.rut_emp = jornadas.rut_emp WHERE cod_ot = ?");
@@ -247,9 +250,13 @@ public class modeloOts {
             String esthorfin = res.getString("horfin_ot");
             String estcdesp = res.getString("checkdesp_ot");
             String estvdesp = res.getString("vdesp_ot");
+            String estdesc = res.getString("desc_ot");
+            String estchmin = res.getString("checkhormin_ot");
+            String esthorex = res.getString("horex_ot");
+            String esthorex2 = res.getString("horex2_ot");
             data = new String[]{estfsal, esthorsal, estfreg, esthorlleg, estdes, estnom, estobs
                     , estrutcli, estdigcli, estraz, estgir, estdir, esttel, id, estton, estfot, estcond
-                    , estpago, estcont, esttot, estneto, estiva, estdesp, esthorfin, estcdesp, estvdesp, estciu};
+                    , estpago, estcont, esttot, estneto, estiva, estdesp, esthorfin, estcdesp, estvdesp, estciu, estdesc, estchmin, esthorex, esthorex2};
         }catch(SQLException e){
             System.out.println("Error obtener ot por id");
             System.out.println(e);
@@ -333,7 +340,7 @@ public class modeloOts {
         try{
             PreparedStatement pstm = conn.prepareStatement("SELECT id_jor, fec_ot, raz_cli, gir_cli, dir_cli,"
                     + "reg_cli, com_cli, obs_jor, cod_ot, total_ot, neto_ot, "
-                    + "iva_ot, fact_ot FROM Jornadas INNER JOIN"
+                    + "iva_ot, fact_ot, desc_ot FROM Jornadas INNER JOIN"
                     + " clientes ON clientes.rut_cli = jornadas.rut_cli INNER JOIN empleados ON empleados.rut_emp "
                     + "= jornadas.rut_emp Where not cod_ot = -1 and fact_ot = 1 ORDER BY cod_ot, fact_ot");
             ResultSet res = pstm.executeQuery();
@@ -351,8 +358,9 @@ public class modeloOts {
                 String estnet = res.getString("neto_ot");
                 String estiva = res.getString("iva_ot");
                 String estcodot = res.getString("cod_ot");
+                String estdesc = res.getString("desc_ot");
                 data[i] = new String[]{estcodot, estraz, estgir, estdir, estreg, estcom, estfec, estnet,
-                    estiva, esttot};
+                    estiva, esttot, estdesc};
                 i++;
             }
             res.close();
@@ -448,7 +456,8 @@ public class modeloOts {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("SELECT clientes.rut_cli, dig_cli, raz_cli, gir_cli,"
-                    + "dir_cli, ciu_cli, com_cli, total_ot, neto_ot, iva_ot, fact_ot, cod_ot, hortot_ot"
+                    + "dir_cli, ciu_cli, com_cli, total_ot, neto_ot, iva_ot, fact_ot, cod_ot, hortot_ot, "
+                    + "checkhormin_ot "
                     + " FROM jornadas INNER JOIN clientes"
                     + " ON clientes.rut_cli = jornadas.rut_cli where cod_ot = ?");
             pstm.setString(1, idOt);
@@ -468,8 +477,9 @@ public class modeloOts {
                 String estcodot = res.getString("cod_ot");
                 String estfact = res.getString("fact_ot");
                 String esthor = res.getString("hortot_ot");
+                String estcheckhor = res.getString("checkhormin_ot");
                 data = new String[]{estrut + "-" + estdig, estraz, estgir, estdir, estciu, estcom, esttot, estnet,
-                estiva, estfact, estcodot, esthor};
+                estiva, estfact, estcodot, esthor, estcheckhor};
                 i++;
             }
             res.close();
@@ -1052,6 +1062,25 @@ public class modeloOts {
             System.out.println(e);
        }
         return -1;
+    }
+    
+    public int agregarHorasExtra(String id, double horex, double horex2){
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("update jornadas set horex_ot = ?, horex2_ot = ? WHERE id_jor = ?");
+            pstm.setDouble(1, horex);
+            pstm.setDouble(2, horex2);
+            pstm.setString(3, id);
+            System.out.println(id);
+            pstm.executeUpdate();
+        }catch(SQLException e){
+            System.out.println("Error actualizar horas en ot");
+            System.out.println(e);
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+        }
+        return 1;
     }
     
 }

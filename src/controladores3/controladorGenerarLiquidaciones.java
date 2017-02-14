@@ -20,12 +20,10 @@ import javax.xml.transform.TransformerException;
 import modelos.modeloEmpleados;
 import modelos3.modeloRemuneraciones;
 import org.apache.fop.apps.FOPException;
-import org.apache.pdfbox.contentstream.operator.state.SetLineDashPattern;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
-import static org.apache.poi.hssf.usermodel.HeaderFooter.page;
 
 /**
  *
@@ -52,6 +50,8 @@ public class controladorGenerarLiquidaciones {
                     modelos3.modeloRemuneraciones remuneraciones = new modeloRemuneraciones();
                     String[][] data = liquidaciones.obtenerRemuneraciones();
                     String[][] imp2cat = remuneraciones.obtenerTablaImpuesto();
+//                    float uf = remuneraciones.obtenerUF() / 100;
+                    float uf = remuneraciones.obtenerUF();
                     int numEmp = data.length;
                     String path = "Liquidaciones " + per;
                     File dir = new File(path);
@@ -63,8 +63,7 @@ public class controladorGenerarLiquidaciones {
                             PDDocument doc = new PDDocument(); // creating instance of pdfDoc
                             PDPage page = new PDPage();
                             doc.addPage(page); // adding page in pdf doc file
-
-                            int base = Integer.parseInt(data[i][2]);
+                            int base = Integer.parseInt(data[i][2]) * Integer.parseInt(data[i][27]) / 30;
                             //GRATIFICACION
                             int grat = (int)(base * 0.25);
                             //BONO ANTIGUEDAD
@@ -79,7 +78,7 @@ public class controladorGenerarLiquidaciones {
                             //BONO ASIGNACION VOLUNTARIA
                             int bonoAV = Integer.parseInt(data[i][13]);
                             int totalBonoAV = (int)((double) base * 0.0077777 * bonoAV);
-                            //BONO COLACION
+                            //BONO ADICIONAL
                             int bonoCol = Integer.parseInt(data[i][8]);
                             int totalBonCol = (int)(((double) base * 0.0077777) * ((double)bonoCol / 2));
                             //HORAS EXTRA
@@ -94,7 +93,7 @@ public class controladorGenerarLiquidaciones {
                             int totalAFP = (int)(totImp * ((double)descAFP / 10000));
                             int sis = (int)(totImp * 0.0141);
                             //DESCUENTO SALUD
-                            int descSalud = 0, totalSalud = 0;
+                            double descSalud = 0, totalSalud = 0;
                             String salud;
                             if(data[i][4].toLowerCase().compareTo("fonasa") == 0){
                                 salud = "FONASA";
@@ -106,16 +105,19 @@ public class controladorGenerarLiquidaciones {
                                 }else{
                                     salud = data[i][22];
                                 }
-                                descSalud = Integer.parseInt(data[i][23]);
+                                descSalud = ((double)Integer.parseInt(data[i][23]) / 1000) * uf;
+                                System.out.println(descSalud);
                                 totalSalud = descSalud;
                             }
                             //DESCUENTO CESANTIA
                             int ces = (int)(totImp * 0.006);
                             int cesEmp = (int) (totImp * 0.024);
+                            //DESCUENTOS LEGALES
+                            double descLegales = ces + totalSalud + totalAFP;
                             //TOTAL TRIBUTABLE
-                            int totTrib = totImp - totalAFP - totalSalud - ces;
+                            double totTrib = totImp - totalAFP - totalSalud - ces;
                             int descRenta = 0;
-                            int totAux = 0;
+                            double totAux = 0;
                             for(String[] imp2cat1: imp2cat){
                                 if(totTrib > Float.parseFloat(imp2cat1[0]) / 10 && totTrib <= Float.parseFloat(imp2cat1[1]) / 10){
                                     descRenta = (int) (totTrib * Float.parseFloat(imp2cat1[2]) / 1000 - Float.parseFloat(imp2cat1[3]) / 100);
@@ -128,11 +130,13 @@ public class controladorGenerarLiquidaciones {
                             //ASIGNACION FAMILIAR
                             int af = Integer.parseInt(data[i][15]);
                             //LIQ ALCANZADO
-                            int liqAl = totAux - caja;
+                            double liqAl = totAux - caja;
                             //COLACION 
                             int col = Integer.parseInt(data[i][6]);
                             //TRANSPORTE
                             int trans = Integer.parseInt(data[i][7]);
+                            //TOTAL NO IMPONIBLE
+                            int noImp = trans + col + af;
                             //ANTICIPO ADELANTO PRESTAMOS
                             int antic = Integer.parseInt(data[i][16]);
                             int adel = Integer.parseInt(data[i][17]);
@@ -143,13 +147,19 @@ public class controladorGenerarLiquidaciones {
                             if(cuo != 0){
                                 cuoPres = pres / cuo;
                             }
+                            //DESCUENTOS MENSUALES
+                            int descMensuales = caja + antic + adel + cuoPres + descRenta;
+                            //TOTAL HABERES
+                            int totalHaberes = noImp + totImp;
                             //TOTAL DESCUENTOS
                             int totDesc = antic + adel + cuoPres + caja;
                             //LIQUIDO
-                            int liq = liqAl + col + trans + af - antic - adel - cuoPres;
+                            double liq = liqAl + col + trans + af - antic - adel - cuoPres;
 
                             PDPageContentStream content = new PDPageContentStream(doc, page);
 
+                            //HEADER
+                            
                             content.beginText();
                             content.setFont(PDType1Font.HELVETICA, 10);
                             content.setLeading(14.5f);
@@ -171,21 +181,21 @@ public class controladorGenerarLiquidaciones {
                             content.newLine();
                             content.showText("Rut: " + data[i][0]);
                             content.endText();
-                            
                             content.drawLine(30, 700, 600, 700);
 
+                            //LEFT SIDE
+                            
                             content.beginText();
                             content.setFont(PDType1Font.HELVETICA, 9);
                             content.setLeading(14.5f);
                             content.moveTextPositionByAmount(120, 650);
                             content.showText("HABERES");
                             content.endText();
-                            
                             content.drawLine(45, 645, 245, 645);
                             
                             content.beginText();
                             content.moveTextPositionByAmount(50, 635);
-                            content.showText("Sueldo base: ");
+                            content.showText("Sueldo base proporcional");
                             content.newLineAtOffset(150, 0);
                             content.showText(FORMAT.format(base));
                             content.newLineAtOffset(-150, -15);
@@ -193,7 +203,7 @@ public class controladorGenerarLiquidaciones {
                             if(horex > 45){
                                 horex = 45;
                             }
-                            content.showText("Horas extra ( " + horex + " horas ):" );
+                            content.showText("Horas extra ( " + horex + " horas )" );
                             content.newLineAtOffset(150, 0);
                             content.showText(FORMAT.format(totalHorEx));
                             content.newLineAtOffset(-150, -15);
@@ -205,7 +215,7 @@ public class controladorGenerarLiquidaciones {
                             content.newLineAtOffset(150, 0);
                             content.showText(FORMAT.format(bonoAnt));
                             content.newLineAtOffset(-150, -15);
-                            content.showText("Bono 300");
+                            content.showText("Bono horas");
                             content.newLineAtOffset(150, 0);
                             content.showText(FORMAT.format(totalBon300));
                             content.newLineAtOffset(-150, -15);
@@ -213,7 +223,7 @@ public class controladorGenerarLiquidaciones {
                             content.newLineAtOffset(150, 0);
                             content.showText(FORMAT.format(totalBonoAV));
                             content.newLineAtOffset(-150, -15);
-                            content.showText("Bono colación");
+                            content.showText("Bono adicional");
                             content.newLineAtOffset(150, 0);
                             content.showText(FORMAT.format(totalBonCol));
                             content.newLineAtOffset(-150, -15);
@@ -223,65 +233,15 @@ public class controladorGenerarLiquidaciones {
                             content.endText();
                             
                             content.drawLine(45, 515, 245, 515);
-                            
-                            
                             content.beginText();
                             content.moveTextPositionByAmount(50, 500);
-                            content.showText("Total imponible");
+                            content.showText("Imponible");
                             content.newLineAtOffset(150, 0);
                             content.showText(FORMAT.format(totImp));
                             content.newLineAtOffset(-150, -15);
                             content.endText();
-                            
                             content.drawLine(45, 493, 245, 493);
                             
-                            content.beginText();
-                            content.moveTextPositionByAmount(410, 650);
-                            content.showText("DESCUENTOS");
-                            content.endText();
-                            
-                            content.drawLine(345, 645, 545, 645);
-
-                            content.beginText();
-                            content.moveTextPositionByAmount(350, 635);
-                            content.showText("Descuento AFP");
-                            content.newLineAtOffset(150, 0);
-                            content.showText(FORMAT.format(totalAFP));
-                            content.newLineAtOffset(-150, -15);
-                            content.showText("SIS");
-                            content.newLineAtOffset(150, 0);
-                            content.showText(FORMAT.format(sis));
-                            content.newLineAtOffset(-150, -15);
-                            content.showText("Descuento salud");
-                            content.newLineAtOffset(150, 0);
-                            content.showText(FORMAT.format(totalSalud));
-                            content.newLineAtOffset(-150, -15);
-                            content.showText("Seguro de cesantía trabajador");
-                            content.newLineAtOffset(150, 0);
-                            content.showText(FORMAT.format(ces));
-                            content.newLineAtOffset(-150, -15);
-                            content.showText("Seguro de cesantía empleador");
-                            content.newLineAtOffset(150, 0);
-                            content.showText(FORMAT.format(cesEmp));
-                            content.endText();
-                            
-                            content.drawLine(345, 565, 545, 565);
-                            
-                            content.beginText();
-                            content.moveTextPositionByAmount(350, 550);
-                            content.showText("Total tributable");
-                            content.newLineAtOffset(150, 0);
-                            content.showText(FORMAT.format(totTrib));
-                            content.endText();
-                            content.drawLine(345, 543, 545, 543);
-                            
-                            content.beginText();
-                            content.moveTextPositionByAmount(350, 520);
-                            content.showText("Impuesto a la renta");
-                            content.newLineAtOffset(150, 0);
-                            content.showText(FORMAT.format(descRenta));
-                            content.endText();
-
                             content.beginText();
                             content.moveTextPositionByAmount(50, 470);
                             content.showText("Colación");
@@ -296,9 +256,97 @@ public class controladorGenerarLiquidaciones {
                             content.newLineAtOffset(150, 0);
                             content.showText(FORMAT.format(af));
                             content.endText();
+                            
+                            content.drawLine(45, 425, 245, 425);
+                            content.beginText();
+                            content.moveTextPositionByAmount(50, 410);
+                            content.showText("No imponible");
+                            content.newLineAtOffset(150, 0);
+                            content.showText(FORMAT.format(noImp));
+                            content.endText();
+                            content.drawLine(45, 403, 245, 403);
+                            
+                            content.drawLine(45, 380, 245, 380);
+                            content.beginText();
+                            content.moveTextPositionByAmount(50, 365);
+                            content.showText("Total haberes");
+                            content.newLineAtOffset(150, 0);
+                            content.showText(FORMAT.format(totalHaberes));
+                            content.endText();
+                            
+                            content.beginText();
+                            content.setFont(PDType1Font.HELVETICA, 9);
+                            content.setLeading(14.5f);
+                            content.moveTextPositionByAmount(65, 280);
+                            content.showText("APORTES LEGALES EMPLEADOR");
+                            content.endText();
+                            content.drawLine(45, 275, 245, 275);
+                            content.beginText();
+                            content.moveTextPositionByAmount(50, 265);
+                            content.showText("SIS");
+                            content.newLineAtOffset(150, 0);
+                            content.showText(FORMAT.format(sis));
+                            content.newLineAtOffset(-150, -15);
+                            content.showText("Seguro de cesantía empleador");
+                            content.newLineAtOffset(150, 0);
+                            content.showText(FORMAT.format(cesEmp));
+                            content.endText();
+                            content.drawLine(45, 243, 245, 243);
+
+                            //RIGHT SIDE
+                            content.beginText();
+                            content.moveTextPositionByAmount(410, 650);
+                            content.showText("DESCUENTOS");
+                            content.endText();
+                            content.drawLine(345, 645, 545, 645);
 
                             content.beginText();
-                            content.moveTextPositionByAmount(350, 490);
+                            content.moveTextPositionByAmount(350, 635);
+                            content.showText("Descuento AFP");
+                            content.newLineAtOffset(150, 0);
+                            content.showText(FORMAT.format(totalAFP));
+                            content.newLineAtOffset(-150, -15);
+//                            content.showText("SIS");
+//                            content.newLineAtOffset(150, 0);
+//                            content.showText(FORMAT.format(sis));
+//                            content.newLineAtOffset(-150, -15);
+                            content.showText("Descuento salud");
+                            content.newLineAtOffset(150, 0);
+                            content.showText(FORMAT.format(totalSalud));
+                            content.newLineAtOffset(-150, -15);
+                            content.showText("Seguro de cesantía trabajador");
+                            content.newLineAtOffset(150, 0);
+                            content.showText(FORMAT.format(ces));
+//                            content.newLineAtOffset(-150, -15);
+//                            content.showText("Seguro de cesantía empleador");
+//                            content.newLineAtOffset(150, 0);
+//                            content.showText(FORMAT.format(cesEmp));
+                            content.endText();
+                            
+                            content.drawLine(345, 585, 545, 585);
+                            content.beginText();
+                            content.moveTextPositionByAmount(350, 570);
+                            content.showText("Descuentos legales");
+                            content.newLineAtOffset(150, 0);
+                            content.showText(FORMAT.format(descLegales));
+                            content.endText();
+                            content.drawLine(345, 563, 545, 563);
+                            
+//                            content.drawLine(345, 565, 545, 565);
+//                            content.beginText();
+//                            content.moveTextPositionByAmount(350, 550);
+//                            content.showText("Total tributable");
+//                            content.newLineAtOffset(150, 0);
+//                            content.showText(FORMAT.format(totTrib));
+//                            content.endText();
+//                            content.drawLine(345, 543, 545, 543);
+                            
+                            content.beginText();
+                            content.moveTextPositionByAmount(350, 545);
+                            content.showText("Impuesto a la renta");
+                            content.newLineAtOffset(150, 0);
+                            content.showText(FORMAT.format(descRenta));
+                            content.newLineAtOffset(-150, -15);
                             content.showText("Caja de compensación");
                             content.newLineAtOffset(150, 0);
                             content.showText(FORMAT.format(caja));
@@ -320,25 +368,34 @@ public class controladorGenerarLiquidaciones {
                             content.showText(String.valueOf(cuores));
                             content.endText();
                             
-                            content.drawLine(345, 420, 545, 420);
-                            
+                            content.drawLine(345, 455, 545, 455);
                             content.beginText();
-                            content.moveTextPositionByAmount(350, 405);
+                            content.moveTextPositionByAmount(350, 440);
+                            content.showText("Descuentos mensuales");
+                            content.newLineAtOffset(150, 0);
+                            content.showText(FORMAT.format(descMensuales));
+                            content.endText();
+                            content.drawLine(345, 433, 545, 433);
+                            
+                            content.drawLine(345, 400, 545, 400);
+                            content.beginText();
+                            content.moveTextPositionByAmount(350, 385);
                             content.showText("Total descuentos");
                             content.newLineAtOffset(150, 0);
-                            content.showText(FORMAT.format(totDesc));
+                            content.showText(FORMAT.format(descLegales + descMensuales));
                             content.endText();
-
-                            content.drawLine(345, 398, 545, 398);
+                            content.drawLine(345, 378, 545, 378);
                             
-                            content.drawLine(45, 430, 245, 430);
                             
+                            //CENTER
+                            content.drawLine(180, 335, 400, 335);
                             content.beginText();
-                            content.moveTextPositionByAmount(50, 415);
-                            content.showText("Total líquido");
+                            content.moveTextPositionByAmount(190, 320);
+                            content.showText("Total a pago");
                             content.newLineAtOffset(150, 0);
                             content.showText(FORMAT.format(liq));
                             content.endText();
+                            content.drawLine(180, 313, 400, 313);
 
 
                             content.close();
@@ -351,7 +408,7 @@ public class controladorGenerarLiquidaciones {
                     }
                     JOptionPane.showMessageDialog(null, "Liquidaciones de sueldo generadas con éxito", "Operación exitosa", 
                                     JOptionPane.INFORMATION_MESSAGE);
-                    liquidaciones.limpiarRemuneraciones();
+//                    liquidaciones.limpiarRemuneraciones();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

@@ -5,14 +5,19 @@
  */
 package vistas;
 
+import controladores.controladorPrincipal;
+import controladores.controladorTarifas;
 import java.awt.Component;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -27,7 +32,6 @@ public class vistaTarifas extends javax.swing.JPanel {
     
     public vistaTarifas(String tipo, Object[][] data) {
         initComponents();
-//        Object[] columnNames = {"Tonalaje", "Dia", "Hora", "Tarifa"}; 
         datos = new MyTableModel(data);
         dfs.setCurrencySymbol("$");
         dfs.setGroupingSeparator('.');
@@ -41,6 +45,8 @@ public class vistaTarifas extends javax.swing.JPanel {
 //        };
         tablaTarifas.setModel(datos);
         tablaTarifas.getColumnModel().getColumn(3).setCellRenderer(new CurrencyTableCellRenderer());
+        TableColumnModel tcm = tablaTarifas.getColumnModel();
+//        tcm.removeColumn(tcm.getColumn(4));
     }
 
     /**
@@ -56,6 +62,7 @@ public class vistaTarifas extends javax.swing.JPanel {
         tablaTarifas = new javax.swing.JTable();
         botonAgregar = new javax.swing.JButton();
         botonOK = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         tablaTarifas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -84,6 +91,13 @@ public class vistaTarifas extends javax.swing.JPanel {
             }
         });
 
+        jButton1.setText("Eliminar tarifa");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -91,6 +105,8 @@ public class vistaTarifas extends javax.swing.JPanel {
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(botonAgregar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(botonOK)
@@ -103,7 +119,8 @@ public class vistaTarifas extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonAgregar)
-                    .addComponent(botonOK))
+                    .addComponent(botonOK)
+                    .addComponent(jButton1))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -116,20 +133,36 @@ public class vistaTarifas extends javax.swing.JPanel {
     private void botonOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonOKActionPerformed
     }//GEN-LAST:event_botonOKActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        controladores.controladorPrincipal miControlador = new controladorPrincipal();
+        controladores.controladorTarifas miControlador2 = new controladorTarifas();
+        boolean selected = tablaTarifas.getSelectedRowCount() > 0;
+        if(selected){
+            int row = getFilaSeleccionada();
+            String id = getIdFila(row);
+            miControlador.eliminarTarifa(id);
+            JTabbedPane tabs = (JTabbedPane)this.getParent();
+            miControlador2.crearControladorPrincipal(tabs);
+        }else{
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una tarifa para ser eliminada");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAgregar;
     private javax.swing.JButton botonOK;
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaTarifas;
     // End of variables declaration//GEN-END:variables
 
     public class MyTableModel extends DefaultTableModel{
         public MyTableModel() {
-          super(new String[]{"Tonelaje", "Día", "Hora", "Tarifa"}, 0);
+          super(new String[]{"Tonelaje", "Día", "Hora", "Tarifa", "Id"}, 0);
         }
         public MyTableModel(Object[][] data){
-            super(new String[]{"Tonelaje", "Día", "Hora", "Tarifa"}, 0);
+            super(new String[]{"Tonelaje", "Día", "Hora", "Tarifa", "Id"}, 0);
             int i = 0;
             this.setRowCount(data.length);
             for(Object[] data1 : data){
@@ -140,6 +173,7 @@ public class vistaTarifas extends javax.swing.JPanel {
                 this.setValueAt(data1[1], i, 1);
                 this.setValueAt(data1[2], i, 2);
                 this.setValueAt(tar, i, 3);
+                this.setValueAt(data1[4], i, 4);
                 i++;
             }
         }
@@ -175,5 +209,13 @@ public class vistaTarifas extends javax.swing.JPanel {
                 }
                 return result;
             }
+    }
+    
+    public String getIdFila(int row){
+        return tablaTarifas.getModel().getValueAt(tablaTarifas.convertRowIndexToModel(row), 4).toString();
+    }
+    
+    public int getFilaSeleccionada(){
+        return tablaTarifas.getSelectedRow();
     }
 }

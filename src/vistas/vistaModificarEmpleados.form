@@ -27,16 +27,12 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+              <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
+                  <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       <Component id="botonAceptar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -51,20 +47,20 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="botonCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="botonAceptar" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <Component id="jPanel3" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="botonCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="botonAceptar" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace pref="16" max="32767" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -83,7 +79,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
                       <Component id="textoCaja" max="32767" attributes="0"/>
@@ -127,6 +123,7 @@
                       <Component id="comboSalud" alignment="0" max="32767" attributes="0"/>
                       <Component id="textoSueldo" alignment="0" max="32767" attributes="0"/>
                       <Component id="textoValorBonoAd" alignment="0" max="32767" attributes="0"/>
+                      <Component id="textoAF" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
@@ -141,7 +138,6 @@
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="textoAF" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -213,7 +209,7 @@
                       <Component id="textoCaja" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="textoAF" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="14" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -309,7 +305,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="labelValorPlan">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Valor plan"/>
+            <Property name="text" type="java.lang.String" value="Valor plan (UF)"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textoValorPlan">
@@ -514,23 +510,27 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="labelCorreo" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="labelTelefono" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="labelFechaNac" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="labelApMaterno" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="labelNombres" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="labelRut" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="textoRut" alignment="0" max="32767" attributes="0"/>
-                      <Component id="textoNombres" alignment="0" max="32767" attributes="0"/>
-                      <Component id="textoApPaterno" alignment="0" max="32767" attributes="0"/>
-                      <Component id="textoApMaterno" alignment="0" max="32767" attributes="0"/>
-                      <Component id="textoFechaNac" alignment="0" max="32767" attributes="0"/>
-                      <Component id="textoTelefono" alignment="0" max="32767" attributes="0"/>
-                      <Component id="textoCorreo" alignment="0" min="-2" pref="154" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="labelCorreo" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelTelefono" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelFechaNac" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelApMaterno" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelNombres" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelRut" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="textoRut" alignment="0" max="32767" attributes="0"/>
+                          <Component id="textoNombres" alignment="0" max="32767" attributes="0"/>
+                          <Component id="textoApPaterno" alignment="0" max="32767" attributes="0"/>
+                          <Component id="textoApMaterno" alignment="0" max="32767" attributes="0"/>
+                          <Component id="textoFechaNac" alignment="0" max="32767" attributes="0"/>
+                          <Component id="textoTelefono" alignment="0" max="32767" attributes="0"/>
+                          <Component id="textoCorreo" alignment="0" min="-2" pref="154" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="jLabel9" alignment="0" max="32767" attributes="0"/>
+                      <Component id="textoDiasTrabajados" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -567,6 +567,10 @@
                   <Component id="labelCorreo" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="textoCorreo" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                  <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="textoDiasTrabajados" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -621,6 +625,13 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Apellido Materno"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel9">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="D&#xed;as trabajados"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="textoDiasTrabajados">
         </Component>
       </SubComponents>
     </Container>

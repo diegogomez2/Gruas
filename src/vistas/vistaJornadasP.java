@@ -12,10 +12,12 @@ import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -313,10 +315,45 @@ public class vistaJornadasP extends javax.swing.JPanel {
             if(grua.compareTo("") != 0){
                 id = getIdFila(row);
                 String[] jornada = miControlador.obtenerJornadaPorId(id);
-                if((miControladorC.crearGuiaDespXML(jornada, id).compareTo("correcto") == 0)){
-                    JTabbedPane tabs = (JTabbedPane)this.getParent();
-                    miControlador.crearControladorPrincipal(tabs);
-                }  
+                JTextField textPat = new JTextField();
+                JTextField textRut = new JTextField();
+                JTextField textDir = new JTextField();
+                JTextField textCom = new JTextField();
+                JTextField textCiud = new JTextField();
+                JTextField textMon = new JTextField();
+                JTextField textTras = new JTextField();
+                Object[] inputs = {
+                    "Indicador de traslado: ", textTras,
+                    "Patente: " , textPat,
+                    "Rut ", textRut, 
+                    "Dirección: ", textDir,
+                    "Comuna: ", textCom,
+                    "Ciudad: ", textCiud,
+                    "Monto: ", textMon,
+                };
+                int option = JOptionPane.showConfirmDialog(null, inputs, "Ingrese la información", JOptionPane.OK_CANCEL_OPTION);
+                if(option == JOptionPane.OK_OPTION){
+                    String ind = textTras.getText();
+                    String pat = textPat.getText();
+                    String rut = textRut.getText();
+                    String dir = textDir.getText();
+                    String com = textCom.getText();
+                    String ciu = textCiud.getText();
+                    String mon = textMon.getText();
+                    try{
+                        Object value = Integer.parseInt(mon);
+                        if (value instanceof Number) {
+                            if((miControladorC.crearGuiaDespXML(jornada, id, (int)value, pat, rut, dir, com, ciu, ind).compareTo("correcto") == 0)){
+                                JTabbedPane tabs = (JTabbedPane)this.getParent();
+                                miControlador.crearControladorPrincipal(tabs);
+                            }  
+                        } else {
+                            JOptionPane.showMessageDialog(null, "El monto debe ser un número");
+                        }
+                    }catch(NumberFormatException e){
+                        JOptionPane.showMessageDialog(null, "El monto debe ser un número");
+                    }
+                }
             }else{
                 JOptionPane.showMessageDialog(null, "Debe asignar una grúa a esta jornada para generar el despacho");
             }

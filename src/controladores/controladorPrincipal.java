@@ -19,16 +19,21 @@ import vistas.vistaPrincipal;
 import controladores2.*;
 import controladores3.controladorEditarSueldos;
 import controladores3.*;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.transform.TransformerException;
 import modelos.modeloEmpleados;
+import modelos.modeloFacturas;
+import modelos.modeloTarifas;
 import modelos2.modeloCobranzas;
 import modelos2.modeloCompras;
 import modelos2.modeloProveedores;
@@ -44,6 +49,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
  */
 public class controladorPrincipal {
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+    DateFormat formatDate2 = new SimpleDateFormat("MMMM/yyyy");
     static String tipo;
     public static String user;
     static controladorClientes micontroladorClientes;
@@ -609,6 +615,16 @@ public class controladorPrincipal {
     public void crearControladorCambiarUTM() {
         controladorCambiarUTM micontrolador = new controladorCambiarUTM();
         micontrolador.mostrarVistaCambiarUTM();
+    }
+    
+    public void crearControladorCambiarUF() {
+        controladorCambiarUF micontrolador = new controladorCambiarUF();
+        micontrolador.mostrarVistaCambiarUF();
+    }
+    
+    public void crearControladorCambiarRutas() {
+        controladorCambiarRutas micontrolador = new controladorCambiarRutas();
+        micontrolador.mostrarVistaCambiarRutas();
     }
     
     public void crearControladorTonelajeBono300() {
@@ -1312,6 +1328,18 @@ public class controladorPrincipal {
         return utm;
     }
     
+    public int obtenerUF(){
+        modelos3.modeloRemuneraciones valores = new modeloRemuneraciones();
+        int uf = valores.obtenerUF();
+        return uf;
+    }
+    
+    public String obtenerRuta(){
+        modelos.modeloFacturas rutas = new modeloFacturas();
+        String ruta = rutas.obtenerRuta();
+        return ruta;
+    }
+    
     public boolean editarSueldos(String min, String base){
         modeloRemuneraciones sueldos = new modeloRemuneraciones();
         if(sueldos.editarSueldos(min, base) > 0){
@@ -1328,6 +1356,26 @@ public class controladorPrincipal {
             return true;
         }else{
             JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al cambiar el valor de la UTM", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+    
+    public boolean cambiarUF(String uf){
+        modeloRemuneraciones valores = new modeloRemuneraciones();
+        if(valores.cambiarUF(uf) > 0){
+            return true;
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al cambiar el valor de la UF", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+    
+    public boolean cambiarRuta(String ruta){
+        modeloFacturas rutas = new modeloFacturas();
+        if(rutas.cambiarRuta(ruta) > 0){
+            return true;
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al cambiar la ruta", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }
@@ -1444,4 +1492,85 @@ public class controladorPrincipal {
 //            return false;
 //        }
 //    }
+    
+    public boolean eliminarTarifa(String id){
+        modeloTarifas tarifa = new modeloTarifas();
+        if(tarifa.eliminarTarifa(id).compareTo("correcto") == 0){
+            JOptionPane.showMessageDialog(miVistaL, "Tarifa eliminada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al eliminar la tarifa seleccionada", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+    
+    public boolean generarReporteTrabajador(){
+        DateFormat perDate = new SimpleDateFormat("MMMM-yyyy");
+        String per = perDate.format(new Date());
+        NumberFormat FORMAT = NumberFormat.getCurrencyInstance();
+        DecimalFormatSymbols dfs = new DecimalFormatSymbols();
+        try{
+            String path = "Reporte trabajadores-" + per;
+            File dir = new File(path);
+            dir.mkdir();
+            modeloEmpleados empleado = new modeloEmpleados();
+            Object[] ruts = empleado.listarRutEmpleados();
+            int numEmp = ruts.length;
+            for(int i = 0; i < numEmp; i++){
+                String file = path + "/Reporte_trabajador_"+ruts[i]+"_"+formatDate.format(new Date())+".xls";
+                Object[][] ots = empleado.obtenerReporteEmpleados(ruts[i].toString());
+                HSSFWorkbook workbook = new HSSFWorkbook();
+                HSSFSheet sheet = workbook.createSheet("FirstSheet"); 
+                HSSFRow rowhead = sheet.createRow((short)0);
+                rowhead.createCell(0).setCellValue("GRUAS HORQUILLA SANTA TERESITA F.M.LTDA");
+                rowhead = sheet.createRow(1);
+                rowhead.createCell(3).setCellValue("1 Fecha de informe: " + formatDate.format(new Date()));
+                rowhead = sheet.createRow(2);
+                rowhead.createCell(3).setCellValue("Servicios de operador " + formatDate2.format(new Date()));
+                rowhead = sheet.createRow(4);
+                rowhead.createCell(0).setCellValue("O.T.");
+                rowhead.createCell(1).setCellValue("FECHA.");
+                rowhead.createCell(2).setCellValue("CLIENTE");
+//                rowhead.createCell(3).setCellValue("O.T.");
+//                rowhead.createCell(4).setCellValue("O.T.");
+                rowhead.createCell(5).setCellValue("SALE");
+                rowhead.createCell(6).setCellValue("TERMINA");
+                rowhead.createCell(7).setCellValue("OFICINA");
+                rowhead.createCell(8).setCellValue("HORAS EXTRA");
+                rowhead.createCell(8).setCellValue("HORAS ARRIENDO");
+                rowhead = sheet.createRow(5);
+                rowhead.createCell(0).setCellValue("*** " + ruts[i].toString());
+                int j = 0;
+                for(Object[] ot:ots){
+                    rowhead = sheet.createRow(j+6);
+                    rowhead.createCell(0).setCellValue(ot[2].toString());
+                    rowhead.createCell(1).setCellValue(ot[3].toString());
+                    rowhead.createCell(2).setCellValue(ot[4].toString());
+//                    rowhead.createCell(3).setCellValue(ot[3].toString());
+//                    rowhead.createCell(4).setCellValue(ot[4].toString());
+                    rowhead.createCell(5).setCellValue(ot[5].toString());
+                    rowhead.createCell(6).setCellValue(ot[6].toString());
+                    rowhead.createCell(7).setCellValue(ot[7].toString());
+                    rowhead.createCell(8).setCellValue("0");
+                    rowhead.createCell(8).setCellValue(ot[9].toString());
+                    j++;
+                }
+                FileOutputStream fileOut;
+                fileOut = new FileOutputStream(file);
+                workbook.write(fileOut);
+                fileOut.close();
+            }
+        }catch (IOException ex) {
+            ex.printStackTrace();
+            Logger.getLogger(controladorPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR", JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }catch(Exception e){
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }
+        JOptionPane.showMessageDialog(null, "Reporte generado con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+        return true;
+    }
 }

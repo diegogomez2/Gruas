@@ -119,7 +119,7 @@ public class modeloCobranzas {
             registros = res.getInt("total");
             res.close();
             pstm = conn.prepareStatement("SELECT COUNT(1) as total FROM Notadebito nd LEFT JOIN Notacredito n ON "
-                    + " nd.id_fac = n.id_fac WHERE n.id_fac = null");
+                    + " nd.id_fac = n.id_fac WHERE n.id_fac is null");
             res = pstm.executeQuery();
             res.next();
             registros += res.getInt("total");
@@ -174,8 +174,8 @@ public class modeloCobranzas {
                 String estfac = res.getString("id");
                 String cant = String.valueOf(this.obtenerCantGestion(estfac, esttipo));
                 String[] gestion = this.obtenerUltGestion(estfac, esttipo);
-                System.out.println(cant);
-                System.out.println(gestion[0] + gestion[1] + gestion[2]+gestion[3]);
+//                System.out.println(cant);
+//                System.out.println(gestion[0] + gestion[1] + gestion[2]+gestion[3]);
                 data[i] = new String[]{estid, estrut + "-" + estdig, estraz, estfec, estdia, estnet,
                     estiva, esttot, estfor, estmed, estabo, estmabo, estcon, esttel, cant, gestion[0], 
                 gestion[1], gestion[2], gestion[3]};
@@ -384,37 +384,38 @@ public class modeloCobranzas {
     public String[] obtenerUltGestion(String id, String tipo){
         
         String[] data = new String[4];
-        
+        System.out.println(id + " id " + tipo );
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm;
             if(tipo.compareTo("notadebito") == 0){
-                pstm = conn.prepareStatement("SELECT ges_ges, res_ges, fec_res_ges, obs_ges"
+                pstm = conn.prepareStatement("SELECT coalesce(ges_ges, '') ges, coalesce(res_ges, '') res, "
+                        + "coalesce(fec_res_ges, '') fec, coalesce(obs_ges, '') obs "
                     + " FROM Gestion_cob WHERE id_nd=? and id_ges = ( SELECT MAX(id_ges) FROM Gestion_cob "
                         + "WHERE id_nd=? )");
             }else{
-                pstm = conn.prepareStatement("SELECT ges_ges, res_ges, fec_res_ges, obs_ges"
+                pstm = conn.prepareStatement("SELECT coalesce(ges_ges, '') ges, coalesce(res_ges, '') res, "
+                        + "coalesce(fec_res_ges, '') fec, coalesce(obs_ges, '') obs "
                     + " FROM Gestion_cob WHERE id_fac=? and id_ges = ( SELECT MAX(id_ges) FROM Gestion_cob "
                         + "WHERE id_fac=? )");
             }
             pstm.setString(1, id);
             pstm.setString(2, id);
             ResultSet res = pstm.executeQuery();
-            res.next();
-            String estges = res.getString("ges_ges");
-            String estres = res.getString("res_ges");
-            String estfec = res.getString("fec_res_ges");
-            String estobs = res.getString("obs_ges");
-            data = new String[]{estges, estres, estfec, estobs};
+            data = new String[]{"", "", "", ""};
+            while(res.next()){
+                String estges = res.getString("ges");
+                String estres = res.getString("res");
+                String estfec = res.getString("fec");
+                String estobs = res.getString("obs");
+                data = new String[]{estges, estres, estfec, estobs};
+            }
             pstm.close();
             res.close();
             return data;
-        }catch(SQLException e){
-            System.out.println("Error al ingresar gestion");
-            System.out.println(e);
-            return data;
-        }catch(ClassNotFoundException e){
+        }catch(SQLException | ClassNotFoundException e){
+            System.out.println("Error al obt ult gestion");
             System.out.println(e);
             return data;
         }

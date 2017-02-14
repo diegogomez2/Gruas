@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.regex.Pattern;
 import javax.swing.JTabbedPane;
 import vistas.vistaIngresarOts;
 
@@ -51,7 +50,7 @@ public class controladorIngresarOts {
 //        System.out.println(data[17]);
         vistaIO.setRutEmp(data[17]);
         vistaIO.setTextoFechaOt();
-        List<List<String>> valores = calcularTarifa(data[0], data[2], data[1], data[3], data[14]);
+        List<List<String>> valores = calcularTarifa(data[0], data[2], data[1], data[3], data[14], true);
         int size = valores.size();
 //        vistaIO.setTextoNeto(String.format("%,d", Integer.parseInt(valores.get(size - 1).get(0))));
 //        vistaIO.setTextoIva(String.format("%,d", Integer.parseInt(valores.get(size - 1).get(1))));
@@ -59,6 +58,8 @@ public class controladorIngresarOts {
         vistaIO.setTextoNeto(valores.get(size - 1).get(0));
         vistaIO.setTextoIva(valores.get(size - 1).get(1));
         vistaIO.setTextoBruto(valores.get(size - 1).get(2));
+        vistaIO.setTextoDescuento("0");
+        vistaIO.setNuevoNeto(0);
         vistaIO.setHoras((int)Float.parseFloat(valores.get(size - 1).get(3)));
         vistaIO.setLocationRelativeTo(null);
         vistaIO.setVisible(true); 
@@ -73,7 +74,7 @@ public class controladorIngresarOts {
     
     public boolean irVistaJornadasP(String id, int horas) {
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
-        String textoNeto, textoIva, textoBruto;
+        String textoNeto, textoIva, textoBruto, textoDesc;
         if(vistaIO.getCheckDespacho().compareTo("1") == 0){
             int valor = Integer.parseInt(vistaIO.getTextoDespacho());
             int iva = (int)(valor * 0.19);
@@ -82,6 +83,7 @@ public class controladorIngresarOts {
 //            textoIva = Integer.toString(iva + Integer.parseInt(removeDots(vistaIO.getTextoIva())));
 //            textoBruto = Integer.toString(bruto + Integer.parseInt(removeDots(vistaIO.getTextoBruto())));
             textoNeto = Integer.toString(valor + Integer.parseInt(vistaIO.getTextoNeto()));
+            textoDesc = Integer.toString(Integer.parseInt(vistaIO.getTextoDescuento()));
             textoIva = Integer.toString(iva + Integer.parseInt(vistaIO.getTextoIva()));
             textoBruto = Integer.toString(bruto + Integer.parseInt(vistaIO.getTextoBruto()));
         }else{
@@ -89,13 +91,15 @@ public class controladorIngresarOts {
 //            textoIva = removeDots(vistaIO.getTextoIva());
 //            textoBruto = removeDots(vistaIO.getTextoBruto());
             textoNeto = vistaIO.getTextoNeto();
+            textoDesc = vistaIO.getTextoDescuento();
             textoIva = vistaIO.getTextoIva();
             textoBruto = vistaIO.getTextoBruto();
         }
+        String checkHoraMin = vistaIO.getCheckHoraMin() ? "1" : "0";
         String[] data = {vistaIO.getTextoContacto(), vistaIO.getTextoFechaOt(), vistaIO.getComboFormaPago(),
             vistaIO.getComboCondPago(), vistaIO.getTextoDespachado(), id, vistaIO.getTextoCodigo(),
             textoNeto, textoIva, textoBruto, vistaIO.getSpinnerFinFaena(), Integer.toString(horas), vistaIO.getSpinnerHoraSalida(),
-        vistaIO.getSpinnerHoraLlegada(), vistaIO.getCheckDespacho(), vistaIO.getTextoDespacho()};
+        vistaIO.getSpinnerHoraLlegada(), vistaIO.getCheckDespacho(), vistaIO.getTextoDespacho(), checkHoraMin, textoDesc};
         boolean flag = miControlador.ingresarOt(data);
         return flag;
     } 
@@ -114,7 +118,7 @@ public class controladorIngresarOts {
         return respuesta;
     }
     
-    public List<List<String>> calcularTarifa(String diaInicio, String diaFin, String horaInicio, String horaFin, String ton) throws ParseException{
+    public List<List<String>> calcularTarifa(String diaInicio, String diaFin, String horaInicio, String horaFin, String ton, boolean checkHoraMin) throws ParseException{
         float horasTotales = 0;
         modelos.modeloOts ots = new modelos.modeloOts();
         List<List<String>> data = new ArrayList<>();
@@ -127,8 +131,9 @@ public class controladorIngresarOts {
         int horMin = 0, minMin = 0;
         if(Integer.parseInt(ton) >= 11){
             minHor = 3;
+        }else{
+            minHor = 2;
         }
-        minHor = 2;
         long diff = fecha2.getTime() - fecha.getTime();
         long difDias = diff/(60*60*1000*24);
         if(difDias == 0){
@@ -154,7 +159,7 @@ public class controladorIngresarOts {
 ////            //String.valueOf((int)(totalTarifa * 1.19)), Integer.toString(3)};
 ////            return data;
 //            }
-            if(hours < minHor){
+            if(hours < minHor && checkHoraMin){
                 horMin = minHor - (int)hours - 1;
                 minMin = 60 - (int)minutes;
             }
@@ -203,11 +208,12 @@ public class controladorIngresarOts {
         if(horMin > 0 || minMin > 0){
             float duracionTramo = horMin + (float)minMin/60;
             totalTarifa += duracionTramo * tarifa;
+            horasTotales += duracionTramo; //REVISAR ESTO 
             data.add(Arrays.asList(Integer.toString((int)tarifa),String.valueOf((int)(tarifa * 0.19)),
              String.valueOf((int)(tarifa * 1.19)), Float.toString(duracionTramo)));
         }
         data.add(Arrays.asList(Integer.toString((int)totalTarifa),String.valueOf((int)(totalTarifa * 0.19)),
-        String.valueOf((int)(totalTarifa * 1.19)), Float.toString(horasTotales)));
+        String.valueOf((int)(totalTarifa * 1.19)), Integer.toString(Math.round(horasTotales))));
         return data;
     }
     
@@ -263,5 +269,10 @@ public class controladorIngresarOts {
     public void actualizarHorometro(int horas, String desc){
         modelos.modeloGruas grua = new modelos.modeloGruas();
         grua.actualizarHorometro(horas, desc);
+    }
+    
+    public void agregarHorasExtra(String id, double horEx, double horEx2){
+        modelos.modeloOts ot = new modelos.modeloOts();
+        ot.agregarHorasExtra(id, horEx, horEx2);
     }
 }

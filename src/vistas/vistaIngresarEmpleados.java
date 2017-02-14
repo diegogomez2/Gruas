@@ -19,6 +19,8 @@ import java.util.regex.Pattern;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
@@ -41,6 +43,21 @@ public class vistaIngresarEmpleados extends javax.swing.JDialog {
                 super.replace(fb, offset, length, text, attrs);
             }
         };
+    
+//    DocumentFilter numbersComma = new DocumentFilter() {
+//            Pattern regEx = Pattern.compile("^[0-9]*\\,[0-9]*|[0-9]+$");
+//            
+//            @Override
+//            public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+//                Matcher matcher = regEx.matcher(text);
+//                System.out.println(matcher.matches());
+//                if (!matcher.matches()) {
+//                    return;
+//                }
+//                super.replace(fb, offset, length, text, attrs);
+//            }
+//        };
+    
     /**
      * Creates new form vistaIngresarEmpleados
      */
@@ -192,11 +209,16 @@ public class vistaIngresarEmpleados extends javax.swing.JDialog {
 
         labelIsapre.setText("Isapre");
 
-        labelValorPlan.setText("Valor plan");
+        labelValorPlan.setText("Valor plan (UF)");
 
         textoValorPlan.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 textoValorPlanFocusLost(evt);
+            }
+        });
+        textoValorPlan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textoValorPlanActionPerformed(evt);
             }
         });
 
@@ -569,7 +591,13 @@ public class vistaIngresarEmpleados extends javax.swing.JDialog {
     }//GEN-LAST:event_comboSaludActionPerformed
 
     private void textoValorPlanFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textoValorPlanFocusLost
-        setTextoValorPlan(getTextoValorPlan());
+        //setTextoValorPlan(getTextoValorPlan());
+        Pattern regEx = Pattern.compile("^[0-9]+[\\.\\,][0-9]+|[0-9]+$");
+        String texto = ((JTextField) evt.getSource()).getText();
+        Matcher matcher = regEx.matcher(texto);
+        if (!matcher.matches()) {
+            textoValorPlan.setText("");
+        }
     }//GEN-LAST:event_textoValorPlanFocusLost
 
     private void textoTransporteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textoTransporteFocusLost
@@ -595,6 +623,17 @@ public class vistaIngresarEmpleados extends javax.swing.JDialog {
     private void textoAFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textoAFFocusLost
         setTextoAF(getTextoAF());
     }//GEN-LAST:event_textoAFFocusLost
+
+    private void textoValorPlanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoValorPlanActionPerformed
+//        System.out.println(evt);
+//        Pattern regEx = Pattern.compile("^[0-9]*\\,[0-9]*|[0-9]+$");
+//        String texto = ((JTextField) evt.getSource()).getText();
+//        Matcher matcher = regEx.matcher(texto);
+//        System.out.println(texto);
+//        if (!matcher.matches()) {
+//            textoValorPlan.setText("");
+//        }
+    }//GEN-LAST:event_textoValorPlanActionPerformed
 
     /**
      * @param args the command line arguments
@@ -803,7 +842,7 @@ public class vistaIngresarEmpleados extends javax.swing.JDialog {
             return "0";
         }
         valor = valor.replace("$", "");
-        valor = valor.replace(".", "");
+        valor = valor.replace(",", ".");
         return valor;
     }
     
@@ -930,7 +969,7 @@ public class vistaIngresarEmpleados extends javax.swing.JDialog {
     
     public String getTextoValorPlan() {
         String val = textoValorPlan.getText().replace("$", "");
-        val = val.replace(".", "");
+        val = val.replace(",", ".");
         return val;
     }
     

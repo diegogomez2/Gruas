@@ -241,7 +241,7 @@ public class modeloRemuneraciones {
         
         try{
             PreparedStatement pstm = conn.prepareStatement("SELECT val_val * men_ren as men, val_val * may_ren as may, "
-                    + "fac_ren fac, val_val * des_ren as des FROM impuesto_renta, valores");
+                    + "fac_ren fac, val_val * des_ren as des FROM impuesto_renta, valores WHERE nom_val = 'UTM'");
             ResultSet res = pstm.executeQuery();
             int i = 0;
             while(res.next()){
@@ -279,6 +279,26 @@ public class modeloRemuneraciones {
         return utm;
     }
     
+    public int obtenerUF(){
+        int uf = 0;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT val_val val FROM valores WHERE nom_val = 'UF'");
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            uf = res.getInt("val");
+            res.close();
+            pstm.close();
+       }catch(SQLException e){
+            System.out.println("Error obtener valor uf");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        return uf;
+    }
+    
     public int cambiarUTM(String utm){
         try{
             Class.forName("com.mysql.jdbc.Driver");
@@ -289,6 +309,24 @@ public class modeloRemuneraciones {
             return 1;
        }catch(SQLException e){
             System.out.println("Error cambiar utm");
+            System.out.println(e);
+            return 0;
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+            return 0;
+       }
+    }
+    
+    public int cambiarUF(String uf){
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("UPDATE Valores set val_val=? WHERE nom_val = 'UF'");
+            pstm.setString(1, uf);
+            pstm.executeUpdate();
+            return 1;
+       }catch(SQLException e){
+            System.out.println("Error cambiar uf");
             System.out.println(e);
             return 0;
        }catch(ClassNotFoundException e){

@@ -41,7 +41,8 @@ class controladorDetalleEmpleados {
         vistaDE.setTextoColacion(data[15]);
         vistaDE.setTextoTransporte(data[16]);
         vistaDE.setTextoIsapre(data[17]);
-        vistaDE.setTextoValorPlan(data[18]);
+        float valIsa = Float.parseFloat(data[18]) / 1000;
+        vistaDE.setTextoValorPlan(String.valueOf(valIsa));
         vistaDE.setTextoBonoAd(data[19]);
         vistaDE.setTextoValorBonoAd(data[20]);
         vistaDE.setTextoCaja(data[21]);

@@ -21,6 +21,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import modelos.modeloFacturas;
 
 /**
@@ -35,7 +36,7 @@ public class vistaFacturasP extends javax.swing.JPanel {
     public vistaFacturasP(String tipo, Object[][] data) {
         initComponents();
         String[] columNames = {"Código OT", "Razon", "Giro", "Dirección", "Región", "Comuna", "Fecha",
-            "Neto", "IVA", "Total"};
+            "Neto", "IVA", "Total", "Desc"};
         DefaultTableModel datos = new DefaultTableModel(data, columNames) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -43,6 +44,8 @@ public class vistaFacturasP extends javax.swing.JPanel {
             }
         };
         tablaFacturas.setModel(datos);
+        TableColumnModel tcm = tablaFacturas.getColumnModel();
+        tcm.removeColumn(tcm.getColumn(10));
         tablaFacturas.setAutoCreateRowSorter(true);
         if (tablaFacturas.getRowCount() > 0) {
             tablaFacturas.setRowSelectionInterval(0, 0);
@@ -199,10 +202,11 @@ public class vistaFacturasP extends javax.swing.JPanel {
                 String flag = verificarRazon();
                 if (flag.compareTo("correcto") == 0) {
                     String[] idOts = new String[filas];
-                    int neto = 0, iva = 0, total = 0;
+                    int neto = 0, iva = 0, total = 0, desc = 0;
                     for (int i = 0; i < filas; i++) {
                         idOts[i] = getIdFact(i);
-                        neto += getNetoFact(i);
+                        desc = getDescFact(i);
+                        neto += getNetoFact(i) - desc;
                         iva += getIvaFact(i);
                         total += getTotalFact(i);
                     }
@@ -223,7 +227,8 @@ public class vistaFacturasP extends javax.swing.JPanel {
                                 miControlador.crearControladorPrincipal(tabs);
                             }
                         } catch (ParseException ex) {
-                            ex.printStackTrace(ps);
+                            ex.printStackTrace();
+//                            ex.printStackTrace(ps);
                             Logger.getLogger(vistaFacturasP.class.getName()).log(Level.SEVERE, null, ex);
                         } 
                     }
@@ -234,7 +239,8 @@ public class vistaFacturasP extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null, "No hay ots para generar una factura");
             }
         }catch(Exception e){
-            e.printStackTrace(ps);
+//            e.printStackTrace(ps);
+            e.printStackTrace();
         }
     }//GEN-LAST:event_botonFacturaActionPerformed
 
@@ -246,10 +252,11 @@ public class vistaFacturasP extends javax.swing.JPanel {
             String flag = verificarRazon();
             if(flag.compareTo("correcto") == 0){
                 String[] idOts = new String[filas];
-                int neto = 0, iva = 0, total = 0;
+                int neto = 0, iva = 0, total = 0, desc = 0;
                 for (int i = 0; i < filas; i++) {
                     idOts[i] = getIdFact(i);
-                    neto += getNetoFact(i);
+                    desc = getDescFact(i);
+                    neto += getNetoFact(i) - desc;
                     iva += getIvaFact(i);
                     total += getTotalFact(i);
                 }
@@ -292,10 +299,11 @@ public class vistaFacturasP extends javax.swing.JPanel {
                         String razonFac = verificarRazonFactura(id_fac, tiponc);
                         if(razonFac.compareTo(getRazonFila(0)) == 0){
                             String[] idOts = new String[filas];
-                            int neto = 0, iva = 0, total = 0;
+                            int neto = 0, iva = 0, total = 0, desc = 0;
                             for (int i = 0; i < filas; i++) {
                                 idOts[i] = getIdFact(i);
-                                neto += getNetoFact(i);
+                                desc = getDescFact(i);
+                                neto += getNetoFact(i) - desc;
                                 iva += getIvaFact(i);
                                 total += getTotalFact(i);
                             }
@@ -344,10 +352,11 @@ public class vistaFacturasP extends javax.swing.JPanel {
             String flag = verificarRazon();
             if(flag.compareTo("correcto") == 0){
                 String[] idOts = new String[filas];
-                int neto = 0, iva = 0, total = 0;
+                int neto = 0, iva = 0, total = 0, desc = 0;
                 for (int i = 0; i < filas; i++) {
                     idOts[i] = getIdFact(i);
-                    neto += getNetoFact(i);
+                    desc = getDescFact(i);
+                    neto += getNetoFact(i) - desc;
                     iva += getIvaFact(i);
                     total += getTotalFact(i);
                 }
@@ -413,6 +422,10 @@ public class vistaFacturasP extends javax.swing.JPanel {
         return Integer.parseInt(tablaFacturas.getValueAt(row, 7).toString());
     }
 
+    public int getDescFact(int row) {
+        return Integer.parseInt(tablaFacturas.getModel().getValueAt(tablaFacturas.convertRowIndexToModel(row), 10).toString());
+    }
+    
     public int getIvaFact(int row) {
         return Integer.parseInt(tablaFacturas.getValueAt(row, 8).toString());
     }

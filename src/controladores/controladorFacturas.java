@@ -88,7 +88,8 @@ public class controladorFacturas {
             }
             return id;
         }catch(Exception e){
-            e.printStackTrace(ps);
+            e.printStackTrace();
+//            e.printStackTrace(ps);
             return "-1";
         }
     }

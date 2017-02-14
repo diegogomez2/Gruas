@@ -43,7 +43,7 @@ public class modeloTarifas {
         
         try{
             PreparedStatement pstm = conn.prepareStatement("SELECT pes_ton, tarifas.id_dia, hin_hor, "
-                    + "hfin_hor, prec_tar  FROM tarifas INNER JOIN dias ON tarifas.id_dia = dias.id_dia "
+                    + "hfin_hor, prec_tar, id_tar  FROM tarifas INNER JOIN dias ON tarifas.id_dia = dias.id_dia "
                     + "INNER JOIN horarios ON horarios.id_hor = tarifas.id_hor inner join tonelajes ON "
                     + "tonelajes.id_ton = tarifas.id_ton ORDER BY tonelajes.id_ton");
             ResultSet res = pstm.executeQuery();
@@ -54,6 +54,7 @@ public class modeloTarifas {
                 String esthin = res.getString("hin_hor");
                 String esthfin = res.getString("hfin_hor");
                 String estprec = res.getString("prec_tar");
+                String estid = res.getString("id_tar");
                 if(estdia.compareTo("1") == 0){
                     estdia = "Lunes - Viernes";
                 }else if(estdia.compareTo("2") == 0){
@@ -61,7 +62,7 @@ public class modeloTarifas {
                 }else{
                     estdia = "Domingo";
                 }
-                data[i] = new String[]{estpes, estdia, esthin+" - "+ esthfin, estprec};
+                data[i] = new String[]{estpes, estdia, esthin+" - "+ esthfin, estprec, estid};
                 i++;
             }
             res.close();
@@ -152,5 +153,24 @@ public class modeloTarifas {
             return "incorrecto";
         }
         return "correcto";
+    }
+    
+    public String eliminarTarifa(String id){
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("DELETE FROM tarifas WHERE id_tar = ?");
+            pstm.setString(1, id);
+            pstm.execute();
+            pstm.close();
+            return "correcto";
+        }catch(SQLException e){
+            System.out.println("Error al eliminar tarifa");
+            System.out.println(e);
+            return "incorrecto";
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+            return "incorrecto";
+        }
     }
 }

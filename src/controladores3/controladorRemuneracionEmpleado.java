@@ -19,8 +19,10 @@ public class controladorRemuneracionEmpleado {
         controladorPrincipal miControlador = new controladorPrincipal();
         String[] data = miControlador.obtenerRemuneracionEmpleadoPorRut(rut);
         String[][] imp2cat = miControlador.obtenerTablaImpuesto();
+//        float uf = miControlador.obtenerUF() / 100;
+        float uf = miControlador.obtenerUF();
         //SUELDO BASE
-        int base = Integer.parseInt(data[2]);
+        int base = Integer.parseInt(data[2]) * Integer.parseInt(data[22]) / 30;
         //GRATIFICACION
         int grat = (int)(base * 0.25);
         //BONO ANTIGUEDAD
@@ -37,7 +39,7 @@ public class controladorRemuneracionEmpleado {
         //BONO ASIGNACION VOLUNTARIA
         int bonoAV = Integer.parseInt(data[13]);
         int totalBonoAV = (int)((double) base * 0.0077777 * bonoAV);
-        //BONO COLACION
+        //BONO ADICIONAL
         int bonoCol = Integer.parseInt(data[8]);
         int totalBonCol = (int)(((double) base * 0.0077777) * ((double)bonoCol / 2));
         //HORAS EXTRA
@@ -54,7 +56,7 @@ public class controladorRemuneracionEmpleado {
         int totalAFP = (int)(totImp * ((double)descAFP / 10000));
         int sis = (int)(totImp * 0.0141);
         //DESCUENTO SALUD
-        int descSalud = 0, totalSalud = 0;
+        double descSalud = 0, totalSalud = 0;
         String salud;
         if(data[4].toLowerCase().compareTo("fonasa") == 0){
             salud = "FONASA";
@@ -62,16 +64,16 @@ public class controladorRemuneracionEmpleado {
             totalSalud = (int)(totImp * ((double)descSalud / 10000));
         }else{
             salud = miControlador.obtenerIsapreEmpleado(rut);
-            descSalud = miControlador.obtenerDescIsapre(rut);
+            descSalud = (miControlador.obtenerDescIsapre(rut) / 1000.0) * uf;
             totalSalud = descSalud;
         }
         //DESCUENTO CESANTIA
         int ces = (int)(totImp * 0.006);
         int cesEmp = (int)(totImp * 0.024);
         //TOTAL TRIBUTABLE
-        int totTrib = totImp - totalAFP - totalSalud - ces;
+        double totTrib = totImp - totalAFP - totalSalud - ces;
         int descRenta = 0;
-        int totAux = 0;
+        double totAux = 0;
         for(String[] imp2cat1: imp2cat){
             if(totTrib > Float.parseFloat(imp2cat1[0]) / 10 && totTrib <= Float.parseFloat(imp2cat1[1]) / 10){
                 descRenta = (int) (totTrib * Float.parseFloat(imp2cat1[2]) / 1000 - Float.parseFloat(imp2cat1[3]) / 100);
@@ -84,7 +86,7 @@ public class controladorRemuneracionEmpleado {
         //ASIGNACION FAMILIAR
         int af = Integer.parseInt(data[15]);
         //LIQ ALCANZADO
-        int liqAl = totAux - caja;
+        double liqAl = totAux - caja;
         //COLACION 
         int col = Integer.parseInt(data[6]);
         //TRANSPORTE
@@ -101,17 +103,21 @@ public class controladorRemuneracionEmpleado {
         int cuoRes = Math.max(0, Integer.parseInt(data[20]) - 1);
         //DESCUENTOS
         int totalDesc = caja + antic + adel + cuoPres;
+        //TOTAL NO IMP
+        int noImp = col + trans + af;
+        //TOTAL HABERES
+        int totalHaberes = noImp + totImp;
         //LIQUIDO
-        int liq = liqAl + col + trans + af - antic - adel - cuoPres;
+        double liq = liqAl + col + trans + af - antic - adel - cuoPres;
         vistaRE = new vistaRemuneracionEmpleado(new javax.swing.JFrame(), true);
         vistaRE.setTextoRut(data[0]);
         vistaRE.setTextoNombre(data[1]);
-        vistaRE.setTextoSueldoBase(data[2]);
+        vistaRE.setTextoSueldoBase(String.valueOf(base));
         vistaRE.setTextoGratLegal(String.valueOf(grat));
         vistaRE.setTextoBonoAntiguedad(String.valueOf(bonoAnt));
         vistaRE.setTextoBono300(String.valueOf(totalBon300));
         vistaRE.setTextoBonoAV(String.valueOf(totalBonoAV));
-        vistaRE.setTextoBonoCol(String.valueOf(totalBonCol));
+        vistaRE.setTextoBonoAd(String.valueOf(totalBonCol));
         vistaRE.setTextoOtrosBonos(String.valueOf(bonoAd));
         vistaRE.setTextoHorEx(String.valueOf(totalHorEx));
         vistaRE.setTextoTotalImponible(String.valueOf(totImp));
@@ -125,6 +131,8 @@ public class controladorRemuneracionEmpleado {
         vistaRE.setTextoTotalTributable(String.valueOf(totTrib));
         vistaRE.setTextoCaja(String.valueOf(caja));
         vistaRE.setTextoAF(String.valueOf(af));
+        vistaRE.setTextoNoImp(String.valueOf(noImp));
+        vistaRE.setTextoTotalHaberes(String.valueOf(totalHaberes));
         vistaRE.setTextoAnticipo(String.valueOf(antic));
         vistaRE.setTextoAdelanto(String.valueOf(adel));
         vistaRE.setTextoPrestamo(String.valueOf(cuoPres));

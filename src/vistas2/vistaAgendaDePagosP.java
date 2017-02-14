@@ -17,8 +17,6 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -27,7 +25,6 @@ import javax.swing.RowFilter;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 
@@ -258,11 +255,11 @@ public class vistaAgendaDePagosP extends javax.swing.JPanel {
     }
     
     public String getIdFila(int row){
-        return tablaPagos.getModel().getValueAt(tablaPagos.convertColumnIndexToModel(row), 8).toString();
+        return tablaPagos.getModel().getValueAt(tablaPagos.convertRowIndexToModel(row), 8).toString();
     }
     
     public String getIdFac(int row){
-        return tablaPagos.getModel().getValueAt(tablaPagos.convertColumnIndexToModel(row), 9).toString();
+        return tablaPagos.getModel().getValueAt(tablaPagos.convertRowIndexToModel(row), 9).toString();
     }
     
     public class MyTableModel extends DefaultTableModel{
@@ -278,11 +275,13 @@ public class vistaAgendaDePagosP extends javax.swing.JPanel {
             this.setRowCount(data.length);
             for(Object[] data1 : data){
                 int monto = Integer.parseInt(data1[5].toString());
+                int num = Integer.parseInt(data1[4].toString());
                 this.setValueAt(data1[0], i, 0);
                 this.setValueAt(data1[1], i, 1);
                 this.setValueAt(data1[2], i, 2);
                 this.setValueAt(data1[3], i, 3);
-                this.setValueAt(data1[4], i, 4);
+//                this.setValueAt(data1[4], i, 4);
+                this.setValueAt(num, i, 4);
                 this.setValueAt(monto, i, 5);
                 this.setValueAt(data1[6], i, 6);
                 this.setValueAt(data1[7], i, 7);
@@ -357,9 +356,12 @@ public class OwnTableCellRenderer extends DefaultTableCellRenderer {
         }
         if(value instanceof Number){
             setHorizontalAlignment(SwingConstants.RIGHT);
-            Number num = (Number)value;
-            String text = FORMAT.format(num);
-            setText(text);
+            setText(value.toString());
+            if(column == 5){
+                Number num = (Number)value;
+                String text = FORMAT.format(num);
+                setText(text);
+            }
         }else{
             setText(value != null ? value.toString() : "");
         }

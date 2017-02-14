@@ -6,6 +6,7 @@
 package controladores;
 
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import vistas.vistaTarifas;
 
 /**
@@ -25,4 +26,11 @@ public class controladorTarifas {
         vistaTarifas = new vistaTarifas(tipo, data);
         return vistaTarifas;
     } 
+    
+    public void crearControladorPrincipal(JTabbedPane tabs) {
+        controladorPrincipal miControlador = new controladorPrincipal();
+        tabs.remove(1);
+        tabs.insertTab("Tarifas", null, miControlador.crearControladorTarifasP(), null, 1);
+        tabs.setSelectedIndex(1);
+    }
 }

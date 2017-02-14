@@ -37,11 +37,15 @@ public class controladorDetalleOts {
         vistaDO.setTextoBruto(data[19]);
         vistaDO.setTextoNeto(data[20]);
         vistaDO.setTextoIva(data[21]);
+        vistaDO.setTextoDescuento(data[27]);
         vistaDO.setTextoDespachado(data[22]);
         vistaDO.setSpinnerFinFaena(data[23]);
         vistaDO.setCheckDespacho(data[24]);
+        vistaDO.setCheckHorMin(data[28]);
         vistaDO.setTextoValorDespacho(data[25]);
         vistaDO.setTextoCiudad(data[26]);
+        vistaDO.setSpinnerHoraExNormales(data[29]);
+        vistaDO.setSpinnerHoraExFestivos(data[30]);
         vistaDO.setTextoCodigo(id);
         vistaDO.setLocationRelativeTo(null);
         vistaDO.setVisible(true);

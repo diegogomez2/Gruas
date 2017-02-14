@@ -462,9 +462,13 @@ public class modeloGruas {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
+            //CON UNA HORA ANTES Y UNA HORA DESPUES
+//            PreparedStatement pstm = conn.prepareStatement("SELECT count(*) as total from jornadas "
+//                    + " where ( subtime(?, '01:00') <= fhreg_jor and "
+//                    + "addtime(?, '01:00') >= fhsal_jor and pat_gru = ?)");
             PreparedStatement pstm = conn.prepareStatement("SELECT count(*) as total from jornadas "
-                    + " where ( subtime(?, '01:00') <= fhreg_jor and "
-                    + "addtime(?, '01:00') >= fhsal_jor and pat_gru = ?)");
+                    + " where ( ? <= fhreg_jor and "
+                    + "? >= fhsal_jor and pat_gru = ?)");
             pstm.setString(1, fhsal);
             pstm.setString(2, fhreg);
             pstm.setString(3, pat);
@@ -488,9 +492,12 @@ public class modeloGruas {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
+//            PreparedStatement pstm = conn.prepareStatement("SELECT count(*) as total from jornadas "
+//                    + " where ( subtime(?, '01:00') <= fhreg_jor and "
+//                    + "addtime(?, '01:00') >= fhsal_jor and pat_gru = ? and id_jor <> ?)");
             PreparedStatement pstm = conn.prepareStatement("SELECT count(*) as total from jornadas "
-                    + " where ( subtime(?, '01:00') <= fhreg_jor and "
-                    + "addtime(?, '01:00') >= fhsal_jor and pat_gru = ? and id_jor <> ?)");
+                    + " where ( ? <= fhreg_jor and "
+                    + "? >= fhsal_jor and pat_gru = ? and id_jor <> ?)");
             pstm.setString(1, fhsal);
             pstm.setString(2, fhreg);
             pstm.setString(3, pat);

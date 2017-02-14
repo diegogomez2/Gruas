@@ -137,7 +137,7 @@ public class vistaDetalleEmpleados extends javax.swing.JDialog {
 
         textoIsapre.setEditable(false);
 
-        labelValorPlan.setText("Valor plan");
+        labelValorPlan.setText("Valor plan (UF)");
 
         textoValorPlan.setEditable(false);
 
@@ -196,14 +196,14 @@ public class vistaDetalleEmpleados extends javax.swing.JDialog {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(labelIsapre)
-                                .addGap(0, 78, Short.MAX_VALUE))
+                                .addGap(0, 62, Short.MAX_VALUE))
                             .addComponent(textoIsapre))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(labelValorPlan)
                                 .addGap(12, 12, 12))
-                            .addComponent(textoValorPlan, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)))
+                            .addComponent(textoValorPlan)))
                     .addComponent(textoTransporte)
                     .addComponent(textoValorBonoAd)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -662,7 +662,8 @@ public class vistaDetalleEmpleados extends javax.swing.JDialog {
     public void setTextoValorPlan(String val){
 //        textoValorPlan.setText(String.valueOf(val));
         textoValorPlan.setHorizontalAlignment(JLabel.RIGHT);
-        textoValorPlan.setText(FORMAT.format(Integer.parseInt(val)));
+        //textoValorPlan.setText(FORMAT.format(Integer.parseInt(val)));
+        textoValorPlan.setText(val);
     }
     
     public void setTextoIsapre(String isa){

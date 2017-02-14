@@ -25,8 +25,8 @@ public final class Connector {
 //        String url= "jdbc:mysql://localhost:3306/fact_gruas?autoReconnect=true&useSSL=true";
         String url= "jdbc:mysql://localhost:3306/fact_gruas";
         String password = "205243";
-//        String password = "gruas_205243";
 //        String url = "jdbc:mysql://10.20.224.100:3306/fact_gruas";
+//        String password = "gruas_205243";
     public String getLogin() {
         return login;
     }

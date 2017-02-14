@@ -1006,6 +1006,7 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
     final public void showTransferencia(){
         checkEstado.setEnabled(false);
         labelCantidad.setText("Número de cuotas");
+        labelNumTC.setText("Número de cuenta");
         labelCantidad.setVisible(true);
         spinnerCantidad.setVisible(true);
         tc.setRowCount(Integer.parseInt(spinnerCantidad.getValue().toString()));
@@ -1049,6 +1050,7 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
     final public void showTC(){
         checkEstado.setEnabled(false);
         labelCantidad.setText("Número de cuotas");
+        labelNumTC.setText("Número de tarjeta de crédito");
         labelCantidad.setVisible(true);
         spinnerCantidad.setVisible(true);
         tc.setRowCount(Integer.parseInt(spinnerCantidad.getValue().toString()));

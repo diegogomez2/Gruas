@@ -239,22 +239,22 @@ public class vistaFacturadasP extends javax.swing.JPanel {
     }//GEN-LAST:event_botonGenerarNCActionPerformed
 
     private void botonGuiaDespActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuiaDespActionPerformed
-        String id;
-        //controladores.controladorPrincipal miControladorP = new controladores.controladorPrincipal();
-        controladores.controladorFacturadas miControlador = new controladores.controladorFacturadas();
-        controladores.controladorCrearFactura miControladorC = new controladores.controladorCrearFactura();
-        boolean selected = tablaFacturadas.getSelectedRowCount() > 0;
-        if(selected){
-            int row = getFilaSeleccionada();
-            id = getIdFila(row);
-            String[] ots = miControlador.obtenerOtsPorIdFacturada(id);
-            if((miControladorC.crearGuiaDespXML(ots, id).compareTo("correcto") == 0)){
-                JTabbedPane tabs = (JTabbedPane)this.getParent();
-                miControlador.crearControladorPrincipal(tabs);
-            } 
-        }else{
-            JOptionPane.showMessageDialog(null, "Debe seleccionar una factura para generar una guía de despacho");
-        }
+//        String id;
+//        //controladores.controladorPrincipal miControladorP = new controladores.controladorPrincipal();
+//        controladores.controladorFacturadas miControlador = new controladores.controladorFacturadas();
+//        controladores.controladorCrearFactura miControladorC = new controladores.controladorCrearFactura();
+//        boolean selected = tablaFacturadas.getSelectedRowCount() > 0;
+//        if(selected){
+//            int row = getFilaSeleccionada();
+//            id = getIdFila(row);
+//            String[] ots = miControlador.obtenerOtsPorIdFacturada(id);
+//            if((miControladorC.crearGuiaDespXML(ots, id).compareTo("correcto") == 0)){
+//                JTabbedPane tabs = (JTabbedPane)this.getParent();
+//                miControlador.crearControladorPrincipal(tabs);
+//            } 
+//        }else{
+//            JOptionPane.showMessageDialog(null, "Debe seleccionar una factura para generar una guía de despacho");
+//        }
     }//GEN-LAST:event_botonGuiaDespActionPerformed
 
     private void textoFiltroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoFiltroKeyReleased

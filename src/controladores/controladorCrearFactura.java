@@ -41,6 +41,9 @@ public class controladorCrearFactura {
     
      public String crearFacXML(String[] idOts, String valorNeto, String valorIva, String valorTotal, String fac) throws ParseException{
         
+         modeloFacturas rutas = new modeloFacturas();
+         String ruta = rutas.obtenerRuta();
+         System.out.println("ruta1: " + ruta);
          File file = new File("test.log");
             PrintStream ps = null;
             try{
@@ -86,13 +89,13 @@ public class controladorCrearFactura {
             modelos.modeloOts modOt = new modeloOts();
             String form = modOt.obtenerFormaPago(idOts[0]);
             
-            Element fpago = doc.createElement("FmaPago");
-            fpago.appendChild(doc.createTextNode(form));
-            id.appendChild(fpago);
+//            Element fpago = doc.createElement("FmaPago");
+//            fpago.appendChild(doc.createTextNode(form));
+//            id.appendChild(fpago);
             
-            Element mpago = doc.createElement("MedioPago");
-            mpago.appendChild(doc.createTextNode("CH"));
-            id.appendChild(mpago);
+//            Element mpago = doc.createElement("MedioPago");
+//            mpago.appendChild(doc.createTextNode("CH"));
+//            id.appendChild(mpago);
             
             //INFORMACION EMISOR
             Element emisor = doc.createElement("Emisor");
@@ -133,6 +136,8 @@ public class controladorCrearFactura {
             //OBTENER LOS DATOS DEL CLIENTE
             modelos.modeloOts ots = new modelos.modeloOts();
             String[] data = ots.obtenerFacturaPorId(idOts[0]);
+            boolean checkHoraMin = true;
+            if(data[12].compareTo("0") == 0) checkHoraMin = false;
             
             //DATOS CLIENTE
             Element receptor = doc.createElement("Receptor");
@@ -192,7 +197,7 @@ public class controladorCrearFactura {
                 controladores.controladorIngresarOts miControlador = new controladores.controladorIngresarOts();
 //                System.out.println("datos "+datosDias[0]);
                 List<List<String>> valores = miControlador.calcularTarifa(datosDias[0], datosDias[1], datosDias[2],
-                        datosDias[3], datosDias[4]);
+                        datosDias[3], datosDias[4], checkHoraMin);
                 String[] infoDespacho = ots.obtenerValorDespachoOt(idOts[i]);
                 
                 for (int j = 0; j < valores.size() - 1; j++) {
@@ -231,8 +236,8 @@ public class controladorCrearFactura {
                     detalle.appendChild(prcItem);
                     
                     Element mtoItem = doc.createElement("MontoItem");
-                    mtoItem.appendChild(doc.createTextNode(Float.toString(Float.parseFloat(valores.get(j).get(0))
-                            * Float.parseFloat(valores.get(j).get(3)))));
+                    mtoItem.appendChild(doc.createTextNode(Integer.toString((int)(Float.parseFloat(valores.get(j).get(0))
+                            * Float.parseFloat(valores.get(j).get(3))))));
                     detalle.appendChild(mtoItem);
                     
                     contador += 1;
@@ -292,16 +297,19 @@ public class controladorCrearFactura {
                 adj.appendChild(imp);
                 
                 Element copias = doc.createElement("Copias");
-                copias.appendChild(doc.createTextNode("1"));
+                copias.appendChild(doc.createTextNode("2"));
                 adj.appendChild(copias);
                         
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
             DOMSource source = new DOMSource(doc);
-            File f = new File("C:/AppSersv/www/eugcomdte/entregas/XML_pre");
+            File f = new File(ruta);
             if(f.exists()){
-                StreamResult result =   new StreamResult(new File("C:/AppServ/www/eugcomdte/entregas/XML_pre/33_"+fol_fac+"_normal.xml"));
+//                StreamResult result =   new StreamResult(new File("C:/AppServ/www/eugcomdte/entregas/XML_pre/33_"+fol_fac+"_normal.xml"));
+//                StreamResult result =   new StreamResult(new File("\\SGST/DTEService/input-pruebas/33_"+fol_fac+"_normal.xml"));
+                System.out.println(ruta);
+                StreamResult result =   new StreamResult(new File(ruta + "/33_"+fol_fac+"_normal.xml"));
                 transformer.transform(source, result);
                 JOptionPane.showMessageDialog(vistaF, "Documento realizado con éxito");
                 return "correcto";
@@ -312,13 +320,16 @@ public class controladorCrearFactura {
                 return "correcto";
             }            
         }catch(ParserConfigurationException | TransformerException pce){
-            pce.printStackTrace(ps);
+            //pce.printStackTrace(ps);
+            pce.printStackTrace();
             return "incorrecto";
         }
     }
     
     public String crearFacExXML(String[] idOts, String valorNeto, String valorIva, String valorTotal, String fac){
         
+        modeloFacturas rutas = new modeloFacturas();
+        String ruta = rutas.obtenerRuta();
         String fecha = formatDate.format(new Date());
         
         try{
@@ -357,13 +368,13 @@ public class controladorCrearFactura {
             modelos.modeloOts modOt = new modeloOts();
             String form = modOt.obtenerFormaPago(idOts[0]);
             
-            Element fpago = doc.createElement("FmaPago");
-            fpago.appendChild(doc.createTextNode(form));
-            id.appendChild(fpago);
+//            Element fpago = doc.createElement("FmaPago");
+//            fpago.appendChild(doc.createTextNode(form));
+//            id.appendChild(fpago);
             
-            Element mpago = doc.createElement("MedioPago");
-            mpago.appendChild(doc.createTextNode("CH"));
-            id.appendChild(mpago);
+//            Element mpago = doc.createElement("MedioPago");
+//            mpago.appendChild(doc.createTextNode("CH"));
+//            id.appendChild(mpago);
             
             //INFORMACION EMISOR
             Element emisor = doc.createElement("Emisor");
@@ -488,16 +499,19 @@ public class controladorCrearFactura {
                 adj.appendChild(imp);
                 
                 Element copias = doc.createElement("Copias");
-                copias.appendChild(doc.createTextNode("1"));
+                copias.appendChild(doc.createTextNode("2"));
                 adj.appendChild(copias);
                 
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
             DOMSource source = new DOMSource(doc);
-            File f = new File("C:/AppSersv/www/eugcomdte/entregas/XML_pre");
+//            File f = new File("C:/AppSersv/www/eugcomdte/entregas/XML_pre");
+            File f = new File(ruta);
             if(f.exists()){
-                StreamResult result =   new StreamResult(new File("C:/AppServ/www/eugcomdte/entregas/XML_pre/34_"+fol_facex+"_exenta.xml"));
+//                StreamResult result =   new StreamResult(new File("C:/AppServ/www/eugcomdte/entregas/XML_pre/34_"+fol_facex+"_exenta.xml"));
+//                StreamResult result =   new StreamResult(new File("\\SGST/DTEService/input-pruebas/34_"+fol_facex+"_exenta.xml"));
+                StreamResult result =   new StreamResult(new File(ruta + "/34_"+fol_facex+"_exenta.xml"));
                 transformer.transform(source, result);
                 JOptionPane.showMessageDialog(vistaF, "Documento realizado con éxito");
                 return "correcto";
@@ -519,6 +533,8 @@ public class controladorCrearFactura {
     
     public String crearNotaCredXML(String id_nc, String[] valores_nc, String[] ots_nc, String razon, String fac, String tipo_fac) throws ParseException{
         
+        modeloFacturas rutas = new modeloFacturas();
+        String ruta = rutas.obtenerRuta();
         String fecha = formatDate.format(new Date());
         try{
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -556,15 +572,15 @@ public class controladorCrearFactura {
             modelos.modeloOts modOt = new modeloOts();
             String form = modOt.obtenerFormaPago(ots_nc[0]);
             
-            Element fpago = doc.createElement("FmaPago");
-            fpago.appendChild(doc.createTextNode(form));
-            id.appendChild(fpago);
+//            Element fpago = doc.createElement("FmaPago");
+//            fpago.appendChild(doc.createTextNode(form));
+//            id.appendChild(fpago);
             
-            Element mpago = doc.createElement("MedioPago");
-            mpago.appendChild(doc.createTextNode("CH"));
-            id.appendChild(mpago);
+//            Element mpago = doc.createElement("MedioPago");
+//            mpago.appendChild(doc.createTextNode("CH"));
+//            id.appendChild(mpago);
             
-            Element fven = doc.createElement("FchaVenc");
+            Element fven = doc.createElement("FchVenc");
             fven.appendChild(doc.createTextNode(fecha));
             id.appendChild(fven);
             
@@ -606,6 +622,8 @@ public class controladorCrearFactura {
             
             modelos.modeloOts ots = new modelos.modeloOts();
             String[] data = ots.obtenerFacturaPorId(ots_nc[0]);
+            boolean checkHoraMin = true;
+            if(data[12].compareTo("0") == 0) checkHoraMin = false;
             
             //DATOS CLIENTE
             Element receptor = doc.createElement("Receptor");
@@ -667,7 +685,7 @@ public class controladorCrearFactura {
                 datosDias = ots.obtenerDiasPorIdOt(ots_nc[i]);
                 controladores.controladorIngresarOts miControlador = new controladores.controladorIngresarOts();
                 List<List<String>> valores = miControlador.calcularTarifa(datosDias[0], datosDias[1], datosDias[2],
-                        datosDias[3], datosDias[4]);
+                        datosDias[3], datosDias[4], checkHoraMin);
                 String[] infoDespacho = ots.obtenerValorDespachoOt(ots_nc[i]);
                 
                 for (int j = 0; j < valores.size() - 1; j++) {
@@ -706,8 +724,8 @@ public class controladorCrearFactura {
                     detalle.appendChild(prcItem);
                     
                     Element mtoItem = doc.createElement("MontoItem");
-                    mtoItem.appendChild(doc.createTextNode(Float.toString(Float.parseFloat(valores.get(j).get(0))
-                            * Float.parseFloat(valores.get(j).get(3)))));
+                    mtoItem.appendChild(doc.createTextNode(Integer.toString((int)(Float.parseFloat(valores.get(j).get(0))
+                            * Float.parseFloat(valores.get(j).get(3))))));
                     detalle.appendChild(mtoItem);
                     
                     contador += 1;
@@ -814,7 +832,7 @@ public class controladorCrearFactura {
                 rootElement.appendChild(adj);
             
                 Element obs = doc.createElement("Observacion");
-                obs.appendChild(doc.createTextNode("OBSERVACIONES"));
+                obs.appendChild(doc.createTextNode("Folio factura: " + fac));
                 adj.appendChild(obs);
                 
                 Element imp = doc.createElement("Impresora");
@@ -822,16 +840,19 @@ public class controladorCrearFactura {
                 adj.appendChild(imp);
                 
                 Element copias = doc.createElement("Copias");
-                copias.appendChild(doc.createTextNode("1"));
+                copias.appendChild(doc.createTextNode("2"));
                 adj.appendChild(copias);
                 
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
             DOMSource source = new DOMSource(doc);
-            File f = new File("C:/AppSersv/www/eugcomdte/entregas/XML_pre");
+//            File f = new File("C:/AppSersv/www/eugcomdte/entregas/XML_pre");
+            File f = new File(ruta);
             if(f.exists()){
-                StreamResult result =   new StreamResult(new File("C:/AppServ/www/eugcomdte/entregas/XML_pre/61_"+fol_nc+"_anula_33.xml"));
+//                StreamResult result =   new StreamResult(new File("C:/AppServ/www/eugcomdte/entregas/XML_pre/61_"+fol_nc+"_anula_33.xml"));
+//                StreamResult result =   new StreamResult(new File("\\SGST/DTEService/input-pruebas/61_"+fol_nc+"_anula_33.xml"));
+                StreamResult result =   new StreamResult(new File(ruta + "/61_"+fol_nc+"_anula_33.xml"));
                 transformer.transform(source, result);
                 JOptionPane.showMessageDialog(vistaF, "Documento realizado con éxito");
                 return "correcto"; 
@@ -854,6 +875,8 @@ public class controladorCrearFactura {
     
     public String crearNotaCredNDXML(String id_nc, String[] valores_nc, String[] ots_nc, String razon, String fac, String tipo_fac) throws ParseException{
         
+        modeloFacturas rutas = new modeloFacturas();
+        String ruta = rutas.obtenerRuta();
         String fecha = formatDate.format(new Date());
         
         try{
@@ -892,15 +915,15 @@ public class controladorCrearFactura {
             modelos.modeloOts modOt = new modeloOts();
             String form = modOt.obtenerFormaPago(ots_nc[0]);
             
-            Element fpago = doc.createElement("FmaPago");
-            fpago.appendChild(doc.createTextNode(form));
-            id.appendChild(fpago);
+//            Element fpago = doc.createElement("FmaPago");
+//            fpago.appendChild(doc.createTextNode(form));
+//            id.appendChild(fpago);
             
-            Element mpago = doc.createElement("MedioPago");
-            mpago.appendChild(doc.createTextNode("CH"));
-            id.appendChild(mpago);
+//            Element mpago = doc.createElement("MedioPago");
+//            mpago.appendChild(doc.createTextNode("CH"));
+//            id.appendChild(mpago);
             
-            Element fven = doc.createElement("FchaVenc");
+            Element fven = doc.createElement("FchVenc");
             fven.appendChild(doc.createTextNode(fecha));
             id.appendChild(fven);
             
@@ -942,6 +965,8 @@ public class controladorCrearFactura {
             
             modelos.modeloOts ots = new modelos.modeloOts();
             String[] data = ots.obtenerFacturaPorId(ots_nc[0]);
+            boolean checkHoraMin = true;
+            if(data[12].compareTo("0") == 0) checkHoraMin = false;
             
             //DATOS CLIENTE
             Element receptor = doc.createElement("Receptor");
@@ -1003,7 +1028,7 @@ public class controladorCrearFactura {
                 datosDias = ots.obtenerDiasPorIdOt(ots_nc[i]);
                 controladores.controladorIngresarOts miControlador = new controladores.controladorIngresarOts();
                 List<List<String>> valores = miControlador.calcularTarifa(datosDias[0], datosDias[1], datosDias[2],
-                        datosDias[3], datosDias[4]);
+                        datosDias[3], datosDias[4], checkHoraMin);
                 String[] infoDespacho = ots.obtenerValorDespachoOt(ots_nc[i]);
                 
                 for (int j = 0; j < valores.size() - 1; j++) {
@@ -1042,8 +1067,8 @@ public class controladorCrearFactura {
                     detalle.appendChild(prcItem);
                     
                     Element mtoItem = doc.createElement("MontoItem");
-                    mtoItem.appendChild(doc.createTextNode(Float.toString(Float.parseFloat(valores.get(j).get(0))
-                            * Float.parseFloat(valores.get(j).get(3)))));
+                    mtoItem.appendChild(doc.createTextNode(Integer.toString((int)(Float.parseFloat(valores.get(j).get(0))
+                            * Float.parseFloat(valores.get(j).get(3))))));
                     detalle.appendChild(mtoItem);
                     
                     contador += 1;
@@ -1127,7 +1152,7 @@ public class controladorCrearFactura {
                 rootElement.appendChild(adj);
             
                 Element obs = doc.createElement("Observacion");
-                obs.appendChild(doc.createTextNode("OBSERVACIONES"));
+                obs.appendChild(doc.createTextNode("Folio nota de crédito: " + fac));
                 adj.appendChild(obs);
                 
                 Element imp = doc.createElement("Impresora");
@@ -1135,16 +1160,19 @@ public class controladorCrearFactura {
                 adj.appendChild(imp);
                 
                 Element copias = doc.createElement("Copias");
-                copias.appendChild(doc.createTextNode("1"));
+                copias.appendChild(doc.createTextNode("2"));
                 adj.appendChild(copias);
                 
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
             DOMSource source = new DOMSource(doc);
-            File f = new File("C:/AppSersv/www/eugcomdte/entregas/XML_pre");
+//            File f = new File("C:/AppSersv/www/eugcomdte/entregas/XML_pre");
+            File f = new File(ruta);
             if(f.exists()){
-                StreamResult result =   new StreamResult(new File("C:/AppServ/www/eugcomdte/entregas/XML_pre/61_"+fol_nc+"_anula_56.xml"));
+//                StreamResult result =   new StreamResult(new File("C:/AppServ/www/eugcomdte/entregas/XML_pre/61_"+fol_nc+"_anula_56.xml"));
+//                StreamResult result =   new StreamResult(new File("\\SGST/DTEService/input-pruebas/61_"+fol_nc+"_anula_56.xml"));
+                StreamResult result =   new StreamResult(new File(ruta + "/61_"+fol_nc+"_anula_56.xml"));
                 transformer.transform(source, result);
                 JOptionPane.showMessageDialog(vistaF, "Documento realizado con éxito");
                 return "correcto"; 
@@ -1167,6 +1195,8 @@ public class controladorCrearFactura {
     
     public String crearNotaDebXML(String[] idOts, String valorNeto, String valorIva, String valorTotal, String fac, String id_fac) throws ParseException{
         
+        modeloFacturas rutas = new modeloFacturas();
+        String ruta = rutas.obtenerRuta();
         String fecha = formatDate.format(new Date());
         
         try{
@@ -1205,13 +1235,13 @@ public class controladorCrearFactura {
             modelos.modeloOts modOt = new modeloOts();
             String form = modOt.obtenerFormaPago(idOts[0]);
             
-            Element fpago = doc.createElement("FmaPago");
-            fpago.appendChild(doc.createTextNode(form));
-            id.appendChild(fpago);
+//            Element fpago = doc.createElement("FmaPago");
+//            fpago.appendChild(doc.createTextNode(form));
+//            id.appendChild(fpago);
             
-            Element mpago = doc.createElement("MedioPago");
-            mpago.appendChild(doc.createTextNode("CH"));
-            id.appendChild(mpago);
+//            Element mpago = doc.createElement("MedioPago");
+//            mpago.appendChild(doc.createTextNode("CH"));
+//            id.appendChild(mpago);
             
             //DATOS EMISOR
             Element emisor = doc.createElement("Emisor");
@@ -1251,6 +1281,10 @@ public class controladorCrearFactura {
             
             modelos.modeloOts ots = new modelos.modeloOts();
             String[] data = ots.obtenerFacturaPorId(idOts[0]);
+            boolean checkHoraMin = true;
+            if(data[12].compareTo("0") == 0){
+                checkHoraMin = false;
+            }
             
             //DATOS CLIENTE
             Element receptor = doc.createElement("Receptor");
@@ -1312,7 +1346,7 @@ public class controladorCrearFactura {
                 datosDias = ots.obtenerDiasPorIdOt(idOts[i]);
                 controladores.controladorIngresarOts miControlador = new controladores.controladorIngresarOts();
                 List<List<String>> valores = miControlador.calcularTarifa(datosDias[0], datosDias[1], datosDias[2],
-                        datosDias[3], datosDias[4]);
+                        datosDias[3], datosDias[4], checkHoraMin);
                 String[] infoDespacho = ots.obtenerValorDespachoOt(idOts[i]);
                 
                 for (int j = 0; j < valores.size() - 1; j++) {
@@ -1351,8 +1385,8 @@ public class controladorCrearFactura {
                     detalle.appendChild(prcItem);
                     
                     Element mtoItem = doc.createElement("MontoItem");
-                    mtoItem.appendChild(doc.createTextNode(Float.toString(Float.parseFloat(valores.get(j).get(0))
-                            * Float.parseFloat(valores.get(j).get(3)))));
+                    mtoItem.appendChild(doc.createTextNode(Integer.toString((int)(Float.parseFloat(valores.get(j).get(0))
+                            * Float.parseFloat(valores.get(j).get(3))))));
                     detalle.appendChild(mtoItem);
                     
                     contador += 1;
@@ -1465,16 +1499,19 @@ public class controladorCrearFactura {
                 adj.appendChild(imp);
                 
                 Element copias = doc.createElement("Copias");
-                copias.appendChild(doc.createTextNode("1"));
+                copias.appendChild(doc.createTextNode("2"));
                 adj.appendChild(copias);
                         
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
             DOMSource source = new DOMSource(doc);
-            File f = new File("C:/AppSersv/www/eugcomdte/entregas/XML_pre");
+//            File f = new File("C:/AppSersv/www/eugcomdte/entregas/XML_pre");
+            File f = new File(ruta);
             if(f.exists()){
-                StreamResult result =   new StreamResult(new File("C:/AppServ/www/eugcomdte/entregas/XML_pre/56_"+fol_nd+"_normal.xml"));
+//                StreamResult result =   new StreamResult(new File("C:/AppServ/www/eugcomdte/entregas/XML_pre/56_"+fol_nd+"_normal.xml"));
+//                StreamResult result =   new StreamResult(new File("\\SGST/DTEService/input-pruebas/56_"+fol_nd+"_normal.xml"));
+                StreamResult result =   new StreamResult(new File(ruta + "/56_"+fol_nd+"_normal.xml"));
                 transformer.transform(source, result);
                 JOptionPane.showMessageDialog(vistaF, "Documento realizado con éxito");
                 return "correcto";
@@ -1497,7 +1534,8 @@ public class controladorCrearFactura {
     public String crearBolXML(String[] idOts, String valorNeto, String valorIva, String valorTotal, String fac){
         
         String fecha = formatDate.format(new Date());
-        
+        modeloFacturas rutas = new modeloFacturas();
+        String ruta = rutas.obtenerRuta();
         try{
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -1656,16 +1694,19 @@ public class controladorCrearFactura {
                 adj.appendChild(imp);
                 
                 Element copias = doc.createElement("Copias");
-                copias.appendChild(doc.createTextNode("1"));
+                copias.appendChild(doc.createTextNode("2"));
                 adj.appendChild(copias);
                         
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
             DOMSource source = new DOMSource(doc);
-            File f = new File("C:/AppSersv/www/eugcomdte/entregas/XML_pre");
+//            File f = new File("C:/AppSersv/www/eugcomdte/entregas/XML_pre");
+            File f = new File(ruta);
             if(f.exists()){
-                StreamResult result =   new StreamResult(new File("C:/AppServ/www/eugcomdte/entregas/XML_pre/boleta_39_"+fac+".xml"));
+//                StreamResult result =   new StreamResult(new File("C:/AppServ/www/eugcomdte/entregas/XML_pre/boleta_39_"+fac+".xml"));
+//                StreamResult result =   new StreamResult(new File("\\SGST/DTEService/input-pruebas/boleta_39_"+fac+".xml"));
+                StreamResult result =   new StreamResult(new File(ruta + "/boleta_39_"+fac+".xml"));
                 transformer.transform(source, result);
                 JOptionPane.showMessageDialog(vistaF, "Documento realizado con éxito");
                 return "correcto";
@@ -1684,9 +1725,13 @@ public class controladorCrearFactura {
         }
     }
     
-    public String crearGuiaDespXML(String[] datos, String id_jor){
+    public String crearGuiaDespXML(String[] datos, String id_jor, int valorNeto, String pat, String rut, String dir, String com, String ciu, String ind){
         
+        modeloFacturas rutas = new modeloFacturas();
+        String ruta = rutas.obtenerRuta();
         String fecha = formatDate.format(new Date());
+        double valorIva = valorNeto * 0.19;
+        double valorTotal = valorNeto * 1.19;
         
         try{
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -1721,14 +1766,18 @@ public class controladorCrearFactura {
             fecEmision.appendChild(doc.createTextNode(fecha));
             id.appendChild(fecEmision);
             
+            Element indTras = doc.createElement("IndTraslado");
+            indTras.appendChild(doc.createTextNode(ind));
+            id.appendChild(indTras);
             
-            Element fpago = doc.createElement("FmaPago");
-            fpago.appendChild(doc.createTextNode("VER FORMA"));
-            id.appendChild(fpago);
             
-            Element mpago = doc.createElement("MedioPago");
-            mpago.appendChild(doc.createTextNode("CH"));
-            id.appendChild(mpago);
+//            Element fpago = doc.createElement("FmaPago");
+//            fpago.appendChild(doc.createTextNode("VER FORMA"));
+//            id.appendChild(fpago);
+            
+//            Element mpago = doc.createElement("MedioPago");
+//            mpago.appendChild(doc.createTextNode("CH"));
+//            id.appendChild(mpago);
             
             //INFORMACION EMISOR
             Element emisor = doc.createElement("Emisor");
@@ -1750,9 +1799,17 @@ public class controladorCrearFactura {
             actEmisor.appendChild(doc.createTextNode("712900"));
             emisor.appendChild(actEmisor);
             
-            Element sucEmisor = doc.createElement("Sucursal");
-            sucEmisor.appendChild(doc.createTextNode("712900"));
-            emisor.appendChild(sucEmisor);
+            //GUIA
+            Element guia = doc.createElement("GuiaExport");
+            emisor.appendChild(guia);
+            
+            Element codTras = doc.createElement("CdgTraslado");
+            codTras.appendChild(doc.createTextNode("3"));
+            guia.appendChild(codTras);
+            
+//            Element sucEmisor = doc.createElement("Sucursal");
+//            sucEmisor.appendChild(doc.createTextNode("712900"));
+//            emisor.appendChild(sucEmisor);
             
             Element dirEmisor = doc.createElement("DirOrigen");
             dirEmisor.appendChild(doc.createTextNode("ALFONSO DONOSO 1021"));
@@ -1799,6 +1856,50 @@ public class controladorCrearFactura {
             regRec.appendChild(doc.createTextNode(data[4]));
             receptor.appendChild(regRec);
             
+            //TRANSPORTE
+            Element trans = doc.createElement("Transporte");
+            encabezado.appendChild(trans);
+            
+            Element patente =  doc.createElement("Patente");
+            patente.appendChild(doc.createTextNode(pat));
+            trans.appendChild(patente);
+            
+            Element rutTrans = doc.createElement("RUTTrans");
+            rutTrans.appendChild(doc.createTextNode(rut));
+            trans.appendChild(rutTrans);
+            
+            Element dirDest = doc.createElement("DirDest");
+            dirDest.appendChild(doc.createTextNode(dir));
+            trans.appendChild(dirDest);
+            
+            Element cmnaDest = doc.createElement("CmnaDest");
+            cmnaDest.appendChild(doc.createTextNode(com));
+            trans.appendChild(cmnaDest);
+            
+            Element ciuDest = doc.createElement("CiudadDest");
+            ciuDest.appendChild(doc.createTextNode(ciu));
+            trans.appendChild(ciuDest);
+            
+            //TOTALES
+            Element totales = doc.createElement("Totales");
+            encabezado.appendChild(totales);
+            
+            Element neto = doc.createElement("MntNeto");
+            neto.appendChild(doc.createTextNode(String.valueOf((int)valorNeto)));
+            totales.appendChild(neto);
+            
+            Element tasaiva = doc.createElement("TasaIVA");
+            tasaiva.appendChild(doc.createTextNode("19.00"));
+            totales.appendChild(tasaiva);
+            
+            Element iva = doc.createElement("IVA");
+            iva.appendChild(doc.createTextNode(String.valueOf((int)valorIva)));
+            totales.appendChild(iva);
+            
+            Element bruto = doc.createElement("MntTotal");
+            bruto.appendChild(doc.createTextNode(String.valueOf((int)valorTotal)));
+            totales.appendChild(bruto);
+            
             //DETALLE
             Element detalle = doc.createElement("Detalle");
             rootElement.appendChild(detalle);
@@ -1810,21 +1911,32 @@ public class controladorCrearFactura {
                 numLin.appendChild(doc.createTextNode(Integer.toString(1)));
                 detalle.appendChild(numLin);
                 
-                Element codItem = doc.createElement("CdgItem");
-                detalle.appendChild(codItem);
+//                Element codItem = doc.createElement("CdgItem");
+//                detalle.appendChild(codItem);
                 
-                Element tipoCod = doc.createElement("TpoCodigo");
-                tipoCod.appendChild(doc.createTextNode("Interna"));
-                codItem.appendChild(tipoCod);
+//                Element tipoCod = doc.createElement("TpoCodigo");
+//                tipoCod.appendChild(doc.createTextNode("Interna"));
+//                codItem.appendChild(tipoCod);
                 
-                Element valCod = doc.createElement("VlrCodigo");
-                valCod.appendChild(doc.createTextNode("2"));
-                codItem.appendChild(valCod);
+//                Element valCod = doc.createElement("VlrCodigo");
+//                valCod.appendChild(doc.createTextNode("2"));
+//                codItem.appendChild(valCod);
                 
                 Element nomItem = doc.createElement("NmbItem");
                 nomItem.appendChild(doc.createTextNode("DESPACHO A OBRA DE GRUA " + grua));
                 detalle.appendChild(nomItem);
-            
+                
+                Element qtyItem = doc.createElement("QtyItem");
+                qtyItem.appendChild(doc.createTextNode("1"));
+                detalle.appendChild(qtyItem);
+                
+                Element unmItem = doc.createElement("UnmdItem");
+                unmItem.appendChild(doc.createTextNode("UND"));
+                detalle.appendChild(unmItem);
+                
+                Element mntItem = doc.createElement("MontoItem");
+                mntItem.appendChild(doc.createTextNode(String.valueOf(valorNeto)));
+                detalle.appendChild(mntItem);
                     
             Element adj = doc.createElement("Adjuntos");
                 rootElement.appendChild(adj);
@@ -1838,20 +1950,26 @@ public class controladorCrearFactura {
                 adj.appendChild(imp);
                 
                 Element copias = doc.createElement("Copias");
-                copias.appendChild(doc.createTextNode("1"));
+                copias.appendChild(doc.createTextNode("2"));
                 adj.appendChild(copias);
                 
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");
             DOMSource source = new DOMSource(doc);
-            File f = new File("C:/AppSersv/www/eugcomdte/entregas/XML_pre");
+//            File f = new File("C:/AppSersv/www/eugcomdte/entregas/XML_pre");
+            File f = new File(ruta);
+            System.out.println(ruta);
             if(f.exists()){
-                StreamResult result =   new StreamResult(new File("C:/AppServ/www/eugcomdte/entregas/XML_pre/33_"+num_fol+"_REF_GUIA.xml"));
+//                StreamResult result =   new StreamResult(new File("C:/AppServ/www/eugcomdte/entregas/XML_pre/33_"+num_fol+"_REF_GUIA.xml"));
+//                StreamResult result =   new StreamResult(new File("\\SGST/DTEService/input-pruebas/33_"+num_fol+"_REF_GUIA.xml"));
+                StreamResult result =   new StreamResult(new File(ruta + "/33_"+num_fol+"_REF_GUIA.xml"));
                 transformer.transform(source, result);
                 JOptionPane.showMessageDialog(vistaF, "Documento realizado con éxito");
                 return "correcto";
             }else{
+                System.out.println("ola");
+                System.out.println(valorNeto);
                 StreamResult result =   new StreamResult(new File("33_"+num_fol+"_REF_GUIA.xml"));
                 transformer.transform(source, result);
                 JOptionPane.showMessageDialog(vistaF, "Documento realizado con éxito en ruta por defecto");

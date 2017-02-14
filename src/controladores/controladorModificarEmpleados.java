@@ -23,7 +23,6 @@ public class controladorModificarEmpleados {
         int sueldo_min = miControlador.obtenerSueldoMin();
         int sueldo_base = miControlador.obtenerSueldoBase();
         vistaME = new vistaModificarEmpleados(new javax.swing.JFrame(), true, dataRegiones);
-        System.out.println(sueldo_min);
         vistaME.setSueldoMin(sueldo_min);
         vistaME.setSueldoBase(sueldo_base);
         vistaME.setTextoRut(data[0]);
@@ -47,11 +46,13 @@ public class controladorModificarEmpleados {
         vistaME.setTextoColacion(data[15]);
         vistaME.setTextoTransporte(data[16]);
         vistaME.setTextoIsapre(data[17]);
-        vistaME.setTextoValorPlan(data[18]);
+        float valIsa = Float.parseFloat(data[18]) / 1000;
+        vistaME.setTextoValorPlan(String.valueOf(valIsa));
         vistaME.setTextoBonoAd(data[19]);
         vistaME.setTextoValorBonoAd(data[20]);
         vistaME.setTextoCaja(data[21]);
         vistaME.setTextoAF(data[22]);
+        vistaME.setTextoDiasTrabajados(data[23]);
         vistaME.setRut(Integer.parseInt(data[0].split("-")[0]));
         vistaME.setLocationRelativeTo(null);
         vistaME.setVisible(true);
@@ -152,7 +153,7 @@ public class controladorModificarEmpleados {
             vistaME.getComboSalud(), vistaME.getTextoFechaIn(), vistaME.getTextoDir(), vistaME.getComboRegion(),
             vistaME.getComboComuna(), vistaME.getIsapre(), vistaME.getValorIsapre(), vistaME.getTextoColacion(), 
             vistaME.getTextoTransporte(), vistaME.getTextoBonoAd(), vistaME.getValorBonoAd(), vistaME.getTextoCaja(),
-            vistaME.getTextoAF()};
+            vistaME.getTextoAF(), vistaME.getTextoDiasTrabajados()};
         boolean flag = miControlador.modificarEmpleado(data, vistaME.getRut());
         return flag;
     }    
