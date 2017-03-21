@@ -904,12 +904,12 @@ public class vistaRemuneracionEmpleado extends javax.swing.JDialog {
     
     public void setTextoTotalImponible(String textoTotalImponible){
         this.textoTotalImponible.setHorizontalAlignment(JLabel.RIGHT);
-        this.textoTotalImponible.setText(FORMAT.format(Integer.parseInt(textoTotalImponible)));
+        this.textoTotalImponible.setText(FORMAT.format(Double.parseDouble(textoTotalImponible)));
     }
     
     public void setTextoTotalHaberes(String textoTotalHaberes){
         this.textoTotalHaberes.setHorizontalAlignment(JLabel.RIGHT);
-        this.textoTotalHaberes.setText(FORMAT.format(Integer.parseInt(textoTotalHaberes)));
+        this.textoTotalHaberes.setText(FORMAT.format(Double.parseDouble(textoTotalHaberes)));
     }
     
     public void setTextoTotalTributable(String textoTotalTrib){
@@ -944,7 +944,7 @@ public class vistaRemuneracionEmpleado extends javax.swing.JDialog {
     
     public void setTextoHorEx(String val){
         this.textoHorEx.setHorizontalAlignment(JLabel.RIGHT);
-        this.textoHorEx.setText(FORMAT.format(Integer.parseInt(val)));
+        this.textoHorEx.setText(FORMAT.format(Double.parseDouble(val)));
     }
     
     public void setCantHorEx(String cant){

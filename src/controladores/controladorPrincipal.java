@@ -19,6 +19,8 @@ import vistas.vistaPrincipal;
 import controladores2.*;
 import controladores3.controladorEditarSueldos;
 import controladores3.*;
+import controladores4.controladorIngresarOC;
+import controladores4.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -70,6 +72,7 @@ public class controladorPrincipal {
     static controladorGlobalPagos micontroladorGlobalPagos;
     static controladorGlobalOtrosPagos micontroladorGlobalOtrosPagos;
     static controladorCobranzas micontroladorCobranzas;
+    static controladorOC micontroladorOC;
     static vistaLogin miVistaL;
     static vistaPrincipal mivistaP;
     static vistas.vistaJornadasP mivistaJP;
@@ -647,6 +650,36 @@ public class controladorPrincipal {
     public void crearControladorGenerarLiquidaciones() throws TransformerException, IOException, FileNotFoundException, FOPException {
         controladorGenerarLiquidaciones micontrolador = new controladorGenerarLiquidaciones();
         micontrolador.generarLiquidaciones();
+    }
+    
+    //OCS 
+    
+    public JPanel crearControladorOCP() {
+        modelos.modeloJornadas jornadas;
+        jornadas = new modelos.modeloJornadas();
+        Object[][] data;
+        data = jornadas.listarJornadas();
+        micontroladorOC = new controladorOC();
+        return micontroladorOC.mostrarTabControlOC(tipo, data);    
+    }
+    
+    public void crearControladorIngresarOC() {
+        modelos.modeloClientes clientes;
+        modelos.modeloGruas gruas;
+        modelos.modeloEmpleados empleados;
+        modelos.modeloTonelajes tonelajes;
+        clientes = new modeloClientes();
+        gruas = new modelos.modeloGruas();
+        empleados = new modelos.modeloEmpleados();
+        tonelajes = new modelos.modeloTonelajes();
+        Object[] dataClientes, dataGruas, dataEmpleados, dataTonelajes;
+        dataClientes = clientes.obtenerRazonClientes();
+        dataGruas = gruas.obtenerDescGruas();
+        dataEmpleados = empleados.obtenerNombresEmpleados();
+        dataTonelajes = tonelajes.listarTonelajes();
+        controladores4.controladorIngresarOC micontroladorOC;
+        micontroladorOC = new controladorIngresarOC();
+        micontroladorOC.mostrarVistaIngresarOC(dataClientes, dataGruas, dataEmpleados, dataTonelajes);
     }
     
     //Funciones

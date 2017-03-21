@@ -75,4 +75,9 @@ public class controladorFacturadas {
         tabs.insertTab("Facturadas", null, miControlador.crearControladorFacturadasP(), null, 6);
         tabs.setSelectedIndex(6);
     }
+    
+    public void liberarNC(String[] ots){
+        modelos.modeloFacturas jor = new modelos.modeloFacturas();
+        jor.liberarNC(ots);
+    }
 }

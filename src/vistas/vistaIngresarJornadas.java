@@ -5,43 +5,32 @@
  */
 package vistas;
 
-import com.mxrck.autocompleter.TextAutoCompleter;
 import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.event.InputMethodEvent;
-import java.awt.event.InputMethodListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JRootPane;
-import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
-import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.JTextComponent;
 import modelos.modeloClientes;
-import org.jdesktop.swingx.JXDatePicker;
 
 /**
  *
@@ -110,6 +99,7 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
         textoFechaRegreso.getEditor().addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent fe) {
+                
             }
 
             @Override
@@ -125,6 +115,36 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
                     autosuggestOperadores(empleados);
                  }
             }
+        });
+        
+        textoOperadores.addFocusListener(new FocusListener() {
+            @Override 
+            public void focusGained(FocusEvent fe){
+                if(getTextoFechaRegreso().compareTo("") != 0 && getTextoFechaSalida().compareTo("") != 0){
+                    modelos.modeloEmpleados empleado = new modelos.modeloEmpleados();
+                    Object[] empleados = empleado.obtenerNomEmpDisp(getTextoFechaSalida() + " " + getTextoHoraSalida(),
+                    getTextoFechaRegreso() + " " + getTextoHoraRegreso());
+                    autosuggestOperadores(empleados);
+                 }
+            }
+            
+            @Override
+            public void focusLost(FocusEvent fe){}
+        });
+        
+        textoGruas.addFocusListener(new FocusListener(){
+            @Override
+            public void focusGained(FocusEvent fe){
+                if(getTextoFechaRegreso().compareTo("") != 0 && getTextoFechaSalida().compareTo("") != 0){
+                    modelos.modeloGruas grua = new modelos.modeloGruas();
+                    Object[] gruas = grua.obtenerDescGruasDisp(getTextoFechaSalida() + " " + getTextoHoraSalida(),
+                    getTextoFechaRegreso() + " " + getTextoHoraRegreso());
+                    autosuggestGruas(gruas);
+                }
+            }
+            
+            @Override 
+            public void focusLost(FocusEvent fl){}
         });
 
         textoGruas.addKeyListener(new KeyAdapter(){

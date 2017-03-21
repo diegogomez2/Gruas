@@ -134,6 +134,8 @@ public class vistaIngresarOts extends javax.swing.JDialog {
         textoIva = new javax.swing.JTextField();
         jLabel28 = new javax.swing.JLabel();
         textoDescuento = new javax.swing.JTextField();
+        jLabel29 = new javax.swing.JLabel();
+        textoNuevoNeto = new javax.swing.JTextField();
         textoContacto = new javax.swing.JTextField();
         checkDespacho = new javax.swing.JCheckBox();
         textoCiudad = new javax.swing.JTextField();
@@ -411,6 +413,10 @@ public class vistaIngresarOts extends javax.swing.JDialog {
             }
         });
 
+        jLabel29.setText("Nuevo neto");
+
+        textoNuevoNeto.setEditable(false);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -421,9 +427,11 @@ public class vistaIngresarOts extends javax.swing.JDialog {
                     .addComponent(jLabel15)
                     .addComponent(jLabel16)
                     .addComponent(jLabel17)
-                    .addComponent(jLabel28))
+                    .addComponent(jLabel28)
+                    .addComponent(jLabel29))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(textoNuevoNeto)
                     .addComponent(textoDescuento)
                     .addComponent(textoNeto, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
                     .addComponent(textoBruto)
@@ -439,6 +447,10 @@ public class vistaIngresarOts extends javax.swing.JDialog {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel28)
                     .addComponent(textoDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel29)
+                    .addComponent(textoNuevoNeto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17)
@@ -478,7 +490,7 @@ public class vistaIngresarOts extends javax.swing.JDialog {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel26)
                     .addComponent(jLabel27))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel25)
                     .addGroup(jPanel6Layout.createSequentialGroup()
@@ -645,7 +657,7 @@ public class vistaIngresarOts extends javax.swing.JDialog {
                             .addComponent(jLabel10)
                             .addComponent(jLabel22))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel9Layout.setVerticalGroup(
@@ -766,9 +778,15 @@ public class vistaIngresarOts extends javax.swing.JDialog {
             List<List<String>> valores = miControlador.calcularTarifa(diaInicio, diaFin, getSpinnerHoraSalida(), getSpinnerHoraLlegada(), ton, getCheckHoraMin());
             int size = valores.size();
             setTextoNeto(valores.get(size - 1).get(0));
-            setTextoIva(valores.get(size - 1).get(1));
-            setTextoBruto(valores.get(size - 1).get(2));
-            setHoras(Integer.parseInt(valores.get(size - 1).get(3)));
+            setNuevoNeto(Integer.parseInt(getTextoNeto()) + Integer.parseInt(getTextoDespacho()) - Integer.parseInt(getTextoDescuento()));
+            setTextoNuevoNeto(String.valueOf(Integer.parseInt(getTextoNeto()) + Integer.parseInt(getTextoDespacho()) - Integer.parseInt(getTextoDescuento())));
+            double nuevoIva = nuevoNeto * 0.19;
+            double nuevoBruto = nuevoNeto + nuevoIva;
+            setTextoIva(String.valueOf((int)nuevoIva));
+            setTextoBruto(String.valueOf((int)nuevoBruto));
+//            setTextoIva(valores.get(size - 1).get(1));
+//            setTextoBruto(valores.get(size - 1).get(2));
+//            setHoras(Integer.parseInt(valores.get(size - 1).get(3)));
 //            System.out.println(horas);
 //            textoNeto.setText(String.format("%,d", Integer.parseInt(valores.get(size - 1).get(0))));
 //            textoIva.setText(String.format("%,d", Integer.parseInt(valores.get(size - 1).get(1))));
@@ -788,20 +806,23 @@ public class vistaIngresarOts extends javax.swing.JDialog {
 
     private void textoDespachoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textoDespachoFocusLost
         setTextoValorDespacho(getTextoDespacho());
-        setNuevoNeto(Integer.parseInt(getTextoNeto()) + Integer.parseInt(getTextoDespacho()));
+        setNuevoNeto(Integer.parseInt(getTextoNeto()) + Integer.parseInt(getTextoDespacho()) - Integer.parseInt(getTextoDescuento()));
+//        setTextoNuevoNeto(String.valueOf(Integer.parseInt(getTextoNeto()) + Integer.parseInt(getTextoDespacho()) - Integer.parseInt(getTextoDescuento())));
         double nuevoIva = nuevoNeto * 0.19;
         double nuevoBruto = nuevoNeto + nuevoIva;
         setTextoIva(String.valueOf((int)nuevoIva));
         setTextoBruto(String.valueOf((int)nuevoBruto));
+        setTextoNuevoNeto(String.valueOf(nuevoNeto));
     }//GEN-LAST:event_textoDespachoFocusLost
 
     private void textoDescuentoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textoDescuentoFocusLost
         setTextoDescuento(getTextoDescuento());
-        setNuevoNeto(Integer.parseInt(getTextoNeto()) - Integer.parseInt(getTextoDescuento()));
+        setNuevoNeto(Integer.parseInt(getTextoNeto()) - Integer.parseInt(getTextoDescuento()) + Integer.parseInt(getTextoDespacho()));
         double nuevoIva = nuevoNeto * 0.19;
         double nuevoBruto = nuevoNeto + nuevoIva;
         setTextoIva(String.valueOf((int)nuevoIva));
         setTextoBruto(String.valueOf((int)nuevoBruto));
+        setTextoNuevoNeto(String.valueOf(nuevoNeto));
     }//GEN-LAST:event_textoDescuentoFocusLost
 
     /**
@@ -871,6 +892,7 @@ public class vistaIngresarOts extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -915,6 +937,7 @@ public class vistaIngresarOts extends javax.swing.JDialog {
     private javax.swing.JTextField textoGrua;
     private javax.swing.JTextField textoIva;
     private javax.swing.JTextField textoNeto;
+    private javax.swing.JTextField textoNuevoNeto;
     private javax.swing.JTextArea textoObs;
     private javax.swing.JTextField textoRazon;
     private javax.swing.JTextField textoRazon2;
@@ -1001,6 +1024,13 @@ public class vistaIngresarOts extends javax.swing.JDialog {
         neto = neto.replace(".", "");
         return neto;
     }
+    
+    public String getTextoNuevoNeto() {
+        String neto = textoNuevoNeto.getText();
+        neto = neto.replace("$", "");
+        neto = neto.replace(".", "");
+        return neto;
+    }
 
     public String getSpinnerFinFaena() {
         String hora = formatClock.format(spinnerFinFaena.getValue());
@@ -1061,10 +1091,17 @@ public class vistaIngresarOts extends javax.swing.JDialog {
     }
 
     public String getTextoDespacho() {
-        String desp = textoDespacho.getText();
-        desp = desp.replace("$", "");
-        desp = desp.replace(".", "");
-        return desp;
+        if(getCheckDespacho().compareTo("0") == 0){
+            return "0";
+        }
+        if(textoDespacho.getText().compareTo("") == 0){
+            return "0";
+        }else{
+            String desp = textoDespacho.getText();
+            desp = desp.replace("$", "");
+            desp = desp.replace(".", "");
+            return desp;
+        }
     }
 
     public void setTon(String ton) {
@@ -1124,6 +1161,22 @@ public class vistaIngresarOts extends javax.swing.JDialog {
         }catch(NumberFormatException e){
             this.textoBruto.setHorizontalAlignment(JLabel.RIGHT);
             this.textoBruto.setText("");
+        }
+    }
+    
+    public void setTextoNuevoNeto(String textoNuevoNeto) {
+        try{
+            Object value = Integer.parseInt(textoNuevoNeto);
+            if (value instanceof Number) {
+                this.textoNuevoNeto.setHorizontalAlignment(JLabel.RIGHT);
+                this.textoNuevoNeto.setText(FORMAT.format(value));
+            } else {
+                this.textoNuevoNeto.setHorizontalAlignment(JLabel.RIGHT);
+                this.textoNuevoNeto.setText("");
+            }
+        }catch(NumberFormatException e){
+            this.textoNuevoNeto.setHorizontalAlignment(JLabel.RIGHT);
+            this.textoNuevoNeto.setText("");
         }
     }
 

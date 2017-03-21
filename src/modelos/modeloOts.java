@@ -100,12 +100,12 @@ public class modeloOts {
             System.out.println(e);
        }
         
-        Object[][] data = new String[registros][11];
+        Object[][] data = new String[registros][13];
         
         try{
             PreparedStatement pstm = conn.prepareStatement("SELECT id_jor, fec_ot, raz_cli, gir_cli, dir_cli,"
                     + "ciu_cli, com_cli, pat_gru, nom_emp, apP_emp, obs_jor, cod_ot, total_ot, neto_ot, "
-                    + "iva_ot, fact_ot FROM Jornadas INNER JOIN"
+                    + "iva_ot, fact_ot, clientes.rut_cli, dig_cli FROM Jornadas INNER JOIN"
                     + " clientes ON clientes.rut_cli = jornadas.rut_cli INNER JOIN empleados ON empleados.rut_emp "
                     + "= jornadas.rut_emp Where not cod_ot = -1 and fact_ot < 2 ORDER BY cod_ot, fact_ot");
             ResultSet res = pstm.executeQuery();
@@ -130,8 +130,10 @@ public class modeloOts {
                 }else{
                     estfact2 = "Facturada";
                 }
+                String estemp = res.getString("nom_emp") + res.getString("apP_emp");
+                String estrut = res.getString("rut_cli") + "-" + res.getString("dig_cli");
                 data[i] = new String[]{estcodot, estraz, estgir, estdir, estciu, estcom, estfec, estnet,
-                estiva, esttot, estfact2};
+                estiva, esttot, estfact2, estemp, estrut};
                 i++;
             }
             res.close();
@@ -162,12 +164,12 @@ public class modeloOts {
             System.out.println(e);
        }
         
-        Object[][] data = new String[registros][11];
+        Object[][] data = new String[registros][13];
         
         try{
             PreparedStatement pstm = conn.prepareStatement("SELECT id_jor, fec_ot, raz_cli, gir_cli, dir_cli,"
                     + "ciu_cli, com_cli, pat_gru, nom_emp, apP_emp, obs_jor, cod_ot, total_ot, neto_ot, "
-                    + "iva_ot, fact_ot FROM Jornadas INNER JOIN"
+                    + "iva_ot, fact_ot, clientes.rut_cli, dig_cli FROM Jornadas INNER JOIN"
                     + " clientes ON clientes.rut_cli = jornadas.rut_cli INNER JOIN empleados ON empleados.rut_emp "
                     + "= jornadas.rut_emp Where not cod_ot = -1 and fact_ot >= 2 ORDER BY cod_ot, fact_ot");
             ResultSet res = pstm.executeQuery();
@@ -194,8 +196,10 @@ public class modeloOts {
                 }else{
                     estfact2 = "Facturada";
                 }
+                String estemp = res.getString("nom_emp") + " " + res.getString("apP_emp");
+                String estrut = res.getString("clientes.rut_cli") + "-" + res.getString("dig_cli");
                 data[i] = new String[]{estcodot, estraz, estgir, estdir, estciu, estcom, estfec, estnet,
-                estiva, esttot, estfact2};
+                estiva, esttot, estfact2, estemp, estrut};
                 i++;
             }
             res.close();
@@ -217,7 +221,7 @@ public class modeloOts {
                     + "des_gru, raz_cli, ciu_cli, nom_emp, apP_emp, apM_emp, freg_jor, obs_jor, clientes.rut_cli, clientes.dig_cli,"
                     + "gir_cli, dir_cli, tel_cli, ton_gru, fec_ot, cod_ot, pag_ot, cond_ot, cont_ot, "
                     + "total_ot, neto_ot, iva_ot, desp_ot, horfin_ot, checkdesp_ot, vdesp_ot, desc_ot, checkhormin_ot, "
-                    + " horex_ot, horex2_ot "
+                    + " coalesce(horex_ot, 0) horex, coalesce(horex2_ot, 0) horex2 "
                     + " FROM jornadas INNER JOIN clientes ON "
                     + "jornadas.rut_cli = clientes.rut_cli INNER JOIN gruas ON gruas.pat_gru = jornadas.pat_gru "
                     + "INNER JOIN empleados ON empleados.rut_emp = jornadas.rut_emp WHERE cod_ot = ?");
@@ -252,8 +256,8 @@ public class modeloOts {
             String estvdesp = res.getString("vdesp_ot");
             String estdesc = res.getString("desc_ot");
             String estchmin = res.getString("checkhormin_ot");
-            String esthorex = res.getString("horex_ot");
-            String esthorex2 = res.getString("horex2_ot");
+            String esthorex = res.getString("horex");
+            String esthorex2 = res.getString("horex2");
             data = new String[]{estfsal, esthorsal, estfreg, esthorlleg, estdes, estnom, estobs
                     , estrutcli, estdigcli, estraz, estgir, estdir, esttel, id, estton, estfot, estcond
                     , estpago, estcont, esttot, estneto, estiva, estdesp, esthorfin, estcdesp, estvdesp, estciu, estdesc, estchmin, esthorex, esthorex2};
@@ -431,6 +435,25 @@ public class modeloOts {
         return "correcto";
     }
     
+    public String eliminarOt(String idOt){
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("DELETE FROM Jornadas WHERE cod_ot = ?");
+            pstm.setString(1, idOt);
+            pstm.execute();
+            pstm.close();
+        }catch(SQLException e){
+            System.out.println("Error eliminar ot");
+            System.out.println(e);
+            return "incorrecto";
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+            return "incorrecto";
+        }
+        return "correcto";
+    }
+    
     public String quitarFactura(String idOt){
         try{
             Class.forName("com.mysql.jdbc.Driver");
@@ -478,7 +501,7 @@ public class modeloOts {
                 String estfact = res.getString("fact_ot");
                 String esthor = res.getString("hortot_ot");
                 String estcheckhor = res.getString("checkhormin_ot");
-                data = new String[]{estrut + "-" + estdig, estraz, estgir, estdir, estciu, estcom, esttot, estnet,
+                data = new String[]{estrut + "-" + estdig.toUpperCase(), estraz, estgir, estdir, estciu, estcom, esttot, estnet,
                 estiva, estfact, estcodot, esthor, estcheckhor};
                 i++;
             }

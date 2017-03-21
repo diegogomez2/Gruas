@@ -98,6 +98,8 @@ public class vistaDetalleOts extends javax.swing.JDialog {
         textoIva = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         textoDescuento = new javax.swing.JTextField();
+        jLabel29 = new javax.swing.JLabel();
+        textoNuevoNeto = new javax.swing.JTextField();
         textoContacto = new javax.swing.JTextField();
         checkDespacho = new javax.swing.JCheckBox();
         textoCiudad = new javax.swing.JTextField();
@@ -373,6 +375,10 @@ public class vistaDetalleOts extends javax.swing.JDialog {
 
         textoDescuento.setEditable(false);
 
+        jLabel29.setText("Nuevo neto");
+
+        textoNuevoNeto.setEditable(false);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -383,9 +389,11 @@ public class vistaDetalleOts extends javax.swing.JDialog {
                     .addComponent(jLabel15)
                     .addComponent(jLabel16)
                     .addComponent(jLabel17)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel29))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(textoNuevoNeto)
                     .addComponent(textoNeto, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
                     .addComponent(textoBruto)
                     .addComponent(textoIva)
@@ -401,6 +409,10 @@ public class vistaDetalleOts extends javax.swing.JDialog {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(textoDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel29)
+                    .addComponent(textoNuevoNeto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17)
@@ -445,7 +457,7 @@ public class vistaDetalleOts extends javax.swing.JDialog {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel27)
                     .addComponent(jLabel28))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel26)
                     .addGroup(jPanel6Layout.createSequentialGroup()
@@ -632,7 +644,7 @@ public class vistaDetalleOts extends javax.swing.JDialog {
                             .addComponent(jLabel10)
                             .addComponent(jLabel22))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel27Layout.setVerticalGroup(
@@ -790,6 +802,7 @@ public class vistaDetalleOts extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -834,6 +847,7 @@ public class vistaDetalleOts extends javax.swing.JDialog {
     private javax.swing.JTextField textoGrua;
     private javax.swing.JTextField textoIva;
     private javax.swing.JTextField textoNeto;
+    private javax.swing.JTextField textoNuevoNeto;
     private javax.swing.JTextArea textoObs;
     private javax.swing.JTextField textoRazon;
     private javax.swing.JTextField textoRazon2;
@@ -944,6 +958,22 @@ public class vistaDetalleOts extends javax.swing.JDialog {
         }catch(NumberFormatException e){
             this.textoNeto.setHorizontalAlignment(JLabel.RIGHT);
             this.textoNeto.setText("");
+        }
+    }
+    
+    public void setTextoNuevoNeto(String textoNuevoNeto) {
+        try{
+            Object value = Integer.parseInt(textoNuevoNeto);
+            if (value instanceof Number) {
+                this.textoNuevoNeto.setHorizontalAlignment(JLabel.RIGHT);
+                this.textoNuevoNeto.setText(FORMAT.format(value));
+            } else {
+                this.textoNuevoNeto.setHorizontalAlignment(JLabel.RIGHT);
+                this.textoNuevoNeto.setText("");
+            }
+        }catch(NumberFormatException e){
+            this.textoNuevoNeto.setHorizontalAlignment(JLabel.RIGHT);
+            this.textoNuevoNeto.setText("");
         }
     }
 

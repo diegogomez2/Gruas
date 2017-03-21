@@ -222,6 +222,7 @@ public class vistaFacturadasP extends javax.swing.JPanel {
                         String[] ots = miControlador.obtenerOtsPorIdNC(id_nc, tipo);
                         try {
                             if((miControladorC.crearNotaCredXML(id_nc, valores_nc, ots, razon, id, tipo).compareTo("correcto") == 0)){
+                                miControlador.liberarNC(ots);
                                 JTabbedPane tabs = (JTabbedPane)this.getParent();
                                 miControlador.crearControladorPrincipal(tabs); 
                             }

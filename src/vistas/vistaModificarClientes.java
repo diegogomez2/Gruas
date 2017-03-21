@@ -10,6 +10,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
 
 /**
  *
@@ -25,6 +29,7 @@ public class vistaModificarClientes extends javax.swing.JDialog {
             String ciu, String com) {
         super(parent, modal);
         initComponents();
+        ((AbstractDocument)textoRazon.getDocument()).setDocumentFilter(new LimitDocumentFilter(40));
         String[] listaRegiones = new String[regiones.length];
         for(int i = 0; i < regiones.length; i++){
             listaRegiones[i] = regiones[i][1].toString();
@@ -507,5 +512,30 @@ public class vistaModificarClientes extends javax.swing.JDialog {
 
     public void setTextoTelefono(String textoTelefono) {
         this.textoTelefono.setText(textoTelefono);
+    }
+    
+    public class LimitDocumentFilter extends DocumentFilter {
+
+        private int limit;
+
+        public LimitDocumentFilter(int limit) {
+            if (limit <= 0) {
+                throw new IllegalArgumentException("Limit can not be <= 0");
+            }
+            this.limit = limit;
+        }
+
+        @Override
+        public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+            int currentLength = fb.getDocument().getLength();
+            int overLimit = (currentLength + text.length()) - limit - length;
+            if (overLimit > 0) {
+                text = text.substring(0, text.length() - overLimit);
+            }
+            if (text.length() > 0) {
+                super.replace(fb, offset, length, text, attrs); 
+            }
+        }
+
     }
 }

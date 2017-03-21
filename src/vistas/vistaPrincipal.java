@@ -78,6 +78,8 @@ public class vistaPrincipal extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        menuOc = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu Principal");
@@ -277,6 +279,18 @@ public class vistaPrincipal extends javax.swing.JFrame {
 
         MenuPrincipal.add(jMenu2);
 
+        jMenu3.setText("OC");
+
+        menuOc.setText("Mostrar clientes por OC");
+        menuOc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuOcActionPerformed(evt);
+            }
+        });
+        jMenu3.add(menuOc);
+
+        MenuPrincipal.add(jMenu3);
+
         setJMenuBar(MenuPrincipal);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -437,6 +451,12 @@ public class vistaPrincipal extends javax.swing.JFrame {
         miControlador.crearControladorCambiarUF();
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
+    private void menuOcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuOcActionPerformed
+        vistaPrincipal.removeAll();
+        controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
+        vistaPrincipal.addTab("OC", miControlador.crearControladorOCP());
+    }//GEN-LAST:event_menuOcActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -487,6 +507,7 @@ public class vistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemUsuarios;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
@@ -498,6 +519,7 @@ public class vistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu menuCobranza;
     private javax.swing.JMenu menuCompras;
     private javax.swing.JMenu menuLibros;
+    private javax.swing.JMenuItem menuOc;
     private javax.swing.JMenu menuOperaciones;
     private javax.swing.JMenu menuRemuneraciones;
     private javax.swing.JMenuItem menuTarifas;

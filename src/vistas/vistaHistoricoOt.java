@@ -178,11 +178,11 @@ public class vistaHistoricoOt extends javax.swing.JPanel {
     public class MyTableModel extends DefaultTableModel{
         public MyTableModel() {
           super(new String[]{"Código OT", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
-             "Neto", "IVA", "Total", "Estado"}, 0);
+             "Neto", "IVA", "Total", "Estado", "Empleado", "Cliente"}, 0);
         }
         public MyTableModel(Object[][] data){
             super(new String[]{"Código OT", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
-             "Neto", "IVA", "Total", "Estado"}, 0);
+             "Neto", "IVA", "Total", "Estado", "Empleado", "Cliente"}, 0);
             
             int i = 0;
             this.setRowCount(data.length);
@@ -202,6 +202,8 @@ public class vistaHistoricoOt extends javax.swing.JPanel {
                 this.setValueAt(iva, i, 8);
                 this.setValueAt(tot, i, 9);
                 this.setValueAt(data1[10], i, 10);
+                this.setValueAt(data1[11], i, 11);
+                this.setValueAt(data1[12], i, 12);
                 i++;
         }
         }

@@ -1268,4 +1268,23 @@ public class modeloFacturas {
             return 0;
        }
     }
+    
+    public void liberarNC(String[] ots){
+        for(String ot: ots){
+            try{
+                Class.forName("com.mysql.jdbc.Driver");
+                conn = DriverManager.getConnection(url, login, password);
+                PreparedStatement pstm = conn.prepareStatement("UPDATE Jornadas set nc_ot = 1 WHERE cod_ot = ?");
+                pstm.setString(1, ot);
+                pstm.executeUpdate();
+                pstm.close();
+            }catch(SQLException e){
+                System.out.println("Error liberar nc");
+                System.out.println(e);
+            }catch(ClassNotFoundException e){
+                System.out.println(e);
+            }
+            
+        }
+    }
 }

@@ -37,6 +37,8 @@ public class controladorDetalleOts {
         vistaDO.setTextoBruto(data[19]);
         vistaDO.setTextoNeto(data[20]);
         vistaDO.setTextoIva(data[21]);
+//        vistaDO.setTextoNuevoNeto(String.valueOf(Integer.parseInt(data[20]) - Integer.parseInt(data[27])));
+        vistaDO.setTextoNuevoNeto(String.valueOf(Integer.parseInt(data[20])));
         vistaDO.setTextoDescuento(data[27]);
         vistaDO.setTextoDespachado(data[22]);
         vistaDO.setSpinnerFinFaena(data[23]);

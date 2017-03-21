@@ -43,14 +43,14 @@ public class controladorRemuneracionEmpleado {
         int bonoCol = Integer.parseInt(data[8]);
         int totalBonCol = (int)(((double) base * 0.0077777) * ((double)bonoCol / 2));
         //HORAS EXTRA
-        int horasEx = Integer.parseInt(data[11]);
-        int cantHorEx = Integer.parseInt(data[12]);
-        int totalHorEx = (int)((double) base * 0.0077777 * horasEx);
+        double horasEx = Double.parseDouble(data[11]);
+        double cantHorEx = Double.parseDouble(data[12]);
+        double totalHorEx = (int)((double) base * 0.0077777 * horasEx);
 //        System.out.println(horasEx);
 //        System.out.println(cantHorEx);
 //        System.out.println(totalHorEx);
         //TOTAL IMPONIBLE
-        int totImp = base + grat + bonoAnt + bonoAd + bonoResp + totalBonoAV + totalBonCol + totalBon300 + totalHorEx;
+        double totImp = base + grat + bonoAnt + bonoAd + bonoResp + totalBonoAV + totalBonCol + totalBon300 + totalHorEx;
         //DESCUENTO AFP
         int descAFP = miControlador.obtenerDescAFP(data[3]);
         int totalAFP = (int)(totImp * ((double)descAFP / 10000));
@@ -106,7 +106,7 @@ public class controladorRemuneracionEmpleado {
         //TOTAL NO IMP
         int noImp = col + trans + af;
         //TOTAL HABERES
-        int totalHaberes = noImp + totImp;
+        double totalHaberes = noImp + totImp;
         //LIQUIDO
         double liq = liqAl + col + trans + af - antic - adel - cuoPres;
         vistaRE = new vistaRemuneracionEmpleado(new javax.swing.JFrame(), true);

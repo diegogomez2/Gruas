@@ -82,12 +82,12 @@ public class controladorGenerarLiquidaciones {
                             int bonoCol = Integer.parseInt(data[i][8]);
                             int totalBonCol = (int)(((double) base * 0.0077777) * ((double)bonoCol / 2));
                             //HORAS EXTRA
-                            int horasEx = Integer.parseInt(data[i][11]);
-                            int cantHorEx = Integer.parseInt(data[i][12]);
-                            int totalHorEx = (int)((double) base * 0.0077777 * horasEx);
+                            double horasEx = Double.parseDouble(data[i][11]);
+                            double cantHorEx = Double.parseDouble(data[i][12]);
+                            double totalHorEx = (int)((double) base * 0.0077777 * horasEx);
 
                             //TOTAL IMPONIBLE
-                            int totImp = base + grat + bonoAnt + bonoAd + bonoResp + totalBonoAV + totalBonCol + totalBon300 + totalHorEx;
+                            double totImp = base + grat + bonoAnt + bonoAd + bonoResp + totalBonoAV + totalBonCol + totalBon300 + totalHorEx;
                             //DESCUENTO AFP
                             int descAFP = Integer.parseInt(data[i][20]);
                             int totalAFP = (int)(totImp * ((double)descAFP / 10000));
@@ -150,7 +150,7 @@ public class controladorGenerarLiquidaciones {
                             //DESCUENTOS MENSUALES
                             int descMensuales = caja + antic + adel + cuoPres + descRenta;
                             //TOTAL HABERES
-                            int totalHaberes = noImp + totImp;
+                            double totalHaberes = noImp + totImp;
                             //TOTAL DESCUENTOS
                             int totDesc = antic + adel + cuoPres + caja;
                             //LIQUIDO
@@ -199,7 +199,7 @@ public class controladorGenerarLiquidaciones {
                             content.newLineAtOffset(150, 0);
                             content.showText(FORMAT.format(base));
                             content.newLineAtOffset(-150, -15);
-                            int horex = Integer.parseInt(data[i][12]);
+                            double horex = Double.parseDouble(data[i][12]);
                             if(horex > 45){
                                 horex = 45;
                             }

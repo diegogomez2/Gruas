@@ -124,6 +124,7 @@ public class vistaOtsP extends javax.swing.JPanel {
         textoFiltro = new javax.swing.JTextField();
         botonAnular = new javax.swing.JButton();
         botonActualizar = new javax.swing.JButton();
+        botonEliminar = new javax.swing.JButton();
 
         tablaOts.getTableHeader().setReorderingAllowed(false);
         tablaOts.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -170,6 +171,13 @@ public class vistaOtsP extends javax.swing.JPanel {
             }
         });
 
+        botonEliminar.setText("Eliminar OT");
+        botonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonEliminarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -180,6 +188,8 @@ public class vistaOtsP extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(botonEliminar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botonAnular)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botonFacturar))
@@ -204,7 +214,8 @@ public class vistaOtsP extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonFacturar)
-                    .addComponent(botonAnular))
+                    .addComponent(botonAnular)
+                    .addComponent(botonEliminar))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -267,10 +278,33 @@ public class vistaOtsP extends javax.swing.JPanel {
         miControlador.crearControladorPrincipal(tabs);
     }//GEN-LAST:event_botonActualizarActionPerformed
 
+    private void botonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarActionPerformed
+        String idOt;
+        controladores.controladorOts miControlador = new controladores.controladorOts();
+        controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
+        boolean selected = tablaOts.getSelectedRowCount() > 0;
+        if (selected) {
+            
+            int row = getFilaSeleccionada();
+            idOt = getIdOt(row);
+            int dialogResult = JOptionPane.showOptionDialog(null, "Esta seguro que desea eliminar la OT \nCódigo: "
+            , "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, 0);
+            if(dialogResult == JOptionPane.YES_OPTION)  miControlador.eliminarOt(idOt);
+                JTabbedPane tabs = (JTabbedPane) this.getParent();
+                micontroladorFacturas.crearControladorPrincipal(tabs);
+                miControlador.crearControladorPrincipal(tabs);
+                //JOptionPane.showMessageDialog(null, "Orden de trabajo facturada con éxito");
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una orden de trabajo para ser eliminada");
+        }
+    }//GEN-LAST:event_botonEliminarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonActualizar;
     private javax.swing.JButton botonAnular;
+    private javax.swing.JButton botonEliminar;
     private javax.swing.JButton botonFacturar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -303,11 +337,11 @@ public class vistaOtsP extends javax.swing.JPanel {
     public class MyTableModel extends DefaultTableModel{
         public MyTableModel() {
           super(new String[]{"Código OT", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
-            "Neto", "IVA", "Total", "Estado"}, 0);
+            "Neto", "IVA", "Total", "Estado", "Empleado", "Cliente"}, 0);
         }
         public MyTableModel(Object[][] data){
             super(new String[]{"Código OT", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
-            "Neto", "IVA", "Total", "Estado"}, 0);
+            "Neto", "IVA", "Total", "Estado", "Empleado", "Cliente"}, 0);
             
             int i = 0;
             this.setRowCount(data.length);
@@ -327,6 +361,8 @@ public class vistaOtsP extends javax.swing.JPanel {
                 this.setValueAt(iva, i, 8);
                 this.setValueAt(tot, i, 9);
                 this.setValueAt(data1[10], i, 10);
+                this.setValueAt(data1[11], i, 11);
+                this.setValueAt(data1[12], i, 12);
                 i++;
         }
         }

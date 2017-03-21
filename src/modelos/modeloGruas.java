@@ -415,9 +415,12 @@ public class modeloGruas {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
+//            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Gruas where "
+//                    + "pat_gru not in (SELECT pat_gru from jornadas where "
+//                    + "( subtime(?, '01:00') <= fhreg_jor and addtime(?, '01:00') >= fhsal_jor and pat_gru is not null))");
             PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Gruas where "
                     + "pat_gru not in (SELECT pat_gru from jornadas where "
-                    + "( subtime(?, '01:00') <= fhreg_jor and addtime(?, '01:00') >= fhsal_jor and pat_gru is not null))");
+                    + "( ?  <= fhreg_jor and ? >= fhsal_jor and pat_gru is not null and nc_ot = 0))");
             pstm.setString(1, fhsal);
             pstm.setString(2, fhreg);
             ResultSet res = pstm.executeQuery();
@@ -436,7 +439,7 @@ public class modeloGruas {
         try{
             PreparedStatement pstm = conn.prepareStatement("SELECT coalesce(des_gru,'') as des_gru "
                     + "FROM Gruas where pat_gru not in (SELECT pat_gru from jornadas where "
-                    + "(subtime(?, '01:00')  <= fhreg_jor and addtime(?, '01:00') >= fhsal_jor and pat_gru is not null))"
+                    + "(?  <= fhreg_jor and ?  >= fhsal_jor and pat_gru is not null and nc_ot = 0))"
                     + " order by des_gru");
             pstm.setString(1, fhsal);
             pstm.setString(2, fhreg);
@@ -468,7 +471,7 @@ public class modeloGruas {
 //                    + "addtime(?, '01:00') >= fhsal_jor and pat_gru = ?)");
             PreparedStatement pstm = conn.prepareStatement("SELECT count(*) as total from jornadas "
                     + " where ( ? <= fhreg_jor and "
-                    + "? >= fhsal_jor and pat_gru = ?)");
+                    + "? >= fhsal_jor and pat_gru = ? and nc_ot = 0)");
             pstm.setString(1, fhsal);
             pstm.setString(2, fhreg);
             pstm.setString(3, pat);
@@ -497,7 +500,7 @@ public class modeloGruas {
 //                    + "addtime(?, '01:00') >= fhsal_jor and pat_gru = ? and id_jor <> ?)");
             PreparedStatement pstm = conn.prepareStatement("SELECT count(*) as total from jornadas "
                     + " where ( ? <= fhreg_jor and "
-                    + "? >= fhsal_jor and pat_gru = ? and id_jor <> ?)");
+                    + "? >= fhsal_jor and pat_gru = ? and id_jor <> ? and nc_ot = 0)");
             pstm.setString(1, fhsal);
             pstm.setString(2, fhreg);
             pstm.setString(3, pat);

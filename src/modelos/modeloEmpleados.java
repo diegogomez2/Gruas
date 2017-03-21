@@ -326,7 +326,7 @@ public class modeloEmpleados {
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Empleados where "
                     + "rut_emp not in (SELECT rut_emp from jornadas where "
-                    + "( subtime(?, '01:00') <= fhreg_jor and addtime(?, '01:00') >= fhsal_jor and rut_emp is not null))");
+                    + "( ? <= fhreg_jor and ? >= fhsal_jor and rut_emp is not null and nc_ot = 0))");
             pstm.setString(1, fhsal);
             pstm.setString(2, fhreg);
             ResultSet res = pstm.executeQuery();
@@ -346,7 +346,7 @@ public class modeloEmpleados {
             PreparedStatement pstm = conn.prepareStatement("SELECT coalesce(nom_emp,'') as nom_emp, "
                     + "coalesce(apP_emp,'') as apP_emp, coalesce(apM_emp,'') as apM_emp "
                     + "FROM Empleados where rut_emp not in (SELECT rut_emp from jornadas where "
-                    + "( subtime(?, '01:00')  <= fhreg_jor and addtime(?, '01:00') >= fhsal_jor and rut_emp is not null))"
+                    + "( ?   <= fhreg_jor and ? >= fhsal_jor and rut_emp is not null and nc_ot = 0))"
                     + " order by nom_emp");
             pstm.setString(1, fhsal);
             pstm.setString(2, fhreg);
@@ -376,7 +376,7 @@ public class modeloEmpleados {
 //            PreparedStatement pstm = conn.prepareStatement("SELECT count(*) as total from jornadas where "
 //                    + "( subtime(?, '01:00') <= fhreg_jor and addtime(?, '01:00') >= fhsal_jor and rut_emp = ?)");
             PreparedStatement pstm = conn.prepareStatement("SELECT count(*) as total from jornadas where "
-                    + "( ? <= fhreg_jor and ? >= fhsal_jor and rut_emp = ?)");
+                    + "( ? <= fhreg_jor and ? >= fhsal_jor and rut_emp = ? and nc_ot = 0)");
             pstm.setString(1, fhsal);
             pstm.setString(2, fhreg);
             pstm.setString(3, rut);
@@ -405,7 +405,7 @@ public class modeloEmpleados {
 //                    + "and id_jor <> ?)");
             PreparedStatement pstm = conn.prepareStatement("SELECT count(*) as total from jornadas where "
                     + "( ? <= fhreg_jor and ? >= fhsal_jor and rut_emp = ?"
-                    + "and id_jor <> ?)");
+                    + "and id_jor <> ? and nc_ot = 0)");
             pstm.setString(1, fhsal);
             pstm.setString(2, fhreg);
             pstm.setString(3, rut);
@@ -913,7 +913,7 @@ public class modeloEmpleados {
              System.out.println(e);
         }
         
-        String[][] data = new String[registros][8];
+        String[][] data = new String[registros][10];
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);

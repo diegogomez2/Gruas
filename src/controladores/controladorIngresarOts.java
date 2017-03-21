@@ -60,6 +60,7 @@ public class controladorIngresarOts {
         vistaIO.setTextoBruto(valores.get(size - 1).get(2));
         vistaIO.setTextoDescuento("0");
         vistaIO.setNuevoNeto(0);
+        vistaIO.setTextoNuevoNeto(valores.get(size - 1).get(0));
         vistaIO.setHoras((int)Float.parseFloat(valores.get(size - 1).get(3)));
         vistaIO.setLocationRelativeTo(null);
         vistaIO.setVisible(true); 
@@ -76,16 +77,17 @@ public class controladorIngresarOts {
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
         String textoNeto, textoIva, textoBruto, textoDesc;
         if(vistaIO.getCheckDespacho().compareTo("1") == 0){
-            int valor = Integer.parseInt(vistaIO.getTextoDespacho());
-            int iva = (int)(valor * 0.19);
-            int bruto = (int)(valor * 1.19);
+            //int valor = Integer.parseInt(vistaIO.getTextoDespacho());
+            //int iva = (int)(valor * 0.19);
+            //int bruto = (int)(valor * 1.19);
 //            textoNeto = Integer.toString(valor + Integer.parseInt(removeDots(vistaIO.getTextoNeto())));
 //            textoIva = Integer.toString(iva + Integer.parseInt(removeDots(vistaIO.getTextoIva())));
 //            textoBruto = Integer.toString(bruto + Integer.parseInt(removeDots(vistaIO.getTextoBruto())));
-            textoNeto = Integer.toString(valor + Integer.parseInt(vistaIO.getTextoNeto()));
+            //textoNeto = Integer.toString(/*valor*/ + Integer.parseInt(vistaIO.getTextoNeto()));
+            textoNeto = Integer.toString(Integer.parseInt(vistaIO.getTextoNuevoNeto()));
             textoDesc = Integer.toString(Integer.parseInt(vistaIO.getTextoDescuento()));
-            textoIva = Integer.toString(iva + Integer.parseInt(vistaIO.getTextoIva()));
-            textoBruto = Integer.toString(bruto + Integer.parseInt(vistaIO.getTextoBruto()));
+            textoIva = Integer.toString(/*iva*/ + Integer.parseInt(vistaIO.getTextoIva()));
+            textoBruto = Integer.toString(/*bruto*/ + Integer.parseInt(vistaIO.getTextoBruto()));
         }else{
 //            textoNeto = removeDots(vistaIO.getTextoNeto());
 //            textoIva = removeDots(vistaIO.getTextoIva());

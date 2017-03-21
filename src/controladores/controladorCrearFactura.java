@@ -39,7 +39,7 @@ public class controladorCrearFactura {
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
     static vistas.vistaFacturasP vistaF;
     
-     public String crearFacXML(String[] idOts, String valorNeto, String valorIva, String valorTotal, String fac) throws ParseException{
+     public String crearFacXML(String[] idOts, String valorNeto, String valorIva, String valorTotal, String fac, String docRef) throws ParseException{
         
          modeloFacturas rutas = new modeloFacturas();
          String ruta = rutas.obtenerRuta();
@@ -148,7 +148,8 @@ public class controladorCrearFactura {
             receptor.appendChild(rutRec);
             
             Element rznRec = doc.createElement("RznSocRecep");
-            rznRec.appendChild(doc.createTextNode(data[1]));
+            String razonConcat = data[1].substring(0, Math.min(data[1].length(), 40));
+            rznRec.appendChild(doc.createTextNode(razonConcat));
             receptor.appendChild(rznRec);
             
             Element girRec = doc.createElement("GiroRecep");
@@ -289,7 +290,7 @@ public class controladorCrearFactura {
                 rootElement.appendChild(adj);
             
                 Element obs = doc.createElement("Observacion");
-                obs.appendChild(doc.createTextNode("OBSERVACIONES"));
+                obs.appendChild(doc.createTextNode("OC: " + docRef));
                 adj.appendChild(obs);
                 
                 Element imp = doc.createElement("Impresora");
@@ -326,7 +327,7 @@ public class controladorCrearFactura {
         }
     }
     
-    public String crearFacExXML(String[] idOts, String valorNeto, String valorIva, String valorTotal, String fac){
+    public String crearFacExXML(String[] idOts, String valorNeto, String valorIva, String valorTotal, String fac, String docRef){
         
         modeloFacturas rutas = new modeloFacturas();
         String ruta = rutas.obtenerRuta();
@@ -425,7 +426,8 @@ public class controladorCrearFactura {
             receptor.appendChild(rutRec);
             
             Element rznRec = doc.createElement("RznSocRecep");
-            rznRec.appendChild(doc.createTextNode(data[1]));
+            String razonConcat = data[1].substring(0, Math.min(data[1].length(), 40));
+            rznRec.appendChild(doc.createTextNode(razonConcat));
             receptor.appendChild(rznRec);
             
             Element girRec = doc.createElement("GiroRecep");
@@ -491,7 +493,8 @@ public class controladorCrearFactura {
                 rootElement.appendChild(adj);
             
                 Element obs = doc.createElement("Observacion");
-                obs.appendChild(doc.createTextNode("OBSERVACIONES"));
+                if(docRef.compareTo("") == 0) docRef = "N/A";
+                obs.appendChild(doc.createTextNode("OC: " + docRef));
                 adj.appendChild(obs);
                 
                 Element imp = doc.createElement("Impresora");
@@ -634,7 +637,8 @@ public class controladorCrearFactura {
             receptor.appendChild(rutRec);
             
             Element rznRec = doc.createElement("RznSocRecep");
-            rznRec.appendChild(doc.createTextNode(data[1]));
+            String razonConcat = data[1].substring(0, Math.min(data[1].length(), 40));
+            rznRec.appendChild(doc.createTextNode(razonConcat));
             receptor.appendChild(rznRec);
             
             Element girRec = doc.createElement("GiroRecep");
@@ -977,7 +981,8 @@ public class controladorCrearFactura {
             receptor.appendChild(rutRec);
             
             Element rznRec = doc.createElement("RznSocRecep");
-            rznRec.appendChild(doc.createTextNode(data[1]));
+            String razonConcat = data[1].substring(0, Math.min(data[1].length(), 40));
+            rznRec.appendChild(doc.createTextNode(razonConcat));
             receptor.appendChild(rznRec);
             
             Element girRec = doc.createElement("GiroRecep");
@@ -1295,7 +1300,8 @@ public class controladorCrearFactura {
             receptor.appendChild(rutRec);
             
             Element rznRec = doc.createElement("RznSocRecep");
-            rznRec.appendChild(doc.createTextNode(data[1]));
+            String razonConcat = data[1].substring(0, Math.min(data[1].length(), 40));
+            rznRec.appendChild(doc.createTextNode(razonConcat));
             receptor.appendChild(rznRec);
             
             Element girRec = doc.createElement("GiroRecep");
@@ -1623,7 +1629,8 @@ public class controladorCrearFactura {
             receptor.appendChild(rutRec);
             
             Element rznRec = doc.createElement("RznSocRecep");
-            rznRec.appendChild(doc.createTextNode(data[1]));
+            String razonConcat = data[1].substring(0, Math.min(data[1].length(), 40));
+            rznRec.appendChild(doc.createTextNode(razonConcat));
             receptor.appendChild(rznRec);
             
             Element girRec = doc.createElement("GiroRecep");
@@ -1837,7 +1844,8 @@ public class controladorCrearFactura {
             receptor.appendChild(rutRec);
             
             Element rznRec = doc.createElement("RznSocRecep");
-            rznRec.appendChild(doc.createTextNode(data[1]));
+            String razonConcat = data[1].substring(0, Math.min(data[1].length(), 40));
+            rznRec.appendChild(doc.createTextNode(razonConcat));
             receptor.appendChild(rznRec);
             
             Element girRec = doc.createElement("GiroRecep");

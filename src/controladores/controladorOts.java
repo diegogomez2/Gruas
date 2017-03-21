@@ -59,6 +59,13 @@ import javax.swing.JTabbedPane;
         return respuesta;
     }
     
+    public String eliminarOt(String idOt){
+        String respuesta = "";
+        modelos.modeloOts ots = new modelos.modeloOts();
+        respuesta = ots.eliminarOt(idOt);
+        return respuesta;
+    }
+    
     public String quitarFactura(String idOt){
         String respuesta = "";
         modelos.modeloOts ots = new modelos.modeloOts();

@@ -206,7 +206,8 @@ public class vistaFacturasP extends javax.swing.JPanel {
                     for (int i = 0; i < filas; i++) {
                         idOts[i] = getIdFact(i);
                         desc = getDescFact(i);
-                        neto += getNetoFact(i) - desc;
+//                        neto += getNetoFact(i) - desc;
+                        neto += getNetoFact(i);
                         iva += getIvaFact(i);
                         total += getTotalFact(i);
                     }
@@ -220,8 +221,10 @@ public class vistaFacturasP extends javax.swing.JPanel {
                         miControlador.crearControladorPrincipal(tabs);
                     }else{
                         try {
+                            //docRef va en el tag observaciones
+                            String docRef = JOptionPane.showInputDialog("Ingrese documento de referencia: ");
                             if ((miControlador.crearFacXML(idOts, Integer.toString(neto), Integer.toString(iva),
-                                    Integer.toString(total), id).compareTo("correcto") == 0)) {
+                                    Integer.toString(total), id, docRef).compareTo("correcto") == 0)) {
                                 JTabbedPane tabs = (JTabbedPane) this.getParent();
                                 micontroladorOts.crearControladorPrincipal(tabs);
                                 miControlador.crearControladorPrincipal(tabs);
@@ -256,7 +259,8 @@ public class vistaFacturasP extends javax.swing.JPanel {
                 for (int i = 0; i < filas; i++) {
                     idOts[i] = getIdFact(i);
                     desc = getDescFact(i);
-                    neto += getNetoFact(i) - desc;
+//                    neto += getNetoFact(i) - desc;
+                    neto += getNetoFact(i);
                     iva += getIvaFact(i);
                     total += getTotalFact(i);
                 }
@@ -304,6 +308,7 @@ public class vistaFacturasP extends javax.swing.JPanel {
                                 idOts[i] = getIdFact(i);
                                 desc = getDescFact(i);
                                 neto += getNetoFact(i) - desc;
+//                                neto += getNetoFact(i);
                                 iva += getIvaFact(i);
                                 total += getTotalFact(i);
                             }
@@ -362,8 +367,9 @@ public class vistaFacturasP extends javax.swing.JPanel {
                 }
                 controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
                 String id = micontroladorFacturas.archivarFacturas(idOts, neto, iva, total, "factura ex", "0", "0");
+                String docRef = JOptionPane.showInputDialog("Ingrese documento de referencia: ");
                 if ((miControlador.crearFacExXML(idOts, Integer.toString(neto), Integer.toString(iva),
-                        Integer.toString(total), id).compareTo("correcto") == 0)) {
+                        Integer.toString(total), id, docRef).compareTo("correcto") == 0)) {
                     JTabbedPane tabs = (JTabbedPane) this.getParent();
                     micontroladorOts.crearControladorPrincipal(tabs);
                     miControlador.crearControladorPrincipal(tabs);
