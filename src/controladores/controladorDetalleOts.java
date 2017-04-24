@@ -35,7 +35,7 @@ public class controladorDetalleOts {
         vistaDO.setComboFormaPago(data[17]);
         vistaDO.setTextoContacto(data[18]);
         vistaDO.setTextoBruto(data[19]);
-        vistaDO.setTextoNeto(data[20]);
+        vistaDO.setTextoNeto(String.valueOf(Integer.parseInt(data[20]) - Integer.parseInt(data[25]) + Integer.parseInt(data[27])));
         vistaDO.setTextoIva(data[21]);
 //        vistaDO.setTextoNuevoNeto(String.valueOf(Integer.parseInt(data[20]) - Integer.parseInt(data[27])));
         vistaDO.setTextoNuevoNeto(String.valueOf(Integer.parseInt(data[20])));

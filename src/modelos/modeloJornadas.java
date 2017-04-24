@@ -289,4 +289,25 @@ public class modeloJornadas {
        }
         return data;
     }
+    
+    public String obtenerDescuento(String id){
+        String data = "";
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT coalesce(desc_ot, 0) des FROM jornadas where cod_ot = ?");
+            pstm.setString(1, id);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            String estdes = res.getString("des");
+            data = estdes;
+            res.close();
+       }catch(SQLException e){
+            System.out.println("Error obtener descuento por id");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        return data;
+    }
 }

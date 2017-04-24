@@ -194,9 +194,10 @@ public class controladorCrearFactura {
                 modelos.modeloJornadas jornada = new modeloJornadas();
                 String[] datosDias;
                 data = ots.obtenerFacturaPorId(idOts[i]);
+                String desc = jornada.obtenerDescuento(idOts[i]);
                 datosDias = ots.obtenerDiasPorIdOt(idOts[i]);
                 controladores.controladorIngresarOts miControlador = new controladores.controladorIngresarOts();
-//                System.out.println("datos "+datosDias[0]);
+                
                 List<List<String>> valores = miControlador.calcularTarifa(datosDias[0], datosDias[1], datosDias[2],
                         datosDias[3], datosDias[4], checkHoraMin);
                 String[] infoDespacho = ots.obtenerValorDespachoOt(idOts[i]);
@@ -235,10 +236,29 @@ public class controladorCrearFactura {
                     //nomItem.appendChild(doc.createTextNode(data[11]+" HORAS DE GRUA HORQUILLA O.T.:"+data[10]));
                     prcItem.appendChild(doc.createTextNode(valores.get(j).get(0)));
                     detalle.appendChild(prcItem);
+                    int descEfectivo = 0;
+                    int newMonto = (int)(Float.parseFloat(valores.get(j).get(0)) * Float.parseFloat(valores.get(j).get(3)) - Float.parseFloat(desc));
+                    if(newMonto >= 0){
+                        descEfectivo = Integer.parseInt(desc);
+                    }else{
+                        descEfectivo = (int)(Float.parseFloat(valores.get(j).get(0)) * Float.parseFloat(valores.get(j).get(3)));
+                    }
+                    if(desc.compareTo("0") != 0){
+                        Element descItem = doc.createElement("DescuentoMonto");
+                        descItem.appendChild(doc.createTextNode(String.valueOf(descEfectivo)));
+                        detalle.appendChild(descItem);
+                    }
                     
                     Element mtoItem = doc.createElement("MontoItem");
-                    mtoItem.appendChild(doc.createTextNode(Integer.toString((int)(Float.parseFloat(valores.get(j).get(0))
-                            * Float.parseFloat(valores.get(j).get(3))))));
+                    if(newMonto >= 0){
+                        desc = "0";
+                        mtoItem.appendChild(doc.createTextNode(String.valueOf(newMonto)));
+                    }else{
+                        desc = String.valueOf(Math.abs(newMonto));
+                        mtoItem.appendChild(doc.createTextNode("0"));
+                    }
+//                    mtoItem.appendChild(doc.createTextNode(Integer.toString((int)(Float.parseFloat(valores.get(j).get(0))
+//                            * Float.parseFloat(valores.get(j).get(3)) - Float.parseFloat(desc)))));
                     detalle.appendChild(mtoItem);
                     
                     contador += 1;

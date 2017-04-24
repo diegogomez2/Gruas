@@ -29,6 +29,7 @@ import java.text.DateFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -1539,7 +1540,16 @@ public class controladorPrincipal {
     
     public boolean generarReporteTrabajador(){
         DateFormat perDate = new SimpleDateFormat("MMMM-yyyy");
+        DateFormat numDate = new SimpleDateFormat("yyyy-MM");
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH, 1);
+        cal.set(Calendar.DATE, cal.getActualMinimum(Calendar.DAY_OF_MONTH));
+        String mes = ""+(cal.get(Calendar.MONTH) - 1);
         String per = perDate.format(new Date());
+        String fec = numDate.format(new Date());
+        String fecIn = "2017-" + mes + "-26";
+        String fecFin = fec+"-25";
+//        System.out.println(fecIn + " " + fecFin);
         NumberFormat FORMAT = NumberFormat.getCurrencyInstance();
         DecimalFormatSymbols dfs = new DecimalFormatSymbols();
         try{
@@ -1551,7 +1561,7 @@ public class controladorPrincipal {
             int numEmp = ruts.length;
             for(int i = 0; i < numEmp; i++){
                 String file = path + "/Reporte_trabajador_"+ruts[i]+"_"+formatDate.format(new Date())+".xls";
-                Object[][] ots = empleado.obtenerReporteEmpleados(ruts[i].toString());
+                Object[][] ots = empleado.obtenerReporteEmpleados(ruts[i].toString(), fecIn, fecFin);
                 HSSFWorkbook workbook = new HSSFWorkbook();
                 HSSFSheet sheet = workbook.createSheet("FirstSheet"); 
                 HSSFRow rowhead = sheet.createRow((short)0);

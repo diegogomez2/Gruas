@@ -296,7 +296,7 @@ public class vistaFacturasP extends javax.swing.JPanel {
             if(flag.compareTo("correcto") == 0){
                 int resp = JOptionPane.showConfirmDialog(null, message, "N° de folio de factura: ", JOptionPane.OK_CANCEL_OPTION);
                 if(resp == JOptionPane.OK_OPTION){
-                    id_fac = idfac.getText().toString();
+                    id_fac = idfac.getText();
                     tiponc = combo.getSelectedItem().toString();
                     boolean existe = verificarExisteFactura(id_fac, tiponc);
                     if(existe){
@@ -307,8 +307,8 @@ public class vistaFacturasP extends javax.swing.JPanel {
                             for (int i = 0; i < filas; i++) {
                                 idOts[i] = getIdFact(i);
                                 desc = getDescFact(i);
-                                neto += getNetoFact(i) - desc;
-//                                neto += getNetoFact(i);
+//                                neto += getNetoFact(i) - desc;
+                                neto += getNetoFact(i);
                                 iva += getIvaFact(i);
                                 total += getTotalFact(i);
                             }

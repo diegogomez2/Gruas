@@ -893,15 +893,18 @@ public class modeloEmpleados {
         return data;
     }
     
-    public String[][] obtenerReporteEmpleados(String rut) {
+    public String[][] obtenerReporteEmpleados(String rut, String fecin, String fecfin) {
         
         int registros = 0;
         
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Jornadas WHERE rut_emp = ? AND MONTH(fec_ot) = MONTH(CURDATE())");
+//            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Jornadas WHERE rut_emp = ? AND MONTH(fec_ot) = MONTH(CURDATE())");
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Jornadas WHERE rut_emp = ? AND fec_ot >= ? and  fec_ot <= ?");
             pstm.setString(1, rut);
+            pstm.setString(2, fecin);
+            pstm.setString(3, fecfin);
             ResultSet res = pstm.executeQuery();
             res.next();
             registros = res.getInt("total");
@@ -917,9 +920,13 @@ public class modeloEmpleados {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
+//            PreparedStatement pstm = conn.prepareStatement("SELECT rut_emp, dig_emp, concat(apP_emp, ' ', nom_emp) nom,  cod_ot, fec_ot, raz_cli, horsal_jor horsal, horfin_ot horfin,"
+//                    + " horlleg_jor horlleg, CONCAT('', timediff(fhreg_jor, fhsal_jor)) diff FROM Jornadas JOIN Empleados USING(rut_emp) JOIN Clientes USING(rut_cli) WHERE rut_emp = ? AND MONTH(fec_ot) = MONTH(CURDATE()) ");
             PreparedStatement pstm = conn.prepareStatement("SELECT rut_emp, dig_emp, concat(apP_emp, ' ', nom_emp) nom,  cod_ot, fec_ot, raz_cli, horsal_jor horsal, horfin_ot horfin,"
-                    + " horlleg_jor horlleg, timediff(fhreg_jor, fhsal_jor) diff FROM Jornadas JOIN Empleados USING(rut_emp) JOIN Clientes USING(rut_cli) WHERE rut_emp = ? AND MONTH(fec_ot) = MONTH(CURDATE()) ");
+                    + " horlleg_jor horlleg, CONCAT('', timediff(fhreg_jor, fhsal_jor)) diff FROM Jornadas JOIN Empleados USING(rut_emp) JOIN Clientes USING(rut_cli) WHERE rut_emp = ? AND fec_ot >= ? and  fec_ot <= ?");
             pstm.setString(1, rut);
+            pstm.setString(2, fecin);
+            pstm.setString(3, fecfin);
             ResultSet res = pstm.executeQuery();
             int j = 0;
             while(res.next()){
@@ -943,7 +950,7 @@ public class modeloEmpleados {
                 String estfin = res.getString("horfin");
                 String estlleg = res.getString("horlleg");
                 String esthorex = "0";
-                String estharr = res.getString("diff"); 
+                String estharr = res.getString("diff");
                 data[j] = new String[]{estfrut + "-" + estdig , estnom, estcod, estfec, estraz, estsal, estfin, estlleg, esthorex, estharr};
                 j++;
             }

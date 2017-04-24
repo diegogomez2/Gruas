@@ -63,6 +63,7 @@ public class vistaOtsP extends javax.swing.JPanel {
         tablaOts.setRowSelectionAllowed(true);
         tablaOts.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         tablaOts.addMouseListener(new MouseAdapter() {
+            @Override
             public void mousePressed(MouseEvent evt) {
                 JTable table = (JTable) evt.getSource();
                 Point p = evt.getPoint();
