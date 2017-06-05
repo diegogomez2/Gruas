@@ -87,7 +87,6 @@ public class vistaIngresarJornadasOC extends javax.swing.JDialog {
         Format time = new SimpleDateFormat("HH:mm");
         MaskFormatter mask = new MaskFormatter("##:##");
         JFormattedTextField hora = new JFormattedTextField(mask);
-//        tablaHorasBase.setModel(hb);
         tablaGruas.setModel(tg);
         
         tablaGruas.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(comboGruas));
@@ -101,9 +100,7 @@ public class vistaIngresarJornadasOC extends javax.swing.JDialog {
         tablaEmpleados.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(hora));
         tablaEmpleados.getColumnModel().getColumn(3).setCellEditor(new DatePickerCellEditor(formatDate));
         tablaEmpleados.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(hora));
-//        tablaEmpleados.setDefaultRenderer(Date.class, render);
         tablaHoras.setModel(th);
-//        hb.setRowCount(tonelajes.length);
         tg.setRowCount(0);
         te.setRowCount(0);
         th.setRowCount(tonelajes.length);
@@ -382,6 +379,7 @@ public class vistaIngresarJornadasOC extends javax.swing.JDialog {
 
         jLabel2.setText("Número de grúas");
 
+        spinnerGruas.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
         spinnerGruas.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 spinnerGruasStateChanged(evt);
@@ -390,6 +388,7 @@ public class vistaIngresarJornadasOC extends javax.swing.JDialog {
 
         jLabel4.setText("Número de trabajadores");
 
+        spinnerEmpleados.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
         spinnerEmpleados.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 spinnerEmpleadosStateChanged(evt);
@@ -783,7 +782,7 @@ public class vistaIngresarJornadasOC extends javax.swing.JDialog {
     }
     
     public String getTextoHoraRegresoEmp(int i) {
-        String hora = tablaGruas.getValueAt(i, 4).toString();
+        String hora = tablaEmpleados.getValueAt(i, 4).toString();
         return hora;
     }
     
@@ -1035,11 +1034,11 @@ public class vistaIngresarJornadasOC extends javax.swing.JDialog {
                 case 1:
                     return Date.class;
                 case 2: 
-                    return Date.class;
-                case 3:
                     return String.class;
-                case 4:
+                case 3:
                     return Date.class;
+                case 4:
+                    return String.class;
                 default:
                     return String.class;
             }
@@ -1192,35 +1191,4 @@ public class vistaIngresarJornadasOC extends javax.swing.JDialog {
             return this;
         }
     }
-//
-//    class SpinnerEditor extends AbstractCellEditor implements TableCellEditor {
-//
-//        protected JSpinner spinner = new JSpinner();
-//
-//        public SpinnerEditor() {
-////            spinner = new JSpinner(new SpinnerDateModel());
-////            JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(spinner, "HH:mm");
-////            spinner.setEditor(timeEditor);
-////            spinner.setValue(new Date());
-//            spinner.setModel(new SpinnerDateModel(new Date(), null, null, Calendar.DATE));
-//        }
-//
-//        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {       
-////            if(value != null && value != ""){
-////                JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(spinner, "HH:mm");
-////                spinner.setEditor(timeEditor);
-////                spinner.setValue(((SpinnerDateModel)value).getValue());
-//System.out.println(value);
-//spinner.setValue(value);
-////            }
-//            return spinner;
-//        }
-//
-//        public Object getCellEditorValue() {
-////            SpinnerModel sm = spinner.getModel();
-////            return sm;
-//                return spinner.getValue();
-//        }
-//        
-//    }       
 }

@@ -218,6 +218,7 @@ public class modeloClientes {
         return data;  
     }
 
+    /* Obtiene el rut del cliente según su razón */
     public String obtenerClientePorRazon(String razon) {
         String data = null;
         try{

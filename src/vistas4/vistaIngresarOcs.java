@@ -15,6 +15,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -41,6 +43,7 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
     MyTableModelGruas tg = new MyTableModelGruas();
     MyTableModelEmpleados te = new MyTableModelEmpleados();
     MyTableModelHoras th = new MyTableModelHoras();
+    JComboBox comboTonelajes;
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
     SimpleDateFormat formatClock = new SimpleDateFormat("HH:mm:ss");
     NumberFormat FORMAT = NumberFormat.getCurrencyInstance();
@@ -61,12 +64,14 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
     /**
      * Creates new form vistaIngresarOC
      */
-    public vistaIngresarOcs(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public vistaIngresarOcs(java.awt.Frame parent, boolean modal, Object[] dataTon) {
+        super(parent, modal); 
         initComponents();
+        comboTonelajes = new JComboBox<Object>(dataTon);
         tablaGruas.setModel(tg);
         tablaEmpleados.setModel(te);
         tablaHoras.setModel(th);
+        tablaEmpleados.getColumnModel().getColumn(10).setCellEditor(new DefaultCellEditor(comboTonelajes));
         dfs.setCurrencySymbol("$");
         dfs.setGroupingSeparator('.');
         dfs.setMonetaryDecimalSeparator('.');
@@ -713,14 +718,7 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                vistaIngresarOcs dialog = new vistaIngresarOcs(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
+               
             }
         });
     }
@@ -1237,7 +1235,8 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
     
     public class MyTableModelEmpleados extends DefaultTableModel{
         public MyTableModelEmpleados() {
-          super(new String[]{"Empleado", "Fecha de salida", "Hora de salida", "Fecha de regreso", "Hora de regreso", "Horas totales", "Horas extra nor.", "Horas extra fes.", "Días media colación", "Días sin colación"}, 0);
+          super(new String[]{"Empleado", "Fecha de salida", "Hora de salida", "Fecha de regreso", "Hora de regreso", "Horas totales", "Horas extra nor.", "Horas extra fes.", "Días media colación", "Días sin colación", 
+          "Ton. empleado"}, 0);
         }
 
         @Override
@@ -1260,6 +1259,9 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
         
         @Override
         public Object getValueAt(int row, int col){
+            if(col == 10 && super.getValueAt(row, col) == null){
+                return 2;
+            }
             return super.getValueAt(row, col);
         }
         

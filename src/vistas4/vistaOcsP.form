@@ -88,7 +88,7 @@
     </Container>
     <Component class="javax.swing.JButton" name="botonFacturar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Facturar OT"/>
+        <Property name="text" type="java.lang.String" value="Facturar OC"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonFacturarActionPerformed"/>
@@ -106,7 +106,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="botonAnular">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Anular OT"/>
+        <Property name="text" type="java.lang.String" value="Anular OC"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonAnularActionPerformed"/>
@@ -122,7 +122,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="botonEliminar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Eliminar OT"/>
+        <Property name="text" type="java.lang.String" value="Eliminar OC"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonEliminarActionPerformed"/>

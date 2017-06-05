@@ -187,6 +187,11 @@
                 <Component class="org.jdesktop.swingx.JXDatePicker" name="textoFechaSalida">
                 </Component>
                 <Component class="javax.swing.JSpinner" name="spinnerGruas">
+                  <Properties>
+                    <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                      <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
+                    </Property>
+                  </Properties>
                   <Events>
                     <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="spinnerGruasStateChanged"/>
                   </Events>
@@ -204,6 +209,11 @@
                   </AuxValues>
                 </Component>
                 <Component class="javax.swing.JSpinner" name="spinnerEmpleados">
+                  <Properties>
+                    <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                      <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
+                    </Property>
+                  </Properties>
                   <Events>
                     <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="spinnerEmpleadosStateChanged"/>
                   </Events>

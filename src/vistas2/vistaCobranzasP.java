@@ -288,7 +288,6 @@ public class vistaCobranzasP extends javax.swing.JPanel {
         boolean selected = tablaFacturadas.getSelectedRowCount() > 0;
         if(selected){
             int row = getFilaSeleccionada();
-//            String id = getIdFila(row);
             String id = getFacFila(row);
             String tipo = getTipoFila(row);
             try {

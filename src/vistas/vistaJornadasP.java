@@ -305,7 +305,6 @@ public class vistaJornadasP extends javax.swing.JPanel {
 
     private void botonGenerarGDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGenerarGDActionPerformed
         String id;
-        //controladores.controladorFacturadas miControlador = new controladores.controladorFacturadas();
         controladores.controladorJornadas miControlador = new controladores.controladorJornadas();
         controladores.controladorCrearFactura miControladorC = new controladores.controladorCrearFactura();
         boolean selected = tablaJornadas.getSelectedRowCount() > 0;
@@ -331,7 +330,7 @@ public class vistaJornadasP extends javax.swing.JPanel {
                     "Ciudad: ", textCiud,
                     "Monto: ", textMon,
                 };
-                int option = JOptionPane.showConfirmDialog(null, inputs, "Ingrese la información", JOptionPane.OK_CANCEL_OPTION);
+                int option = JOptionPane.showConfirmDialog(null, inputs, "Ingrese la información de despacho.", JOptionPane.OK_CANCEL_OPTION);
                 if(option == JOptionPane.OK_OPTION){
                     String ind = textTras.getText();
                     String pat = textPat.getText();

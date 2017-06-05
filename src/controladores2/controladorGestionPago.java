@@ -40,8 +40,6 @@ public class controladorGestionPago {
         String med = vistaGP.getComboMedio();
         String ban = vistaGP.getTextoBanco();
         String num = vistaGP.getTextoNum();
-//        System.out.println("id " + id + "\nfolio " + folio + " \ntipo " + tipo + " \ntipoPag " + tipoPag
-//         + " \nmonto " + monto + " \nfec " +fec+"\nmed " +med+"\nban "+ban+"\nnum "+num );
         if(!miControlador.gestionPago(id, folio, tipo, tipoPag, monto, fec, med, ban, num)){
             return false;
         }

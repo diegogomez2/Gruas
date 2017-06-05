@@ -1094,14 +1094,6 @@ public class controladorPrincipal {
         String rut = empleado.obtenerEmpleadoPorNombre(textoOperador);
         return rut;
     }
-    
-    //obtiene los rut de los empleados por sus nombres, usado en ocs
-    //malo, borrar
-//    public String obtenerEmpleadosPorNombre(String[] textoOperador) {
-//        modelos.modeloEmpleados empleado = new modelos.modeloEmpleados();
-//        String[] rut = empleado.obtenerEmpleadoPorNombre(textoOperador);
-//        return rut;
-//    }
 
     public String obtenerGruaPorDesc(String textoGrua) {
         modelos.modeloGruas grua = new modelos.modeloGruas();
@@ -1176,14 +1168,17 @@ public class controladorPrincipal {
     
     public void crearControladorIngresarOcs(String id) throws ParseException {
         String[] data;
+        Object[] dataTon;
         Object[] ciudades;
         modelos4.modeloJornadasOC jornada = new modelos4.modeloJornadasOC();
         modelos.modeloRegiones ciudad = new modeloRegiones();
+        modelos.modeloTonelajes tonelajes = new modeloTonelajes();
+        dataTon = tonelajes.listarTonelajes();
         data = jornada.obtenerJornadaOCPorId(id);
         ciudades = ciudad.listaCiudades2();
         controladores4.controladorIngresarOcs micontroladorIO;
         micontroladorIO = new controladorIngresarOcs();
-        micontroladorIO.mostrarVistaIngresarOcs(data, ciudades);
+        micontroladorIO.mostrarVistaIngresarOcs(data, ciudades, dataTon);
     }
     
     public String[] obtenerOtPorId(String id) {
@@ -1978,5 +1973,14 @@ public class controladorPrincipal {
     public void generarReporteCobranza(String est) {
        controladorReportes miControlador = new controladorReportes();
        miControlador.generarReporteCobranza(est);
+    }
+
+    public void crearControladorModificarPago(String id) throws ParseException {
+        modelos2.modeloCobranzas cobranza = new modeloCobranzas();
+        Object[] dataPagos;
+        dataPagos = cobranza.obtenerPago(id);
+        controladorModificarPago micontroladorMP;
+        micontroladorMP = new controladorModificarPago();
+        micontroladorMP.mostrarVistaModificarPago(dataPagos);
     }
 }

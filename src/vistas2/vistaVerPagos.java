@@ -5,11 +5,16 @@
  */
 package vistas2;
 
+import controladores.controladorPrincipal;
 import java.awt.Component;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -39,6 +44,8 @@ public class vistaVerPagos extends javax.swing.JDialog {
         
         tablaPagos.setModel(datos);
         tablaPagos.getColumnModel().getColumn(1).setCellRenderer(new CurrencyTableCellRenderer());
+        TableColumnModel tcm = tablaPagos.getColumnModel();
+        tcm.removeColumn(tcm.getColumn(6));
         tablaPagos.setAutoCreateRowSorter(true);
     }
 
@@ -53,8 +60,10 @@ public class vistaVerPagos extends javax.swing.JDialog {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaPagos = new javax.swing.JTable();
+        botonModificarPago = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Pagos");
 
         tablaPagos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -69,19 +78,50 @@ public class vistaVerPagos extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(tablaPagos);
 
+        botonModificarPago.setText("Modificar pago");
+        botonModificarPago.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonModificarPagoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(botonModificarPago)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(botonModificarPago)
+                .addGap(0, 11, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void botonModificarPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarPagoActionPerformed
+        boolean selected = tablaPagos.getSelectedRowCount() > 0;
+        if(selected){
+            int row = getRowSelected();
+            String id = getId(row);
+            controladores.controladorPrincipal miControlador = new controladorPrincipal();
+            try {
+                miControlador.crearControladorModificarPago(id);
+            } catch (ParseException ex) {
+                Logger.getLogger(vistaVerPagos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un pago para ser modificado");
+        }
+    }//GEN-LAST:event_botonModificarPagoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -118,16 +158,25 @@ public class vistaVerPagos extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonModificarPago;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaPagos;
     // End of variables declaration//GEN-END:variables
 
+    public int getRowSelected(){
+        return tablaPagos.getSelectedRow();
+    }
+    
+    public String getId(int row){
+        return tablaPagos.getModel().getValueAt(tablaPagos.convertRowIndexToModel(row), 6).toString();
+    }
+    
     public class MyTableModel extends DefaultTableModel{
         public MyTableModel() {
-          super(new String[]{"Opcion de pago", "Monto", "Fecha", "Medio de pago", "Banco", "N° cuenta/cheque"}, 0);
+          super(new String[]{"Opcion de pago", "Monto", "Fecha", "Medio de pago", "Banco", "N° cuenta/cheque", "Id"}, 0);
         }
         public MyTableModel(Object[][] data){
-            super(new String[]{"Opcion de pago", "Monto", "Fecha", "Medio de pago", "Banco", "N° cuenta/cheque"}, 0);
+            super(new String[]{"Opcion de pago", "Monto", "Fecha", "Medio de pago", "Banco", "N° cuenta/cheque", "Id"}, 0);
             
             int i = 0;
             this.setRowCount(data.length);
@@ -139,6 +188,7 @@ public class vistaVerPagos extends javax.swing.JDialog {
                 this.setValueAt(data1[3], i, 3);
                 this.setValueAt(data1[4], i, 4);
                 this.setValueAt(data1[5], i, 5);
+                this.setValueAt(data1[6], i, 6);
                 i++;
             }
         }

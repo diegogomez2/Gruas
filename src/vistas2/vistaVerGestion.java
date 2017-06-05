@@ -45,6 +45,7 @@ public class vistaVerGestion extends javax.swing.JDialog {
         tablaGestiones = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Gestiones");
 
         tablaGestiones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

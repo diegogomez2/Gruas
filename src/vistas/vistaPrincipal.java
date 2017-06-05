@@ -96,6 +96,7 @@ public class vistaPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu Principal");
+        setAutoRequestFocus(false);
         setMinimumSize(new java.awt.Dimension(900, 700));
 
         MenuArchivo.setText("Archivo");

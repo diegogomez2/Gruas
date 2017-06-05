@@ -1100,13 +1100,6 @@ public class vistaIngresarOts extends javax.swing.JDialog {
         double horasEx = (Double) spinnerHoraExFes.getValue();
         return horasEx;
     }
-    
-    /***BORRAR***/
-    //Horas para el calculo // HoraEx al 50% = 1, al 100% = 2
-    public double getHorasExCal(){
-        double horasEx =  (Double) spinnerHoraExNormales.getValue() + 2 * (Double) spinnerHoraExFes.getValue();
-        return horasEx;
-    }
 
     public String getTextoDespacho() {
         if(getCheckDespacho().compareTo("0") == 0){

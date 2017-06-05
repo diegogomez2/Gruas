@@ -6,10 +6,12 @@
 package vistas2;
 
 import controladores2.controladorGestionPago;
+import controladores2.controladorModificarPago;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JLabel;
@@ -19,30 +21,25 @@ import javax.swing.JOptionPane;
  *
  * @author diego
  */
-public class vistaGestionPago extends javax.swing.JDialog {
+public class vistaModificarPago extends javax.swing.JDialog {
 
     /**
-     * Creates new form vistaGestionPago
+     * Creates new form vistaModificarPago
      */
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
     int saldo;
+    int montoAnt;
     String id;
-    String folio;
-    String tipo;
     NumberFormat FORMAT = NumberFormat.getCurrencyInstance();
     DecimalFormatSymbols dfs = new DecimalFormatSymbols();
     
-    public vistaGestionPago(java.awt.Frame parent, boolean modal, int saldo) {
+    public vistaModificarPago(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        textoFecha.setDate(new Date());
-        this.saldo = saldo;
         dfs.setCurrencySymbol("$");
         dfs.setGroupingSeparator('.');
         dfs.setMonetaryDecimalSeparator('.');
         ((DecimalFormat) FORMAT).setDecimalFormatSymbols(dfs);
-        textoSaldo.setText(FORMAT.format(saldo));
-        this.setPagoTotal();
     }
 
     /**
@@ -67,12 +64,12 @@ public class vistaGestionPago extends javax.swing.JDialog {
         textoNumCuenta = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         textoSaldo = new javax.swing.JFormattedTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        botonCancelar = new javax.swing.JButton();
+        botonAceptar = new javax.swing.JButton();
         textoMonto = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Ingresar gestión de pago");
+        setTitle("Modificar pago");
 
         jLabel1.setText("Opción de pago");
 
@@ -104,17 +101,17 @@ public class vistaGestionPago extends javax.swing.JDialog {
 
         textoSaldo.setEditable(false);
 
-        jButton1.setText("Cancelar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        botonCancelar.setText("Cancelar");
+        botonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                botonCancelarActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Aceptar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        botonAceptar.setText("Aceptar");
+        botonAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                botonAceptarActionPerformed(evt);
             }
         });
 
@@ -158,14 +155,11 @@ public class vistaGestionPago extends javax.swing.JDialog {
                             .addComponent(textoMonto)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton2)
+                        .addComponent(botonAceptar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)))
+                        .addComponent(botonCancelar)))
                 .addContainerGap())
         );
-
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2});
-
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -199,29 +193,13 @@ public class vistaGestionPago extends javax.swing.JDialog {
                 .addComponent(textoSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(botonCancelar)
+                    .addComponent(botonAceptar))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        controladorGestionPago miControladorGP = new controladorGestionPago();
-        if (miControladorGP.irVistaCobranzasP()) {
-            JOptionPane.showMessageDialog(this, "Pago modificado con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
-            setVisible(false);
-        }   
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void textoMontoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textoMontoFocusLost
-        setTextoMonto(getTextoMonto());
-    }//GEN-LAST:event_textoMontoFocusLost
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void comboOpcionPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboOpcionPagoActionPerformed
         int op = getComboOpcionPago();
@@ -240,6 +218,22 @@ public class vistaGestionPago extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_comboMedioActionPerformed
 
+    private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
+        dispose();
+    }//GEN-LAST:event_botonCancelarActionPerformed
+
+    private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
+        controladorModificarPago miControladorMP = new controladorModificarPago();
+        if (miControladorMP.irVistaCobranzasP()) {
+            JOptionPane.showMessageDialog(this, "Pago modificado con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+            setVisible(false);
+        }
+    }//GEN-LAST:event_botonAceptarActionPerformed
+
+    private void textoMontoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textoMontoFocusLost
+        setTextoMonto(getTextoMonto());
+    }//GEN-LAST:event_textoMontoFocusLost
+
     /**
      * @param args the command line arguments
      */
@@ -257,29 +251,28 @@ public class vistaGestionPago extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(vistaGestionPago.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(vistaModificarPago.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(vistaGestionPago.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(vistaModificarPago.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(vistaGestionPago.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(vistaModificarPago.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(vistaGestionPago.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(vistaModificarPago.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonAceptar;
+    private javax.swing.JButton botonCancelar;
     private javax.swing.JComboBox<String> comboMedio;
     private javax.swing.JComboBox<String> comboOpcionPago;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -293,29 +286,34 @@ public class vistaGestionPago extends javax.swing.JDialog {
     private javax.swing.JTextField textoNumCuenta;
     private javax.swing.JFormattedTextField textoSaldo;
     // End of variables declaration//GEN-END:variables
+
     
-    public String getFolio(){
-        return folio;
-    }
-    
-    public void setFolio(String folio){
-        this.folio = folio;
-    }
-    
-    public String getIdFac(){
+    public String getId(){
         return id;
     }
     
-    public void setIdFac(String id){
+    public void setId(String id){
         this.id = id;
     }
     
-    public String getTipo(){
-        return tipo;
+    public void setComboOpcionPago(String opcionPago){
+        comboOpcionPago.setSelectedItem(opcionPago);
     }
     
-    public void setTipo(String tipo){
-        this.tipo = tipo;
+    public void setTextoFechaPago(String fechaPago) throws ParseException{
+        textoFecha.setDate(formatDate.parse(fechaPago));
+    }
+    
+    public void setComboMedioPago(String medioPago){
+        comboMedio.setSelectedItem(medioPago);
+    }
+    
+    public void setTextoBanco(String banco){
+        textoBanco.setText(banco);
+    }
+    
+    public void setTextoNumeroCuentaCheque(String num){
+        textoNumCuenta.setText(num);
     }
 
     public String getComboMedio() {
@@ -409,5 +407,16 @@ public class vistaGestionPago extends javax.swing.JDialog {
         String dateString = formatDate.format(textoFecha.getDate());
         return dateString;
     }
+    
+    public void setSaldo(int saldo){
+        this.saldo = saldo;
+    }
+    
+    public void setMontoAnt(int montoAnt){
+        this.montoAnt = montoAnt;
+    }
+    
+    public int getMontAnt(){
+        return this.montoAnt;
+    }
 }
-

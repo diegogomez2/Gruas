@@ -70,20 +70,22 @@ public class controladorOcs {
     }
     
     public void restarMensualidad(String idOc) throws ParseException{
-//        int mes, year;
-//        modelos.modeloEmpleados empleado = new modelos.modeloEmpleados();
-//        String[][] data = empleado.obtenerHorasOc(idOc);
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//        Date fecha = sdf.parse(data[1]);
-//        Calendar cal = Calendar.getInstance();
-//        cal.setTime(fecha);
-//        if(cal.get(Calendar.DAY_OF_MONTH) > 25){
-//            mes = cal.get(Calendar.MONTH) + 2;
-//        }else{
-//            mes = cal.get(Calendar.MONTH) + 1;
-//        }
-//        year = cal.get(Calendar.YEAR);
-////        empleado.restarMensualidad(data[0], mes, year, data[2], data[3], data[4], data[5], data[6], data[7]);
+        int mes, year;
+        modelos.modeloEmpleados empleado = new modelos.modeloEmpleados();
+        String[][] data = empleado.obtenerHorasOc(idOc);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date fecha = sdf.parse(data[0][1]);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(fecha);
+        if(cal.get(Calendar.DAY_OF_MONTH) > 25){
+            mes = cal.get(Calendar.MONTH) + 2;
+        }else{
+            mes = cal.get(Calendar.MONTH) + 1;
+        }
+        year = cal.get(Calendar.YEAR);
+        for(String[] data1: data){
+            empleado.restarMensualidad(data1[0], mes, year, data1[2], data1[3], data1[4], data1[5], data1[6], data1[7]);
+        }
         
     }
     

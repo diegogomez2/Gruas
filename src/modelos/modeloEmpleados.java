@@ -285,6 +285,7 @@ public class modeloEmpleados {
         return "correcto";
     }
 
+    /* Obtiene el rut del empleado según su nombre */
     public String obtenerEmpleadoPorNombre(String textoOperador) {
         String data = null;
         String[] nom = (textoOperador.trim()).split(" +");
@@ -318,49 +319,7 @@ public class modeloEmpleados {
         return data;
     }
     
-    //malo, borrar
-//    public String[] obtenerEmpleadosPorNombre(String[] textoOperador) {
-//        String[] data = null;
-//        String[] noms = null;
-//        String[] apsP = null;
-//        String[] apsM = null;
-//        int j = 0;
-//        for(String nombreOperador: textoOperador){
-//            String[] nom = (nombreOperador.trim()).split(" +");
-//            int size = nom.length;
-//            if(size < 3) return null;
-//            apsM[j] = nom[size-1];
-//            apsP[j] = nom[size-2];
-//            String nombres = "";
-//            for(int i = 0; i < size - 2; i++){
-//                nombres += nom[i] + " ";
-//            }
-//            nombres = nombres.trim();
-//            noms[j] = nombres;
-//        }
-//        try{
-//            Class.forName("com.mysql.jdbc.Driver");
-//            conn = DriverManager.getConnection(url, login, password);
-//            PreparedStatement pstm = conn.prepareStatement("SELECT rut_emp FROM empleados WHERE apP_emp = ? "
-//                    + "AND apM_emp = ? AND nom_emp = ?");
-//            pstm.setString(1, apP);
-//            pstm.setString(2, apM);
-//            pstm.setString(3, nombres);
-//            ResultSet res = pstm.executeQuery();
-//            res.next();
-//            String estrut = res.getString("rut_emp");
-//            data = estrut;
-//        }catch(SQLException e){
-//            System.out.println("Error al obtener empleado por nombre");
-//            System.out.println(e);
-//        }catch(ClassNotFoundException e){
-//            System.out.println(e);
-//        }
-//        return data;
-//    }
-    
     public Object[] obtenerNomEmpDisp(String fhsal, String fhreg) {
-        //String fechSal, String horaSal, String fechReg, String horaReg
         int registros = 0;
         try{
             Class.forName("com.mysql.jdbc.Driver");
@@ -408,20 +367,17 @@ public class modeloEmpleados {
         return data;  
     }
     
+    /* Comprueba si el empleado esta disponible en el periodo indicado*/
     public int checkEmpDisp(String fhsal, String fhreg, String rut) {
-        //String fechSal, String horaSal, String fechReg, String horaReg
         int registros = 0;
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-//            PreparedStatement pstm = conn.prepareStatement("SELECT count(*) as total from jornadas where "
-//                    + "( subtime(?, '01:00') <= fhreg_jor and addtime(?, '01:00') >= fhsal_jor and rut_emp = ?)");
             PreparedStatement pstm = conn.prepareStatement("SELECT count(*) as total from jornadas where "
                     + "( ? <= fhreg_jor and ? >= fhsal_jor and rut_emp = ? and nc_ot = 0)");
             pstm.setString(1, fhsal);
             pstm.setString(2, fhreg);
             pstm.setString(3, rut);
-            System.out.println(pstm);
             ResultSet res = pstm.executeQuery();
             res.next();
             registros = res.getInt("total");
@@ -996,7 +952,8 @@ public class modeloEmpleados {
         }
     }
     
-    public void agregarMensualidad(String rut, int mes, int year, double horas, double horasNormales, double horasFestivas, int horasColacion30, int horasColacion1, String ton){ //agregar ton
+    /*Agrega la mensualidad y las horas bono 300 al operador al asignar una OT o una OC*/
+    public void agregarMensualidad(String rut, int mes, int year, double horas, double horasNormales, double horasFestivas, int horasColacion30, int horasColacion1, String ton){ 
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
@@ -1012,7 +969,6 @@ public class modeloEmpleados {
             pstm.setDouble(6, horasFestivas);
             pstm.setInt(7, horasColacion30);
             pstm.setInt(8, horasColacion1);
-            //pstm.setString(8, rut);
             pstm.setDouble(9, horas);
             pstm.setDouble(10, horasNormales);
             pstm.setDouble(11, horasFestivas);
@@ -1038,6 +994,7 @@ public class modeloEmpleados {
         }
     }
     
+    /*Obtiene las horas de la ot mas la id del tonelaje segun su id*/
     public String[] obtenerHorasOt(String idOt){ //agregar ton
         String[] data = new String[1];
         try{
@@ -1067,34 +1024,55 @@ public class modeloEmpleados {
         return data;
     }
     
+    /*Obtiene las horas de la oc mas la id del tonelaje segun su id*/
     public String[][] obtenerHorasOc(String idOc){ //agregar ton
-//        String[] data = new String[1];
-//        try{
-//            Class.forName("com.mysql.jdbc.Driver");
-//            conn = DriverManager.getConnection(url, login, password);
-//            PreparedStatement pstm = conn.prepareStatement("SELECT rut_emp, fec_ot, hortot_ot, horex_ot, horex2_ot, horcol30_ot, horcol1_ot, id_ton FROM Jornadas_oc INNER JOIN "
-//                    + "Gruas USING(pat_gru) INNER JOIN Tonelajes ON ton_gru = pes_ton WHERE cod_ot = ?");
-//            pstm.setString(1, idOt);
-//            ResultSet res = pstm.executeQuery();
-//            res.next();
-//            String estrut = res.getString("rut_emp");
-//            String estfec = res.getString("fec_ot");
-//            String esthor = res.getString("hortot_ot");
-//            String esthorex = res.getString("horex_ot");
-//            String esthorex2 = res.getString("horex2_ot");
-//            String esthorcol30 = res.getString("horcol30_ot");
-//            String esthorcol1 = res.getString("horcol1_ot");
-//            String estidton = res.getString("id_ton");
-//            data = new String[]{estrut, estfec, esthor, esthorex, esthorex2, esthorcol30, esthorcol1, estidton};
-//            pstm.close();
-//        }catch(SQLException e){
-//            System.out.println("Error al obtener horas ot de empleado");
-//            System.out.println(e);
-//        }catch(ClassNotFoundException e){
-//            System.out.println(e);
-//        }
-//        return data;
-return null;
+        int registros = 0;
+        
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT COUNT(1) total FROM Detalle_oc_emp INNER JOIN Jornadas_oc USING(id_joroc) WHERE cod_oc = ?");
+            pstm.setString(1, idOc);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+       }catch(SQLException e){
+            System.out.println("Error al listar horas oc");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        String[][] data = new String[registros][];
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT rut_emp, fec_oc, hortot_det_emp, horex_det_emp, horex2_det_emp, horcol30_det_emp, horcol1_det_emp, id_ton FROM Jornadas_oc INNER JOIN "
+                    + "Detalle_oc_emp USING(id_joroc) INNER JOIN Tonelajes ON pes_det_emp = pes_ton WHERE cod_oc = ?");
+            pstm.setString(1, idOc);
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while(res.next()){
+                String estrut = res.getString("rut_emp");
+                String estfec = res.getString("fec_oc");
+                String esthor = res.getString("hortot_det_emp");
+                String esthorex = res.getString("horex_det_emp");
+                String esthorex2 = res.getString("horex2_det_emp");
+                String esthorcol30 = res.getString("horcol30_det_emp");
+                String esthorcol1 = res.getString("horcol1_det_emp");
+                String estidton = res.getString("id_ton");
+                data[i] = new String[]{estrut, estfec, esthor, esthorex, esthorex2, esthorcol30, esthorcol1, estidton};
+                i++;
+            }
+            pstm.close();
+            res.close();
+        }catch(SQLException e){
+            System.out.println("Error al obtener horas oc de empleado");
+            System.out.println(e);
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+        }
+        return data;
     }
     
     public void restarMensualidad(String rut, int mes, int year, String horas, String horex, String horex2, String horcol30, String horcol1, String ton){
@@ -1112,12 +1090,13 @@ return null;
             pstm.setInt(7, mes);
             pstm.setInt(8, year);
             pstm.execute();
-            pstm = conn.prepareStatement("UPDATE Horas_bono_300 SET horbon=horbon-? WHERE rut_emp = ? AND mes_bon = ? AND year_bon = ? AND id_ton = ?");
+            pstm = conn.prepareStatement("UPDATE Horas_bono_300 SET hor_bon=hor_bon-? WHERE rut_emp = ? AND mes_bon = ? AND year_bon = ? AND id_ton = ?");
             pstm.setString(1, horas);
             pstm.setString(2, rut);
             pstm.setInt(3, mes);
             pstm.setInt(4, year);
             pstm.setString(5, ton);
+            pstm.executeUpdate();
             pstm.close();
         }catch(SQLException|ClassNotFoundException e){
             System.out.println("error al restar mensualidad empleado");

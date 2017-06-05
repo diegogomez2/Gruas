@@ -141,7 +141,7 @@ public class vistaOcsP extends javax.swing.JPanel {
         tablaOcs.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tablaOcs);
 
-        botonFacturar.setText("Facturar OT");
+        botonFacturar.setText("Facturar OC");
         botonFacturar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonFacturarActionPerformed(evt);
@@ -156,7 +156,7 @@ public class vistaOcsP extends javax.swing.JPanel {
             }
         });
 
-        botonAnular.setText("Anular OT");
+        botonAnular.setText("Anular OC");
         botonAnular.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonAnularActionPerformed(evt);
@@ -170,7 +170,7 @@ public class vistaOcsP extends javax.swing.JPanel {
             }
         });
 
-        botonEliminar.setText("Eliminar OT");
+        botonEliminar.setText("Eliminar OC");
         botonEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonEliminarActionPerformed(evt);
@@ -294,7 +294,7 @@ public class vistaOcsP extends javax.swing.JPanel {
             JTabbedPane tabs = (JTabbedPane) this.getParent();
             micontroladorFacturas.crearControladorPrincipal(tabs);
             miControlador.crearControladorPrincipal(tabs);
-            //JOptionPane.showMessageDialog(null, "Orden de trabajo facturada con éxito");
+            JOptionPane.showMessageDialog(null, "Orden de trabajo eliminada con éxito");
 
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una orden de trabajo para ser eliminada");

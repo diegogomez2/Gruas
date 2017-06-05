@@ -30,8 +30,8 @@ public class controladorIngresarOcs {
     DateFormat newFormat = new SimpleDateFormat("dd-MM-yyyy");
     DateFormat dt = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     
-    public void mostrarVistaIngresarOcs(String[] data, Object[] ciudades) throws ParseException {
-        vistaIO = new vistaIngresarOcs(new javax.swing.JFrame(), true);
+    public void mostrarVistaIngresarOcs(String[] data, Object[] ciudades, Object[] dataTon) throws ParseException {
+        vistaIO = new vistaIngresarOcs(new javax.swing.JFrame(), true, dataTon);
         vistaIO.setDiaInicio(data[0]);
         vistaIO.setHoraInicio(data[1]);
         vistaIO.setDiaFin(data[2]);
@@ -128,16 +128,16 @@ public class controladorIngresarOcs {
     public void agregarMensualidad(int mes, int year){
         JTable tablaEmpleados = vistaIO.getTablaEmpleados();
         int numEmp = tablaEmpleados.getRowCount();
-        String[][] horas = new String[numEmp][6];
+        String[][] horas = new String[numEmp][7];
         for(int i = 0; i < numEmp; i++){
             horas[i] = new String[]{tablaEmpleados.getValueAt(i, 0).toString(), tablaEmpleados.getValueAt(i, 5).toString(), tablaEmpleados.getValueAt(i, 6).toString(), tablaEmpleados.getValueAt(i, 7).toString(), 
-            tablaEmpleados.getValueAt(i, 8).toString(), tablaEmpleados.getValueAt(i, 9).toString()};
+            tablaEmpleados.getValueAt(i, 8).toString(), tablaEmpleados.getValueAt(i, 9).toString(), tablaEmpleados.getValueAt(i, 10).toString()};
         }
         modelos.modeloEmpleados empleado = new modeloEmpleados();
         for(String[] hora: horas){
             String rut = empleado.obtenerEmpleadoPorNombre(hora[0]);
              empleado.agregarMensualidad(rut, mes, year, Double.parseDouble(hora[1]), Double.parseDouble(hora[2]), Double.parseDouble(hora[3]), Integer.parseInt(hora[4]), 
-                    Integer.parseInt(hora[5]), "1");
+                    Integer.parseInt(hora[5]), hora[6]);
         }
     }
     

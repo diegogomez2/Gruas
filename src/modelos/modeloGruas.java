@@ -373,12 +373,13 @@ public class modeloGruas {
         return data;  
     }
 
+    /* Obtiene la patente de la grúa según su descripción*/
     public String obtenerGruaPorDesc(String textoGrua) {
         String data = null;
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("SELECT * FROM gruas WHERE des_gru = ?");
+            PreparedStatement pstm = conn.prepareStatement("SELECT pat_gru FROM Gruas WHERE des_gru = ?");
             pstm.setString(1, textoGrua);
             ResultSet res = pstm.executeQuery();
             res.next();
@@ -459,23 +460,17 @@ public class modeloGruas {
         return data;  
     }
     
+    /* Comprueba disponibilidad de una grua en el periodo indicado*/
     public int checkGruaDisp(String fhsal, String fhreg, String pat) {
-        //String fechSal, String horaSal, String fechReg, String horaReg
         int registros = 0;
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            //CON UNA HORA ANTES Y UNA HORA DESPUES
-//            PreparedStatement pstm = conn.prepareStatement("SELECT count(*) as total from jornadas "
-//                    + " where ( subtime(?, '01:00') <= fhreg_jor and "
-//                    + "addtime(?, '01:00') >= fhsal_jor and pat_gru = ?)");
-            PreparedStatement pstm = conn.prepareStatement("SELECT count(*) as total from jornadas "
-                    + " where ( ? <= fhreg_jor and "
-                    + "? >= fhsal_jor and pat_gru = ? and nc_ot = 0)");
+            PreparedStatement pstm = conn.prepareStatement("SELECT COUNT(*) total FROM Jornadas "
+                    + "WHERE ( ? <= fhreg_jor and ? >= fhsal_jor AND pat_gru = ? AND nc_ot = 0)");
             pstm.setString(1, fhsal);
             pstm.setString(2, fhreg);
             pstm.setString(3, pat);
-            System.out.println(pstm);
             ResultSet res = pstm.executeQuery();
             res.next();
             registros = res.getInt("total");

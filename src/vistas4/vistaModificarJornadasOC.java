@@ -80,7 +80,6 @@ import org.jdesktop.swingx.table.DatePickerCellEditor;
         textoClientes = (JTextField)comboClientes.getEditor().getEditorComponent();
         textoGruas = (JTextField)comboGruas.getEditor().getEditorComponent();
         textoOperadores = (JTextField)comboOperadores.getEditor().getEditorComponent();
-//        tablaHorasBase.setModel(hb);
         tablaGruas.setModel(tg);
         tablaGruas.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(comboGruas));
         tablaGruas.getColumnModel().getColumn(1).setCellEditor(new DatePickerCellEditor(formatDate));
@@ -777,7 +776,7 @@ import org.jdesktop.swingx.table.DatePickerCellEditor;
     }
     
     public String getTextoHoraRegresoEmp(int i) {
-        String hora = tablaGruas.getValueAt(i, 4).toString();
+        String hora = tablaEmpleados.getValueAt(i, 4).toString();
         return hora;
     }
     
@@ -880,9 +879,9 @@ import org.jdesktop.swingx.table.DatePickerCellEditor;
         for(Object[] data1 : data){
             tablaEmpleados.setValueAt(data1[0], i, 0);
             tablaEmpleados.setValueAt(formatDate2.parse(data1[1].toString()), i, 1);
-            tablaEmpleados.setValueAt(formatClock.parse(data1[2].toString()), i, 2);
+            tablaEmpleados.setValueAt(data1[2].toString(), i, 2);
             tablaEmpleados.setValueAt(formatDate2.parse(data1[3].toString()), i, 3);
-            tablaEmpleados.setValueAt(formatClock.parse(data1[4].toString()), i, 4);
+            tablaEmpleados.setValueAt(data1[4].toString(), i, 4);
             i++;
         }
     }
@@ -1134,61 +1133,5 @@ import org.jdesktop.swingx.table.DatePickerCellEditor;
             tablaHoras.setValueAt(Double.parseDouble(ton.toString()), i, 0);
             i++;
         }
-    }
-    
-//    class SpinnerRenderer extends JSpinner implements TableCellRenderer {
-//        public SpinnerRenderer() {
-//            setOpaque(false);
-//        }
-//
-//        @Override
-//        public Component getTableCellRendererComponent(JTable table, Object value,
-//                boolean isSelected, boolean hasFocus, int row, int column) {
-//            if(value != null && value != ""){
-//                setModel(new SpinnerDateModel());
-//                setValue(value);
-//                JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(this, "HH:mm");
-//                setEditor(timeEditor);
-//            }
-//            return this;
-//        }
-//    }
-
-//    class SpinnerEditor extends AbstractCellEditor implements TableCellEditor {
-//
-//        protected JSpinner spinner;
-//
-//        public SpinnerEditor() {
-//            spinner = new JSpinner(new SpinnerDateModel());
-//            spinner.setFocusable(true);
-//            for(Component tmpComponent: spinner.getComponents()){
-//                tmpComponent.setFocusable(true);
-//                tmpComponent.addFocusListener(new FocusAdapter(){
-//                @Override
-//                public void focusLost(FocusEvent fe){
-//                    
-//                }});
-//            }
-//            JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(spinner, "HH:mm");
-//            spinner.setEditor(timeEditor);
-//            spinner.setValue(new Date());
-//        }
-//
-//        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {       
-//            if(value != null && value != ""){
-//                JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(spinner, "HH:mm");
-//                spinner.setEditor(timeEditor);
-//                System.out.println(value.getClass());
-//                spinner.setValue(((SpinnerDateModel)value).getValue());
-//            }
-//            return spinner;
-//        }
-//
-//        public Object getCellEditorValue() {
-//            SpinnerModel sm = spinner.getModel();
-//            return sm;
-//        }
-//
-//    }       
-    
+    }    
 }

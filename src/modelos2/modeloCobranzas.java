@@ -317,6 +317,7 @@ public class modeloCobranzas {
         return "correcto";
     }
     
+    /*Ingresa una nueva gestion de pago y actualiza el monto abonado en la fac/nd*/
     public String gestionPago(String id, String fol, String tipo, String tipoPag, String monto, String fec, String med, String ban, String num){
         try{
             System.out.println(id + " " + fol + " " + tipo);
@@ -356,6 +357,7 @@ public class modeloCobranzas {
         return "correcto";
     }
     
+    /*Obtiene el saldo restante de una factura segun su folio y tipo*/
     public int getSaldo(String fol, String tipo){
         try{
             Class.forName("com.mysql.jdbc.Driver");
@@ -376,7 +378,33 @@ public class modeloCobranzas {
             res.close();
             return saldo;
         }catch(SQLException e){
-            System.out.println("Error al ingresar gestion");
+            System.out.println("Error al obtener saldo");
+            System.out.println(e);
+            return -1;
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+            return -1;
+        }
+    }
+    
+    /*Obtiene el saldo de una fac/nd segun el id de un pago*/
+    public int getSaldo(String idPago){
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT tot_fac tot, abo_fac abo FROM Facturas INNER JOIN Gestion_pag USING(id_fac) WHERE id_pag = ? "
+                    + "UNION "
+                    + "SELECT tot_nd tot, abo_nd abo FROM Notadebito INNER JOIN Gestion_pag USING(id_nd) WHERE id_pag = ?");
+            pstm.setString(1, idPago);
+            pstm.setString(2, idPago);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            int saldo = Integer.parseInt(res.getString("tot")) - Integer.parseInt(res.getString("abo"));
+            pstm.close();
+            res.close();
+            return saldo;
+        }catch(SQLException e){
+            System.out.println("Error al obtener saldo");
             System.out.println(e);
             return -1;
         }catch(ClassNotFoundException e){
@@ -515,6 +543,7 @@ public class modeloCobranzas {
         }
     }
     
+    /*Obtiene la informacion de pagos de una factura/nc segun el id de la fac/nd y tipo*/
     public Object[][] obtenerPagos(String id, String tipo){
         int registros = 0;
         try{
@@ -539,17 +568,17 @@ public class modeloCobranzas {
             System.out.println(e);
        }
         
-        Object[][] data = new String[registros][6];
+        Object[][] data = new String[registros][7];
         
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm;
             if(tipo.compareTo("notadebito") == 0){
-                pstm = conn.prepareStatement("SELECT tipo_pag, mon_pag, fec_pag, med_pag, ban_pag, num_pag"
+                pstm = conn.prepareStatement("SELECT tipo_pag, mon_pag, fec_pag, med_pag, ban_pag, num_pag, id_pag"
                     + " FROM Gestion_pag WHERE id_nd=?");
             }else{
-                pstm = conn.prepareStatement("SELECT tipo_pag, mon_pag, fec_pag, med_pag, ban_pag, num_pag"
+                pstm = conn.prepareStatement("SELECT tipo_pag, mon_pag, fec_pag, med_pag, ban_pag, num_pag, id_pag"
                     + " FROM Gestion_pag WHERE id_fac=?");
             }
             pstm.setString(1, id);
@@ -562,7 +591,8 @@ public class modeloCobranzas {
                 String estmed = res.getString("med_pag");
                 String estban = res.getString("ban_pag");
                 String estnum = res.getString("num_pag");
-                data[i] = new String[]{esttip, estmon, estfec, estmed, estban, estnum};
+                String estid = res.getString("id_pag");
+                data[i] = new String[]{esttip, estmon, estfec, estmed, estban, estnum, estid};
                 i++;
             }
             pstm.close();
@@ -575,6 +605,84 @@ public class modeloCobranzas {
         }catch(ClassNotFoundException e){
             System.out.println(e);
             return data;
+        }
+    }
+    
+    /*Obtiene un pago segun su id*/
+    public Object[] obtenerPago(String id){
+        Object[] data = new String[7];
+        
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT id_pag, tipo_pag, mon_pag, fec_pag, med_pag, ban_pag, num_pag"
+                    + " FROM Gestion_pag WHERE id_pag = ?");
+            pstm.setString(1, id);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            String estid = res.getString("id_pag");
+            String esttip = res.getString("tipo_pag");
+            String estmon = res.getString("mon_pag");
+            String estfec = res.getString("fec_pag");
+            String estmed = res.getString("med_pag");
+            String estban = res.getString("ban_pag");
+            String estnum = res.getString("num_pag");
+            data = new String[]{estid, esttip, estmon, estfec, estmed, estban, estnum};
+            pstm.close();
+            res.close();
+            return data;
+        }catch(SQLException e){
+            System.out.println("Error al ingresar gestion");
+            System.out.println(e);
+            return data;
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+            return data;
+        }
+    }
+
+    /*Modifica gestion de pago por id*/
+    public boolean modificarPago(String[] data, String id) {
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("UPDATE Gestion_pag SET tipo_pag=?, mon_pag=?, fec_pag=?, med_pag=?, ban_pag=?, num_pag=? "
+                    + "WHERE id_pag = ?");
+            pstm.setString(1, data[0]);
+            pstm.setString(2, data[1]);
+            pstm.setString(3, data[2]);
+            pstm.setString(4, data[3]);
+            pstm.setString(5, data[4]);
+            pstm.setString(6, data[5]);
+            pstm.setString(7, id);
+            pstm.executeUpdate();
+            pstm = conn.prepareStatement("SELECT id_fac id FROM Facturas INNER JOIN Gestion_pag USING(id_fac) WHERE id_pag = ? "
+                    + "UNION "
+                    + "SELECT id_nd id FROM Notadebito INNER JOIN Gestion_pag USING(id_nd) WHERE id_pag = ?");
+            pstm.setString(1, id);
+            pstm.setString(2, id);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            String estid = res.getString("id");
+            pstm = conn.prepareStatement("UPDATE Facturas SET abo_fac=?+abo_fac-? WHERE id_fac=?");
+            pstm.setString(1, data[1]);
+            pstm.setString(2, data[6]);
+            pstm.setString(3, estid);
+            pstm.executeUpdate();
+            pstm = conn.prepareStatement("UPDATE Notadebito SET abo_nd=?+abo_nd-? WHERE id_nd=?");
+            pstm.setString(1, data[1]);
+            pstm.setString(2, data[6]);
+            pstm.setString(3, estid);
+            pstm.executeUpdate();
+            pstm.close();
+            return true;
+        }catch(SQLException e){
+            System.out.println("Error al modificar gestion de pago");
+            System.out.println(e);
+            return false;
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+            return false;
         }
     }
 }

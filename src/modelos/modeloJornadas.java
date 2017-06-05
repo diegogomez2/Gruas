@@ -97,11 +97,12 @@ public class modeloJornadas {
         return data;
     }
     
+    /*Ingresa la jornada*/
     public String ingresarJornada(String[] data) {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("insert into jornadas (fsal_jor, horsal_jor,"
+            PreparedStatement pstm = conn.prepareStatement("INSERT INTO Jornadas (fsal_jor, horsal_jor,"
                     + " pat_gru, rut_cli, rut_emp, freg_jor, horlleg_jor, obs_jor, diasal_jor, dialleg_jor, fhsal_jor,"
                     + "fhreg_jor) "
                     + "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
@@ -138,20 +139,20 @@ public class modeloJornadas {
         return "correcto";
     }
 
+    /* Obtiene los datos de una jornada segun su id*/
     public String[] obtenerJornadaPorId(String id) {
         String[] data = new String[]{};
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("SELECT fsal_jor, horsal_jor, freg_jor, horlleg_jor,"
-                    + "coalesce(des_gru,'') as des_gru, raz_cli, coalesce(nom_emp,'') as nom_emp, "
-                    + "coalesce(apP_emp,'') as apP_emp, coalesce(apM_emp,'') as apM_emp, freg_jor, obs_jor, clientes.rut_cli, clientes.dig_cli,"
-                    + "gir_cli, dir_cli, tel_cli, ton_gru, ciu_cli, coalesce(obs_cli,'') as obs_cli, "
-                    + "Empleados.rut_emp FROM jornadas INNER JOIN clientes ON "
-                    + "jornadas.rut_cli = clientes.rut_cli LEFT JOIN gruas ON gruas.pat_gru = jornadas.pat_gru "
-                    + "LEFT JOIN empleados ON empleados.rut_emp = jornadas.rut_emp WHERE id_jor = ?");
+                    + "coalesce(des_gru,'') des_gru, raz_cli, coalesce(nom_emp,'') nom_emp, "
+                    + "coalesce(apP_emp,'') apP_emp, coalesce(apM_emp,'') apM_emp, freg_jor, obs_jor, Clientes.rut_cli, Clientes.dig_cli,"
+                    + "gir_cli, dir_cli, tel_cli, ton_gru, ciu_cli, coalesce(obs_cli,'') obs_cli, "
+                    + "Empleados.rut_emp FROM Jornadas INNER JOIN Clientes ON "
+                    + "Jornadas.rut_cli = Clientes.rut_cli LEFT JOIN Gruas ON Gruas.pat_gru = Jornadas.pat_gru "
+                    + "LEFT JOIN Empleados ON Empleados.rut_emp = Jornadas.rut_emp WHERE id_jor = ?");
             pstm.setString(1, id);
-            System.out.println(pstm);
             ResultSet res = pstm.executeQuery();
             res.next();
             String estrutcli = res.getString("clientes.rut_cli");
@@ -182,11 +183,12 @@ public class modeloJornadas {
         return data;
     }
 
+    /*Elimina la jornada segun su id*/
     public String eliminarJornada(String id) {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("DELETE FROM jornadas WHERE id_jor = ?");
+            PreparedStatement pstm = conn.prepareStatement("DELETE FROM Jornadas WHERE id_jor = ?");
             pstm.setString(1, id);
             pstm.execute();
             pstm.close();

@@ -72,8 +72,6 @@ public class controladorIngresarJornadas {
         }
         Date fecha1 = formatDate.parse(vistaIJ.getTextoFechaSalida());
         Date fecha2 = formatDate.parse(vistaIJ.getTextoFechaRegreso());
-        //Date fhsal = dt.parse(vistaIJ.getTextoFechaSalida() + vistaIJ.getTextoHoraSalida());
-        //Date fhreg = dt.parse(vistaIJ.getTextoFechaRegreso()+ vistaIJ.getTextoHoraRegreso());
         String fhsal = vistaIJ.getTextoFechaSalida() + " " + vistaIJ.getTextoHoraSalida();
         String fhreg = vistaIJ.getTextoFechaRegreso() + " " + vistaIJ.getTextoHoraRegreso();
         if(fecha2.before(fecha1)){

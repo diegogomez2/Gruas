@@ -488,10 +488,6 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
     private javax.swing.JTextArea textoObsCliente;
     // End of variables declaration//GEN-END:variables
 
-    public void focusGained(FocusEvent event) {
-        System.out.println("HOLA");
-    }
-
     public String getTextoFechaRegreso() {
         Date fecha = textoFechaRegreso.getDate();
         if (fecha == null) {
