@@ -48,6 +48,8 @@ public class controladorDetalleOts {
         vistaDO.setTextoCiudad(data[26]);
         vistaDO.setSpinnerHoraExNormales(data[29]);
         vistaDO.setSpinnerHoraExFestivos(data[30]);
+        vistaDO.setSpinnerHoraColacion30(data[31]);
+        vistaDO.setSpinnerHoraColacion1(data[32]);
         vistaDO.setTextoCodigo(id);
         vistaDO.setLocationRelativeTo(null);
         vistaDO.setVisible(true);

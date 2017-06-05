@@ -6,14 +6,9 @@
 package controladores2;
 
 import controladores.*;
-import java.awt.Frame;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import modelos2.modeloCompras;
-import vistas.vistaIngresarClientes;
 import vistas2.vistaIngresarCompras;
 
 /**

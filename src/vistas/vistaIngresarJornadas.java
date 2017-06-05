@@ -22,7 +22,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -410,7 +409,6 @@ public class vistaIngresarJornadas extends javax.swing.JDialog {
     }//GEN-LAST:event_botonCancelarActionPerformed
 
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
-        JFrame tabs = (JFrame) this.getParent();
         controladores.controladorIngresarJornadas miControladorIJ = new controladores.controladorIngresarJornadas();
         String respuesta = miControladorIJ.camposVacios();
         boolean esVacio = respuesta.length() == 0;

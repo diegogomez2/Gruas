@@ -2017,4 +2017,11 @@ public class controladorCrearFactura {
         tabs.insertTab("Histórico", null, miControlador.crearControladorHistoricoP(), null, 7);
         tabs.setSelectedIndex(5);
     }
+    
+//    public void crearControladorPrincipalOC(JTabbedPane tabs){
+//        controladorPrincipal miControlador = new controladorPrincipal();
+//        tabs.remove(2);
+//        tabs.insertTab("A facturar", null, miControlador.crearControladorFacturasOCP(), null, 2);
+//        tabs.setSelectedIndex(2);
+//    }
 }

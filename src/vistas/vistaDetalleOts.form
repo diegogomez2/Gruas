@@ -187,12 +187,12 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="jSpinner2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="spinnerHoraCol1" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="jSpinner1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="spinnerHoraCol30" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -205,12 +205,12 @@
                           <Component id="jLabel25" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jSpinner1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="spinnerHoraCol30" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jSpinner2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="spinnerHoraCol1" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel14" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="0" pref="11" max="32767" attributes="0"/>
@@ -234,9 +234,15 @@
                     <Property name="text" type="java.lang.String" value="D&#xed;as"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JSpinner" name="jSpinner1">
+                <Component class="javax.swing.JSpinner" name="spinnerHoraCol30">
+                  <Properties>
+                    <Property name="enabled" type="boolean" value="false"/>
+                  </Properties>
                 </Component>
-                <Component class="javax.swing.JSpinner" name="jSpinner2">
+                <Component class="javax.swing.JSpinner" name="spinnerHoraCol1">
+                  <Properties>
+                    <Property name="enabled" type="boolean" value="false"/>
+                  </Properties>
                 </Component>
               </SubComponents>
             </Container>

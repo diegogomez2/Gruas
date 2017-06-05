@@ -46,7 +46,7 @@ public class modeloOts {
             PreparedStatement pstm = conn.prepareStatement("update jornadas set cont_ot = ?, fec_ot = ?, pag_ot = ?,"
                     + "cond_ot = ?, desp_ot = ?, cod_ot = ?, neto_ot = ?, iva_ot = ?, total_ot = ?, "
                     + "horfin_ot=?, hortot_ot=?, horsal_jor=?, horlleg_jor=?, checkdesp_ot = ?, vdesp_ot = ?, "
-                    + "checkhormin_ot=?, desc_ot=? where id_jor = ?");
+                    + "checkhormin_ot=?, desc_ot=?, horex_ot=?, horex2_ot=?, horcol30_ot=?, horcol1_ot=? where id_jor = ?");
             pstm.setString(1, data[0]);
             pstm.setString(2, data[1]);
             pstm.setString(3, data[2]);
@@ -68,7 +68,11 @@ public class modeloOts {
             }
             pstm.setString(16, data[16]);
             pstm.setInt(17, Integer.parseInt(data[17]));
-            pstm.setInt(18, Integer.parseInt(data[5]));
+            pstm.setDouble(18, Double.parseDouble(data[18]));
+            pstm.setDouble(19, Double.parseDouble(data[19]));
+            pstm.setInt(20, Integer.parseInt(data[20]));
+            pstm.setInt(21, Integer.parseInt(data[21]));
+            pstm.setInt(22, Integer.parseInt(data[5]));
             pstm.execute();
             pstm.close();
         }catch(SQLException e){
@@ -221,7 +225,7 @@ public class modeloOts {
                     + "des_gru, raz_cli, ciu_cli, nom_emp, apP_emp, apM_emp, freg_jor, obs_jor, clientes.rut_cli, clientes.dig_cli,"
                     + "gir_cli, dir_cli, tel_cli, ton_gru, fec_ot, cod_ot, pag_ot, cond_ot, cont_ot, "
                     + "total_ot, neto_ot, iva_ot, desp_ot, horfin_ot, checkdesp_ot, vdesp_ot, desc_ot, checkhormin_ot, "
-                    + " coalesce(horex_ot, 0) horex, coalesce(horex2_ot, 0) horex2 "
+                    + " coalesce(horex_ot, 0) horex, coalesce(horex2_ot, 0) horex2, coalesce(horcol30_ot, 0) horcol30_ot, coalesce(horcol1_ot, 0) horcol1_ot "
                     + " FROM jornadas INNER JOIN clientes ON "
                     + "jornadas.rut_cli = clientes.rut_cli INNER JOIN gruas ON gruas.pat_gru = jornadas.pat_gru "
                     + "INNER JOIN empleados ON empleados.rut_emp = jornadas.rut_emp WHERE cod_ot = ?");
@@ -258,9 +262,12 @@ public class modeloOts {
             String estchmin = res.getString("checkhormin_ot");
             String esthorex = res.getString("horex");
             String esthorex2 = res.getString("horex2");
+            String esthorcol30 = res.getString("horcol30_ot");
+            String esthorcol1 = res.getString("horcol1_ot");
             data = new String[]{estfsal, esthorsal, estfreg, esthorlleg, estdes, estnom, estobs
                     , estrutcli, estdigcli, estraz, estgir, estdir, esttel, id, estton, estfot, estcond
-                    , estpago, estcont, esttot, estneto, estiva, estdesp, esthorfin, estcdesp, estvdesp, estciu, estdesc, estchmin, esthorex, esthorex2};
+                    , estpago, estcont, esttot, estneto, estiva, estdesp, esthorfin, estcdesp, estvdesp, estciu, estdesc, estchmin, esthorex, esthorex2, 
+                    esthorcol30, esthorcol1};
         }catch(SQLException e){
             System.out.println("Error obtener ot por id");
             System.out.println(e);
@@ -1104,6 +1111,96 @@ public class modeloOts {
             System.out.println(e);
         }
         return 1;
+    }
+    
+    public int agregarHorasColacion(String id, int col30, int col1){
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("UPDATE Jornadas set horcol30_ot = ?, horcol1_ot = ? WHERE id_jor = ?");
+            pstm.setDouble(1, col30);
+            pstm.setDouble(2, col1);
+            pstm.setString(3, id);
+            System.out.println(id);
+            pstm.executeUpdate();
+        }catch(SQLException e){
+            System.out.println("Error actualizar horas colacion en ot");
+            System.out.println(e);
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+        }
+        return 1;
+    }
+    
+    public Object[][] listarReporteHistoricoOt(String fecIn, String fecFin){
+        int registros = 0;
+        
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM jornadas WHERE NOT cod_ot = -1 and fact_ot >= 2 AND fec_ot >= ? AND fec_ot <= ?");
+            pstm.setString(1, fecIn);
+            pstm.setString(2, fecFin);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+       }catch(SQLException e){
+            System.out.println("Error listar reporte historico ot");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        
+        Object[][] data = new String[registros][14];
+        
+        try{
+            PreparedStatement pstm = conn.prepareStatement("SELECT id_jor, fec_ot, raz_cli, gir_cli, dir_cli,"
+                    + "ciu_cli, com_cli, pat_gru, nom_emp, apP_emp, obs_jor, cod_ot, total_ot, neto_ot, "
+                    + "iva_ot, fact_ot, clientes.rut_cli, dig_cli FROM Jornadas INNER JOIN"
+                    + " clientes ON clientes.rut_cli = jornadas.rut_cli INNER JOIN empleados ON empleados.rut_emp "
+                    + "= jornadas.rut_emp Where not cod_ot = -1 and fact_ot >= 2 AND fec_ot >= ? AND fec_ot <= ? ORDER BY cod_ot, fact_ot");
+            pstm.setString(1, fecIn);
+            pstm.setString(2, fecFin);
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while(res.next()){
+                String estfec = res.getString("fec_ot");
+                java.util.Date fecha = formatDate.parse(estfec);
+                estfec = newFormat.format(fecha);
+                String estraz = res.getString("raz_cli");
+                String estgir = res.getString("gir_cli");
+                String estdir = res.getString("dir_cli");
+                String estciu = res.getString("ciu_cli");
+                String estcom = res.getString("com_cli");
+                String esttot = res.getString("total_ot");
+                String estnet = res.getString("neto_ot");
+                String estiva = res.getString("iva_ot");
+                String estcodot = res.getString("cod_ot");
+                String estfact = res.getString("fact_ot");
+                String estfact2;
+                if(estfact.compareTo("0") == 0){
+                    estfact2 = "Disponible";
+                }else if(estfact.compareTo("4") == 0){
+                    estfact2 = "Nula";
+                }else{
+                    estfact2 = "Facturada";
+                }
+                String estemp = res.getString("nom_emp") + " " + res.getString("apP_emp");
+                String estrut = res.getString("clientes.rut_cli") + "-" + res.getString("dig_cli");
+                String estpat = res.getString("pat_gru");
+                data[i] = new String[]{estcodot, estrut, estraz, estgir, estdir, estciu, estcom, estfec, estnet,
+                estiva, esttot, estfact2, estemp, estpat};
+                i++;
+            }
+            res.close();
+        }catch(SQLException e){
+            System.out.println("Error listar reporte historico ots");
+            System.out.println(e);
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        return data;
     }
     
 }

@@ -72,17 +72,6 @@ public class controladorIngresarOts {
     public boolean irVistaJornadasP(String id, int horas) {
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
         String textoNeto, textoIva, textoBruto, textoDesc;
-//        if(vistaIO.getCheckDespacho().compareTo("1") == 0){
-//            textoNeto = Integer.toString(Integer.parseInt(vistaIO.getTextoNuevoNeto()));
-//            textoDesc = Integer.toString(Integer.parseInt(vistaIO.getTextoDescuento()));
-//            textoIva = Integer.toString(/*iva*/ + Integer.parseInt(vistaIO.getTextoIva()));
-//            textoBruto = Integer.toString(/*bruto*/ + Integer.parseInt(vistaIO.getTextoBruto()));
-//        }else{
-//            textoNeto = vistaIO.getTextoNeto();
-//            textoDesc = vistaIO.getTextoDescuento();
-//            textoIva = vistaIO.getTextoIva();
-//            textoBruto = vistaIO.getTextoBruto();
-//        }
         textoNeto = Integer.toString(Integer.parseInt(vistaIO.getTextoNuevoNeto()));
         textoDesc = Integer.toString(Integer.parseInt(vistaIO.getTextoDescuento()));
         textoIva = Integer.toString(/*iva*/ + Integer.parseInt(vistaIO.getTextoIva()));
@@ -91,7 +80,8 @@ public class controladorIngresarOts {
         String[] data = {vistaIO.getTextoContacto(), vistaIO.getTextoFechaOt(), vistaIO.getComboFormaPago(),
             vistaIO.getComboCondPago(), vistaIO.getTextoDespachado(), id, vistaIO.getTextoCodigo(),
             textoNeto, textoIva, textoBruto, vistaIO.getSpinnerFinFaena(), Integer.toString(horas), vistaIO.getSpinnerHoraSalida(),
-        vistaIO.getSpinnerHoraLlegada(), vistaIO.getCheckDespacho(), vistaIO.getTextoDespacho(), checkHoraMin, textoDesc};
+        vistaIO.getSpinnerHoraLlegada(), vistaIO.getCheckDespacho(), vistaIO.getTextoDespacho(), checkHoraMin, textoDesc, String.valueOf(vistaIO.getSpinnerHorasExtraNormales()), 
+        String.valueOf(vistaIO.getSpinnerHorasExtraFestivos()), String.valueOf(vistaIO.getSpinnerColacion30()), String.valueOf(vistaIO.getSpinnerColacion1())};
         boolean flag = miControlador.ingresarOt(data);
         return flag;
     } 
@@ -231,5 +221,10 @@ public class controladorIngresarOts {
     public void agregarHorasExtra(String id, double horEx, double horEx2){
         modelos.modeloOts ot = new modelos.modeloOts();
         ot.agregarHorasExtra(id, horEx, horEx2);
+    }
+    
+    public void agregarHorasColacion(String id, int col30, int col1){
+        modelos.modeloOts ot = new modelos.modeloOts();
+        ot.agregarHorasColacion(id, col30, col1);
     }
 }

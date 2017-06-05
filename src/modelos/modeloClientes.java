@@ -257,5 +257,55 @@ public class modeloClientes {
         }
         return data;
     }
+    
+    public Object[][] listarReporteClientes(){
+        int registros = 0;
+        
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Clientes");
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+       }catch(SQLException e){
+            System.out.println("Error al listar reporte clientes");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        
+        Object[][] data = new String[registros][12];
+        
+        try{
+            PreparedStatement pstm = conn.prepareStatement("SELECT rut_cli, dig_cli, raz_cli, gir_cli, tel_cli, cel_cli, cor_cli, dir_cli, reg_cli, ciu_cli, com_cli, obs_cli, "
+                    + "con_cli FROM Clientes ORDER BY rut_cli");
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while(res.next()){
+                String estrut = res.getString("rut_cli");
+                String estdig = res.getString("dig_cli");
+                String estraz = res.getString("raz_cli");
+                String estgir = res.getString("gir_cli");
+                String esttel = res.getString("tel_cli");
+                String estcel = res.getString("cel_cli");
+                String estcor = res.getString("cor_cli");
+                String estdir = res.getString("dir_cli");
+                String estreg = res.getString("reg_cli");
+                String estciu = res.getString("ciu_cli");
+                String estcom = res.getString("com_cli");
+                String estobs = res.getString("obs_cli");
+                String estcon = res.getString("con_cli");
+                data[i] = new String[]{estrut + "-" + estdig, estraz, estgir, esttel, estcel, estcor, estdir, estreg, estciu, estcom, estobs, estcon};
+                i++;
+            }
+            res.close();
+        }catch(SQLException e){
+            System.out.println(e);
+            System.out.println("error listar reporte clientes");
+        }
+        return data;
+    }
    
 }

@@ -14,6 +14,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.xml.transform.TransformerException;
@@ -32,6 +33,7 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 public class controladorGenerarLiquidaciones {
     
     DateFormat perDate = new SimpleDateFormat("MMMM-yyyy");
+    DateFormat date2 = new SimpleDateFormat("dd-MMMM-yyyy");
     String per = perDate.format(new Date());
     NumberFormat FORMAT = NumberFormat.getCurrencyInstance();
     DecimalFormatSymbols dfs = new DecimalFormatSymbols();
@@ -48,7 +50,7 @@ public class controladorGenerarLiquidaciones {
                     controladores.controladorPrincipal miControlador = new controladorPrincipal();
                     modelos.modeloEmpleados liquidaciones = new modeloEmpleados();
                     modelos3.modeloRemuneraciones remuneraciones = new modeloRemuneraciones();
-                    String[][] data = liquidaciones.obtenerRemuneraciones();
+                    String[][] data = liquidaciones.obtenerRemuneraciones2(getMes(), getYear());
                     String[][] imp2cat = remuneraciones.obtenerTablaImpuesto();
 //                    float uf = remuneraciones.obtenerUF() / 100;
                     float uf = remuneraciones.obtenerUF();
@@ -75,19 +77,40 @@ public class controladorGenerarLiquidaciones {
                             int bonoAd = Integer.parseInt(data[i][10]);
                             //BONO RESPONSABILIDAD
                             int bonoResp = 0;
-                            //BONO ASIGNACION VOLUNTARIA
-                            int bonoAV = Integer.parseInt(data[i][13]);
-                            int totalBonoAV = (int)((double) base * 0.0077777 * bonoAV);
                             //BONO ADICIONAL
                             int bonoCol = Integer.parseInt(data[i][8]);
                             int totalBonCol = (int)(((double) base * 0.0077777) * ((double)bonoCol / 2));
                             //HORAS EXTRA
-                            double horasEx = Double.parseDouble(data[i][11]);
-                            double cantHorEx = Double.parseDouble(data[i][12]);
-                            double totalHorEx = (int)((double) base * 0.0077777 * horasEx);
-
+                            double horasExNor = Double.parseDouble(data[i][11]);
+                            double horasExFes = Double.parseDouble(data[i][12]);
+                            double horasEx = 0;
+                            double bonoHor = 0;
+                            double cantHorEx = 0;
+                            //total de horas extras normales = 1; festivas = 2
+                            double totalHorex = 0;
+                            double resHorEx = 0;
+                            if(horasExNor > 45){
+                                cantHorEx = 45;
+                                totalHorex = 45;
+                                resHorEx = horasExNor - 45;
+                            }else{
+                                cantHorEx = horasExNor;
+                                totalHorex = cantHorEx;
+                            }
+                            if(cantHorEx + horasExFes > 45) {
+                                resHorEx = resHorEx + (horasExFes - 45 + cantHorEx) * 2;
+                                totalHorex = 45 - cantHorEx;
+                                cantHorEx = 45;
+                            }else{
+                                cantHorEx += horasExFes;
+                                totalHorex += horasExFes * 2;
+                            }
+                            
+                            //BONO ASIGNACION VOLUNTARIA
+                            double totalBonoAV = base * 0.0077777 * resHorEx;
+                            double valorHorEx = (int)((double) base * 0.0077777 * totalHorex);
                             //TOTAL IMPONIBLE
-                            double totImp = base + grat + bonoAnt + bonoAd + bonoResp + totalBonoAV + totalBonCol + totalBon300 + totalHorEx;
+                            double totImp = base + grat + bonoAnt + bonoAd + bonoResp + totalBonoAV + totalBonCol + totalBon300 + valorHorEx;
                             //DESCUENTO AFP
                             int descAFP = Integer.parseInt(data[i][20]);
                             int totalAFP = (int)(totImp * ((double)descAFP / 10000));
@@ -106,7 +129,6 @@ public class controladorGenerarLiquidaciones {
                                     salud = data[i][22];
                                 }
                                 descSalud = ((double)Integer.parseInt(data[i][23]) / 1000) * uf;
-                                System.out.println(descSalud);
                                 totalSalud = descSalud;
                             }
                             //DESCUENTO CESANTIA
@@ -203,9 +225,9 @@ public class controladorGenerarLiquidaciones {
                             if(horex > 45){
                                 horex = 45;
                             }
-                            content.showText("Horas extra ( " + horex + " horas )" );
+                            content.showText("Horas extra ( " + cantHorEx + " horas )" );
                             content.newLineAtOffset(150, 0);
-                            content.showText(FORMAT.format(totalHorEx));
+                            content.showText(FORMAT.format(valorHorEx));
                             content.newLineAtOffset(-150, -15);
                             content.showText("Gratificación:");
                             content.newLineAtOffset(150, 0);
@@ -306,10 +328,6 @@ public class controladorGenerarLiquidaciones {
                             content.newLineAtOffset(150, 0);
                             content.showText(FORMAT.format(totalAFP));
                             content.newLineAtOffset(-150, -15);
-//                            content.showText("SIS");
-//                            content.newLineAtOffset(150, 0);
-//                            content.showText(FORMAT.format(sis));
-//                            content.newLineAtOffset(-150, -15);
                             content.showText("Descuento salud");
                             content.newLineAtOffset(150, 0);
                             content.showText(FORMAT.format(totalSalud));
@@ -317,10 +335,6 @@ public class controladorGenerarLiquidaciones {
                             content.showText("Seguro de cesantía trabajador");
                             content.newLineAtOffset(150, 0);
                             content.showText(FORMAT.format(ces));
-//                            content.newLineAtOffset(-150, -15);
-//                            content.showText("Seguro de cesantía empleador");
-//                            content.newLineAtOffset(150, 0);
-//                            content.showText(FORMAT.format(cesEmp));
                             content.endText();
                             
                             content.drawLine(345, 585, 545, 585);
@@ -331,15 +345,6 @@ public class controladorGenerarLiquidaciones {
                             content.showText(FORMAT.format(descLegales));
                             content.endText();
                             content.drawLine(345, 563, 545, 563);
-                            
-//                            content.drawLine(345, 565, 545, 565);
-//                            content.beginText();
-//                            content.moveTextPositionByAmount(350, 550);
-//                            content.showText("Total tributable");
-//                            content.newLineAtOffset(150, 0);
-//                            content.showText(FORMAT.format(totTrib));
-//                            content.endText();
-//                            content.drawLine(345, 543, 545, 543);
                             
                             content.beginText();
                             content.moveTextPositionByAmount(350, 545);
@@ -416,6 +421,20 @@ public class controladorGenerarLiquidaciones {
         };
         runnable.run();
         return true;
+    }
+    
+    public int getMes(){
+        Date fecha = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(fecha);
+        return cal.get(Calendar.MONTH) + 1;  
+    }
+    
+    public int getYear(){
+        Date fecha = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(fecha);
+        return cal.get(Calendar.YEAR);  
     }
 
 }

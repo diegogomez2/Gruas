@@ -19,7 +19,6 @@ import vistas.vistaPrincipal;
 import controladores2.*;
 import controladores3.controladorEditarSueldos;
 import controladores3.*;
-import controladores4.controladorIngresarOC;
 import controladores4.*;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -73,7 +72,8 @@ public class controladorPrincipal {
     static controladorGlobalPagos micontroladorGlobalPagos;
     static controladorGlobalOtrosPagos micontroladorGlobalOtrosPagos;
     static controladorCobranzas micontroladorCobranzas;
-    static controladorOC micontroladorOC;
+    static controladorJornadasOC micontroladorJornadasOC;
+    static controladorOcs micontroladorOcs;
     static vistaLogin miVistaL;
     static vistaPrincipal mivistaP;
     static vistas.vistaJornadasP mivistaJP;
@@ -345,6 +345,12 @@ public class controladorPrincipal {
         controladorDetalleFacturadas micontroladorDF;
         micontroladorDF = new controladorDetalleFacturadas();
         micontroladorDF.mostrarVistaDetalleFacturadas(id, tipo);
+    }
+    
+    public void crearControladorDetalleFacturadasOC(String id, String tipo) throws ParseException {
+        controladorDetalleFacturadasOC micontroladorDF;
+        micontroladorDF = new controladorDetalleFacturadasOC();
+        micontroladorDF.mostrarVistaDetalleFacturadasOC(id, tipo);
     }
     
     //USUARIOS
@@ -655,16 +661,15 @@ public class controladorPrincipal {
     
     //OCS 
     
-    public JPanel crearControladorOCP() {
-        modelos.modeloJornadas jornadas;
-        jornadas = new modelos.modeloJornadas();
+    public JPanel crearControladorJornadasOCP() {
+        modelos4.modeloJornadasOC jornadas = new modelos4.modeloJornadasOC();
         Object[][] data;
-        data = jornadas.listarJornadas();
-        micontroladorOC = new controladorOC();
-        return micontroladorOC.mostrarTabControlOC(tipo, data);    
+        data = jornadas.listarJornadasOC();
+        micontroladorJornadasOC = new controladorJornadasOC();
+        return micontroladorJornadasOC.mostrarTabControlJornadasOC(tipo, data);    
     }
     
-    public void crearControladorIngresarOC() {
+    public void crearControladorIngresarJornadasOC() throws ParseException {
         modelos.modeloClientes clientes;
         modelos.modeloGruas gruas;
         modelos.modeloEmpleados empleados;
@@ -678,10 +683,62 @@ public class controladorPrincipal {
         dataGruas = gruas.obtenerDescGruas();
         dataEmpleados = empleados.obtenerNombresEmpleados();
         dataTonelajes = tonelajes.listarTonelajes();
-        controladores4.controladorIngresarOC micontroladorOC;
-        micontroladorOC = new controladorIngresarOC();
-        micontroladorOC.mostrarVistaIngresarOC(dataClientes, dataGruas, dataEmpleados, dataTonelajes);
+        controladores4.controladorIngresarJornadasOC micontroladorJOC;
+        micontroladorJOC = new controladorIngresarJornadasOC();
+        micontroladorJOC.mostrarVistaIngresarJornadasOC(dataClientes, dataGruas, dataEmpleados, dataTonelajes);
     }
+    
+    public void crearControladorModificarJornadasOC(String id) throws ParseException {
+        modelos.modeloClientes clientes;
+        modelos.modeloGruas gruas;
+        modelos.modeloEmpleados empleados;
+        clientes = new modeloClientes();
+        gruas = new modelos.modeloGruas();
+        empleados = new modelos.modeloEmpleados();
+        Object[] dataClientes, dataGruas, dataEmpleados;
+        dataClientes = clientes.obtenerRazonClientes();
+        dataGruas = gruas.obtenerDescGruas();
+        dataEmpleados = empleados.obtenerNombresEmpleados();
+        controladorModificarJornadasOC micontroladorMJOC;
+        micontroladorMJOC = new controladorModificarJornadasOC();
+        micontroladorMJOC.mostrarVistaModificarJornadasOC(id, dataClientes, dataGruas, dataEmpleados);
+    }
+    
+    public JPanel crearControladorOcsP() {
+        modelos4.modeloOcs ocs;
+        ocs = new modelos4.modeloOcs();
+        Object[][] data;
+        data = ocs.listarOcs();
+        micontroladorOcs = new controladorOcs();
+        return micontroladorOcs.mostrarTabControlOcs(tipo, data);    
+    }
+    
+    public JPanel crearControladorFacturasOCP() {
+        modelos4.modeloOcs ocs;
+        ocs = new modelos4.modeloOcs();
+        Object[][] data;
+        data = ocs.listarFacturasOC();
+        controladores4.controladorFacturasOC micontroladorFacturasOC = new controladorFacturasOC();
+        return micontroladorFacturasOC.mostrarTabControlFacturasOC(tipo, data);    
+    }
+    
+    public JPanel crearControladorFacturadasOCP() {
+        modelos.modeloFacturas facturas;
+        facturas = new modelos.modeloFacturas();
+        Object[][] data;
+        data = facturas.listarFacturadasOC();
+        controladores4.controladorFacturadasOC micontroladorFacturadas = new controladorFacturadasOC();
+        return micontroladorFacturadas.mostrarTabControlFacturadasOCP(tipo, data);    
+    }
+    
+    public JPanel crearControladorHistoricoOCP() {
+        modelos4.modeloOcs ocs;
+        ocs = new modelos4.modeloOcs();
+        Object[][] data;
+        data = ocs.listarHistoricosOC();
+        controladores4.controladorHistoricoOC micontroladorHistoricoOC = new controladorHistoricoOC();
+        return micontroladorHistoricoOC.mostrarTabControlHistoricoOC(tipo, data);    
+    }     
     
     //Funciones
     public boolean ingresarCliente(String[] data){
@@ -908,7 +965,96 @@ public class controladorPrincipal {
         }
     }
     
+    public String ingresarJornadaOC(String[] data) {
+        modelos4.modeloJornadasOC jornada = new modelos4.modeloJornadasOC();
+        String id = jornada.ingresarJornadaOC(data);
+        if(id.compareTo("incorrecto") != 0){
+            JOptionPane.showMessageDialog(miVistaL, "Jornada ingresada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+            return id;
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al ingresar los datos.\n", "Error", JOptionPane.ERROR_MESSAGE);
+            return "incorrecto";
+        }
+    }   
+    
+    public String modificarJornadaOC(String[] data, String id) {
+        modelos4.modeloJornadasOC jornada = new modelos4.modeloJornadasOC();
+        if(jornada.modificarJornadaOC(data, id).compareTo("incorrecto") != 0){
+            JOptionPane.showMessageDialog(miVistaL, "Jornada modificada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+            return "correcto";
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al ingresar los datos.\n", "Error", JOptionPane.ERROR_MESSAGE);
+            return "incorrecto";
+        }
+    } 
+    
+    public boolean eliminarJornadasOC(String id) {
+        modelos4.modeloJornadasOC jornada = new modelos4.modeloJornadasOC();
+        if(jornada.eliminarJornadaOC(id).compareTo("correcto") == 0){
+            JOptionPane.showMessageDialog(miVistaL, "Jornada eliminada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al eliminar la jornada seleccionada", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+    
+    public boolean ingresarOc(String[] data){
+        modelos4.modeloOcs oc = new modelos4.modeloOcs();
+        if(oc.obtenerCodigoOc(data[6]).compareTo("incorrecto") == 0){
+            JOptionPane.showMessageDialog(miVistaL, "Código de oc duplicado ", "Error", JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }
+        if(oc.ingresarOc(data).compareTo("correcto") == 0){
+            JOptionPane.showMessageDialog(miVistaL, "Orden de trabajo ingresada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al ingresar los datos\n" 
+                    + "", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+    
+    public String ingresarDetalleGrua(String id, String pat, String fhsal, String fhreg) {
+        modelos4.modeloJornadasOC jornada = new modelos4.modeloJornadasOC();
+        if(jornada.ingresarDetalleGrua(id, pat, fhsal, fhreg).compareTo("correcto") == 0){
+            //JOptionPane.showMessageDialog(miVistaL, "Jornada ingresada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+            return "correcto";
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al ingresar los datos.\n", "Error", JOptionPane.ERROR_MESSAGE);
+            return "incorrecto";
+        }
+    }   
+    
+    public String ingresarDetalleEmpleado(String id, String rut, String fhsal, String fhreg) {
+        modelos4.modeloJornadasOC jornada = new modelos4.modeloJornadasOC();
+        if(jornada.ingresarDetalleEmpleado(id, rut, fhsal, fhreg).compareTo("correcto") == 0){
+            //JOptionPane.showMessageDialog(miVistaL, "Jornada ingresada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+            return "correcto";
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al ingresar los datos.\n", "Error", JOptionPane.ERROR_MESSAGE);
+            return "incorrecto";
+        }
+    }  
+    
+    public String ingresarHoras(String id, String[] hora) {
+        modelos4.modeloJornadasOC jornada = new modelos4.modeloJornadasOC();
+        if(jornada.ingresarHoras(id, hora[0], hora[1], hora[2], hora[3]).compareTo("correcto") == 0){
+            //JOptionPane.showMessageDialog(miVistaL, "Jornada ingresada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+            return "correcto";
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al ingresar los datos.\n", "Error", JOptionPane.ERROR_MESSAGE);
+            return "incorrecto";
+        }
+    }  
+    
     public String ingresarNotaCredito(String id, String razon, String tipo){
+        modelos.modeloFacturas factura = new modelos.modeloFacturas();
+        String folio = factura.folioNC();
+        return factura.ingresarNotaCredito(id, razon, folio, tipo);
+    }
+    
+    public String ingresarNotaCreditoOC(String id, String razon, String tipo){
         modelos.modeloFacturas factura = new modelos.modeloFacturas();
         String folio = factura.folioNC();
         return factura.ingresarNotaCredito(id, razon, folio, tipo);
@@ -937,19 +1083,27 @@ public class controladorPrincipal {
         return data;
     }
 
-    String obtenerClientePorRazon(String textoCliente) {
+    public String obtenerClientePorRazon(String textoCliente) {
         modelos.modeloClientes cliente = new modelos.modeloClientes();
         String rut = cliente.obtenerClientePorRazon(textoCliente);
         return rut;
     }
 
-    String obtenerEmpleadoPorNombre(String textoOperador) {
+    public String obtenerEmpleadoPorNombre(String textoOperador) {
         modelos.modeloEmpleados empleado = new modelos.modeloEmpleados();
         String rut = empleado.obtenerEmpleadoPorNombre(textoOperador);
         return rut;
     }
+    
+    //obtiene los rut de los empleados por sus nombres, usado en ocs
+    //malo, borrar
+//    public String obtenerEmpleadosPorNombre(String[] textoOperador) {
+//        modelos.modeloEmpleados empleado = new modelos.modeloEmpleados();
+//        String[] rut = empleado.obtenerEmpleadoPorNombre(textoOperador);
+//        return rut;
+//    }
 
-    String obtenerGruaPorDesc(String textoGrua) {
+    public String obtenerGruaPorDesc(String textoGrua) {
         modelos.modeloGruas grua = new modelos.modeloGruas();
         String pat = grua.obtenerGruaPorDesc(textoGrua);
         return pat;
@@ -971,6 +1125,30 @@ public class controladorPrincipal {
         controladorEliminarJornadas micontroladorEJ;
         micontroladorEJ = new controladorEliminarJornadas();
         micontroladorEJ.irVistaJornadasP(id);
+    }
+    
+    public void crearControladorEliminarJornadasOC(String id) {
+        controladorEliminarJornadasOC micontroladorEJOC;
+        micontroladorEJOC = new controladorEliminarJornadasOC();
+        micontroladorEJOC.irVistaJornadasOCP(id);
+    }
+    
+    public void crearControladorDetalleJornadasOC(String id) throws ParseException {
+        controladorDetalleJornadasOC micontroladorDJOC;
+        micontroladorDJOC = new controladorDetalleJornadasOC();
+        micontroladorDJOC.mostrarVistaDetalleJornadasOC(id);
+    }
+    
+    public void crearControladorDetalleOcs(String id) throws ParseException {
+        controladores4.controladorDetalleOcs micontroladorDO;
+        micontroladorDO = new controladorDetalleOcs();
+        micontroladorDO.mostrarVistaDetalleOcs(id);
+    }
+    
+    public String[] obtenerJornadaOCPorId(String id) {
+        modelos4.modeloJornadasOC jornada = new modelos4.modeloJornadasOC();
+        String[] datos = jornada.obtenerJornadaOCPorId(id);
+        return datos;
     }
 
     boolean eliminarJornadas(String id) {
@@ -994,6 +1172,18 @@ public class controladorPrincipal {
         controladores.controladorIngresarOts micontroladorIO;
         micontroladorIO = new controladorIngresarOts();
         micontroladorIO.mostrarVistaIngresarOts(data, ciudades);
+    }
+    
+    public void crearControladorIngresarOcs(String id) throws ParseException {
+        String[] data;
+        Object[] ciudades;
+        modelos4.modeloJornadasOC jornada = new modelos4.modeloJornadasOC();
+        modelos.modeloRegiones ciudad = new modeloRegiones();
+        data = jornada.obtenerJornadaOCPorId(id);
+        ciudades = ciudad.listaCiudades2();
+        controladores4.controladorIngresarOcs micontroladorIO;
+        micontroladorIO = new controladorIngresarOcs();
+        micontroladorIO.mostrarVistaIngresarOcs(data, ciudades);
     }
     
     public String[] obtenerOtPorId(String id) {
@@ -1025,6 +1215,37 @@ public class controladorPrincipal {
         
         return datos;
     }
+    
+    public String[] obtenerOcPorId(String id) {
+        modelos4.modeloOcs oc = new modelos4.modeloOcs();
+        String[] datos = oc.obtenerOcPorId(id);
+        return datos;
+    }
+    
+    public Object[][] obtenerOcPorIdFacturada(String id, String tipo) {
+        modelos4.modeloOcs oc = new modelos4.modeloOcs();
+        Object[][] datos;
+        int tiponc = 0;
+        switch(tipo){
+//            case("notadebito"):
+////                datos = oc.obtenerOtPorIdFacturadaND(id);
+//                break;
+//            case("notacredito"):
+////                tiponc = oc.tipoNC(id);
+//                if(tiponc == 0){
+////                    datos = oc.obtenerOtPorIdFacturadaNC(id); 
+//                }else{
+////                    datos = oc.obtenerOtPorIdNDNC(id);
+//                } 
+//                break;
+            default:
+                datos = oc.obtenerOcPorIdFacturada(id, tipo);
+                break;
+        }
+        
+        return datos;
+    }
+    
     
     public boolean eliminarUsuario(String data){
         modelos.modeloUsuarios usuario = new modelos.modeloUsuarios();
@@ -1195,6 +1416,36 @@ public class controladorPrincipal {
         return data;
     }
     
+    public boolean borrarDetalleGruas(String id){
+        modelos4.modeloJornadasOC gruas = new modelos4.modeloJornadasOC();
+        if(gruas.borrarDetalleGruas(id).compareTo("correcto") == 0){
+            return true;
+        }else{
+            System.out.println("Error al borrar detalle gruas oc");
+            return false;
+        }
+    }
+    
+    public boolean borrarDetalleEmpleados(String id){
+        modelos4.modeloJornadasOC emp = new modelos4.modeloJornadasOC();
+        if(emp.borrarDetalleEmpleados(id).compareTo("correcto") == 0){
+            return true;
+        }else{
+            System.out.println("Error al borrar detalle empleados oc");
+            return false;
+        }
+    }
+    
+    public boolean borrarHorasBase(String id){
+        modelos4.modeloJornadasOC horas = new modelos4.modeloJornadasOC();
+        if(horas.borrarHorasBase(id).compareTo("correcto") == 0){
+            return true;
+        }else{
+            System.out.println("Error al borrar horas base oc");
+            return false;
+        }
+    }
+    
     //Funciones agenda de pagos
     public boolean cambiarEstadoPago(String estado, String id, String fac){
         modeloCompras compra = new modeloCompras();
@@ -1250,6 +1501,74 @@ public class controladorPrincipal {
 //        }
 //    }
     
+    /* OLD; BORRAR */
+//    public boolean generarReporte(){
+//        try{
+//            modeloCobranzas cobranza = new modeloCobranzas();
+//            Object[][] facturas = cobranza.listarFacturadasGestion();
+//            String file = "Reporte_cobranza_"+formatDate.format(new Date())+".xls";
+//            HSSFWorkbook workbook = new HSSFWorkbook();
+//            HSSFSheet sheet = workbook.createSheet("FirstSheet"); 
+//            HSSFRow rowhead = sheet.createRow((short)0);
+//            rowhead.createCell(0).setCellValue("Folio");
+//            rowhead.createCell(1).setCellValue("Rut");
+//            rowhead.createCell(2).setCellValue("Razón social");
+//            rowhead.createCell(3).setCellValue("Fecha emisión");
+//            rowhead.createCell(4).setCellValue("Días emisión");
+//            rowhead.createCell(5).setCellValue("Neto");
+//            rowhead.createCell(6).setCellValue("Iva");
+//            rowhead.createCell(7).setCellValue("Total");
+//            rowhead.createCell(8).setCellValue("Forma de pago");
+//            rowhead.createCell(9).setCellValue("Medio de pago");
+//            rowhead.createCell(10).setCellValue("Abono");
+//            rowhead.createCell(11).setCellValue("Monto abono");
+//            rowhead.createCell(12).setCellValue("Contacto");
+//            rowhead.createCell(13).setCellValue("Teléfono");
+//            rowhead.createCell(14).setCellValue("N° de gestiones");
+//            rowhead.createCell(15).setCellValue("Tipo gestión");
+//            rowhead.createCell(16).setCellValue("Resultado");
+//            rowhead.createCell(17).setCellValue("Fecha gestión");
+//            rowhead.createCell(18).setCellValue("Observaciones");
+//            int i = 1;
+//            for(Object[] fac:facturas){
+//                rowhead = sheet.createRow(i);
+//                i++;
+//                rowhead.createCell(0).setCellValue(fac[0].toString());
+//                rowhead.createCell(1).setCellValue(fac[1].toString());
+//                rowhead.createCell(2).setCellValue(fac[2].toString());
+//                rowhead.createCell(3).setCellValue(fac[3].toString());
+//                rowhead.createCell(4).setCellValue(fac[4].toString());
+//                rowhead.createCell(5).setCellValue(fac[5].toString());
+//                rowhead.createCell(6).setCellValue(fac[6].toString());
+//                rowhead.createCell(7).setCellValue(fac[7].toString());
+//                rowhead.createCell(8).setCellValue(fac[8].toString());
+//                rowhead.createCell(9).setCellValue(fac[9].toString());
+//                rowhead.createCell(10).setCellValue(fac[10].toString());
+//                rowhead.createCell(11).setCellValue(fac[11].toString());
+//                rowhead.createCell(12).setCellValue(fac[12].toString());
+//                rowhead.createCell(13).setCellValue(fac[13].toString());
+//                rowhead.createCell(14).setCellValue(fac[14].toString());
+//                rowhead.createCell(15).setCellValue(fac[15].toString());
+//                rowhead.createCell(16).setCellValue(fac[16].toString());
+//                rowhead.createCell(17).setCellValue(fac[17].toString());
+//                rowhead.createCell(18).setCellValue(fac[18].toString());
+//                FileOutputStream fileOut;
+//                fileOut = new FileOutputStream(file);
+//                workbook.write(fileOut);
+//                fileOut.close();
+//            }
+//        }catch (IOException ex) {
+//            Logger.getLogger(controladorPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+//            JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR", JOptionPane.INFORMATION_MESSAGE);
+//            return false;
+//        }catch(Exception e){
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", JOptionPane.INFORMATION_MESSAGE);
+//            return false;
+//        }
+//        JOptionPane.showMessageDialog(null, "Reporte generado con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+//        return true;
+//    }
+    
     public boolean generarReporte(){
         try{
             modeloCobranzas cobranza = new modeloCobranzas();
@@ -1270,13 +1589,14 @@ public class controladorPrincipal {
             rowhead.createCell(9).setCellValue("Medio de pago");
             rowhead.createCell(10).setCellValue("Abono");
             rowhead.createCell(11).setCellValue("Monto abono");
-            rowhead.createCell(12).setCellValue("Contacto");
-            rowhead.createCell(13).setCellValue("Teléfono");
-            rowhead.createCell(14).setCellValue("N° de gestiones");
-            rowhead.createCell(15).setCellValue("Tipo gestión");
-            rowhead.createCell(16).setCellValue("Resultado");
-            rowhead.createCell(17).setCellValue("Fecha gestión");
-            rowhead.createCell(18).setCellValue("Observaciones");
+            rowhead.createCell(12).setCellValue("Saldo");
+            rowhead.createCell(13).setCellValue("Contacto");
+            rowhead.createCell(14).setCellValue("Teléfono");
+            rowhead.createCell(15).setCellValue("N° de gestiones");
+            rowhead.createCell(16).setCellValue("Tipo gestión");
+            rowhead.createCell(17).setCellValue("Resultado");
+            rowhead.createCell(18).setCellValue("Fecha gestión");
+            rowhead.createCell(19).setCellValue("Observaciones");
             int i = 1;
             for(Object[] fac:facturas){
                 rowhead = sheet.createRow(i);
@@ -1300,6 +1620,7 @@ public class controladorPrincipal {
                 rowhead.createCell(16).setCellValue(fac[16].toString());
                 rowhead.createCell(17).setCellValue(fac[17].toString());
                 rowhead.createCell(18).setCellValue(fac[18].toString());
+                rowhead.createCell(19).setCellValue(fac[19].toString());
                 FileOutputStream fileOut;
                 fileOut = new FileOutputStream(file);
                 workbook.write(fileOut);
@@ -1308,9 +1629,11 @@ public class controladorPrincipal {
         }catch (IOException ex) {
             Logger.getLogger(controladorPrincipal.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println(ex.getMessage());
             return false;
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", JOptionPane.INFORMATION_MESSAGE);
+            e.printStackTrace();
             return false;
         }
         JOptionPane.showMessageDialog(null, "Reporte generado con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
@@ -1415,8 +1738,18 @@ public class controladorPrincipal {
     }
     
     public String[] obtenerRemuneracionEmpleadoPorRut(String rut){
+        int mes, year;
         modelos.modeloEmpleados sueldos = new modeloEmpleados();
-        String[] data = sueldos.obtenerRemuneracionPorRut(rut);
+        Date fecha = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(fecha);
+        if(cal.get(Calendar.DAY_OF_MONTH) > 25){
+            mes = cal.get(Calendar.MONTH) + 2;
+        }else{
+            mes = cal.get(Calendar.MONTH) + 1;
+        }
+        year = cal.get(Calendar.YEAR);
+        String[] data = sueldos.obtenerRemuneracionPorRut2(rut, mes, year);
         return data;
     }
     
@@ -1615,5 +1948,35 @@ public class controladorPrincipal {
         }
         JOptionPane.showMessageDialog(null, "Reporte generado con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
         return true;
+    }
+   
+    public void generarReporteClientes(){
+        controladorReportes miControlador = new controladorReportes();
+        miControlador.generarReporteClientes();
+    }
+    
+    public void generarReporteGruas(){
+        controladorReportes miControlador = new controladorReportes();
+        miControlador.generarReporteGruas();
+    }
+    
+    public void generarReporteHistoricoOT(String fecIn, String fecFin){
+        controladorReportes miControlador = new controladorReportes();
+        miControlador.generarReporteHistoricoOT(fecIn, fecFin);
+    }
+    
+    public void generarReporteHistoricoFacturas(String fecIn, String fecFin){
+        controladorReportes miControlador = new controladorReportes();
+        miControlador.generarReporteHistoricoFacturas(fecIn, fecFin);
+    }
+
+    public void generarReporteCompras(String fecIn, String fecFin) {
+        controladorReportes miControlador = new controladorReportes();
+        miControlador.generarReporteCompras(fecIn, fecFin);
+    }
+
+    public void generarReporteCobranza(String est) {
+       controladorReportes miControlador = new controladorReportes();
+       miControlador.generarReporteCobranza(est);
     }
 }

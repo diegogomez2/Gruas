@@ -518,4 +518,78 @@ public class modeloGruas {
        }
         return registros;
     }
+    
+    public Object[][] listarReporteGruas(){
+        int registros = 0;
+        
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM gruas");
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+       }catch(SQLException e){
+            System.out.println("Error al listar reporte gruas");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        
+        Object[][] data = new String[registros][28];
+        
+        try{
+            PreparedStatement pstm = conn.prepareStatement("SELECT pat_gru, coalesce(ano_gru, '') ano, des_gru, mar_gru, coalesce(mod_gru, '') modelo, ton_gru, "
+                    + "coalesce(pes_gru, '') peso, coalesce(tneum_gru, '') tneum, coalesce(tneum2_gru, '') tneum2, coalesce(ncha_gru, '') ncha, coalesce(tcom_gru, '') tcom, "
+                    + "coalesce(mas_gru, '') mastil, coalesce(altmas_gru, '') altmas, coalesce(anc_gru, '') anc, coalesce(lar_gru, '') lar, coalesce(larU_gru, '') laru, "
+                    + "coalesce(altlev_gru, '') altlev, coalesce(ndel_gru, '') ndel, coalesce(ntra_gru, '') ntra, coalesce(nmo_gru, '') nmo, coalesce(nse_gru, '') nse, "
+                    + "coalesce(frt_gru, '') frt, coalesce(fum_gru, '') fum, coalesce(kmhum_gru, '') kmhum, coalesce(hpm_gru, '') hpm, coalesce(fba_gru, '') fba, "
+                    + "coalesce(obs_gru, '') obs, coalesce(fin_gru, '') fin, coalesce(kmh_gru, '') kmh, ocu_gru, coalesce(horo_gru, '') horo FROM gruas");
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while(res.next()){
+                String estpat = res.getString("pat_gru");
+                String estano = res.getString("ano");
+                String estdes = res.getString("des_gru");
+                String estmar = res.getString("mar_gru");
+                String estmod = res.getString("modelo");
+                String estton = res.getString("ton_gru");
+                String estpeso = res.getString("peso");
+                String esttiponeum = res.getString("tneum");
+                String esttiponeum2 = res.getString("tneum2");
+                String estnchasis = res.getString("ncha");
+                String esttipocombs = res.getString("tcom");
+                String estmastil = res.getString("mastil");
+                String estaltmastil = res.getString("altmas");
+                String estancho = res.getString("anc");
+                String estlargo = res.getString("lar"); 
+                String estlargounas = res.getString("larU");
+                String estaltlevante = res.getString("altlev");
+                String estneumdel = res.getString("ndel");
+                String estneumtras = res.getString("ntra");
+                String estnmotor = res.getString("nmo");
+                String estnserie = res.getString("nse");
+                String estfechart = res.getString("frt");
+                String estfechaum = res.getString("fum");
+                String estfechakmhum = res.getString("kmhum");
+                //String esthpm = res.getString("hpm_gru");
+                String estfechabaja = res.getString("fba");
+                String estobs = res.getString("obs");
+                String estfechain = res.getString("fin");
+                //String estkmh = res.getString("kmh_gru");
+                //String estocu = res.getString("ocu_gru");
+                String estkmh = res.getString("horo");
+                data[i] = new String[]{estpat, estano, estdes, estmar, estmod, estton, estpeso, esttiponeum, esttiponeum2, estnchasis, esttipocombs, estmastil, estaltmastil, 
+                    estancho, estlargo, estlargounas, estaltlevante, estneumdel, estneumtras, estnmotor, estnserie, estfechart, estfechaum, estfechakmhum, estfechabaja, 
+                    estobs, estfechain, estkmh};
+                i++;
+            }
+            res.close();
+        }catch(SQLException e){
+            System.out.println("Error al listar reporte gruas");
+            System.out.println(e);
+        }
+        return data;
+    }
 }

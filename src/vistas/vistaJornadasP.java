@@ -236,7 +236,7 @@ public class vistaJornadasP extends javax.swing.JPanel {
             int dialogResult = JOptionPane.showOptionDialog(null, "Esta seguro que desea eliminar la jornada: \n "
                     + "Código: " + id, "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, 0);
             if (dialogResult == JOptionPane.YES_OPTION) {
-                miControlador.eliminarJormadas(id);
+                miControlador.eliminarJornadas(id);
             }
             JTabbedPane tabs = (JTabbedPane) this.getParent();
             miControlador.crearControladorPrincipal(tabs);

@@ -41,7 +41,7 @@ public class controladorJornadas {
         miControlador.crearControladorDetalleJornadas(id); 
     }
 
-    public void eliminarJormadas(String id) {
+    public void eliminarJornadas(String id) {
         controladorPrincipal miControlador = new controladorPrincipal();
         miControlador.crearControladorEliminarJornadas(id);
     }

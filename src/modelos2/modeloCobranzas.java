@@ -46,7 +46,7 @@ public class modeloCobranzas {
             registros += res.getInt("total");
             res.close();
        }catch(SQLException e){
-            System.out.println("Error listar facturadas");
+            System.out.println("Error listar facturadas cobranza");
             System.out.println(e);
        }catch(ClassNotFoundException e){
             System.out.println(e);
@@ -99,7 +99,7 @@ public class modeloCobranzas {
             }
             res.close();
         }catch(SQLException e){
-            System.out.println("Error listar facturadas");
+            System.out.println("Error listar facturadas cobranza 2");
             System.out.println(e);
         }catch(Exception e){
             System.out.println(e);
@@ -107,19 +107,107 @@ public class modeloCobranzas {
         return data;
     }
     
+    //OLD BORRAR
+//    public Object[][] listarFacturadasGestion(){
+//        int registros = 0;
+//        try{
+//            Class.forName("com.mysql.jdbc.Driver");
+//            conn = DriverManager.getConnection(url, login, password);
+//            PreparedStatement pstm = conn.prepareStatement("SELECT COUNT(1) as total FROM Facturas f LEFT JOIN "
+//                    + "Notacredito n ON f.id_fac = n.id_fac WHERE n.id_fac is null");
+//            ResultSet res = pstm.executeQuery();
+//            res.next();
+//            registros = res.getInt("total");
+//            res.close();
+//            pstm = conn.prepareStatement("SELECT COUNT(1) as total FROM Notadebito nd LEFT JOIN Notacredito n ON "
+//                    + " nd.id_fac = n.id_fac WHERE n.id_fac is null");
+//            res = pstm.executeQuery();
+//            res.next();
+//            registros += res.getInt("total");
+//            res.close();
+//       }catch(SQLException e){
+//            System.out.println("Error listar facturadas");
+//            System.out.println(e);
+//       }catch(ClassNotFoundException e){
+//            System.out.println(e);
+//       }
+//        Object[][] data = new String[registros][11];
+//        
+//        try{
+//            PreparedStatement pstm = conn.prepareStatement("SELECT fol_fac as fol, c.rut_cli, dig_cli, raz_cli, "
+//                    + "ges_fac as ges, con_cli, tel_cli, tot_fac as tot, neto_fac as neto, iva_fac as iva, "
+//                    + "fec_fac as fec, abo_fac as abo, pag_ot, cond_ot, tipo_fac as tipo, f.id_fac as id FROM Facturas f LEFT JOIN Notacredito n ON "
+//                    + "f.id_fac = n.id_fac INNER JOIN( SELECT id_fac, rut_cli, pag_ot, cond_ot FROM Jornadas GROUP BY "
+//                    + "id_fac ) b ON b.id_fac = f.id_fac INNER JOIN Clientes c on c.rut_cli = b.rut_cli WHERE n.id_fac is null "
+//                    + "UNION "
+//                    + "SELECT fol_nd as fol, c.rut_cli, dig_cli, raz_cli, ges_nd as ges, con_cli, tel_cli, "
+//                    + "tot_nd as tot, neto_nd as neto, iva_nd as iva, fec_nd as fec, abo_nd as abo, pag_ot, "
+//                    + "cond_ot, tipo_nd as tipo, f.id_nd as id FROM "
+//                    + "Notadebito f LEFT JOIN Notacredito n ON n.id_fac = f.id_fac INNER JOIN( "
+//                    + "SELECT id_fac, rut_cli, pag_ot, cond_ot FROM Jornadas GROUP BY id_fac ) b ON b.id_fac = f.id_fac "
+//                    + "INNER JOIN Clientes c on c.rut_cli = b.rut_cli INNER JOIN Facturas ON "
+//                    + "facturas.id_fac = f.id_fac WHERE n.id_fac is null ORDER BY fec DESC");
+//            ResultSet res = pstm.executeQuery();
+//            int i = 0;
+//            while(res.next()){
+//                String estid = res.getString("fol");
+//                String estrut = res.getString("rut_cli");
+//                String estdig = res.getString("dig_cli");
+//                String estraz = res.getString("raz_cli");
+//                String estfec = res.getString("fec");
+//                java.util.Date fecha = formatDate.parse(estfec);
+//                estfec = newFormat.format(fecha);
+//                Date cur = new Date();
+////                long dias = Math.round((cur.getTime() - fecha.getTime()) / (double) 86400000);
+//                long dias = ((cur.getTime() - fecha.getTime()) / (long) 86400000);
+//                String estdia = String.valueOf(dias);
+//                String estnet = res.getString("neto");
+//                String esttot = res.getString("tot");
+//                String estiva = res.getString("iva");
+//                String estfor = res.getString("pag_ot");
+//                String estmed = res.getString("cond_ot");
+//                String estabo = "No";
+//                String estmabo = res.getString("abo");
+//                if(Integer.parseInt(estmabo) > 0) estabo = "Si";
+//                String estcon = res.getString("con_cli");
+//                String esttel = res.getString("tel_cli");
+//                String esttipo = res.getString("tipo");
+//                String estfac = res.getString("id");
+//                String cant = String.valueOf(this.obtenerCantGestion(estfac, esttipo));
+//                String[] gestion = this.obtenerUltGestion(estfac, esttipo);
+////                System.out.println(cant);
+////                System.out.println(gestion[0] + gestion[1] + gestion[2]+gestion[3]);
+//                data[i] = new String[]{estid, estrut + "-" + estdig, estraz, estfec, estdia, estnet,
+//                    estiva, esttot, estfor, estmed, estabo, estmabo, estcon, esttel, cant, gestion[0], 
+//                gestion[1], gestion[2], gestion[3]};
+//                i++;
+//            }
+//            res.close();
+//        }catch(SQLException e){
+//            System.out.println("Error listar facturadas");
+//            System.out.println(e);
+//        }catch(Exception e){
+//            System.out.println(e);
+//        }
+//        return data;
+//    }
+    
     public Object[][] listarFacturadasGestion(){
         int registros = 0;
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("SELECT COUNT(1) as total FROM Facturas f LEFT JOIN "
-                    + "Notacredito n ON f.id_fac = n.id_fac WHERE n.id_fac is null");
+//            PreparedStatement pstm = conn.prepareStatement("SELECT COUNT(1) as total FROM Facturas f LEFT JOIN "
+//                    + "Notacredito n ON f.id_fac = n.id_fac WHERE n.id_fac is null");
+            PreparedStatement pstm = conn.prepareStatement("SELECT COUNT(*) as total FROM Facturas LEFT JOIN Notacredito n USING(id_fac) WHERE n.id_fac IS NULL AND "
+                    + "(tot_fac - abo_fac) > 0");
             ResultSet res = pstm.executeQuery();
             res.next();
             registros = res.getInt("total");
             res.close();
-            pstm = conn.prepareStatement("SELECT COUNT(1) as total FROM Notadebito nd LEFT JOIN Notacredito n ON "
-                    + " nd.id_fac = n.id_fac WHERE n.id_fac is null");
+//            pstm = conn.prepareStatement("SELECT COUNT(1) as total FROM Notadebito nd LEFT JOIN Notacredito n ON "
+//                    + " nd.id_fac = n.id_fac WHERE n.id_fac is null");
+            pstm = conn.prepareStatement("SELECT COUNT(*) as total FROM Notadebito LEFT JOIN Notacredito n USING(id_fac) WHERE n.id_fac IS NULL AND (tot_nd - abo_nd) > 0");
             res = pstm.executeQuery();
             res.next();
             registros += res.getInt("total");
@@ -133,19 +221,19 @@ public class modeloCobranzas {
         Object[][] data = new String[registros][11];
         
         try{
-            PreparedStatement pstm = conn.prepareStatement("SELECT fol_fac as fol, c.rut_cli, dig_cli, raz_cli, "
-                    + "ges_fac as ges, con_cli, tel_cli, tot_fac as tot, neto_fac as neto, iva_fac as iva, "
-                    + "fec_fac as fec, abo_fac as abo, pag_ot, cond_ot, tipo_fac as tipo, f.id_fac as id FROM Facturas f LEFT JOIN Notacredito n ON "
-                    + "f.id_fac = n.id_fac INNER JOIN( SELECT id_fac, rut_cli, pag_ot, cond_ot FROM Jornadas GROUP BY "
-                    + "id_fac ) b ON b.id_fac = f.id_fac INNER JOIN Clientes c on c.rut_cli = b.rut_cli WHERE n.id_fac is null "
+            PreparedStatement pstm = conn.prepareStatement("SELECT fol_fac as fol, c.rut_cli, dig_cli, raz_cli, con_cli, tel_cli, tot_fac as tot, neto_fac as neto, iva_fac as iva, "
+                    + "fec_fac as fec, abo_fac as abo, (tot_fac - abo_fac) as sal,  pag_ot, cond_ot, tipo_fac as tipo, f.id_fac as id, coalesce(ges_ges, '') ges, "
+                    + "coalesce(res_ges, '') res, coalesce(fec_res_ges, '') fecres, coalesce(obs_ges, '') obsres, coalesce(cant, 0) cant FROM Facturas f LEFT JOIN "
+                    + "Notacredito n ON f.id_fac = n.id_fac INNER JOIN( SELECT id_fac, rut_cli, pag_ot, cond_ot FROM Jornadas GROUP BY id_fac ) b ON b.id_fac = f.id_fac "
+                    + "INNER JOIN Clientes c on c.rut_cli = b.rut_cli LEFT JOIN (SELECT count(*) cant, id_fac, ges_ges, res_ges, fec_res_ges, obs_ges FROM Gestion_cob ORDER BY "
+                    + "fec_res_ges desc LIMIT 1) d ON d.id_fac = f.id_fac WHERE n.id_fac IS NULL AND(tot_fac - abo_fac) > 0 "
                     + "UNION "
-                    + "SELECT fol_nd as fol, c.rut_cli, dig_cli, raz_cli, ges_nd as ges, con_cli, tel_cli, "
-                    + "tot_nd as tot, neto_nd as neto, iva_nd as iva, fec_nd as fec, abo_nd as abo, pag_ot, "
-                    + "cond_ot, tipo_nd as tipo, f.id_nd as id FROM "
-                    + "Notadebito f LEFT JOIN Notacredito n ON n.id_fac = f.id_fac INNER JOIN( "
-                    + "SELECT id_fac, rut_cli, pag_ot, cond_ot FROM Jornadas GROUP BY id_fac ) b ON b.id_fac = f.id_fac "
-                    + "INNER JOIN Clientes c on c.rut_cli = b.rut_cli INNER JOIN Facturas ON "
-                    + "facturas.id_fac = f.id_fac WHERE n.id_fac is null ORDER BY fec DESC");
+                    + "SELECT fol_nd as fol, c.rut_cli, dig_cli, raz_cli, con_cli, tel_cli, tot_nd as tot, neto_nd as neto, iva_nd as iva, fec_nd as fec, abo_nd as abo, "
+                    + "(tot_nd - abo_nd) sal, pag_ot, cond_ot, tipo_nd as tipo, f.id_nd as id, coalesce(ges_ges, '') ges, coalesce(res_ges, '') res, coalesce(fec_res_ges, '') fecres, "
+                    + "coalesce(obs_ges, '') obsres, coalesce(cant, 0) cant FROM Notadebito f LEFT JOIN Notacredito n ON n.id_fac = f.id_fac INNER JOIN( SELECT id_fac, rut_cli, "
+                    + "pag_ot, cond_ot FROM Jornadas GROUP BY id_fac ) b ON b.id_fac = f.id_fac INNER JOIN Clientes c on c.rut_cli = b.rut_cli "
+                    + "INNER JOIN Facturas ON facturas.id_fac = f.id_fac LEFT JOIN (SELECT count(*) cant, id_nd, ges_ges , res_ges, fec_res_ges, obs_ges FROM Gestion_cob "
+                    + "ORDER BY fec_res_ges desc LIMIT 1) d on d.id_nd = f.id_nd WHERE n.id_fac is null and (tot_nd - abo_nd) > 0 ORDER BY fec DESC");
             ResultSet res = pstm.executeQuery();
             int i = 0;
             while(res.next()){
@@ -167,23 +255,29 @@ public class modeloCobranzas {
                 String estmed = res.getString("cond_ot");
                 String estabo = "No";
                 String estmabo = res.getString("abo");
+                String estsal = res.getString("sal");
                 if(Integer.parseInt(estmabo) > 0) estabo = "Si";
                 String estcon = res.getString("con_cli");
                 String esttel = res.getString("tel_cli");
                 String esttipo = res.getString("tipo");
                 String estfac = res.getString("id");
-                String cant = String.valueOf(this.obtenerCantGestion(estfac, esttipo));
-                String[] gestion = this.obtenerUltGestion(estfac, esttipo);
+                //borrar String cant = String.valueOf(this.obtenerCantGestion(estfac, esttipo));
+                //borrar String[] gestion = this.obtenerUltGestion(estfac, esttipo);
+                String estcant = res.getString("cant");
+                String estges = res.getString("ges");
+                String estres = res.getString("res");
+                String estfecres = res.getString("fecres");
+                String estobs = res.getString("obsres");
 //                System.out.println(cant);
 //                System.out.println(gestion[0] + gestion[1] + gestion[2]+gestion[3]);
                 data[i] = new String[]{estid, estrut + "-" + estdig, estraz, estfec, estdia, estnet,
-                    estiva, esttot, estfor, estmed, estabo, estmabo, estcon, esttel, cant, gestion[0], 
-                gestion[1], gestion[2], gestion[3]};
+                    estiva, esttot, estfor, estmed, estabo, estmabo, estsal, estcon, esttel, estcant, estges, 
+                estres, estfecres, estobs};
                 i++;
             }
             res.close();
         }catch(SQLException e){
-            System.out.println("Error listar facturadas");
+            System.out.println("Error listar facturadas/gestiones");
             System.out.println(e);
         }catch(Exception e){
             System.out.println(e);
@@ -372,7 +466,7 @@ public class modeloCobranzas {
             res.close();
             return cant;
         }catch(SQLException e){
-            System.out.println("Error al ingresar gestion");
+            System.out.println("Error al obtener cant gestion");
             System.out.println(e);
             return cant;
         }catch(ClassNotFoundException e){

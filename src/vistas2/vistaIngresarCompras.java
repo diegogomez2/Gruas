@@ -360,7 +360,7 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
 
         jLabel2.setText("Clasificación de compra");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activo fijo (maquinaria)", "Activo vehiculo", "Combustibles (petróleo/gas)", "Respuestos", "Neumáticos", "Aceite y lubricantes", "Mantenciones", "Gastos de oficina", "Gastos generales", "Arriendo leasing", "Salud y seguridad", "Molymet", "Otros" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activo fijo (maquinaria)", "Activo vehiculo", "Combustibles (petróleo/gas)", "Repuestos", "Neumáticos", "Aceite y lubricantes", "Mantenciones", "Gastos de oficina", "Gastos generales", "Arriendo leasing", "Salud y seguridad", "Molymet", "Otros" }));
 
         jLabel3.setText("Total");
 
@@ -725,15 +725,16 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(486, Short.MAX_VALUE)
+                .addContainerGap(508, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonCancelar)
                     .addComponent(botonAceptar))
                 .addContainerGap())
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 56, Short.MAX_VALUE)))
+                    .addGap(0, 0, 0)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE)
+                    .addGap(78, 78, 78)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -747,10 +748,7 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -1165,13 +1163,13 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
         public Class getColumnClass(int column) {
           switch (column) {
             case 0:
-                return Integer.class;
+                return String.class;
             case 1: 
                 return String.class;
             case 2:
-                return Integer.class;
+                return Double.class;
             case 3: 
-                return Integer.class;
+                return Double.class;
             default:
                 return Boolean.class;
           }

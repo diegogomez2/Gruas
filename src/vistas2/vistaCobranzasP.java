@@ -375,6 +375,7 @@ public class vistaCobranzasP extends javax.swing.JPanel {
                 this.setValueAt(data1[13], i, 14);
                 this.setValueAt(data1[14], i, 15);
                 this.setValueAt(data1[15], i, 16);
+                if(i == 448) break;
                 i++;
             }
         }

@@ -60,8 +60,8 @@ public class vistaDetalleOts extends javax.swing.JDialog {
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
-        jSpinner2 = new javax.swing.JSpinner();
+        spinnerHoraCol30 = new javax.swing.JSpinner();
+        spinnerHoraCol1 = new javax.swing.JSpinner();
         jLabel2 = new javax.swing.JLabel();
         textoGiro = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
@@ -152,6 +152,10 @@ public class vistaDetalleOts extends javax.swing.JDialog {
 
         jLabel25.setText("Días");
 
+        spinnerHoraCol30.setEnabled(false);
+
+        spinnerHoraCol1.setEnabled(false);
+
         javax.swing.GroupLayout jPanel25Layout = new javax.swing.GroupLayout(jPanel25);
         jPanel25.setLayout(jPanel25Layout);
         jPanel25Layout.setHorizontalGroup(
@@ -165,11 +169,11 @@ public class vistaDetalleOts extends javax.swing.JDialog {
                     .addGroup(jPanel25Layout.createSequentialGroup()
                         .addComponent(jLabel14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(spinnerHoraCol1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel25Layout.createSequentialGroup()
                         .addComponent(jLabel13)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(spinnerHoraCol30, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel25Layout.setVerticalGroup(
@@ -178,11 +182,11 @@ public class vistaDetalleOts extends javax.swing.JDialog {
                 .addComponent(jLabel25)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spinnerHoraCol30, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spinnerHoraCol1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14))
                 .addGap(0, 11, Short.MAX_VALUE))
         );
@@ -820,8 +824,6 @@ public class vistaDetalleOts extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JSpinner jSpinner2;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
     private javax.swing.JLabel labelFinFaena;
@@ -829,6 +831,8 @@ public class vistaDetalleOts extends javax.swing.JDialog {
     private javax.swing.JLabel labelHoraSalida;
     private javax.swing.JLabel labelSeñores;
     private javax.swing.JSpinner spinnerFinFaena;
+    private javax.swing.JSpinner spinnerHoraCol1;
+    private javax.swing.JSpinner spinnerHoraCol30;
     private javax.swing.JSpinner spinnerHoraExFes;
     private javax.swing.JSpinner spinnerHoraExNormales;
     private javax.swing.JSpinner spinnerHoraLlegada;
@@ -1007,6 +1011,14 @@ public class vistaDetalleOts extends javax.swing.JDialog {
     
     public void setSpinnerHoraExFestivos(String spinnerHorExFestivos) throws ParseException {
         this.spinnerHoraExFes.setValue(Double.parseDouble(spinnerHorExFestivos));
+    }
+    
+    public void setSpinnerHoraColacion30(String spinnerHorCol30){
+        this.spinnerHoraCol30.setValue(Integer.parseInt(spinnerHorCol30));
+    }
+    
+    public void setSpinnerHoraColacion1(String spinnerHorCol1){
+        this.spinnerHoraCol1.setValue(Integer.parseInt(spinnerHorCol1));
     }
 
     public void setSpinnerHoraLlegada(String spinnerHoraLlegada) throws ParseException {

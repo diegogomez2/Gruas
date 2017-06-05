@@ -939,7 +939,7 @@ public class vistaRemuneracionEmpleado extends javax.swing.JDialog {
     
     public void setTextoBonoAV(String val){
         this.textoBonoAV.setHorizontalAlignment(JLabel.RIGHT);
-        this.textoBonoAV.setText(FORMAT.format(Integer.parseInt(val)));
+        this.textoBonoAV.setText(FORMAT.format(Double.parseDouble(val)));
     }
     
     public void setTextoHorEx(String val){

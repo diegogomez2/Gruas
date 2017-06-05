@@ -117,6 +117,7 @@ public class modeloCompras {
             res.next();
             id = res.getString(1);
             pstm.close();
+            res.close();
         }catch(SQLException e){
             System.out.println("Error al ingresar compra");
             System.out.println(e);

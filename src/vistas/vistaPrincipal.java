@@ -7,13 +7,17 @@ package vistas;
 
 import controladores.controladorPrincipal;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.xml.transform.TransformerException;
 import org.apache.fop.apps.FOPException;
+import org.jdesktop.swingx.JXDatePicker;
 
 /**
  *
@@ -25,6 +29,8 @@ public class vistaPrincipal extends javax.swing.JFrame {
     /**
      * Creates new form vistaPrincipal
      */
+    SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+    
     public vistaPrincipal() {
         initComponents();
         setLocationRelativeTo(null);
@@ -76,10 +82,17 @@ public class vistaPrincipal extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        menuOpciones = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
+        menuOC = new javax.swing.JMenu();
         menuOc = new javax.swing.JMenuItem();
+        menuExportar = new javax.swing.JMenu();
+        menuExportarClientes = new javax.swing.JMenuItem();
+        menuExportarGruas = new javax.swing.JMenuItem();
+        menuExportarHistoricoOts = new javax.swing.JMenuItem();
+        menuExportarFacturas = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu Principal");
@@ -267,7 +280,7 @@ public class vistaPrincipal extends javax.swing.JFrame {
 
         MenuPrincipal.add(menuRemuneraciones);
 
-        jMenu2.setText("Opciones");
+        menuOpciones.setText("Opciones");
 
         jMenuItem6.setText("Cambiar ruta");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
@@ -275,11 +288,11 @@ public class vistaPrincipal extends javax.swing.JFrame {
                 jMenuItem6ActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem6);
+        menuOpciones.add(jMenuItem6);
 
-        MenuPrincipal.add(jMenu2);
+        MenuPrincipal.add(menuOpciones);
 
-        jMenu3.setText("OC");
+        menuOC.setText("OC");
 
         menuOc.setText("Mostrar clientes por OC");
         menuOc.addActionListener(new java.awt.event.ActionListener() {
@@ -287,9 +300,61 @@ public class vistaPrincipal extends javax.swing.JFrame {
                 menuOcActionPerformed(evt);
             }
         });
-        jMenu3.add(menuOc);
+        menuOC.add(menuOc);
 
-        MenuPrincipal.add(jMenu3);
+        MenuPrincipal.add(menuOC);
+
+        menuExportar.setText("Exportar");
+
+        menuExportarClientes.setText("Generar reporte clientes");
+        menuExportarClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuExportarClientesActionPerformed(evt);
+            }
+        });
+        menuExportar.add(menuExportarClientes);
+
+        menuExportarGruas.setText("Generar reporte grúas");
+        menuExportarGruas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuExportarGruasActionPerformed(evt);
+            }
+        });
+        menuExportar.add(menuExportarGruas);
+
+        menuExportarHistoricoOts.setText("Generar reporte histórico OT");
+        menuExportarHistoricoOts.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuExportarHistoricoOtsActionPerformed(evt);
+            }
+        });
+        menuExportar.add(menuExportarHistoricoOts);
+
+        menuExportarFacturas.setText("Generar reporte histórico facturas");
+        menuExportarFacturas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuExportarFacturasActionPerformed(evt);
+            }
+        });
+        menuExportar.add(menuExportarFacturas);
+
+        jMenuItem8.setText("Generar reporte compras");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
+        menuExportar.add(jMenuItem8);
+
+        jMenuItem9.setText("Generar reporte cobranza");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
+        menuExportar.add(jMenuItem9);
+
+        MenuPrincipal.add(menuExportar);
 
         setJMenuBar(MenuPrincipal);
 
@@ -454,8 +519,83 @@ public class vistaPrincipal extends javax.swing.JFrame {
     private void menuOcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuOcActionPerformed
         vistaPrincipal.removeAll();
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
-        vistaPrincipal.addTab("OC", miControlador.crearControladorOCP());
+        vistaPrincipal.addTab("Jornadas OC", miControlador.crearControladorJornadasOCP());
+        vistaPrincipal.addTab("OCs", miControlador.crearControladorOcsP());
+        vistaPrincipal.addTab("A facturar", miControlador.crearControladorFacturasOCP());
+        vistaPrincipal.addTab("Facturadas", miControlador.crearControladorFacturadasOCP());
+        vistaPrincipal.addTab("Histórico", miControlador.crearControladorHistoricoOCP());
     }//GEN-LAST:event_menuOcActionPerformed
+
+    private void menuExportarClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExportarClientesActionPerformed
+        controladorPrincipal miControlador = new controladorPrincipal();
+        miControlador.generarReporteClientes();
+    }//GEN-LAST:event_menuExportarClientesActionPerformed
+
+    private void menuExportarGruasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExportarGruasActionPerformed
+        controladorPrincipal miControlador = new controladorPrincipal();
+        miControlador.generarReporteGruas();
+    }//GEN-LAST:event_menuExportarGruasActionPerformed
+
+    private void menuExportarHistoricoOtsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExportarHistoricoOtsActionPerformed
+        controladorPrincipal miControlador = new controladorPrincipal();
+        JXDatePicker fechaIn = new JXDatePicker(new Date());
+        JXDatePicker fechaFin = new JXDatePicker(new Date());
+        Object[] message = {
+          "Fecha de inicio: ", fechaIn,
+            "Fecha de término; ", fechaFin,
+        };
+        int resp = JOptionPane.showConfirmDialog(null, message, "Ingresar fechas.", JOptionPane.OK_CANCEL_OPTION);
+        if(resp == JOptionPane.YES_OPTION){
+            String fecIn = formatDate.format(fechaIn.getDate());
+            String fecFin = formatDate.format(fechaFin.getDate());
+            miControlador.generarReporteHistoricoOT(fecIn, fecFin);
+        }
+    }//GEN-LAST:event_menuExportarHistoricoOtsActionPerformed
+
+    private void menuExportarFacturasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExportarFacturasActionPerformed
+        controladorPrincipal miControlador = new controladorPrincipal();
+        JXDatePicker fechaIn = new JXDatePicker(new Date());
+        JXDatePicker fechaFin = new JXDatePicker(new Date());
+        Object[] message = {
+          "Fecha de inicio: ", fechaIn,
+            "Fecha de término; ", fechaFin,
+        };
+        int resp = JOptionPane.showConfirmDialog(null, message, "Ingresar fechas.", JOptionPane.OK_CANCEL_OPTION);
+        if(resp == JOptionPane.YES_OPTION){
+            String fecIn = formatDate.format(fechaIn.getDate());
+            String fecFin = formatDate.format(fechaFin.getDate());
+            miControlador.generarReporteHistoricoFacturas(fecIn, fecFin);
+        }
+    }//GEN-LAST:event_menuExportarFacturasActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        controladorPrincipal miControlador = new controladorPrincipal();
+        JXDatePicker fechaIn = new JXDatePicker(new Date());
+        JXDatePicker fechaFin = new JXDatePicker(new Date());
+        Object[] message = {
+          "Fecha de inicio: ", fechaIn,
+            "Fecha de término; ", fechaFin,
+        };
+        int resp = JOptionPane.showConfirmDialog(null, message, "Ingresar fechas.", JOptionPane.OK_CANCEL_OPTION);
+        if(resp == JOptionPane.YES_OPTION){
+            String fecIn = formatDate.format(fechaIn.getDate());
+            String fecFin = formatDate.format(fechaFin.getDate());
+            miControlador.generarReporteCompras(fecIn, fecFin);
+        }
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+//        controladorPrincipal miControlador = new controladorPrincipal();
+//        JComboBox estado = new JComboBox(new String[]{"Pagado", "No pagado"});
+//        Object[] message = {
+//            "Estado: ", estado
+//        };
+//        int resp = JOptionPane.showConfirmDialog(null, message, "Ingresar estado de cobranza.", JOptionPane.OK_CANCEL_OPTION);
+//        if(resp == JOptionPane.YES_OPTION){
+//            String est = estado.getSelectedItem().toString();
+//            miControlador.generarReporteCobranza(est);
+//        }
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -506,8 +646,6 @@ public class vistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemOperaciones;
     private javax.swing.JMenuItem itemUsuarios;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
@@ -515,11 +653,20 @@ public class vistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JMenuItem menuAgregarTarifa;
     private javax.swing.JMenu menuCobranza;
     private javax.swing.JMenu menuCompras;
+    private javax.swing.JMenu menuExportar;
+    private javax.swing.JMenuItem menuExportarClientes;
+    private javax.swing.JMenuItem menuExportarFacturas;
+    private javax.swing.JMenuItem menuExportarGruas;
+    private javax.swing.JMenuItem menuExportarHistoricoOts;
     private javax.swing.JMenu menuLibros;
+    private javax.swing.JMenu menuOC;
     private javax.swing.JMenuItem menuOc;
+    private javax.swing.JMenu menuOpciones;
     private javax.swing.JMenu menuOperaciones;
     private javax.swing.JMenu menuRemuneraciones;
     private javax.swing.JMenuItem menuTarifas;

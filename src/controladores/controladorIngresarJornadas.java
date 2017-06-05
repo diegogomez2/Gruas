@@ -10,8 +10,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
-import javax.swing.JRootPane;
-import javax.swing.JTabbedPane;
 import vistas.vistaIngresarJornadas;
 
 /**
@@ -33,6 +31,7 @@ public class controladorIngresarJornadas {
 
     public String camposVacios() {
         String respuesta = "";
+        System.out.println(vistaIJ);
         if (vistaIJ.getTextoFechaSalida().compareTo("") == 0) {
             respuesta += "-Fecha de salida.\n";
         }

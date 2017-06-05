@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package controladores;
-import modelos.modeloFacturas;
 
 import java.text.ParseException;
 import javax.swing.JPanel;

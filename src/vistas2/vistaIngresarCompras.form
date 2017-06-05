@@ -32,11 +32,7 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
-          </Group>
+          <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -61,7 +57,7 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="486" max="32767" attributes="0"/>
+                  <EmptySpace pref="508" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="botonCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="botonAceptar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -70,8 +66,9 @@
               </Group>
               <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jScrollPane1" min="-2" pref="464" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="56" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" pref="464" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -786,7 +783,7 @@
                         <StringItem index="0" value="Activo fijo (maquinaria)"/>
                         <StringItem index="1" value="Activo vehiculo"/>
                         <StringItem index="2" value="Combustibles (petr&#xf3;leo/gas)"/>
-                        <StringItem index="3" value="Respuestos"/>
+                        <StringItem index="3" value="Repuestos"/>
                         <StringItem index="4" value="Neum&#xe1;ticos"/>
                         <StringItem index="5" value="Aceite y lubricantes"/>
                         <StringItem index="6" value="Mantenciones"/>

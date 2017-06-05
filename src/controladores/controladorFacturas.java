@@ -39,6 +39,15 @@ public class controladorFacturas {
         tabs.setSelectedIndex(5);
     }
     
+    public void crearControladorPrincipalOC(JTabbedPane tabs){
+        controladorPrincipal miControlador = new controladorPrincipal();
+        tabs.remove(1);
+        tabs.remove(1);
+        tabs.insertTab("OCs", null, miControlador.crearControladorOcsP(), null, 1);
+        tabs.insertTab("A facturar", null, miControlador.crearControladorFacturasOCP(), null, 2);
+        tabs.setSelectedIndex(2);
+    }
+    
     public void irVistaDetalleFacturas(String id) throws ParseException{
         controladorPrincipal miControlador = new controladorPrincipal();
         miControlador.crearControladorDetalleFacturas(id);

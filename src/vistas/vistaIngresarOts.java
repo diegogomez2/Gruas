@@ -13,6 +13,7 @@ import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -754,10 +755,13 @@ public class vistaIngresarOts extends javax.swing.JDialog {
                 controladores.controladorGruas micontroladorGruas = new controladorGruas();
                 controladores.controladorEmpleados micontroladorEmpleados = new controladorEmpleados();
                 micontroladorGruas.agregarHoras(textoGrua.getText(), horas);
-                micontroladorEmpleados.agregarHoras(getRutEmp(), horas, ton);
-                micontroladorEmpleados.agregarColacion(getRutEmp(), getSpinnerColacion());
-                micontroladorEmpleados.agregarHorasExtra(getRutEmp(), getSpinnerHorasExtra(), getHorasExCal());
-                miControladorIO.agregarHorasExtra(id, getSpinnerHorasExtraNormales(), getSpinnerHorasExtraFestivos());
+                micontroladorEmpleados.agregarMensualidad(getRutEmp(), getMes(), getYear(), getHoras(), getSpinnerHorasExtraNormales(), getSpinnerHorasExtraFestivos(), getSpinnerColacion30(), 
+                        getSpinnerColacion1(), ton);
+                //micontroladorEmpleados.agregarHoras(getRutEmp(), horas, ton);
+                //micontroladorEmpleados.agregarColacion(getRutEmp(), getSpinnerColacion());
+                //micontroladorEmpleados.agregarHorasExtra(getRutEmp(), getSpinnerHorasExtra(), getHorasExCal());
+                //miControladorIO.agregarHorasExtra(id, getSpinnerHorasExtraNormales(), getSpinnerHorasExtraFestivos());
+                //miControladorIO.agregarHorasColacion(id, getSpinnerColacion30(), getSpinnerColacion1());
             }
         }
     }//GEN-LAST:event_botonIngresarActionPerformed
@@ -981,6 +985,24 @@ public class vistaIngresarOts extends javax.swing.JDialog {
         String dateString = formatDate.format(textoFechaOt.getDate());
         return dateString;
     }
+    
+    public int getMes(){
+        Date fecha = textoFechaOt.getDate();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(fecha);
+        System.out.println("Mes: " + cal.get(Calendar.MONTH));
+        if(cal.get(Calendar.DAY_OF_MONTH) > 25)
+            return cal.get(Calendar.MONTH) + 2;
+        return cal.get(Calendar.MONTH) + 1;  
+    }
+    
+    public int getYear(){
+        Date fecha = textoFechaOt.getDate();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(fecha);
+        System.out.println("Year: " + cal.get(Calendar.YEAR));
+        return cal.get(Calendar.YEAR);  
+    }
 
     public String getTextoCodigo() {
         return textoCodigo.getText();
@@ -1045,16 +1067,29 @@ public class vistaIngresarOts extends javax.swing.JDialog {
         return "0";
     }
     
+    //BORRAR
     public int getSpinnerColacion(){
         int colacion = 2 * (Integer) spinnerCol1.getValue() + (Integer) spinnerCol30.getValue();
         return colacion;
     }
     
-    //Horas extra totales
-    public double getSpinnerHorasExtra(){
-        double horasEx = (Double) spinnerHoraExNormales.getValue() + (Double) spinnerHoraExFes.getValue();
-        return horasEx;
+    public int getSpinnerColacion30(){
+        int colacion = (Integer) spinnerCol30.getValue();
+        return colacion;
     }
+    
+    public int getSpinnerColacion1(){
+        int colacion = (Integer) spinnerCol1.getValue();
+        return colacion;
+    }
+    
+    //Horas extra totales
+    /***BORRAR***/
+//    public double getSpinnerHorasExtra(){
+//        double horasEx = (Double) spinnerHoraExNormales.getValue() + (Double) spinnerHoraExFes.getValue();
+//        return horasEx;
+//    }
+    
     
     public double getSpinnerHorasExtraNormales(){
         double horasEx = (Double) spinnerHoraExNormales.getValue();
@@ -1066,6 +1101,7 @@ public class vistaIngresarOts extends javax.swing.JDialog {
         return horasEx;
     }
     
+    /***BORRAR***/
     //Horas para el calculo // HoraEx al 50% = 1, al 100% = 2
     public double getHorasExCal(){
         double horasEx =  (Double) spinnerHoraExNormales.getValue() + 2 * (Double) spinnerHoraExFes.getValue();

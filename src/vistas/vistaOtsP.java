@@ -261,13 +261,15 @@ public class vistaOtsP extends javax.swing.JPanel {
             int row = getFilaSeleccionada();
             id = getIdFila(row);
             idOt = getIdOt(row);
-
+            int dialogResult = JOptionPane.showOptionDialog(null, "Esta seguro que desea anular la OT \nCódigo: " + idOt
+            , "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, 0);
+            if(dialogResult == JOptionPane.YES_OPTION){
                 miControlador.anularFactura(idOt);
                 JTabbedPane tabs = (JTabbedPane) this.getParent();
                 micontroladorFacturas.crearControladorPrincipal(tabs);
                 miControlador.crearControladorPrincipal(tabs);
-                //JOptionPane.showMessageDialog(null, "Orden de trabajo facturada con éxito");
-
+                //JOptionPane.showMessageDialog(null, "Orden de trabajo facturada con éxito");   
+            }
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una orden de trabajo para ser anulada");
         }
@@ -283,19 +285,25 @@ public class vistaOtsP extends javax.swing.JPanel {
         String idOt;
         controladores.controladorOts miControlador = new controladores.controladorOts();
         controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
+        controladores.controladorEmpleados micontroladorEmpleados = new controladores.controladorEmpleados();
         boolean selected = tablaOts.getSelectedRowCount() > 0;
         if (selected) {
-            
             int row = getFilaSeleccionada();
             idOt = getIdOt(row);
-            int dialogResult = JOptionPane.showOptionDialog(null, "Esta seguro que desea eliminar la OT \nCódigo: "
+            int dialogResult = JOptionPane.showOptionDialog(null, "Esta seguro que desea eliminar la OT \nCódigo: " + idOt
             , "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, 0);
-            if(dialogResult == JOptionPane.YES_OPTION)  miControlador.eliminarOt(idOt);
-                JTabbedPane tabs = (JTabbedPane) this.getParent();
-                micontroladorFacturas.crearControladorPrincipal(tabs);
-                miControlador.crearControladorPrincipal(tabs);
-                //JOptionPane.showMessageDialog(null, "Orden de trabajo facturada con éxito");
-
+            if(dialogResult == JOptionPane.YES_OPTION) {
+                try {
+                    micontroladorEmpleados.restarMensualidad(idOt);
+                } catch (ParseException ex) {
+                    Logger.getLogger(vistaOtsP.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                miControlador.eliminarOt(idOt);
+                JOptionPane.showMessageDialog(null, "OT eliminada con éxito.");
+            }
+            JTabbedPane tabs = (JTabbedPane) this.getParent();
+            micontroladorFacturas.crearControladorPrincipal(tabs);
+            miControlador.crearControladorPrincipal(tabs);
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una orden de trabajo para ser eliminada");
         }
@@ -338,11 +346,11 @@ public class vistaOtsP extends javax.swing.JPanel {
     public class MyTableModel extends DefaultTableModel{
         public MyTableModel() {
           super(new String[]{"Código OT", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
-            "Neto", "IVA", "Total", "Estado", "Empleado", "Cliente"}, 0);
+            "Neto", "IVA", "Total", "Estado", "Operador", "Cliente"}, 0);
         }
         public MyTableModel(Object[][] data){
             super(new String[]{"Código OT", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
-            "Neto", "IVA", "Total", "Estado", "Empleado", "Cliente"}, 0);
+            "Neto", "IVA", "Total", "Estado", "Operador", "Cliente"}, 0);
             
             int i = 0;
             this.setRowCount(data.length);
@@ -405,5 +413,4 @@ public class vistaOtsP extends javax.swing.JPanel {
                 return result;
             }
     }
-
 }
