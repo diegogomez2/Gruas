@@ -134,7 +134,7 @@ public class modeloOts {
                 }else{
                     estfact2 = "Facturada";
                 }
-                String estemp = res.getString("nom_emp") + res.getString("apP_emp");
+                String estemp = res.getString("nom_emp") + " " + res.getString("apP_emp");
                 String estrut = res.getString("rut_cli") + "-" + res.getString("dig_cli");
                 data[i] = new String[]{estcodot, estraz, estgir, estdir, estciu, estcom, estfec, estnet,
                 estiva, esttot, estfact2, estemp, estrut};

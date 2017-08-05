@@ -92,7 +92,6 @@ public class vistaPrincipal extends javax.swing.JFrame {
         menuExportarHistoricoOts = new javax.swing.JMenuItem();
         menuExportarFacturas = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu Principal");
@@ -323,7 +322,7 @@ public class vistaPrincipal extends javax.swing.JFrame {
         });
         menuExportar.add(menuExportarGruas);
 
-        menuExportarHistoricoOts.setText("Generar reporte histórico OT");
+        menuExportarHistoricoOts.setText("Generar reporte histórico OT/OC");
         menuExportarHistoricoOts.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuExportarHistoricoOtsActionPerformed(evt);
@@ -346,14 +345,6 @@ public class vistaPrincipal extends javax.swing.JFrame {
             }
         });
         menuExportar.add(jMenuItem8);
-
-        jMenuItem9.setText("Generar reporte cobranza");
-        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem9ActionPerformed(evt);
-            }
-        });
-        menuExportar.add(jMenuItem9);
 
         MenuPrincipal.add(menuExportar);
 
@@ -583,10 +574,9 @@ public class vistaPrincipal extends javax.swing.JFrame {
             String fecFin = formatDate.format(fechaFin.getDate());
             miControlador.generarReporteCompras(fecIn, fecFin);
         }
-    }//GEN-LAST:event_jMenuItem8ActionPerformed
-
-    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
-//        controladorPrincipal miControlador = new controladorPrincipal();
+        
+        // ESTO SE BORRO PERO VA EN GENERAR REPORTE EN LA SECCION EXPORTAR
+        //        controladorPrincipal miControlador = new controladorPrincipal();
 //        JComboBox estado = new JComboBox(new String[]{"Pagado", "No pagado"});
 //        Object[] message = {
 //            "Estado: ", estado
@@ -596,7 +586,7 @@ public class vistaPrincipal extends javax.swing.JFrame {
 //            String est = estado.getSelectedItem().toString();
 //            miControlador.generarReporteCobranza(est);
 //        }
-    }//GEN-LAST:event_jMenuItem9ActionPerformed
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -655,7 +645,6 @@ public class vistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JMenuItem menuAgregarTarifa;
     private javax.swing.JMenu menuCobranza;
     private javax.swing.JMenu menuCompras;

@@ -54,5 +54,10 @@ public class controladorJornadasOC {
         controladorPrincipal miControlador = new controladorPrincipal();
         miControlador.crearControladorIngresarOcs(id);
     }
+
+    public void irVistaIngresarTraspaletaOcs(String id) throws ParseException {
+        controladorPrincipal miControlador = new controladorPrincipal();
+        miControlador.crearControladorIngresarTraspaletaOcs(id);
+    }
     
 }

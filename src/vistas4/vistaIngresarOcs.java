@@ -21,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
@@ -67,11 +68,16 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
     public vistaIngresarOcs(java.awt.Frame parent, boolean modal, Object[] dataTon) {
         super(parent, modal); 
         initComponents();
+        jButton1.setVisible(false);
         comboTonelajes = new JComboBox<Object>(dataTon);
         tablaGruas.setModel(tg);
         tablaEmpleados.setModel(te);
         tablaHoras.setModel(th);
         tablaEmpleados.getColumnModel().getColumn(10).setCellEditor(new DefaultCellEditor(comboTonelajes));
+        TableColumnModel tcmGruas = tablaGruas.getColumnModel();
+        TableColumnModel tcmEmp = tablaEmpleados.getColumnModel();
+        tcmGruas.removeColumn(tcmGruas.getColumn(6));
+        tcmEmp.removeColumn(tcmEmp.getColumn(11));
         dfs.setCurrencySymbol("$");
         dfs.setGroupingSeparator('.');
         dfs.setMonetaryDecimalSeparator('.');
@@ -151,8 +157,10 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
         tablaHoras = new javax.swing.JTable();
         botonIngresar = new javax.swing.JButton();
         botonCancelar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Asignar OC");
 
         jScrollPane2.getVerticalScrollBar().setUnitIncrement(16);
 
@@ -172,6 +180,7 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
 
         jLabel22.setText("Observación en faena");
 
+        textoObs.setEditable(false);
         textoObs.setColumns(20);
         textoObs.setLineWrap(true);
         textoObs.setRows(3);
@@ -449,7 +458,7 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(comboCondPago, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(comboCondPago, 0, 459, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(textoDespachado)
                     .addComponent(textoFechaOt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -460,7 +469,7 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
                             .addComponent(jLabel8)
                             .addComponent(jLabel9)
                             .addComponent(jLabel10))
-                        .addGap(0, 622, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel9Layout.setVerticalGroup(
@@ -498,6 +507,7 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaGruas.getTableHeader().setReorderingAllowed(false);
         jScrollPane3.setViewportView(tablaGruas);
 
         tablaEmpleados.setModel(new javax.swing.table.DefaultTableModel(
@@ -511,6 +521,7 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaEmpleados.getTableHeader().setReorderingAllowed(false);
         jScrollPane4.setViewportView(tablaEmpleados);
 
         tablaHoras.setModel(new javax.swing.table.DefaultTableModel(
@@ -524,26 +535,25 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaHoras.getTableHeader().setReorderingAllowed(false);
         jScrollPane5.setViewportView(tablaHoras);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane3))))
+                    .addComponent(jScrollPane5)
+                    .addComponent(jScrollPane4)
+                    .addComponent(jScrollPane3))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -578,12 +588,21 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
             }
         });
 
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(1262, Short.MAX_VALUE)
+                .addContainerGap(912, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(18, 18, 18)
                 .addComponent(botonIngresar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(botonCancelar)
@@ -597,7 +616,8 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
                 .addContainerGap(830, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonIngresar)
-                    .addComponent(botonCancelar))
+                    .addComponent(botonCancelar)
+                    .addComponent(jButton1))
                 .addContainerGap())
             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel5Layout.createSequentialGroup()
@@ -687,6 +707,10 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
         setTextoNuevoNeto(String.valueOf(nuevoNeto));
     }//GEN-LAST:event_textoNetoFocusLost
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        System.out.println(tablaGruas.getModel().getValueAt(0, 6));
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -729,6 +753,7 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
     private javax.swing.JCheckBox checkDespacho;
     private javax.swing.JComboBox<String> comboCondPago;
     private javax.swing.JComboBox<String> comboFormaPago;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
@@ -1164,6 +1189,7 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
             tablaGruas.setValueAt(data1[3], i, 3);
             tablaGruas.setValueAt(data1[4], i, 4);
             tablaGruas.setValueAt(0, i, 5);
+            tablaGruas.getModel().setValueAt(data1[5], i, 6);
             i++;
         }
     }
@@ -1184,6 +1210,7 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
             tablaEmpleados.setValueAt(0, i, 7);
             tablaEmpleados.setValueAt(0, i, 8);
             tablaEmpleados.setValueAt(0, i, 9);
+            tablaEmpleados.getModel().setValueAt(data1[5], i, 11);
             i++;
         }
     }
@@ -1208,7 +1235,7 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
     
     public class MyTableModelGruas extends DefaultTableModel{
         public MyTableModelGruas() {
-          super(new String[]{"Grua", "Fecha de salida", "Hora de salida", "Fecha de regreso", "Hora de regreso", "Horas totales"}, 0);
+          super(new String[]{"Grua", "Fecha de salida", "Hora de salida", "Fecha de regreso", "Hora de regreso", "Horas totales", "Id"}, 0);
         }
 
         @Override
@@ -1235,8 +1262,8 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
     
     public class MyTableModelEmpleados extends DefaultTableModel{
         public MyTableModelEmpleados() {
-          super(new String[]{"Empleado", "Fecha de salida", "Hora de salida", "Fecha de regreso", "Hora de regreso", "Horas totales", "Horas extra nor.", "Horas extra fes.", "Días media colación", "Días sin colación", 
-          "Ton. empleado"}, 0);
+          super(new String[]{"Empleado", "Fecha de salida", "Hora de salida", "Fecha de regreso", "Hora de regreso", "Horas totales", "Horas extra nor.", 
+              "Horas extra fes.", "Días media colación", "Días sin colación", "Ton. empleado", "Id"}, 0);
         }
 
         @Override
@@ -1260,7 +1287,7 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
         @Override
         public Object getValueAt(int row, int col){
             if(col == 10 && super.getValueAt(row, col) == null){
-                return 2;
+                return 3;
             }
             return super.getValueAt(row, col);
         }

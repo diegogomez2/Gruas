@@ -5,7 +5,13 @@
  */
 package vistas2;
 
+import controladores.controladorPrincipal;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -22,7 +28,7 @@ public class vistaVerGestion extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         
-        String[] columNames = {"Tipo de gestion", "Resultado", "Fecha", "Observaciones"};
+        String[] columNames = {"Tipo de gestion", "Resultado", "Fecha", "Observaciones", "Id"};
         datos = new DefaultTableModel(data, columNames){
             @Override
             public boolean isCellEditable(int row, int column){
@@ -30,6 +36,8 @@ public class vistaVerGestion extends javax.swing.JDialog {
             }
         };
         tablaGestiones.setModel(datos);
+        TableColumnModel tcm = tablaGestiones.getColumnModel();
+        tcm.removeColumn(tcm.getColumn(4));
     }
 
     /**
@@ -43,6 +51,7 @@ public class vistaVerGestion extends javax.swing.JDialog {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaGestiones = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Gestiones");
@@ -60,19 +69,50 @@ public class vistaVerGestion extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(tablaGestiones);
 
+        jButton1.setText("Modificar gestión");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 554, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        boolean selected = tablaGestiones.getSelectedRowCount() > 0;
+        if(selected){
+            int row = getRowSelected();
+            String id = getId(row);
+            controladores.controladorPrincipal miControlador = new controladorPrincipal();
+            try {
+                miControlador.crearControladorModificarGestion(id);
+            } catch (ParseException ex) {
+                Logger.getLogger(vistaVerPagos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una gestión para ser modificada");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -109,7 +149,16 @@ public class vistaVerGestion extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaGestiones;
     // End of variables declaration//GEN-END:variables
+
+    public int getRowSelected(){
+        return tablaGestiones.getSelectedRow();
+    }
+    
+    public String getId(int row){
+        return tablaGestiones.getModel().getValueAt(tablaGestiones.convertRowIndexToModel(row), 4).toString();
+    }
 }

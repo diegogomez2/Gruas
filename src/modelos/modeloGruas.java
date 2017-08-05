@@ -398,7 +398,7 @@ public class modeloGruas {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("update gruas set horo_gru = horo_gru + ? WHERE des_gru = ?");
+            PreparedStatement pstm = conn.prepareStatement("UPDATE Gruas SET horo_gru = horo_gru + ? WHERE des_gru = ?");
             pstm.setInt(1, horas);
             pstm.setString(2, desc);
             pstm.executeUpdate();
@@ -410,6 +410,25 @@ public class modeloGruas {
         }
     }
     
+    
+    /* Actualiza el numero de horas en detalle gruas para OC*/
+    public void actualizarHorasDetalleGruas(int id, int horas){
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("UPDATE Detalle_oc_gru SET horas_det_gru = ? WHERE id_det_gru = ?");
+            pstm.setInt(1, horas);
+            pstm.setInt(2, id);
+            pstm.executeUpdate();
+        }catch(SQLException e){
+            System.out.println("Error al actualizar det horas gruas oc");
+            System.out.println(e);
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+        }
+    }
+    
+    /* Obtiene las gruas disponibles en periodo de tiempo*/
     public Object[] obtenerDescGruasDisp(String fhsal, String fhreg) {
         //String fechSal, String horaSal, String fechReg, String horaReg
         int registros = 0;
@@ -419,11 +438,16 @@ public class modeloGruas {
 //            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Gruas where "
 //                    + "pat_gru not in (SELECT pat_gru from jornadas where "
 //                    + "( subtime(?, '01:00') <= fhreg_jor and addtime(?, '01:00') >= fhsal_jor and pat_gru is not null))");
-            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Gruas where "
-                    + "pat_gru not in (SELECT pat_gru from jornadas where "
-                    + "( ?  <= fhreg_jor and ? >= fhsal_jor and pat_gru is not null and nc_ot = 0))");
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(*) as total FROM Gruas where pat_gru not in( "
+                    + "SELECT pat_gru from Jornadas where ( ? <= fhreg_jor and ? >= fhsal_jor and pat_gru is not null and nc_ot = 0) "
+                    + "UNION ALL "
+                    + "SELECT pat_gru FROM Detalle_oc_gru WHERE fhsal_det_gru IS NULL AND fhreg_det_gru IS NULL AND pat_gru IS NOT NULL "
+                    + "UNION ALL "
+                    + "SELECT pat_gru FROM Detalle_oc_gru WHERE ? <= fhreg_det_gru AND ? >= fhsal_det_gru  AND pat_gru IS NOT NULL)");
             pstm.setString(1, fhsal);
             pstm.setString(2, fhreg);
+            pstm.setString(3, fhsal);
+            pstm.setString(4, fhreg);
             ResultSet res = pstm.executeQuery();
             res.next();
             registros = res.getInt("total");
@@ -466,11 +490,22 @@ public class modeloGruas {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("SELECT COUNT(*) total FROM Jornadas "
-                    + "WHERE ( ? <= fhreg_jor and ? >= fhsal_jor AND pat_gru = ? AND nc_ot = 0)");
+//            PreparedStatement pstm = conn.prepareStatement("SELECT COUNT(*) total FROM Jornadas "
+//                    + "WHERE ( ? <= fhreg_jor and ? >= fhsal_jor AND pat_gru = ? AND nc_ot = 0)");
+            PreparedStatement pstm = conn.prepareStatement("SELECT SUM(total) total FROM("
+                    + "SELECT count(*) as total FROM Jornadas WHERE ( ? <= fhreg_jor AND ? >= fhsal_jor AND pat_gru = ? AND nc_ot = 0) "
+                    + "UNION ALL "
+                    + "SELECT count(*) as total FROM Detalle_oc_gru WHERE pat_gru = ? AND fhsal_det_gru IS NULL AND fhreg_det_gru IS NULL "
+                    + "UNION ALL "
+                    + "SELECT count(*) as total FROM Detalle_oc_gru WHERE ? <= fhreg_det_gru AND ? >= fhsal_det_gru AND pat_gru = ?"
+                    + ") a");
             pstm.setString(1, fhsal);
             pstm.setString(2, fhreg);
             pstm.setString(3, pat);
+            pstm.setString(4, pat);
+            pstm.setString(5, fhsal);
+            pstm.setString(6, fhreg);
+            pstm.setString(7, pat);
             ResultSet res = pstm.executeQuery();
             res.next();
             registros = res.getInt("total");
@@ -484,6 +519,8 @@ public class modeloGruas {
         return registros;
     }
     
+    
+    /* Chequea la disponibilidad de una grua en un periodo determinado dejando fuera la id de la jornada (se usa en el modificar) */
     public int checkGruaDispId(String fhsal, String fhreg, String pat, String id) {
         //String fechSal, String horaSal, String fechReg, String horaReg
         int registros = 0;
@@ -491,16 +528,23 @@ public class modeloGruas {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
 //            PreparedStatement pstm = conn.prepareStatement("SELECT count(*) as total from jornadas "
-//                    + " where ( subtime(?, '01:00') <= fhreg_jor and "
-//                    + "addtime(?, '01:00') >= fhsal_jor and pat_gru = ? and id_jor <> ?)");
-            PreparedStatement pstm = conn.prepareStatement("SELECT count(*) as total from jornadas "
-                    + " where ( ? <= fhreg_jor and "
-                    + "? >= fhsal_jor and pat_gru = ? and id_jor <> ? and nc_ot = 0)");
+//                    + " where ( ? <= fhreg_jor and "
+//                    + "? >= fhsal_jor and pat_gru = ? and id_jor <> ? and nc_ot = 0)");
+            PreparedStatement pstm = conn.prepareStatement("SELECT SUM(total) total FROM("
+                    + "SELECT count(*) as total FROM Jornadas WHERE ( ? <= fhreg_jor AND ? >= fhsal_jor AND pat_gru = ? AND id_jor <> ? AND nc_ot = 0) "
+                    + "UNION ALL "
+                    + "SELECT count(*) as total FROM Detalle_oc_gru WHERE pat_gru = ? AND fhsal_det_gru IS NULL AND fhreg_det_gru IS NULL "
+                    + "UNION ALL "
+                    + "SELECT count(*) as total FROM Detalle_oc_gru WHERE ? <= fhreg_det_gru AND ? >= fhsal_det_gru AND pat_gru = ?"
+                    + ") a");
             pstm.setString(1, fhsal);
             pstm.setString(2, fhreg);
             pstm.setString(3, pat);
             pstm.setString(4, id);
-            System.out.println(pstm);
+            pstm.setString(5, pat);
+            pstm.setString(6, fhsal);
+            pstm.setString(7, fhreg);
+            pstm.setString(8, pat);
             ResultSet res = pstm.executeQuery();
             res.next();
             registros = res.getInt("total");

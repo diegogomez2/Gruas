@@ -1468,7 +1468,32 @@ public class modeloFacturas {
                     + "neto_nd as neto, iva_nd  iva, fec_nd as fec, tipo_nd  tipo FROM Notadebito f INNER JOIN( "
                     + "SELECT id_fac, rut_cli FROM Jornadas GROUP BY id_fac) "
                     + "b ON b.id_fac = f.id_fac INNER JOIN Clientes c on c.rut_cli = b.rut_cli INNER JOIN "
-                    + "Facturas ON Facturas.id_fac = f.id_fac WHERE fec_nd >= ? AND fec_nd <= ? order by fec DESC");
+                    + "Facturas ON Facturas.id_fac = f.id_fac WHERE fec_nd >= ? AND fec_nd <= ? "
+                    + "UNION "
+                    + "SELECT fol_fac fol, raz_cli, gir_cli, dir_cli, "
+                    + "ciu_cli, com_cli, tot_fac tot, neto_fac neto, iva_fac iva,fec_fac fec, tipo_fac tipo "
+                    + "FROM facturas f INNER JOIN ("
+                    + "SELECT id_fac, rut_cli FROM jornadas_oc GROUP BY id_fac) "
+                    + "b ON b.id_fac = f.id_fac INNER JOIN Clientes c ON c.rut_cli = b.rut_cli WHERE fec_fac >= ? AND fec_fac <= ?"
+                    + "UNION "
+                    + "SELECT fol_nc fol, raz_cli, gir_cli, dir_cli, ciu_cli, com_cli, tot_fac tot, "
+                    + "neto_fac neto, iva_fac iva, fec_nc fec, tipo_nc tipo FROM Notacredito f INNER JOIN("
+                    + "SELECT id_fac, rut_cli FROM Jornadas_oc GROUP BY id_fac) "
+                    + "b ON b.id_fac = f.id_fac INNER JOIN Clientes c on c.rut_cli = b.rut_cli INNER JOIN "
+                    + "Facturas ON Facturas.id_fac = f.id_fac WHERE fec_nc >= ? AND fec_nc <= ?"
+                    + "UNION "
+                    + "SELECT fol_nc fol, raz_cli, gir_cli, dir_cli, ciu_cli, com_cli, tot_nd tot, "
+                    + "neto_nd neto, iva_nd iva, fec_nc fec, tipo_nc tipo FROM Notacredito f INNER JOIN("
+                    + "SELECT id_nd, rut_cli FROM Jornadas_oc GROUP BY id_nd) "
+                    + "b ON b.id_nd = f.id_nd INNER JOIN Clientes c on c.rut_cli = b.rut_cli INNER JOIN "
+                    + "Notadebito ON Notadebito.id_nd = f.id_nd WHERE fec_nc >= ? AND fec_nc <= ?"
+                    + "UNION "
+                    + "SELECT fol_nd fol, raz_cli, gir_cli, dir_cli, ciu_cli, com_cli, tot_nd tot, "
+                    + "neto_nd as neto, iva_nd  iva, fec_nd as fec, tipo_nd  tipo FROM Notadebito f INNER JOIN( "
+                    + "SELECT id_fac, rut_cli FROM Jornadas_oc GROUP BY id_fac) "
+                    + "b ON b.id_fac = f.id_fac INNER JOIN Clientes c on c.rut_cli = b.rut_cli INNER JOIN "
+                    + "Facturas ON Facturas.id_fac = f.id_fac WHERE fec_nd >= ? AND fec_nd <= ? "
+                    + "order by fec DESC");
             pstm.setString(1, fecIn);
             pstm.setString(2, fecFin);
             pstm.setString(3, fecIn);
@@ -1477,6 +1502,14 @@ public class modeloFacturas {
             pstm.setString(6, fecFin);
             pstm.setString(7, fecIn);
             pstm.setString(8, fecFin);
+            pstm.setString(9, fecIn);
+            pstm.setString(10, fecFin);
+            pstm.setString(11, fecIn);
+            pstm.setString(12, fecFin);
+            pstm.setString(13, fecIn);
+            pstm.setString(14, fecFin);
+            pstm.setString(15, fecIn);
+            pstm.setString(16, fecFin);
             ResultSet res = pstm.executeQuery();
             int i = 0;
             while(res.next()){
@@ -1715,4 +1748,8 @@ public class modeloFacturas {
 //        }
 //        return data;
 //    }
+
+    public Object[][] listarReporteCobranza(String est) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

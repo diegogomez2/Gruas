@@ -31,7 +31,6 @@ public class controladorIngresarJornadas {
 
     public String camposVacios() {
         String respuesta = "";
-        System.out.println(vistaIJ);
         if (vistaIJ.getTextoFechaSalida().compareTo("") == 0) {
             respuesta += "-Fecha de salida.\n";
         }

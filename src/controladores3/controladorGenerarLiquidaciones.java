@@ -19,6 +19,7 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.xml.transform.TransformerException;
 import modelos.modeloEmpleados;
+import modelos.modeloFacturas;
 import modelos3.modeloRemuneraciones;
 import org.apache.fop.apps.FOPException;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -43,6 +44,8 @@ public class controladorGenerarLiquidaciones {
         Thread runnable = new Thread() {
             public void run() {
                 try {
+                    modeloFacturas rutas = new modeloFacturas();
+                    String ruta = rutas.obtenerRuta();
                     dfs.setCurrencySymbol("$ ");
                     dfs.setGroupingSeparator('.');
                     dfs.setMonetaryDecimalSeparator('.');
@@ -55,7 +58,7 @@ public class controladorGenerarLiquidaciones {
 //                    float uf = remuneraciones.obtenerUF() / 100;
                     float uf = remuneraciones.obtenerUF();
                     int numEmp = data.length;
-                    String path = "Liquidaciones " + per;
+                    String path = ruta + "/Liquidaciones " + per;
                     File dir = new File(path);
                     dir.mkdir();
 //                    int bono300 = miControlador.obtenerBono300();
@@ -65,24 +68,26 @@ public class controladorGenerarLiquidaciones {
                             PDDocument doc = new PDDocument(); // creating instance of pdfDoc
                             PDPage page = new PDPage();
                             doc.addPage(page); // adding page in pdf doc file
-                            int base = Integer.parseInt(data[i][2]) * Integer.parseInt(data[i][27]) / 30;
+                            int base = Integer.parseInt(data[i][2]) * Integer.parseInt(data[i][28]) / 30;
                             //GRATIFICACION
                             int grat = (int)(base * 0.25);
                             //BONO ANTIGUEDAD
                             int bonoAnt = miControlador.obtenerBonoAnt(data[i][5]);
                             //BONO 300
 //                            int totalBon300 = bono300 * Integer.parseInt(data[i][9]);
-                            int totalBon300 = Integer.parseInt(data[i][26]);
+                            int totalBon300 = Integer.parseInt(data[i][27]);
                             //BONO ADICIONAL
-                            int bonoAd = Integer.parseInt(data[i][10]);
+                            int bonoAd = Integer.parseInt(data[i][11]);
                             //BONO RESPONSABILIDAD
                             int bonoResp = 0;
                             //BONO ADICIONAL
-                            int bonoCol = Integer.parseInt(data[i][8]);
+                            int bonoCol1 = Integer.parseInt(data[i][8]);
+                            int bonoCol30 = Integer.parseInt(data[i][9]);
+                            int bonoCol = bonoCol1 + bonoCol30/2;
                             int totalBonCol = (int)(((double) base * 0.0077777) * ((double)bonoCol / 2));
                             //HORAS EXTRA
-                            double horasExNor = Double.parseDouble(data[i][11]);
-                            double horasExFes = Double.parseDouble(data[i][12]);
+                            double horasExNor = Double.parseDouble(data[i][12]);
+                            double horasExFes = Double.parseDouble(data[i][13]);
                             double horasEx = 0;
                             double bonoHor = 0;
                             double cantHorEx = 0;
@@ -112,7 +117,7 @@ public class controladorGenerarLiquidaciones {
                             //TOTAL IMPONIBLE
                             double totImp = base + grat + bonoAnt + bonoAd + bonoResp + totalBonoAV + totalBonCol + totalBon300 + valorHorEx;
                             //DESCUENTO AFP
-                            int descAFP = Integer.parseInt(data[i][20]);
+                            int descAFP = Integer.parseInt(data[i][21]);
                             int totalAFP = (int)(totImp * ((double)descAFP / 10000));
                             int sis = (int)(totImp * 0.0141);
                             //DESCUENTO SALUD
@@ -120,15 +125,15 @@ public class controladorGenerarLiquidaciones {
                             String salud;
                             if(data[i][4].toLowerCase().compareTo("fonasa") == 0){
                                 salud = "FONASA";
-                                descSalud = Integer.parseInt(data[i][21]);
+                                descSalud = Integer.parseInt(data[i][22]);
                                 totalSalud = (int)(totImp * ((double)descSalud / 10000));
                             }else{
-                                if(data[i][22].compareTo("") == 0){
+                                if(data[i][23].compareTo("") == 0){
                                     salud = data[i][4];
                                 }else{
-                                    salud = data[i][22];
+                                    salud = data[i][23];
                                 }
-                                descSalud = ((double)Integer.parseInt(data[i][23]) / 1000) * uf;
+                                descSalud = ((double)Integer.parseInt(data[i][24]) / 1000) * uf;
                                 totalSalud = descSalud;
                             }
                             //DESCUENTO CESANTIA
@@ -148,9 +153,9 @@ public class controladorGenerarLiquidaciones {
                                 }
                             }
                             //CAJA COMPENSACION
-                            int caja = Integer.parseInt(data[i][14]);
+                            int caja = Integer.parseInt(data[i][15]);
                             //ASIGNACION FAMILIAR
-                            int af = Integer.parseInt(data[i][15]);
+                            int af = Integer.parseInt(data[i][16]);
                             //LIQ ALCANZADO
                             double liqAl = totAux - caja;
                             //COLACION 
@@ -160,12 +165,12 @@ public class controladorGenerarLiquidaciones {
                             //TOTAL NO IMPONIBLE
                             int noImp = trans + col + af;
                             //ANTICIPO ADELANTO PRESTAMOS
-                            int antic = Integer.parseInt(data[i][16]);
-                            int adel = Integer.parseInt(data[i][17]);
-                            int pres = Integer.parseInt(data[i][18]);
-                            int cuo = Integer.parseInt(data[i][19]);
+                            int antic = Integer.parseInt(data[i][17]);
+                            int adel = Integer.parseInt(data[i][18]);
+                            int pres = Integer.parseInt(data[i][19]);
+                            int cuo = Integer.parseInt(data[i][20]);
                             int cuoPres = 0;
-                            int cuores = Math.max(0, Integer.parseInt(data[i][25]) - 1);
+                            int cuores = Math.max(0, Integer.parseInt(data[i][26]) - 1);
                             if(cuo != 0){
                                 cuoPres = pres / cuo;
                             }
@@ -198,7 +203,7 @@ public class controladorGenerarLiquidaciones {
                             content.newLine();
                             content.showText("Nombre: " + data[i][1]);
                             content.newLineAtOffset(400, 0);
-                            content.showText("Contrato: " + data[i][24]);
+                            content.showText("Contrato: " + data[i][25]);
                             content.newLineAtOffset(-400, 0);
                             content.newLine();
                             content.showText("Rut: " + data[i][0]);
@@ -221,7 +226,7 @@ public class controladorGenerarLiquidaciones {
                             content.newLineAtOffset(150, 0);
                             content.showText(FORMAT.format(base));
                             content.newLineAtOffset(-150, -15);
-                            double horex = Double.parseDouble(data[i][12]);
+                            double horex = Double.parseDouble(data[i][13]);
                             if(horex > 45){
                                 horex = 45;
                             }

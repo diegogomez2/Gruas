@@ -1983,4 +1983,49 @@ public class controladorPrincipal {
         micontroladorMP = new controladorModificarPago();
         micontroladorMP.mostrarVistaModificarPago(dataPagos);
     }
+    
+    public void crearControladorModificarGestion(String id) throws ParseException {
+        modelos2.modeloCobranzas cobranza = new modeloCobranzas();
+        Object[] dataGestion;
+        dataGestion = cobranza.obtenerGestion(id);
+        controladorModificarGestion micontroladorMG;
+        micontroladorMG = new controladorModificarGestion();
+        micontroladorMG.mostrarVistaModificarGestion(dataGestion);
+    }
+
+    public boolean ingresarTraspaleta(String[] data) {
+        modelos4.modeloJornadasOC jornada = new modelos4.modeloJornadasOC();
+        String id = jornada.ingresarTraspaleta(data);
+        if(id.compareTo("incorrecto") != 0){
+            JOptionPane.showMessageDialog(miVistaL, "Jornada ingresada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al ingresar los datos.\n", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+
+    public void crearControladorIngresarTraspaletaOcs(String id) throws ParseException {
+        String[] data;
+        Object[] ciudades;
+        modelos4.modeloJornadasOC jornada = new modelos4.modeloJornadasOC();
+        modelos.modeloRegiones ciudad = new modeloRegiones();
+        modelos.modeloTonelajes tonelajes = new modeloTonelajes();
+        data = jornada.obtenerJornadaOCPorId(id);
+        ciudades = ciudad.listaCiudades2();
+        controladores4.controladorIngresarOcs micontroladorIO;
+        micontroladorIO = new controladorIngresarOcs();
+        micontroladorIO.mostrarVistaIngresarTraspaletaOcs(data, ciudades);
+    }
+
+    public String modificarTraspaleta(String[] data, String id) {
+        modelos4.modeloJornadasOC jornada = new modelos4.modeloJornadasOC();
+        if(jornada.modificarTraspaleta(data, id).compareTo("incorrecto") != 0){
+            JOptionPane.showMessageDialog(miVistaL, "Jornada modificada con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+            return "correcto";
+        }else{
+            JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al ingresar los datos.\n", "Error", JOptionPane.ERROR_MESSAGE);
+            return "incorrecto";
+        }
+    }
 }

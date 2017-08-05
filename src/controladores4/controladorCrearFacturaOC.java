@@ -38,7 +38,7 @@ public class controladorCrearFacturaOC {
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
     static vistas.vistaFacturasP vistaF;
     
-     public String crearFacXML(String[] idOcs, String valorNeto, String valorIva, String valorTotal, String fac, String docRef) throws ParseException{
+     public String crearFacXML(String[] idOcs, String valorNeto, String valorIva, String valorTotal, String fac, String docRef, String orden) throws ParseException{
         
          modeloFacturas rutas = new modeloFacturas();
          String ruta = rutas.obtenerRuta();
@@ -202,39 +202,43 @@ public class controladorCrearFacturaOC {
 //                String[] infoDespacho = ots.obtenerValorDespachoOt(idOts[i]);
 //                
 //                for (int j = 0; j < valores.size() - 1; j++) {
-//                    DETALLE
-//                    Element detalle = doc.createElement("Detalle");
-//                    rootElement.appendChild(detalle);
-//                    
-//                    Element numLin = doc.createElement("NroLinDet");
-//                    numLin.appendChild(doc.createTextNode(Integer.toString(contador+1)));
-//                    detalle.appendChild(numLin);
-//
-//                    Element codItem = doc.createElement("CdgItem");
-//                    detalle.appendChild(codItem);
-//
-//                    Element tipoCod = doc.createElement("TpoCodigo");
-//                    tipoCod.appendChild(doc.createTextNode("Interna"));
-//                    codItem.appendChild(tipoCod);
-//
-//                    Element valCod = doc.createElement("VlrCodigo");
-//                    valCod.appendChild(doc.createTextNode("1"));
-//                    codItem.appendChild(valCod);
-//
-//                    Element nomItem = doc.createElement("NmbItem");
-//                    nomItem.appendChild(doc.createTextNode(data[11]+" HORAS DE GRUA HORQUILLA O.T.:"+data[10]));
-//                    nomItem.appendChild(doc.createTextNode(valores.get(j).get(3)+" HORAS DE GRUA HORQUILLA O.T.:"+data[10]));
-//                    detalle.appendChild(nomItem);
-//
-//                    Element qtyItem = doc.createElement("QtyItem");
-//                    nomItem.appendChild(doc.createTextNode(data[11]+" HORAS DE GRUA HORQUILLA O.T.:"+data[10]));
-//                    qtyItem.appendChild(doc.createTextNode(valores.get(j).get(3)));
-//                    detalle.appendChild(qtyItem);
-//                    
-//                    Element prcItem = doc.createElement("PrcItem");
-//                    nomItem.appendChild(doc.createTextNode(data[11]+" HORAS DE GRUA HORQUILLA O.T.:"+data[10]));
-//                    prcItem.appendChild(doc.createTextNode(valores.get(j).get(0)));
-//                    detalle.appendChild(prcItem);
+                    //DETALLE
+                    Element detalle = doc.createElement("Detalle");
+                    rootElement.appendChild(detalle);
+                    
+                    Element numLin = doc.createElement("NroLinDet");
+                    numLin.appendChild(doc.createTextNode(Integer.toString(1)));
+                    detalle.appendChild(numLin);
+
+                    Element codItem = doc.createElement("CdgItem");
+                    detalle.appendChild(codItem);
+
+                    Element tipoCod = doc.createElement("TpoCodigo");
+                    tipoCod.appendChild(doc.createTextNode("Interna"));
+                    codItem.appendChild(tipoCod);
+
+                    Element valCod = doc.createElement("VlrCodigo");
+                    valCod.appendChild(doc.createTextNode("1"));
+                    codItem.appendChild(valCod);
+
+                    if(Integer.parseInt(data[13]) > 0){
+                        Element nomItem = doc.createElement("NmbItem");
+                        nomItem.appendChild(doc.createTextNode("ARRIENDO " + data[13] + " TRASPALETAS (orden N "+orden+")"));
+                        detalle.appendChild(nomItem);
+                    }else{
+                        Element nomItem = doc.createElement("NmbItem");
+                        nomItem.appendChild(doc.createTextNode("ARRIENDO GRUAS (orden N "+orden+")"));
+                        detalle.appendChild(nomItem);
+                    }
+
+                    Element qtyItem = doc.createElement("QtyItem");
+                    qtyItem.appendChild(doc.createTextNode("1"));
+                    detalle.appendChild(qtyItem);
+                    
+                    Element prcItem = doc.createElement("PrcItem");
+                    prcItem.appendChild(doc.createTextNode(valorNeto));
+                    detalle.appendChild(prcItem);
+                    //REVISAR EL DSCO
 //                    int descEfectivo = 0;
 //                    int newMonto = (int)(Float.parseFloat(valores.get(j).get(0)) * Float.parseFloat(valores.get(j).get(3)) - Float.parseFloat(desc));
 //                    if(newMonto >= 0){
@@ -247,7 +251,8 @@ public class controladorCrearFacturaOC {
 //                        descItem.appendChild(doc.createTextNode(String.valueOf(descEfectivo)));
 //                        detalle.appendChild(descItem);
 //                    }
-//                    
+                    
+                    //REVISAR TB
 //                    Element mtoItem = doc.createElement("MontoItem");
 //                    if(newMonto >= 0){
 //                        desc = "0";
@@ -2019,10 +2024,14 @@ public class controladorCrearFacturaOC {
 //    
     public void crearControladorPrincipalOC(JTabbedPane tabs){
         controladorPrincipal miControlador = new controladorPrincipal();
-        tabs.remove(2);
-        tabs.remove(2);
+        tabs.remove(1);
+        tabs.remove(1);
+        tabs.remove(1);
+        tabs.remove(1);
+        tabs.insertTab("OCs", null, miControlador.crearControladorOcsP(), null, 1);
         tabs.insertTab("A facturar", null, miControlador.crearControladorFacturasOCP(), null, 2);
-        tabs.insertTab("Histórico", null, miControlador.crearControladorHistoricoOCP(), null, 3);
+        tabs.insertTab("Facturadas", null, miControlador.crearControladorFacturadasOCP(), null, 3);
+        tabs.insertTab("Histórico", null, miControlador.crearControladorHistoricoOCP(), null, 4);
         tabs.setSelectedIndex(2);
     }
 }

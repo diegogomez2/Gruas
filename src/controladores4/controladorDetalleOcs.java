@@ -19,9 +19,9 @@ public class controladorDetalleOcs {
         controladorPrincipal miControlador = new controladorPrincipal();
         modelos4.modeloJornadasOC ocs = new modelos4.modeloJornadasOC();
         String data[] = miControlador.obtenerOcPorId(id);
-        String[][] horas = ocs.obtenerHorasPorIdJornadaOC(data[22]);
-        String[][] gruas = ocs.obtenerGruasPorIdJornadaOC(data[22]);
-        String[][] emps = ocs.obtenerEmpleadosPorIdJornadaOC(data[22]);
+        String[][] horas = ocs.obtenerHorasPorIdJornadaOC(data[23]);
+        String[][] gruas = ocs.obtenerGruasPorIdJornadaOC(data[23]);
+        String[][] emps = ocs.obtenerEmpleadosPorIdJornadaOC(data[23]);
         vistaDO = new vistas4.vistaDetalleOcs(new javax.swing.JFrame(), true);
 //        {estfsal, estfreg, estobs, estrutcli, estdigcli, estraz, estgir, estdir, esttel, id, estfot, estcond
 //                    , estpago, estcont, esttot, estneto, estiva, estdesp, esthorfin, estcdesp, estvdesp, estciu, estdesc, estidoc};

@@ -320,6 +320,7 @@ import org.jdesktop.swingx.table.DatePickerCellEditor;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        radioDoc = new javax.swing.ButtonGroup();
         botonCancelar = new javax.swing.JButton();
         botonAceptar = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
@@ -333,22 +334,28 @@ import org.jdesktop.swingx.table.DatePickerCellEditor;
         jLabel5 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        labelTrabajadores = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        labelGruas = new javax.swing.JLabel();
         textoFechaRegreso = new org.jdesktop.swingx.JXDatePicker();
         spinnerEmpleados = new javax.swing.JSpinner();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        scrollTrabajadores = new javax.swing.JScrollPane();
         tablaEmpleados = new javax.swing.JTable();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        scrollGruas = new javax.swing.JScrollPane();
         tablaGruas = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
         comboClientes = new javax.swing.JComboBox<>();
-        jScrollPane6 = new javax.swing.JScrollPane();
+        scrollHoras = new javax.swing.JScrollPane();
         tablaHoras = new javax.swing.JTable();
+        labelNumTras = new javax.swing.JLabel();
+        spinnerNumTras = new javax.swing.JSpinner();
+        jLabel8 = new javax.swing.JLabel();
+        radioOC = new javax.swing.JRadioButton();
+        radioTras = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Modificar jornada OC");
 
         botonCancelar.setText("Cancelar");
         botonCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -383,11 +390,11 @@ import org.jdesktop.swingx.table.DatePickerCellEditor;
 
         jLabel10.setText("Observaciones cliente");
 
-        jLabel4.setText("Número de trabajadores");
+        labelTrabajadores.setText("Número de trabajadores");
 
         jLabel7.setText("Observaciones");
 
-        jLabel2.setText("Número de grúas");
+        labelGruas.setText("Número de grúas");
 
         spinnerEmpleados.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -408,7 +415,7 @@ import org.jdesktop.swingx.table.DatePickerCellEditor;
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tablaEmpleados);
+        scrollTrabajadores.setViewportView(tablaEmpleados);
 
         tablaGruas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -421,7 +428,7 @@ import org.jdesktop.swingx.table.DatePickerCellEditor;
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(tablaGruas);
+        scrollGruas.setViewportView(tablaGruas);
 
         jLabel6.setText("Fecha de término");
 
@@ -446,7 +453,11 @@ import org.jdesktop.swingx.table.DatePickerCellEditor;
                 return types [columnIndex];
             }
         });
-        jScrollPane6.setViewportView(tablaHoras);
+        scrollHoras.setViewportView(tablaHoras);
+
+        labelNumTras.setText("Número de traspaletas");
+
+        spinnerNumTras.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -458,18 +469,19 @@ import org.jdesktop.swingx.table.DatePickerCellEditor;
                     .addComponent(comboClientes, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(textoFechaSalida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(textoFechaRegreso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 694, Short.MAX_VALUE)
+                    .addComponent(scrollGruas, javax.swing.GroupLayout.DEFAULT_SIZE, 694, Short.MAX_VALUE)
                     .addComponent(jScrollPane3)
                     .addComponent(jScrollPane4)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(scrollTrabajadores, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel3)
                         .addGap(209, 209, 209))
+                    .addComponent(scrollHoras)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
+                                .addComponent(labelGruas)
                                 .addGap(18, 18, 18)
                                 .addComponent(spinnerGruas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel1)
@@ -478,11 +490,14 @@ import org.jdesktop.swingx.table.DatePickerCellEditor;
                             .addComponent(jLabel10)
                             .addComponent(jLabel7)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
+                                .addComponent(labelTrabajadores)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(spinnerEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, 0))
-                    .addComponent(jScrollPane6))
+                                .addComponent(spinnerEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(labelNumTras)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(spinnerNumTras, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -503,19 +518,19 @@ import org.jdesktop.swingx.table.DatePickerCellEditor;
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(spinnerGruas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addComponent(labelGruas))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scrollGruas, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
+                    .addComponent(labelTrabajadores)
                     .addComponent(spinnerEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scrollTrabajadores, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scrollHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -524,10 +539,33 @@ import org.jdesktop.swingx.table.DatePickerCellEditor;
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelNumTras)
+                    .addComponent(spinnerNumTras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jScrollPane5.setViewportView(jPanel1);
+
+        jLabel8.setText("Tipo de documento");
+
+        radioDoc.add(radioOC);
+        radioOC.setSelected(true);
+        radioOC.setText("Jornada OC");
+        radioOC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioOCActionPerformed(evt);
+            }
+        });
+
+        radioDoc.add(radioTras);
+        radioTras.setText("Trapaleta");
+        radioTras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioTrasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -539,13 +577,29 @@ import org.jdesktop.swingx.table.DatePickerCellEditor;
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(botonCancelar)
                 .addContainerGap())
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 716, Short.MAX_VALUE)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 733, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(radioOC)
+                        .addGap(18, 18, 18)
+                        .addComponent(radioTras)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane5)
-                .addGap(18, 18, 18)
+                .addContainerGap()
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(radioOC)
+                    .addComponent(radioTras))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 839, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonCancelar)
                     .addComponent(botonAceptar))
@@ -561,20 +615,40 @@ import org.jdesktop.swingx.table.DatePickerCellEditor;
 
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
         controladores4.controladorModificarJornadasOC miControladorMJOC = new controladores4.controladorModificarJornadasOC();
-        String respuesta = miControladorMJOC.camposVacios();
-        boolean esVacio = respuesta.length() == 0;
-        if (!esVacio) {
-            JOptionPane.showMessageDialog(this, respuesta, "Debe rellenar los siguientes campos", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            try {
-                if (miControladorMJOC.irVistaJornadasOCP()) {
-                    setVisible(false);
-                } else {
-                    JOptionPane.showMessageDialog(this, "Se generó un error al ingresar la jornada\n"
-                        + "Por favor compruebe que el cliente, grúa y empleados sean correctos", "Error", JOptionPane.INFORMATION_MESSAGE);
+        if(radioOC.isSelected()){
+            String respuesta = miControladorMJOC.camposVacios();
+            boolean esVacio = respuesta.length() == 0;
+            if (!esVacio) {
+                JOptionPane.showMessageDialog(this, respuesta, "Debe rellenar los siguientes campos", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                try {
+                    if (miControladorMJOC.irVistaJornadasOCP()) {
+                        setVisible(false);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Se generó un error al ingresar la jornada\n"
+                            + "Por favor compruebe que el cliente, grúa y empleados sean correctos", "Error", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                } catch (ParseException ex) {
+                    Logger.getLogger(vistaModificarJornadasOC.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } catch (ParseException ex) {
-                Logger.getLogger(vistaModificarJornadasOC.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        /* Desde aqui se ingresa como traspaleta */
+        }else{
+            String respuesta = miControladorMJOC.camposVaciosTras();
+            boolean esVacio = respuesta.length() == 0;
+            if(!esVacio){
+                JOptionPane.showMessageDialog(this, respuesta, "Debe rellenar los siguientes campos", JOptionPane.INFORMATION_MESSAGE);
+            }else {
+                try {
+                    if (miControladorMJOC.irVistaJornadasTrasOCP()) {
+                        setVisible(false);
+                    } else {
+    //                    JOptionPane.showMessageDialog(this, "Se generó un error al ingresar la jornada\n"
+    //                            + "Por favor compruebe que el cliente, grúa y empleados sean correctos", "Error", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                } catch (ParseException ex) {
+                    Logger.getLogger(vistaIngresarJornadasOC.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }//GEN-LAST:event_botonAceptarActionPerformed
@@ -586,6 +660,20 @@ import org.jdesktop.swingx.table.DatePickerCellEditor;
     private void spinnerEmpleadosStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinnerEmpleadosStateChanged
         te.setRowCount((Integer) spinnerEmpleados.getValue());
     }//GEN-LAST:event_spinnerEmpleadosStateChanged
+
+    private void radioOCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioOCActionPerformed
+        if(radioOC.isSelected()){
+            showOC();
+            hideTras();
+        }
+    }//GEN-LAST:event_radioOCActionPerformed
+
+    private void radioTrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioTrasActionPerformed
+        if(radioTras.isSelected()){
+            showTras();
+            hideOC();
+        }
+    }//GEN-LAST:event_radioTrasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -627,21 +715,27 @@ import org.jdesktop.swingx.table.DatePickerCellEditor;
     private javax.swing.JComboBox<String> comboClientes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JLabel labelGruas;
+    private javax.swing.JLabel labelNumTras;
+    private javax.swing.JLabel labelTrabajadores;
+    private javax.swing.ButtonGroup radioDoc;
+    private javax.swing.JRadioButton radioOC;
+    private javax.swing.JRadioButton radioTras;
+    private javax.swing.JScrollPane scrollGruas;
+    private javax.swing.JScrollPane scrollHoras;
+    private javax.swing.JScrollPane scrollTrabajadores;
     private javax.swing.JSpinner spinnerEmpleados;
     private javax.swing.JSpinner spinnerGruas;
+    private javax.swing.JSpinner spinnerNumTras;
     private javax.swing.JTable tablaEmpleados;
     private javax.swing.JTable tablaGruas;
     private javax.swing.JTable tablaHoras;
@@ -760,22 +854,26 @@ import org.jdesktop.swingx.table.DatePickerCellEditor;
     }
 
     public String getTextoHoraSalidaGrua(int i) {
+        if(tablaGruas.getValueAt(i, 2) == null) return "";
         String hora = tablaGruas.getValueAt(i, 2).toString();
         if(hora == null) return "";
         return hora;
     }
     
     public String getTextoHoraSalidaEmp(int i) {
+        if(tablaEmpleados.getValueAt(i, 2) == null) return "";
         String hora = tablaEmpleados.getValueAt(i, 2).toString();
         return hora;
     }
 
     public String getTextoHoraRegresoGrua(int i) {
+        if(tablaGruas.getValueAt(i, 4) == null) return "";
         String hora = tablaGruas.getValueAt(i, 4).toString();
         return hora;
     }
     
     public String getTextoHoraRegresoEmp(int i) {
+        if(tablaEmpleados.getValueAt(i, 4) == null) return "";
         String hora = tablaEmpleados.getValueAt(i, 4).toString();
         return hora;
     }
@@ -824,10 +922,10 @@ import org.jdesktop.swingx.table.DatePickerCellEditor;
 
     public String getGruasVacia() {
         for (int i = 0; i < tablaGruas.getRowCount(); i++) {
-            for(int j = 0; j < tablaGruas.getColumnCount(); j++){
-                if (tablaGruas.getValueAt(i, j) == null || tablaGruas.getValueAt(i, j) == "") {
+//            for(int j = 0; j < tablaGruas.getColumnCount(); j++){
+                if (tablaGruas.getValueAt(i, 0) == null || tablaGruas.getValueAt(i, 0) == "") {
                     return "";
-                }
+//                }
             }
         }
         return "novacio";
@@ -835,11 +933,11 @@ import org.jdesktop.swingx.table.DatePickerCellEditor;
 
     public String getEmpleadosVacia() {
         for (int i = 0; i < tablaEmpleados.getRowCount(); i++) {
-            for(int j = 0; j < tablaEmpleados.getColumnCount(); j++){
+//            for(int j = 0; j < tablaEmpleados.getColumnCount(); j++){
                 if (tablaEmpleados.getValueAt(i, 0) == null) {
                     return "";
                 }
-            }
+//            }
         }
         return "novacio";
     }
@@ -863,10 +961,10 @@ import org.jdesktop.swingx.table.DatePickerCellEditor;
         tg.setRowCount(data.length);
         for(Object[] data1 : data){
             tablaGruas.setValueAt(data1[0], i, 0);
-            tablaGruas.setValueAt(formatDate2.parse(data1[1].toString()), i, 1);
-            tablaGruas.setValueAt(data1[2].toString(), i, 2);
-            tablaGruas.setValueAt(formatDate2.parse(data1[3].toString()), i, 3);
-            tablaGruas.setValueAt(data1[4], i, 4);
+            if(data1[1] != null) tablaGruas.setValueAt(formatDate2.parse(data1[1].toString()), i, 1);
+            if(data1[2] != null) tablaGruas.setValueAt(data1[2].toString(), i, 2);
+            if(data1[3] != null) tablaGruas.setValueAt(formatDate2.parse(data1[3].toString()), i, 3);
+            if(data1[4] != null) tablaGruas.setValueAt(data1[4], i, 4);
             i++;
         }
     }
@@ -878,10 +976,10 @@ import org.jdesktop.swingx.table.DatePickerCellEditor;
         te.setRowCount(data.length);
         for(Object[] data1 : data){
             tablaEmpleados.setValueAt(data1[0], i, 0);
-            tablaEmpleados.setValueAt(formatDate2.parse(data1[1].toString()), i, 1);
-            tablaEmpleados.setValueAt(data1[2].toString(), i, 2);
-            tablaEmpleados.setValueAt(formatDate2.parse(data1[3].toString()), i, 3);
-            tablaEmpleados.setValueAt(data1[4].toString(), i, 4);
+            if(data1[1] != null) tablaEmpleados.setValueAt(formatDate2.parse(data1[1].toString()), i, 1);
+            if(data1[2] != null) tablaEmpleados.setValueAt(data1[2].toString(), i, 2);
+            if(data1[3] != null) tablaEmpleados.setValueAt(formatDate2.parse(data1[3].toString()), i, 3);
+            if(data1[4] != null) tablaEmpleados.setValueAt(data1[4].toString(), i, 4);
             i++;
         }
     }
@@ -1134,4 +1232,52 @@ import org.jdesktop.swingx.table.DatePickerCellEditor;
             i++;
         }
     }    
+    
+     /* Para traspaleta*/
+    
+    public int getSpinnerTras() {
+        return Integer.parseInt(spinnerNumTras.getValue().toString());
+    }
+    
+    public void hideTras(){
+        labelNumTras.setVisible(false);
+        spinnerNumTras.setVisible(false);
+    }
+    
+    public void showTras(){
+        labelNumTras.setVisible(true);
+        spinnerNumTras.setVisible(true);
+    }
+    
+    public void hideOC(){
+        labelGruas.setVisible(false);
+        spinnerGruas.setVisible(false);
+        scrollGruas.setVisible(false);
+        labelTrabajadores.setVisible(false);
+        spinnerEmpleados.setVisible(false);
+        scrollTrabajadores.setVisible(false);
+        scrollHoras.setVisible(false);
+    }
+    
+    public void showOC(){
+        labelGruas.setVisible(true);
+        spinnerGruas.setVisible(true);
+        scrollGruas.setVisible(true);
+        labelTrabajadores.setVisible(true);
+        spinnerEmpleados.setVisible(true);
+        scrollTrabajadores.setVisible(true);
+        scrollHoras.setVisible(true);
+    }
+    
+    public void setSpinnerTras(String spinnerNumTras){
+        this.spinnerNumTras.setValue(Integer.parseInt(spinnerNumTras));
+    }
+    
+    public void setRadioOC(){
+        radioOC.setSelected(true);
+    }
+    
+    public void setRadioTras(){
+        radioTras.setSelected(true);
+    }
 }

@@ -56,11 +56,11 @@ public class vistaFacturasOCP extends javax.swing.JPanel {
                 Point p = evt.getPoint();
                 int row = table.rowAtPoint(p);
                 if (evt.getClickCount() == 2) {
-                    controladores.controladorFacturas miControlador = new controladores.controladorFacturas();
+                    controladores4.controladorOcs miControlador = new controladores4.controladorOcs();
                     try {
-                        miControlador.irVistaDetalleFacturas(tablaFacturasOC.getValueAt(row, 0).toString());
+                        miControlador.irVistaDetalleOcs(tablaFacturasOC.getValueAt(row, 0).toString());
                     } catch (ParseException ex) {
-                        Logger.getLogger(vistaJornadasP.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(vistaOcsP.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
@@ -213,13 +213,25 @@ public class vistaFacturasOCP extends javax.swing.JPanel {
                         miControlador.crearControladorPrincipalOC(tabs);
                     }else{
                         try {
-                            //docRef va en el tag observaciones
-                            String docRef = JOptionPane.showInputDialog("Ingrese documento de referencia: ");
-                            if ((miControlador.crearFacXML(idOcs, Integer.toString(neto), Integer.toString(iva),
-                                Integer.toString(total), id, docRef).compareTo("correcto") == 0)) {
-                                JTabbedPane tabs = (JTabbedPane) this.getParent();
-                                micontroladorOcs.crearControladorPrincipal(tabs);
-                                miControlador.crearControladorPrincipalOC(tabs);
+                            //docRef va en el tag observaciones, orden va en el tag detalle
+                            String docRef, orden;
+                            JTextField documentoRef = new JTextField();
+                            JTextField numOrden = new JTextField();
+                            Object[] message = {
+                                "Ingrese documento de referencia: ", documentoRef,
+                                "Número de orden: ", numOrden
+                            };
+//                            String docRef = JOptionPane.showInputDialog("Ingrese documento de referencia: ");
+                            int resp = JOptionPane.showConfirmDialog(null, message, "Datos de facturación: ", JOptionPane.OK_CANCEL_OPTION);
+                            if(resp == JOptionPane.YES_OPTION){
+                                docRef = documentoRef.getText();
+                                orden = numOrden.getText();
+                                if ((miControlador.crearFacXML(idOcs, Integer.toString(neto), Integer.toString(iva),
+                                    Integer.toString(total), id, docRef, orden).compareTo("correcto") == 0)) {
+                                    JTabbedPane tabs = (JTabbedPane) this.getParent();
+                                    //micontroladorOcs.crearControladorPrincipal(tabs);
+                                    miControlador.crearControladorPrincipalOC(tabs);
+                                }     
                             }
                         }catch (ParseException ex) {
                             ex.printStackTrace();

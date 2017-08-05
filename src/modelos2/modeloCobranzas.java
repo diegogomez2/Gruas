@@ -66,7 +66,13 @@ public class modeloCobranzas {
                     + "Notadebito f LEFT JOIN Notacredito n ON n.id_fac = f.id_fac INNER JOIN( "
                     + "SELECT id_fac, rut_cli, pag_ot, cond_ot FROM Jornadas GROUP BY id_fac ) b ON b.id_fac = f.id_fac "
                     + "INNER JOIN Clientes c on c.rut_cli = b.rut_cli INNER JOIN Facturas ON "
-                    + "facturas.id_fac = f.id_fac WHERE n.id_fac is null ORDER BY fec DESC");
+                    + "facturas.id_fac = f.id_fac WHERE n.id_fac is null " //ORDER BY fec DESC 
+                    //FACTURAS DE OC
+                    + "UNION "
+                    + "SELECT fol_fac as fol, c.rut_cli, dig_cli, raz_cli, ges_fac as ges, con_cli, tel_cli, tot_fac as tot, neto_fac as neto, iva_fac as iva, "
+                    + "fec_fac as fec, abo_fac as abo, pag_oc, cond_oc, tipo_fac tipo, f.id_fac id FROM Facturas f LEFT JOIN Notacredito n ON "
+                    + "f.id_fac = n.id_fac INNER JOIN ( SELECT id_fac, rut_cli, pag_oc, cond_oc FROM Jornadas_oc GROUP BY id_fac ) b ON b.id_fac = f.id_fac INNER JOIN Clientes c "
+                    + "ON c.rut_cli = b.rut_cli WHERE n.id_fac is null ORDER BY fec DESC ");
             ResultSet res = pstm.executeQuery();
             int i = 0;
             while(res.next()){
@@ -233,7 +239,22 @@ public class modeloCobranzas {
                     + "coalesce(obs_ges, '') obsres, coalesce(cant, 0) cant FROM Notadebito f LEFT JOIN Notacredito n ON n.id_fac = f.id_fac INNER JOIN( SELECT id_fac, rut_cli, "
                     + "pag_ot, cond_ot FROM Jornadas GROUP BY id_fac ) b ON b.id_fac = f.id_fac INNER JOIN Clientes c on c.rut_cli = b.rut_cli "
                     + "INNER JOIN Facturas ON facturas.id_fac = f.id_fac LEFT JOIN (SELECT count(*) cant, id_nd, ges_ges , res_ges, fec_res_ges, obs_ges FROM Gestion_cob "
-                    + "ORDER BY fec_res_ges desc LIMIT 1) d on d.id_nd = f.id_nd WHERE n.id_fac is null and (tot_nd - abo_nd) > 0 ORDER BY fec DESC");
+                    + "ORDER BY fec_res_ges desc LIMIT 1) d on d.id_nd = f.id_nd WHERE n.id_fac is null and (tot_nd - abo_nd) > 0 "
+                    + "UNION "
+                    + "SELECT fol_fac as fol, c.rut_cli, dig_cli, raz_cli, con_cli, tel_cli, tot_fac as tot, neto_fac as neto, iva_fac as iva, "
+                    + "fec_fac as fec, abo_fac as abo, (tot_fac - abo_fac) as sal,  pag_oc, cond_oc, tipo_fac as tipo, f.id_fac as id, coalesce(ges_ges, '') ges, "
+                    + "coalesce(res_ges, '') res, coalesce(fec_res_ges, '') fecres, coalesce(obs_ges, '') obsres, coalesce(cant, 0) cant FROM Facturas f LEFT JOIN "
+                    + "Notacredito n ON f.id_fac = n.id_fac INNER JOIN( SELECT id_fac, rut_cli, pag_oc, cond_oc FROM Jornadas_oc GROUP BY id_fac ) b ON b.id_fac = f.id_fac "
+                    + "INNER JOIN Clientes c on c.rut_cli = b.rut_cli LEFT JOIN (SELECT count(*) cant, id_fac, ges_ges, res_ges, fec_res_ges, obs_ges FROM Gestion_cob ORDER BY "
+                    + "fec_res_ges desc LIMIT 1) d ON d.id_fac = f.id_fac WHERE n.id_fac IS NULL AND(tot_fac - abo_fac) > 0 "
+                    + "UNION "
+                    + "SELECT fol_nd as fol, c.rut_cli, dig_cli, raz_cli, con_cli, tel_cli, tot_nd as tot, neto_nd as neto, iva_nd as iva, fec_nd as fec, abo_nd as abo, "
+                    + "(tot_nd - abo_nd) sal, pag_oc, cond_oc, tipo_nd as tipo, f.id_nd as id, coalesce(ges_ges, '') ges, coalesce(res_ges, '') res, coalesce(fec_res_ges, '') fecres, "
+                    + "coalesce(obs_ges, '') obsres, coalesce(cant, 0) cant FROM Notadebito f LEFT JOIN Notacredito n ON n.id_fac = f.id_fac INNER JOIN( SELECT id_fac, rut_cli, "
+                    + "pag_oc, cond_oc FROM Jornadas_oc GROUP BY id_fac ) b ON b.id_fac = f.id_fac INNER JOIN Clientes c on c.rut_cli = b.rut_cli "
+                    + "INNER JOIN Facturas ON facturas.id_fac = f.id_fac LEFT JOIN (SELECT count(*) cant, id_nd, ges_ges , res_ges, fec_res_ges, obs_ges FROM Gestion_cob "
+                    + "ORDER BY fec_res_ges desc LIMIT 1) d on d.id_nd = f.id_nd WHERE n.id_fac is null and (tot_nd - abo_nd) > 0 "
+                    + "ORDER BY fec DESC");
             ResultSet res = pstm.executeQuery();
             int i = 0;
             while(res.next()){
@@ -413,6 +434,7 @@ public class modeloCobranzas {
         }
     }
     
+    /* Obtiene las gestiones de una factura o nota de debito en particular */
     public Object[][] obtenerGestion(String id, String tipo){
         int registros = 0;
         try{
@@ -444,10 +466,10 @@ public class modeloCobranzas {
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm;
             if(tipo.compareTo("notadebito") == 0){
-                pstm = conn.prepareStatement("SELECT ges_ges, res_ges, fec_res_ges, obs_ges"
+                pstm = conn.prepareStatement("SELECT ges_ges, res_ges, fec_res_ges, obs_ges, id_ges"
                     + " FROM Gestion_cob WHERE id_nd=?");
             }else{
-                pstm = conn.prepareStatement("SELECT ges_ges, res_ges, fec_res_ges, obs_ges"
+                pstm = conn.prepareStatement("SELECT ges_ges, res_ges, fec_res_ges, obs_ges, id_ges"
                     + " FROM Gestion_cob WHERE id_fac=?");
             }
             pstm.setString(1, id);
@@ -458,7 +480,8 @@ public class modeloCobranzas {
                 String estres = res.getString("res_ges");
                 String estfec = res.getString("fec_res_ges");
                 String estobs = res.getString("obs_ges");
-                data[i] = new String[]{estges, estres, estfec, estobs};
+                String estid = res.getString("id_ges");
+                data[i] = new String[]{estges, estres, estfec, estobs, estid};
                 i++;
             }
             pstm.close();
@@ -632,7 +655,7 @@ public class modeloCobranzas {
             res.close();
             return data;
         }catch(SQLException e){
-            System.out.println("Error al ingresar gestion");
+            System.out.println("Error al obtener pago por id");
             System.out.println(e);
             return data;
         }catch(ClassNotFoundException e){
@@ -678,6 +701,60 @@ public class modeloCobranzas {
             return true;
         }catch(SQLException e){
             System.out.println("Error al modificar gestion de pago");
+            System.out.println(e);
+            return false;
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+            return false;
+        }
+    }
+
+    /* Obtiene una gestion segun su id */
+    public Object[] obtenerGestion(String id) {
+        Object[] data = new String[7];
+        
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT id_ges, ges_ges, res_ges, fec_res_ges, obs_ges FROM Gestion_cob WHERE id_ges = ?");
+            pstm.setString(1, id);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            String estid = res.getString("id_ges");
+            String estges = res.getString("ges_ges");
+            String estres = res.getString("res_ges");
+            String estfec = res.getString("fec_res_ges");
+            String estobs = res.getString("obs_ges");
+            data = new String[]{estid, estges, estres, estfec, estobs};
+            pstm.close();
+            res.close();
+            return data;
+        }catch(SQLException e){
+            System.out.println("Error al obtener gestion por id");
+            System.out.println(e);
+            return data;
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+            return data;
+        }
+    }
+
+    /* Modifica la gestion de cobranza por id */
+    public boolean modificarGestion(String[] data, String id) {
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("UPDATE Gestion_cob SET ges_ges=?, res_ges=?, fec_res_ges=?, obs_ges=? WHERE id_ges = ?");
+            pstm.setString(1, data[0]);
+            pstm.setString(2, data[1]);
+            pstm.setString(3, data[2]);
+            pstm.setString(4, data[3]);
+            pstm.setString(5, id);
+            pstm.executeUpdate();
+            pstm.close();
+            return true;
+        }catch(SQLException e){
+            System.out.println("Error al modificar gestion de cobranza");
             System.out.println(e);
             return false;
         }catch(ClassNotFoundException e){

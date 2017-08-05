@@ -18,6 +18,7 @@ import javax.swing.JTable;
 import modelos.modeloEmpleados;
 import modelos.modeloGruas;
 import vistas4.vistaIngresarOcs;
+import vistas4.vistaIngresarTraspaletaOcs;
 
 /**
  *
@@ -26,6 +27,7 @@ import vistas4.vistaIngresarOcs;
 public class controladorIngresarOcs {
     
     static vistas4.vistaIngresarOcs vistaIO;
+    static vistas4.vistaIngresarTraspaletaOcs vistaITO;
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
     DateFormat newFormat = new SimpleDateFormat("dd-MM-yyyy");
     DateFormat dt = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -87,10 +89,24 @@ public class controladorIngresarOcs {
         if (vistaIO.getTextoCodigo().compareTo("") == 0) {
             respuesta += "-Código de OC.\n";
         }
-        if (vistaIO.getTextoObs().compareTo("") == 0) {
-            respuesta += "-Observaciones.\n";
-        }
+//        if (vistaIO.getTextoObs().compareTo("") == 0) {
+//            respuesta += "-Observaciones.\n";
+//        }
         if (vistaIO.getTextoFechaOc().compareTo("") == 0) {
+            respuesta += "-Fecha de OT.\n";
+        }
+        return respuesta;
+    }
+    
+    public String camposVacios2(){
+        String respuesta = "";
+        if (vistaITO.getTextoCodigo().compareTo("") == 0) {
+            respuesta += "-Código de OC.\n";
+        }
+//        if (vistaIO.getTextoObs().compareTo("") == 0) {
+//            respuesta += "-Observaciones.\n";
+//        }
+        if (vistaITO.getTextoFechaOc().compareTo("") == 0) {
             respuesta += "-Fecha de OT.\n";
         }
         return respuesta;
@@ -113,32 +129,81 @@ public class controladorIngresarOcs {
     public void actualizarHorometro(){
         JTable tablaGruas = vistaIO.getTablaGruas();
         int numGruas = tablaGruas.getRowCount();
-        String[][] horas = new String[numGruas][2];
+        String[][] horas = new String[numGruas][3];
         for(int i = 0; i < numGruas; i++){
-            horas[i] = new String[]{tablaGruas.getValueAt(i, 5).toString(), tablaGruas.getValueAt(i, 0).toString()};
+            System.out.println(tablaGruas.getModel().getValueAt(i, 6));
+            horas[i] = new String[]{tablaGruas.getValueAt(i, 5).toString(), tablaGruas.getValueAt(i, 0).toString(), tablaGruas.getModel().getValueAt(i, 6).toString()};
         }
         modelos.modeloGruas grua = new modeloGruas();
         for(String[] hora: horas){
-            System.out.println(hora[0] + " " + hora[1]);
+            System.out.println(hora[0] + " " + hora[1] + " " + hora[2]);
             int h = (int)Double.parseDouble(hora[0]);
+            int id = Integer.parseInt(hora[2]);
             grua.actualizarHorometro(h, hora[1]);
+            grua.actualizarHorasDetalleGruas(id, h);
         }
     }
     
     public void agregarMensualidad(int mes, int year){
         JTable tablaEmpleados = vistaIO.getTablaEmpleados();
         int numEmp = tablaEmpleados.getRowCount();
-        String[][] horas = new String[numEmp][7];
+        String[][] horas = new String[numEmp][8];
         for(int i = 0; i < numEmp; i++){
+            System.out.println(tablaEmpleados.getModel().getValueAt(i, 11));
             horas[i] = new String[]{tablaEmpleados.getValueAt(i, 0).toString(), tablaEmpleados.getValueAt(i, 5).toString(), tablaEmpleados.getValueAt(i, 6).toString(), tablaEmpleados.getValueAt(i, 7).toString(), 
-            tablaEmpleados.getValueAt(i, 8).toString(), tablaEmpleados.getValueAt(i, 9).toString(), tablaEmpleados.getValueAt(i, 10).toString()};
+            tablaEmpleados.getValueAt(i, 8).toString(), tablaEmpleados.getValueAt(i, 9).toString(), tablaEmpleados.getValueAt(i, 10).toString(), tablaEmpleados.getModel().getValueAt(i, 11).toString()};
         }
         modelos.modeloEmpleados empleado = new modeloEmpleados();
         for(String[] hora: horas){
             String rut = empleado.obtenerEmpleadoPorNombre(hora[0]);
+            int id = Integer.parseInt(hora[7]);
              empleado.agregarMensualidad(rut, mes, year, Double.parseDouble(hora[1]), Double.parseDouble(hora[2]), Double.parseDouble(hora[3]), Integer.parseInt(hora[4]), 
                     Integer.parseInt(hora[5]), hora[6]);
+             empleado.agregarHorasDetalleEmp(id, Double.parseDouble(hora[1]), Double.parseDouble(hora[2]), Double.parseDouble(hora[3]), Double.parseDouble(hora[4]), 
+                     Integer.parseInt(hora[5]), hora[6]);
         }
+    }
+
+    public void mostrarVistaIngresarTraspaletaOcs(String[] data, Object[] ciudades) throws ParseException {
+        vistaITO = new vistaIngresarTraspaletaOcs(new javax.swing.JFrame(), true);
+//        vistaITO.setDiaInicio(data[0]);
+//        vistaITO.setHoraInicio(data[1]);
+//        vistaITO.setDiaFin(data[2]);
+//        vistaITO.setHoraFin(data[3]);
+        vistaITO.setTextoObs(data[4]);
+        vistaITO.setTextoRutCliente(data[5] + "-" + data[6]);
+        vistaITO.setTextoRazon(data[7]);
+        vistaITO.setTextoRazon2(data[7]);
+        vistaITO.setTextoGiro(data[8]);
+        vistaITO.setTextoDireccion(data[9]);
+        vistaITO.setTextoTelefono(data[10]);
+        vistaITO.setId(data[11]);
+        vistaITO.setTextoCiudad(data[12]);
+        vistaITO.setTextoFechaOt();
+        vistaITO.setTextoNeto("0");
+        vistaITO.setTextoIva("0");
+        vistaITO.setTextoBruto("0");
+        vistaITO.setTextoDescuento("0");
+        vistaITO.setNuevoNeto(0);
+        vistaITO.setTextoNuevoNeto("0");
+        vistaITO.setNumTras(data[16]);
+//        vistaIO.setHoras((int)Float.parseFloat(valores.get(size - 1).get(3)));
+        vistaITO.setLocationRelativeTo(null);
+        vistaITO.setVisible(true);  
+    }
+
+    public boolean irVistaJornadasTraspaletaOCP(String id) {
+        controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
+        String textoNeto, textoIva, textoBruto, textoDesc;
+        textoNeto = Integer.toString(Integer.parseInt(vistaITO.getTextoNuevoNeto()));
+        textoDesc = Integer.toString(Integer.parseInt(vistaITO.getTextoDescuento()));
+        textoIva = Integer.toString(/*iva*/ + Integer.parseInt(vistaITO.getTextoIva()));
+        textoBruto = Integer.toString(/*bruto*/ + Integer.parseInt(vistaITO.getTextoBruto()));
+        String[] data = {vistaITO.getTextoContacto(), vistaITO.getTextoFechaOc(), vistaITO.getComboFormaPago(),
+            vistaITO.getComboCondPago(), vistaITO.getTextoDespachado(), id, vistaITO.getTextoCodigo(),
+            textoNeto, textoIva, textoBruto, vistaITO.getCheckDespacho(), vistaITO.getTextoDespacho(), textoDesc};
+        boolean flag = miControlador.ingresarOc(data);
+        return flag;
     }
     
 }

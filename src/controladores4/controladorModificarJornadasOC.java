@@ -34,10 +34,18 @@ public class controladorModificarJornadasOC {
         vistaMJOC.setTextoObsCliente(data[13]);
         vistaMJOC.setSpinnerGruas(data[14]);
         vistaMJOC.setSpinnerEmpleados(data[15]);
-        vistaMJOC.agregarGruas(id);
-        vistaMJOC.agregarEmpleados(id);
-        vistaMJOC.agregarHoras(id);
         vistaMJOC.setId(id);
+        if(Integer.parseInt(data[16]) > 0){
+            vistaMJOC.setRadioTras();
+            vistaMJOC.hideOC();
+            vistaMJOC.setSpinnerTras(data[16]);
+        }else{
+            vistaMJOC.setRadioTras();
+            vistaMJOC.hideTras();
+            vistaMJOC.agregarGruas(id);
+            vistaMJOC.agregarEmpleados(id);
+            vistaMJOC.agregarHoras(id);
+        }
         vistaMJOC.setLocationRelativeTo(null);
         vistaMJOC.setVisible(true);
     }
@@ -50,14 +58,25 @@ public class controladorModificarJornadasOC {
         if (vistaMJOC.getTextoFechaRegreso().compareTo("") == 0) {
             respuesta += "-Fecha de regreso.\n";
         }
-        if (vistaMJOC.getTextoObs().compareTo("") == 0) {
-            respuesta += "-Observaciones.\n";
-        }
+//        if (vistaMJOC.getTextoObs().compareTo("") == 0) {
+//            respuesta += "-Observaciones.\n";
+//        }
         if(vistaMJOC.getGruasVacia().compareTo("") == 0){
             respuesta += "-Tabla de grúas.\n";
         }
         if(vistaMJOC.getEmpleadosVacia().compareTo("") == 0){
             respuesta += "-Tabla de operadores.\n";
+        }
+        return respuesta;
+    }
+    
+    public String camposVaciosTras() {
+        String respuesta = "";
+        if (vistaMJOC.getTextoFechaSalida().compareTo("") == 0) {
+            respuesta += "-Fecha de alida.\n";
+        }
+        if (vistaMJOC.getTextoFechaRegreso().compareTo("") == 0) {
+            respuesta += "-Fecha de regreso.\n";
         }
         return respuesta;
     }
@@ -76,11 +95,12 @@ public class controladorModificarJornadasOC {
                 pat_gru[i] = miControlador.obtenerGruaPorDesc(tablaGruas.getValueAt(i, 0).toString());
                 fh_gru[i][0] = vistaMJOC.getTextoFechaSalidaGrua(i) + " " + vistaMJOC.getTextoHoraSalidaGrua(i);
                 fh_gru[i][1] = vistaMJOC.getTextoFechaRegresoGrua(i) + " " + vistaMJOC.getTextoHoraRegresoGrua(i);
-                if(miControlador.checkGruaDisp(pat_gru[i], vistaMJOC.getTextoFechaSalidaGrua(i), vistaMJOC.getTextoHoraSalidaGrua(i), vistaMJOC.getTextoFechaRegresoGrua(i), 
-                        vistaMJOC.getTextoHoraRegresoGrua(i)) > 0) {
-                    JOptionPane.showMessageDialog(null, "Grúa '" + pat_gru[i] + "' no disponible para la fecha agendada.", "Error", JOptionPane.INFORMATION_MESSAGE);
-                    return false;
-                }
+                //NO SE CHECKEA DISP
+//                if(miControlador.checkGruaDisp(pat_gru[i], vistaMJOC.getTextoFechaSalidaGrua(i), vistaMJOC.getTextoHoraSalidaGrua(i), vistaMJOC.getTextoFechaRegresoGrua(i), 
+//                        vistaMJOC.getTextoHoraRegresoGrua(i)) > 0) {
+//                    JOptionPane.showMessageDialog(null, "Grúa '" + pat_gru[i] + "' no disponible para la fecha agendada.", "Error", JOptionPane.INFORMATION_MESSAGE);
+//                    return false;
+//                }
             }
         }
         for(int i = 0; i < numEmpleados; i++){
@@ -88,14 +108,16 @@ public class controladorModificarJornadasOC {
                 rut_emp[i] = miControlador.obtenerEmpleadoPorNombre(tablaEmpleados.getValueAt(i, 0).toString());
                 fh_emp[i][0] = vistaMJOC.getTextoFechaSalidaEmp(i) + " " + vistaMJOC.getTextoHoraSalidaEmp(i);
                 fh_emp[i][1] = vistaMJOC.getTextoFechaRegresoEmp(i) + " " + vistaMJOC.getTextoHoraRegresoEmp(i);
-                if(miControlador.checkEmpDisp(rut_emp[i], vistaMJOC.getTextoFechaSalidaEmp(i), vistaMJOC.getTextoHoraSalidaEmp(i), vistaMJOC.getTextoFechaRegresoEmp(i), 
-                        vistaMJOC.getTextoHoraRegresoEmp(i)) > 0) {
-                    JOptionPane.showMessageDialog(null, "Operador '" + rut_emp[i] + "' no disponible para la fecha agendada.", "Error", JOptionPane.INFORMATION_MESSAGE);
-                    return false;
-                }
-            }else{
-                rut_emp[i] = "";
+                //NO SE CHECKEA DISP
+//                if(miControlador.checkEmpDisp(rut_emp[i], vistaMJOC.getTextoFechaSalidaEmp(i), vistaMJOC.getTextoHoraSalidaEmp(i), vistaMJOC.getTextoFechaRegresoEmp(i), 
+//                        vistaMJOC.getTextoHoraRegresoEmp(i)) > 0) {
+//                    JOptionPane.showMessageDialog(null, "Operador '" + rut_emp[i] + "' no disponible para la fecha agendada.", "Error", JOptionPane.INFORMATION_MESSAGE);
+//                    return false;
+//                }
             }
+//            else{
+//                rut_emp[i] = "";
+//            }
         }
         for(int i = 0; i < numTon; i++){
             horas[i] = new String[]{tablaHoras.getValueAt(i, 0).toString(), tablaHoras.getValueAt(i, 1).toString(), tablaHoras.getValueAt(i, 2).toString(), 
@@ -130,6 +152,31 @@ public class controladorModificarJornadasOC {
             for(String[] hora: horas){
                 miControlador.ingresarHoras(vistaMJOC.getId(), hora);
             }
+        }else{
+            return false;
+        }
+        return true;
+//        return flag;
+    }
+    
+    public boolean irVistaJornadasTrasOCP() throws ParseException {
+        controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
+        String rut_cli = miControlador.obtenerClientePorRazon(vistaMJOC.getComboCliente());
+        String numTras = String.valueOf(vistaMJOC.getSpinnerTras()); 
+        Date fecha1 = formatDate.parse(vistaMJOC.getTextoFechaSalida());
+        Date fecha2 = formatDate.parse(vistaMJOC.getTextoFechaRegreso());
+        String fhsal = vistaMJOC.getTextoFechaSalida() + " ";
+        String fhreg = vistaMJOC.getTextoFechaRegreso() + " ";
+        if(fecha2.before(fecha1)){
+            JOptionPane.showMessageDialog(vistaMJOC, "La fecha de llegada debe ser posterior a la fecha de salida", "Error", JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }
+        String[] data = {vistaMJOC.getTextoFechaSalida(), "", rut_cli, vistaMJOC.getTextoFechaRegreso(), "", vistaMJOC.getTextoObs(), vistaMJOC.getDiaSalida(), 
+            vistaMJOC.getDiaRegreso(), fhsal, fhreg, numTras};
+        if(miControlador.modificarTraspaleta(data, vistaMJOC.getId()).compareTo("correcto") == 0){
+            miControlador.borrarDetalleGruas(vistaMJOC.getId());
+            miControlador.borrarDetalleEmpleados(vistaMJOC.getId());
+            miControlador.borrarHorasBase(vistaMJOC.getId());
         }else{
             return false;
         }

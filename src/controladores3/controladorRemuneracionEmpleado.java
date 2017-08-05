@@ -23,24 +23,27 @@ public class controladorRemuneracionEmpleado {
 //        float uf = miControlador.obtenerUF() / 100;
         float uf = miControlador.obtenerUF();
         //SUELDO BASE
-        int base = Integer.parseInt(data[2]) * Integer.parseInt(data[27]) / 30;
+        int base = Integer.parseInt(data[2]) * Integer.parseInt(data[28]) / 30;
         //GRATIFICACION
         int grat = (int) (base * 0.25);
         //BONO ANTIGUEDAD
         int bonoAnt = miControlador.obtenerBonoAnt(data[5]);
         //BONO 300
 //                            int totalBon300 = bono300 * Integer.parseInt(data[i][9]);
-        int totalBon300 = Integer.parseInt(data[26]);
+        int totalBon300 = Integer.parseInt(data[27]);
         //BONO ADICIONAL
-        int bonoAd = Integer.parseInt(data[10]);
+        int bonoAd = Integer.parseInt(data[11]);
         //BONO RESPONSABILIDAD
         int bonoResp = 0;
         //BONO ADICIONAL
-        int bonoCol = Integer.parseInt(data[8]);
-        int totalBonCol = (int) (((double) base * 0.0077777) * ((double) bonoCol / 2));
+        int bonoCol1 = Integer.parseInt(data[8]);
+        int bonoCol30 = Integer.parseInt(data[9]);
+        int bonoCol = bonoCol1 + bonoCol30/2;
+//        int totalBonCol = (int) (((double) base * 0.0077777) * ((double) bonoCol / 2));
+        int totalBonCol = (int) (((double) base * 0.0077777) * bonoCol);
         //HORAS EXTRA
-        double horasExNor = Double.parseDouble(data[11]);
-        double horasExFes = Double.parseDouble(data[12]);
+        double horasExNor = Double.parseDouble(data[12]);
+        double horasExFes = Double.parseDouble(data[13]);
         double horasEx = 0;
         double bonoHor = 0;
         double cantHorEx = 0;
@@ -70,7 +73,7 @@ public class controladorRemuneracionEmpleado {
         //TOTAL IMPONIBLE
         double totImp = base + grat + bonoAnt + bonoAd + bonoResp + totalBonoAV + totalBonCol + totalBon300 + valorHorEx;
         //DESCUENTO AFP
-        int descAFP = Integer.parseInt(data[20]);
+        int descAFP = Integer.parseInt(data[21]);
         int totalAFP = (int) (totImp * ((double) descAFP / 10000));
         int sis = (int) (totImp * 0.0141);
         //DESCUENTO SALUD
@@ -78,15 +81,15 @@ public class controladorRemuneracionEmpleado {
         String salud;
         if (data[4].toLowerCase().compareTo("fonasa") == 0) {
             salud = "FONASA";
-            descSalud = Integer.parseInt(data[21]);
+            descSalud = Integer.parseInt(data[22]);
             totalSalud = (int) (totImp * ((double) descSalud / 10000));
         } else {
             if (data[22].compareTo("") == 0) {
                 salud = data[4];
             } else {
-                salud = data[22];
+                salud = data[23];
             }
-            descSalud = ((double) Integer.parseInt(data[23]) / 1000) * uf;
+            descSalud = ((double) Integer.parseInt(data[24]) / 1000) * uf;
             totalSalud = descSalud;
         }
         //DESCUENTO CESANTIA
@@ -106,9 +109,9 @@ public class controladorRemuneracionEmpleado {
             }
         }
         //CAJA COMPENSACION
-        int caja = Integer.parseInt(data[14]);
+        int caja = Integer.parseInt(data[15]);
         //ASIGNACION FAMILIAR
-        int af = Integer.parseInt(data[15]);
+        int af = Integer.parseInt(data[16]);
         //LIQ ALCANZADO
         double liqAl = totAux - caja;
         //COLACION 
@@ -118,12 +121,12 @@ public class controladorRemuneracionEmpleado {
         //TOTAL NO IMPONIBLE
         int noImp = trans + col + af;
         //ANTICIPO ADELANTO PRESTAMOS
-        int antic = Integer.parseInt(data[16]);
-        int adel = Integer.parseInt(data[17]);
-        int pres = Integer.parseInt(data[18]);
-        int cuo = Integer.parseInt(data[19]);
+        int antic = Integer.parseInt(data[17]);
+        int adel = Integer.parseInt(data[18]);
+        int pres = Integer.parseInt(data[19]);
+        int cuo = Integer.parseInt(data[20]);
         int cuoPres = 0;
-        int cuoRes = Math.max(0, Integer.parseInt(data[25]) - 1);
+        int cuoRes = Math.max(0, Integer.parseInt(data[26]) - 1);
         if (cuo != 0) {
             cuoPres = pres / cuo;
         }

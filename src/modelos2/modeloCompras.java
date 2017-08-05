@@ -256,8 +256,8 @@ public class modeloCompras {
                 pstm.setInt(1, Integer.parseInt(id));
                 pstm.setInt(2, Integer.parseInt(data1[0]));
                 pstm.setString(3, data1[1]);
-                pstm.setInt(4, Integer.parseInt(data1[2]));
-                pstm.setInt(5, Integer.parseInt(data1[3]));
+                pstm.setDouble(4, Double.parseDouble(data1[2]));
+                pstm.setDouble(5, Double.parseDouble(data1[3]));
                 System.out.println("data "+data1[4]);
                 iva = (data1[4].compareTo("Con") == 0) ? 1 : 0;
                 pstm.setInt(6, iva);

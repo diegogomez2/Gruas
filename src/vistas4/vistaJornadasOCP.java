@@ -31,7 +31,7 @@ public class vistaJornadasOCP extends javax.swing.JPanel {
     
     public vistaJornadasOCP(String tipo, Object[][] data) {
         initComponents();
-        String[] columNames = {"Código", "Cliente", "Fecha de salida", "Observaciones", "N° de grúas", "N° de operadores"};
+        String[] columNames = {"Código", "Cliente", "Fecha de salida", "Observaciones", "N° de grúas", "N° de operadores", "N° de traspaletas"};
         datos = new DefaultTableModel(data, columNames) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -200,7 +200,6 @@ public class vistaJornadasOCP extends javax.swing.JPanel {
             }
             JTabbedPane tabs = (JTabbedPane) this.getParent();
             miControlador.crearControladorPrincipal(tabs);
-
         } else {
             JOptionPane.showMessageDialog(tablaJornadasOC, "Debe seleccionar una jornada para ser modificada");
         }
@@ -253,20 +252,33 @@ public class vistaJornadasOCP extends javax.swing.JPanel {
         boolean selected = tablaJornadasOC.getSelectedRowCount() > 0;
         if (selected) {
             int row = getFilaSeleccionada();
+            int tras = Integer.parseInt(getNumTraspaletas(row));
             id = getIdFila(row);
-            int grua = Integer.parseInt(getNumGruas(row));
-            int trab = Integer.parseInt(getNumEmpleados(row));
-            if (trab > 0 && grua > 0) {
-                try {
-                    miControlador.irVistaIngresarOcs(id);
-                } catch (ParseException ex) {
+            System.out.println(tras);
+            if(tras > 0){
+                try{
+                    miControlador.irVistaIngresarTraspaletaOcs(id);  
+                }catch(Exception ex){
                     Logger.getLogger(vistaJornadasP.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 JTabbedPane tabs = (JTabbedPane) this.getParent();
                 miControladorOc.crearControladorPrincipal(tabs);
                 miControlador.crearControladorPrincipal(tabs);
-            } else {
-                JOptionPane.showMessageDialog(null, "Debe llenar los datos faltantes para asignar una OC a esta jornada");
+            }else{
+                int grua = Integer.parseInt(getNumGruas(row));
+                int trab = Integer.parseInt(getNumEmpleados(row));
+                if (trab > 0 && grua > 0) {
+                    try {
+                        miControlador.irVistaIngresarOcs(id);
+                    } catch (ParseException ex) {
+                        Logger.getLogger(vistaJornadasP.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    JTabbedPane tabs = (JTabbedPane) this.getParent();
+                    miControladorOc.crearControladorPrincipal(tabs);
+                    miControlador.crearControladorPrincipal(tabs);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Debe llenar los datos faltantes para asignar una OC a esta jornada");
+                }
             }
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una jornada para ser asignada");
@@ -300,5 +312,9 @@ public class vistaJornadasOCP extends javax.swing.JPanel {
     
     public String getNumEmpleados(int row){
         return tablaJornadasOC.getValueAt(row, 5).toString();                
+    }
+    
+    public String getNumTraspaletas(int row){
+        return tablaJornadasOC.getValueAt(row, 6).toString();                
     }
 }

@@ -427,12 +427,12 @@ public class modeloOcs {
     }
     
     public String[] obtenerFacturaPorIdOC(String idOc){
-        String[] data = new String[12];
+        String[] data = new String[13];
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("SELECT clientes.rut_cli, dig_cli, raz_cli, gir_cli,"
-                    + "dir_cli, ciu_cli, com_cli, total_oc, neto_oc, iva_oc, fact_oc, cod_oc, hortot_oc FROM Jornadas_oc INNER JOIN Clientes"
+                    + "dir_cli, ciu_cli, com_cli, total_oc, neto_oc, iva_oc, fact_oc, cod_oc, hortot_oc, tras_oc FROM Jornadas_oc INNER JOIN Clientes"
                     + " ON Clientes.rut_cli = jornadas_oc.rut_cli WHERE cod_oc = ?");
             pstm.setString(1, idOc);
             ResultSet res = pstm.executeQuery();
@@ -451,11 +451,12 @@ public class modeloOcs {
                 String estcodot = res.getString("cod_oc");
                 String estfact = res.getString("fact_oc");
                 String esthor = res.getString("hortot_oc");
+                String esttras = res.getString("tras_oc");
                 //Esta linea deberia borrarse
                 //String estcheckhor = res.getString("checkhormin_ot");
                 String estcheckhor = "";
                 data = new String[]{estrut + "-" + estdig.toUpperCase(), estraz, estgir, estdir, estciu, estcom, esttot, estnet,
-                estiva, estfact, estcodot, esthor, estcheckhor};
+                estiva, estfact, estcodot, esthor, estcheckhor, esttras};
                 i++;
             }
             res.close();
@@ -1057,5 +1058,74 @@ public class modeloOcs {
 //        }
 //        return 1;
 //    }
+
+    public Object[][] listarReporteHistoricoOc(String fecIn, String fecFin){
+        int registros = 0;
+        
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM jornadas_oc WHERE NOT cod_oc = -1 and fact_oc >= 2 AND fec_oc >= ? AND fec_oc <= ?");
+            pstm.setString(1, fecIn);
+            pstm.setString(2, fecFin);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+       }catch(SQLException e){
+            System.out.println("Error listar reporte historico oc");
+            System.out.println(e);
+       }catch(ClassNotFoundException e){
+            System.out.println(e);
+       }
+        
+        Object[][] data = new String[registros][14];
+        
+        try{
+            PreparedStatement pstm = conn.prepareStatement("SELECT id_joroc, fec_oc, raz_cli, gir_cli, dir_cli,"
+                    + "ciu_cli, com_cli, obs_joroc, cod_oc, total_oc, neto_oc, "
+                    + "iva_oc, fact_oc, clientes.rut_cli, dig_cli FROM Jornadas_oc INNER JOIN"
+                    + " Clientes ON Clientes.rut_cli = Jornadas_oc.rut_cli WHERE not cod_oc = -1 and fact_oc >= 2 AND fec_oc >= ? AND fec_oc <= ? ORDER BY cod_oc, fact_oc");
+            pstm.setString(1, fecIn);
+            pstm.setString(2, fecFin);
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while(res.next()){
+                String estfec = res.getString("fec_oc");
+                java.util.Date fecha = formatDate.parse(estfec);
+                estfec = newFormat.format(fecha);
+                String estraz = res.getString("raz_cli");
+                String estgir = res.getString("gir_cli");
+                String estdir = res.getString("dir_cli");
+                String estciu = res.getString("ciu_cli");
+                String estcom = res.getString("com_cli");
+                String esttot = res.getString("total_oc");
+                String estnet = res.getString("neto_oc");
+                String estiva = res.getString("iva_oc");
+                String estcodot = res.getString("cod_oc");
+                String estfact = res.getString("fact_oc");
+                String estfact2;
+                if(estfact.compareTo("0") == 0){
+                    estfact2 = "Disponible";
+                }else if(estfact.compareTo("4") == 0){
+                    estfact2 = "Nula";
+                }else{
+                    estfact2 = "Facturada";
+                }
+                String estrut = res.getString("clientes.rut_cli") + "-" + res.getString("dig_cli");
+                data[i] = new String[]{estcodot, estrut, estraz, estgir, estdir, estciu, estcom, estfec, estnet,
+                estiva, esttot, estfact2};
+                i++;
+            }
+            res.close();
+        }catch(SQLException e){
+            System.out.println("Error listar reporte historico ocs");
+            System.out.println(e);
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        return data;
+    }
+
 
 }

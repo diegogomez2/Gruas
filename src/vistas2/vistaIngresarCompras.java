@@ -1521,14 +1521,15 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
         try{
             for(int i = 0; i < tablaDetalle.getRowCount(); i++){
                 if(tablaDetalle.getValueAt(i, 4) == Boolean.FALSE){
-                    int totParcial = Integer.valueOf(tablaDetalle.getValueAt(i, 2).toString()) * 
-                            Integer.valueOf(tablaDetalle.getValueAt(i, 3).toString());
+                    /* SE CAMBIO DOUBLE Y DOUBLE EN LA V4 Y SE CASTEO A INT*/
+                    int totParcial = (int) (Double.valueOf(tablaDetalle.getValueAt(i, 2).toString()) * 
+                            Double.valueOf(tablaDetalle.getValueAt(i, 3).toString()));
                     tot += totParcial;
                     net += totParcial;
                 }else{
                     int ivaParcial = 0;
-                    int totParcial = Integer.valueOf(tablaDetalle.getValueAt(i, 2).toString()) * 
-                            Integer.valueOf(tablaDetalle.getValueAt(i, 3).toString());
+                    int totParcial = (int)(Double.valueOf(tablaDetalle.getValueAt(i, 2).toString()) * 
+                            Double.valueOf(tablaDetalle.getValueAt(i, 3).toString()));
                     double ivaFloat = totParcial * 0.19;
                     ivaParcial = (int)Math.round(ivaFloat);
                     tot += totParcial;

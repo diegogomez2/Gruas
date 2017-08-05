@@ -155,7 +155,7 @@ public class vistaHistoricoOC extends javax.swing.JPanel {
     }//GEN-LAST:event_textoFiltroKeyReleased
 
     private void botonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarActionPerformed
-        controladores.controladorHistorico miControlador = new controladores.controladorHistorico();
+        controladores4.controladorHistoricoOC miControlador = new controladores4.controladorHistoricoOC();
         JTabbedPane tabs = (JTabbedPane)this.getParent();
         miControlador.crearControladorPrincipal(tabs);
     }//GEN-LAST:event_botonActualizarActionPerformed
@@ -177,11 +177,11 @@ public class vistaHistoricoOC extends javax.swing.JPanel {
     
     public class MyTableModel extends DefaultTableModel{
         public MyTableModel() {
-          super(new String[]{"Código OT", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
+          super(new String[]{"Código OC", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
              "Neto", "IVA", "Total", "Estado", "Empleado", "Cliente"}, 0);
         }
         public MyTableModel(Object[][] data){
-            super(new String[]{"Código OT", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
+            super(new String[]{"Código OC", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
              "Neto", "IVA", "Total", "Estado", "Cliente"}, 0);
             
             int i = 0;

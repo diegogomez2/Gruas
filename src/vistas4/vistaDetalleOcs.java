@@ -22,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class vistaDetalleOcs extends javax.swing.JDialog {
 
-    DateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy");
+    DateFormat formatDate = new SimpleDateFormat("yyyy-MM-ddd");
     NumberFormat FORMAT = NumberFormat.getCurrencyInstance();
     DecimalFormatSymbols dfs = new DecimalFormatSymbols();
     MyTableModelGruas tg = new MyTableModelGruas();
@@ -886,7 +886,7 @@ public class vistaDetalleOcs extends javax.swing.JDialog {
             tablaGruas.setValueAt(data1[2], i, 2);
             tablaGruas.setValueAt(data1[3], i, 3);
             tablaGruas.setValueAt(data1[4], i, 4);
-            tablaGruas.setValueAt(0, i, 5);
+            tablaGruas.setValueAt(Double.parseDouble(data1[6].toString()), i, 5);
             i++;
         }
     }
@@ -900,11 +900,12 @@ public class vistaDetalleOcs extends javax.swing.JDialog {
             tablaEmpleados.setValueAt(data1[2], i, 2);
             tablaEmpleados.setValueAt(data1[3], i, 3);
             tablaEmpleados.setValueAt(data1[4], i, 4);
-            tablaEmpleados.setValueAt(0, i, 5);
-            tablaEmpleados.setValueAt(0, i, 6);
-            tablaEmpleados.setValueAt(0, i, 7);
-            tablaEmpleados.setValueAt(0, i, 8);
-            tablaEmpleados.setValueAt(0, i, 9);
+            tablaEmpleados.setValueAt(Double.parseDouble(data1[6].toString()), i, 5);
+            tablaEmpleados.setValueAt(Double.parseDouble(data1[7].toString()), i, 6);
+            tablaEmpleados.setValueAt(Double.parseDouble(data1[8].toString()), i, 7);
+            tablaEmpleados.setValueAt(Integer.parseInt(data1[9].toString()), i, 8);
+            tablaEmpleados.setValueAt(Integer.parseInt(data1[10].toString()), i, 9);
+            tablaEmpleados.setValueAt(data1[11], i, 10);
             i++;
         }
     }
@@ -917,10 +918,10 @@ public class vistaDetalleOcs extends javax.swing.JDialog {
             tablaHoras.setValueAt(Double.parseDouble(data1[1]), i, 1);
             tablaHoras.setValueAt(Double.parseDouble(data1[2]), i, 2);
             tablaHoras.setValueAt(Double.parseDouble(data1[3]), i, 3);
-            tablaHoras.setValueAt(0, i, 4);
-            tablaHoras.setValueAt(0, i, 5);
-            tablaHoras.setValueAt(0, i, 6);
-            tablaHoras.setValueAt(0, i, 7);
+            tablaHoras.setValueAt(Double.parseDouble(data1[4]), i, 4);
+            tablaHoras.setValueAt(Double.parseDouble(data1[5]), i, 5);
+            tablaHoras.setValueAt(Double.parseDouble(data1[6]), i, 6);
+            tablaHoras.setValueAt(Double.parseDouble(data1[7]), i, 7);
             i++;
         }
     }
@@ -954,7 +955,7 @@ public class vistaDetalleOcs extends javax.swing.JDialog {
     
     public class MyTableModelEmpleados extends DefaultTableModel{
         public MyTableModelEmpleados() {
-          super(new String[]{"Empleado", "Fecha de salida", "Hora de salida", "Fecha de regreso", "Hora de regreso", "Horas totales", "Horas extra nor.", "Horas extra fes.", "Días media colación", "Días sin colación"}, 0);
+          super(new String[]{"Empleado", "Fecha de salida", "Hora de salida", "Fecha de regreso", "Hora de regreso", "Horas totales", "Horas extra nor.", "Horas extra fes.", "Días media colación", "Días sin colación", "Tonelaje"}, 0);
         }
 
         @Override

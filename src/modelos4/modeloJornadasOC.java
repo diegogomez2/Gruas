@@ -73,7 +73,7 @@ public class modeloJornadasOC {
         
         try{
             PreparedStatement pstm = conn.prepareStatement("SELECT id_joroc, fsal_joroc, horsal_joroc, raz_cli, freg_joroc, obs_joroc, coalesce(countg, 0) countg, "
-                    + "coalesce(counte, 0) counte FROM Jornadas_oc "
+                    + "coalesce(counte, 0) counte, tras_oc FROM Jornadas_oc "
                     + "INNER JOIN clientes ON clientes.rut_cli = jornadas_oc.rut_cli LEFT JOIN (SELECT id_joroc, COUNT(*) countg FROM "
                     + "Detalle_oc_gru GROUP BY id_joroc) gruas USING(id_joroc) LEFT JOIN (SELECT id_joroc, COUNT(*) counte FROM Detalle_oc_emp GROUP BY id_joroc) emp USING(id_joroc) "
                     + "WHERE cod_oc = -1 ORDER BY id_joroc");
@@ -89,7 +89,8 @@ public class modeloJornadasOC {
                 String estobs = res.getString("obs_joroc");
                 String estcgru = res.getString("countg");
                 String estcemp = res.getString("counte");
-                data[i] = new String[]{estid, estcli, estfsal, estobs, estcgru, estcemp};
+                String esttras = res.getString("tras_oc");
+                data[i] = new String[]{estid, estcli, estfsal, estobs, estcgru, estcemp, esttras};
                 i++;
             }
             res.close();
@@ -134,6 +135,8 @@ public class modeloJornadasOC {
     }
 
     public String ingresarDetalleGrua(String id, String pat, String fhsal, String fhreg) {
+        if(fhsal.compareTo(" ") == 0) fhsal = null;
+        if(fhreg.compareTo(" ") == 0) fhreg = null;
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
@@ -157,6 +160,8 @@ public class modeloJornadasOC {
     }
     
     public String ingresarDetalleEmpleado(String id, String rut, String fhsal, String fhreg) {
+        if(fhsal.compareTo(" ") == 0) fhsal = null;
+        if(fhreg.compareTo(" ") == 0) fhreg = null;
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
@@ -209,7 +214,7 @@ public class modeloJornadasOC {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("SELECT fsal_joroc, horsal_joroc, freg_joroc, horlleg_joroc, raz_cli, obs_joroc, clientes.rut_cli, clientes.dig_cli, "
-                    + "gir_cli, dir_cli, tel_cli, ciu_cli, coalesce(obs_cli,'') obs_cli, coalesce(countg, 0) countg, coalesce(counte, 0) counte FROM Jornadas_oc INNER JOIN Clientes ON Jornadas_oc.rut_cli = Clientes.rut_cli "
+                    + "gir_cli, dir_cli, tel_cli, ciu_cli, coalesce(obs_cli,'') obs_cli, coalesce(countg, 0) countg, coalesce(counte, 0) counte, tras_oc FROM Jornadas_oc INNER JOIN Clientes ON Jornadas_oc.rut_cli = Clientes.rut_cli "
                     + "LEFT JOIN (SELECT id_joroc, COUNT(*) countg FROM Detalle_oc_gru GROUP BY id_joroc) gruas USING(id_joroc) LEFT JOIN (SELECT id_joroc, COUNT(*) counte "
                     + "FROM Detalle_oc_emp GROUP BY id_joroc) emp USING(id_joroc) WHERE id_joroc = ?");
             pstm.setString(1, id);
@@ -230,7 +235,9 @@ public class modeloJornadasOC {
             String estobscli = res.getString("obs_cli");
             String estcgru = res.getString("countg");
             String estcemp = res.getString("counte");
-            data = new String[]{estfsal, esthorsal, estfreg, esthorlleg, estobs, estrutcli, estdigcli, estraz, estgir, estdir, esttel, id, estciu, estobscli, estcgru, estcemp};
+            String esttras = res.getString("tras_oc");
+            data = new String[]{estfsal, esthorsal, estfreg, esthorlleg, estobs, estrutcli, estdigcli, estraz, estgir, estdir, esttel, id, estciu, estobscli, estcgru, estcemp, 
+            esttras};
         }catch(SQLException e){
             System.out.println("Error obtener jornada oc por id");
             System.out.println(e);
@@ -263,7 +270,7 @@ public class modeloJornadasOC {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("UPDATE Jornadas_oc set fsal_joroc=?, horsal_joroc=?, "
+            PreparedStatement pstm = conn.prepareStatement("UPDATE Jornadas_oc SET fsal_joroc=?, horsal_joroc=?, "
                     + "rut_cli=?, freg_joroc = ?, horlleg_joroc=?, obs_joroc=?"
                     + " WHERE id_joroc=?");
             pstm.setString(1, data[0]);
@@ -333,12 +340,12 @@ public class modeloJornadasOC {
             System.out.println(e);
        }
         
-        String[][] data = new String[registros][5];
+        String[][] data = new String[registros][7];
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("SELECT des_gru, DATE_FORMAT(fhsal_det_gru, '%d-%m-%Y') fsal, DATE_FORMAT(fhsal_det_gru, '%H:%i') hsal, "
-                    + "DATE_FORMAT(fhreg_det_gru, '%d-%m-%Y') freg, DATE_FORMAT(fhreg_det_gru, '%H:%i') hreg FROM Detalle_oc_gru INNER JOIN Gruas USING(pat_gru) WHERE id_joroc = ?");
+                    + "DATE_FORMAT(fhreg_det_gru, '%d-%m-%Y') freg, DATE_FORMAT(fhreg_det_gru, '%H:%i') hreg, id_det_gru id, coalesce(horas_det_gru, '0') h FROM Detalle_oc_gru INNER JOIN Gruas USING(pat_gru) WHERE id_joroc = ?");
             pstm.setString(1, id);
             ResultSet res = pstm.executeQuery();
             int i = 0;
@@ -348,7 +355,9 @@ public class modeloJornadasOC {
                 String esthsal = res.getString("hsal");
                 String estfreg = res.getString("freg");
                 String esthreg = res.getString("hreg");
-                data[i] = new String[]{estgru, estfsal, esthsal, estfreg, esthreg};
+                String estid = res.getString("id");
+                String esthoras = res.getString("h");
+                data[i] = new String[]{estgru, estfsal, esthsal, estfreg, esthreg, estid, esthoras};
                 i++;
             }
             res.close();
@@ -379,12 +388,14 @@ public class modeloJornadasOC {
             System.out.println(e);
        }
         
-        String[][] data = new String[registros][5];
+        String[][] data = new String[registros][12];
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("SELECT nom_emp, apP_emp, apM_emp, DATE_FORMAT(fhsal_det_emp, '%d-%m-%Y') fsal, DATE_FORMAT(fhsal_det_emp, '%H:%i') hsal, "
-                    + " DATE_FORMAT(fhreg_det_emp, '%d-%m-%Y') freg, DATE_FORMAT(fhreg_det_emp, '%H:%i') hreg FROM Detalle_oc_emp INNER JOIN Empleados USING(rut_emp) WHERE id_joroc = ?");
+                    + " DATE_FORMAT(fhreg_det_emp, '%d-%m-%Y') freg, DATE_FORMAT(fhreg_det_emp, '%H:%i') hreg, id_det_oc id, coalesce(hortot_det_emp, 0) hortot, "
+                    + " coalesce(horex_det_emp, 0) horex, coalesce(horex2_det_emp, 0) horex2, coalesce(horcol1_det_emp, 0) horcol1, coalesce(horcol30_det_emp, 0) horcol30, "
+                    + " coalesce(pes_det_emp, 0) pes FROM Detalle_oc_emp INNER JOIN Empleados USING(rut_emp) WHERE id_joroc = ?");
             pstm.setString(1, id);
             ResultSet res = pstm.executeQuery();
             int i = 0;
@@ -396,7 +407,15 @@ public class modeloJornadasOC {
                 String esthsal = res.getString("hsal");
                 String estfreg = res.getString("freg");
                 String esthreg = res.getString("hreg");
-                data[i] = new String[]{estnom + " " + estapp + " " + estapm, estfsal, esthsal, estfreg, esthreg};
+                String estid = res.getString("id");
+                String esthortot = res.getString("hortot");
+                String esthorex = res.getString("horex");
+                String esthorex2 = res.getString("horex2");
+                String esthorcol1 = res.getString("horcol1");
+                String esthorcol30 = res.getString("horcol30");
+                String estpes = res.getString("pes");
+                data[i] = new String[]{estnom + " " + estapp + " " + estapm, estfsal, esthsal, estfreg, esthreg, estid, esthortot, esthorex, esthorex2, esthorcol1, esthorcol30, 
+                estpes};
                 i++;
             }
             res.close();
@@ -427,11 +446,12 @@ public class modeloJornadasOC {
             System.out.println(e);
        }
         
-        String[][] data = new String[registros][4];
+        String[][] data = new String[registros][8];
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("SELECT pes_ton, horas_hora, turnos_hora, base_hora FROM Horas_oc INNER JOIN Tonelajes USING(id_ton) WHERE id_joroc = ?");
+            PreparedStatement pstm = conn.prepareStatement("SELECT pes_ton, horas_hora, turnos_hora, base_hora, turnosex_hora, horasex_hora, horasad_hora, valor_hora FROM Horas_oc "
+                    + "INNER JOIN Tonelajes USING(id_ton) WHERE id_joroc = ?");
             pstm.setString(1, id);
             ResultSet res = pstm.executeQuery();
             int i = 0;
@@ -440,7 +460,11 @@ public class modeloJornadasOC {
                 String esthoras = res.getString("horas_hora");
                 String estturnos = res.getString("turnos_hora");
                 String estbase = res.getString("base_hora");
-                data[i] = new String[]{estpes, esthoras, estturnos, estbase};
+                String estturnosex = res.getString("turnosex_hora");
+                String esthorasex = res.getString("horasex_hora");
+                String esthorasad = res.getString("horasad_hora");
+                String estvalorhora = res.getString("valor_hora");
+                data[i] = new String[]{estpes, esthoras, estturnos, estbase, estvalorhora, esthorasad, esthorasex, estturnosex};
                 i++;
             }
             res.close();
@@ -531,5 +555,65 @@ public class modeloJornadasOC {
 //       }
 //        return data;
 //    }
+
+    public String ingresarTraspaleta(String[] data) {
+        String id = "";
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("INSERT INTO Jornadas_oc (fsal_joroc, horsal_joroc,"
+                    + " rut_cli, freg_joroc, horlleg_joroc, obs_joroc, tras_oc) "
+                    + "values (?, ?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+            pstm.setString(1, data[0]);
+            pstm.setString(2, data[1]);
+            pstm.setInt(3, Integer.parseInt(data[2]));
+            pstm.setString(4, data[3]);
+            pstm.setString(5, data[4]);
+            pstm.setString(6, data[5]);
+            pstm.setString(7, data[10]);
+            pstm.execute();
+            ResultSet res = pstm.getGeneratedKeys();
+            res.next();
+            id = res.getString(1);
+            pstm.close();
+            res.close();
+        }catch(SQLException e){
+            System.out.println("Error ingresar jornada oc con traspaleta");
+            System.out.println(e);
+            return "incorrecto";
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+            return "incorrecto";
+        }
+        return id;
+    }
+
+    public String modificarTraspaleta(String[] data, String id) {
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("UPDATE Jornadas_oc SET fsal_joroc=?, horsal_joroc=?,"
+                    + " rut_cli=?, freg_joroc=?, horlleg_joroc=?, obs_joroc=?, tras_oc=? WHERE "
+                    + "id_joroc=?", PreparedStatement.RETURN_GENERATED_KEYS);
+            pstm.setString(1, data[0]);
+            pstm.setString(2, data[1]);
+            pstm.setString(3, data[2]);
+            pstm.setString(4, data[3]);
+            pstm.setString(5, data[4]);
+            pstm.setString(6, data[5]);
+            pstm.setString(7, data[10]);
+            pstm.setString(8, id);
+            pstm.executeUpdate();
+            pstm.close();
+        }catch(SQLException e){
+            System.out.println("Error modificar jornada oc con traspaleta");
+            System.out.println(e);
+            return "incorrecto";
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+            return "incorrecto";
+        }
+        return id;
+    }
 }
 

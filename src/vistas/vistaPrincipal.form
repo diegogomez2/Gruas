@@ -256,7 +256,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuExportarHistoricoOts">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Generar reporte hist&#xf3;rico OT"/>
+                <Property name="text" type="java.lang.String" value="Generar reporte hist&#xf3;rico OT/OC"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuExportarHistoricoOtsActionPerformed"/>
@@ -276,14 +276,6 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem8ActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem9">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Generar reporte cobranza"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem9ActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

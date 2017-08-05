@@ -341,7 +341,7 @@ public class vistaOcsP extends javax.swing.JPanel {
             "Neto", "IVA", "Total", "Estado", "Cliente"}, 0);
         }
         public MyTableModel(Object[][] data){
-            super(new String[]{"Código OT", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
+            super(new String[]{"Código OC", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
             "Neto", "IVA", "Total", "Estado", "Cliente"}, 0);
             
             int i = 0;
