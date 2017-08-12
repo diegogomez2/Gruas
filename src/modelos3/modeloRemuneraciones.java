@@ -259,15 +259,15 @@ public class modeloRemuneraciones {
         return data;
     }
     
-    public int obtenerUTM(){
-        int utm = 0;
+    public double obtenerUTM(){
+        double utm = 0;
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("SELECT val_val val FROM valores WHERE nom_val = 'UTM'");
             ResultSet res = pstm.executeQuery();
             res.next();
-            utm = res.getInt("val");
+            utm = res.getDouble("val");
             res.close();
             pstm.close();
        }catch(SQLException e){
@@ -279,15 +279,15 @@ public class modeloRemuneraciones {
         return utm;
     }
     
-    public int obtenerUF(){
-        int uf = 0;
+    public double obtenerUF(){
+        double uf = 0;
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("SELECT val_val val FROM valores WHERE nom_val = 'UF'");
             ResultSet res = pstm.executeQuery();
             res.next();
-            uf = res.getInt("val");
+            uf = res.getDouble("val");
             res.close();
             pstm.close();
        }catch(SQLException e){

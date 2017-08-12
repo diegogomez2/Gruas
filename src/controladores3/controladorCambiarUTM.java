@@ -20,7 +20,7 @@ public class controladorCambiarUTM {
     
     public void mostrarVistaCambiarUTM(){
         controladorPrincipal miControlador = new controladorPrincipal();
-        int utm = miControlador.obtenerUTM();
+        double utm = miControlador.obtenerUTM();
         vistaCU = new vistaCambiarUTM(new javax.swing.JFrame(), true);
         vistaCU.setTextoNuevoValorUTM(String.valueOf(0));
         vistaCU.setTextoValorUTM(String.valueOf(utm));

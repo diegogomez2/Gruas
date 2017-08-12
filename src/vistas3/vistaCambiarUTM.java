@@ -21,8 +21,10 @@ public class vistaCambiarUTM extends javax.swing.JDialog {
     /**
      * Creates new form vistaCambiarUTM
      */
-    NumberFormat FORMAT = NumberFormat.getCurrencyInstance();
+    //NumberFormat FORMAT = NumberFormat.getCurrencyInstance();
+    DecimalFormat FORMAT = (DecimalFormat) DecimalFormat.getCurrencyInstance();
     DecimalFormatSymbols dfs = new DecimalFormatSymbols();
+    private static final DecimalFormat FORMAT2 = new DecimalFormat("$#.00");
     
     public vistaCambiarUTM(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -31,6 +33,7 @@ public class vistaCambiarUTM extends javax.swing.JDialog {
         dfs.setGroupingSeparator('.');
         dfs.setMonetaryDecimalSeparator('.');
         ((DecimalFormat) FORMAT).setDecimalFormatSymbols(dfs);
+        ((DecimalFormat) FORMAT2).setDecimalFormatSymbols(dfs);
     }
 
     /**
@@ -189,43 +192,44 @@ public class vistaCambiarUTM extends javax.swing.JDialog {
     
     public void setTextoValorUTM(String val){
         try{
-            Object value = Integer.parseInt(val);
+            Object value = Double.parseDouble(val);
             if (value instanceof Number) {
                 textoValor.setHorizontalAlignment(JLabel.RIGHT);
-                textoValor.setText(FORMAT.format(value));
+                textoValor.setText(FORMAT2.format(value));
             } else {
                 textoValor.setHorizontalAlignment(JLabel.RIGHT);
                 textoValor.setText("");
-                textoValor.setText(FORMAT.format(value));
+                textoValor.setText(FORMAT2.format(value));
             }
         }catch(NumberFormatException e){
             textoValor.setHorizontalAlignment(JLabel.RIGHT);
             textoValor.setText("");
-            textoValor.setText(FORMAT.format(val));
+            textoValor.setText(FORMAT2.format(val));
         }
     }
     
     public void setTextoNuevoValorUTM(String val){
         try{
-            Object value = Integer.parseInt(val);
+            Object value = Double.parseDouble(val);
             if (value instanceof Number) {
                 textoNuevoValor.setHorizontalAlignment(JLabel.RIGHT);
-                textoNuevoValor.setText(FORMAT.format(value));
+                textoNuevoValor.setText(FORMAT2.format(value));
             } else {
                 textoNuevoValor.setHorizontalAlignment(JLabel.RIGHT);
                 textoNuevoValor.setText("");
-                textoNuevoValor.setText(FORMAT.format(value));
+                textoNuevoValor.setText(FORMAT2.format(value));
             }
         }catch(NumberFormatException e){
             textoNuevoValor.setHorizontalAlignment(JLabel.RIGHT);
             textoNuevoValor.setText("");
-            textoNuevoValor.setText(FORMAT.format(0));
+            textoNuevoValor.setText(FORMAT2.format(0));
         }
     }
     
     public String getTextoNuevoValorUTM(){
         String val = textoNuevoValor.getText().replace("$", "");
         val = val.replace(".", "");
+        val = val.replace(',', '.');
         return val;
     }
 }

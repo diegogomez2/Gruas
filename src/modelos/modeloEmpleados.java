@@ -589,6 +589,7 @@ public class modeloEmpleados {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
+            /*SE CAMBIA DE WHERE mes_suel year_suel mes_bon year_bon A ON Mensualidiades y Horas_bono_300 respectivamente*/
             PreparedStatement pstm = conn.prepareStatement("SELECT empleados.rut_emp, dig_emp, concat(nom_emp, ' ', apP_emp) "
                     + "nom, coalesce(sum(coalesce(hor_bon, 0) * coalesce(val_ton, 0)), 0) bon300, sueldo_emp, afp_emp, sal_emp, "
                     + "TIMESTAMPDIFf(YEAR, fin_emp, CURDATE()) ant, colacion_emp col, transporte_emp trans, "
@@ -598,18 +599,19 @@ public class modeloEmpleados {
                     + "coalesce(adel_emp, 0) adel, coalesce(pres_emp, 0) pres, coalesce(cuo_emp, 0) cuo, coalesce(cuores_emp, 0) "
                     + "cuores, coalesce(des_afp, 0) des, coalesce(des_sal, 0) dessal, coalesce(isa_emp, '') isa, coalesce(val_isa_emp, 0) valisa, "
                     + "coalesce(fin_emp, '') fin, coalesce(diastrab_emp, 30) dias FROM Empleados LEFT JOIN Afps ON afp_emp = nom_afp LEFT JOIN Salud ON sal_emp = nom_sal "
-                    + "LEFT JOIN Horas_bono_300 on (Empleados.rut_emp = Horas_bono_300.rut_emp) LEFT JOIN Tonelajes using(id_ton) LEFT JOIN Mensualidades ON Empleados.rut_emp  "
-                    + " = Mensualidades.rut_emp WHERE empleados.rut_emp = ? AND mes_bon = ? AND mes_suel = ? AND year_bon = ? AND year_suel = ?");
-            pstm.setString(1, rut);
-            pstm.setInt(2, mes);
+                    + "LEFT JOIN Horas_bono_300 on (Empleados.rut_emp = Horas_bono_300.rut_emp) AND mes_bon = ? AND year_bon = ? LEFT JOIN Tonelajes using(id_ton) LEFT JOIN Mensualidades ON Empleados.rut_emp  "
+                    + " = Mensualidades.rut_emp AND mes_suel = ?  AND year_suel = ? WHERE empleados.rut_emp = ?");
+            pstm.setInt(1, mes);
+            pstm.setInt(2, year);
             pstm.setInt(3, mes);
             pstm.setInt(4, year);
-            pstm.setInt(5, year);
+            pstm.setString(5, rut);
             ResultSet res = pstm.executeQuery();
             res.next();
             String estrut = res.getString("rut_emp");
                 String estfrut = "";
                 int cont = 0;
+                System.out.println(estrut);
                 for(int i = estrut.length() - 1; i >= 0; i--){
                     estfrut = estrut.substring(i , i+1) + estfrut;
                     cont ++;

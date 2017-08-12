@@ -36,11 +36,12 @@ public class controladorModificarJornadasOC {
         vistaMJOC.setSpinnerEmpleados(data[15]);
         vistaMJOC.setId(id);
         if(Integer.parseInt(data[16]) > 0){
+            System.out.println(data[16]);
             vistaMJOC.setRadioTras();
             vistaMJOC.hideOC();
             vistaMJOC.setSpinnerTras(data[16]);
         }else{
-            vistaMJOC.setRadioTras();
+            vistaMJOC.setRadioOC();
             vistaMJOC.hideTras();
             vistaMJOC.agregarGruas(id);
             vistaMJOC.agregarEmpleados(id);

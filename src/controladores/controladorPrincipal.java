@@ -1128,13 +1128,26 @@ public class controladorPrincipal {
     public void crearControladorDetalleJornadasOC(String id) throws ParseException {
         controladorDetalleJornadasOC micontroladorDJOC;
         micontroladorDJOC = new controladorDetalleJornadasOC();
-        micontroladorDJOC.mostrarVistaDetalleJornadasOC(id);
+        controladorPrincipal miControlador = new controladorPrincipal();
+        String data[] = miControlador.obtenerJornadaOCPorId(id);
+        if(data[16].compareTo("0") == 0){
+            micontroladorDJOC.mostrarVistaDetalleJornadasOC(data, id);
+        }else{
+            micontroladorDJOC.mostrarVistaDetalleJornadasTraspaletaOC(data, id);
+        }
     }
     
     public void crearControladorDetalleOcs(String id) throws ParseException {
         controladores4.controladorDetalleOcs micontroladorDO;
         micontroladorDO = new controladorDetalleOcs();
-        micontroladorDO.mostrarVistaDetalleOcs(id);
+        modelos4.modeloJornadasOC ocs = new modelos4.modeloJornadasOC();
+        controladorPrincipal miControlador = new controladorPrincipal();
+        String data[] = miControlador.obtenerOcPorId(id);
+        if(data[24].compareTo("0") == 0){
+            micontroladorDO.mostrarVistaDetalleOcs(data);
+        }else{
+            micontroladorDO.mostrarVistaDetalleTraspaletaOcs(data);
+        }
     }
     
     public String[] obtenerJornadaOCPorId(String id) {
@@ -1674,15 +1687,15 @@ public class controladorPrincipal {
         return sueldo_base;
     }
     
-    public int obtenerUTM(){
+    public double obtenerUTM(){
         modelos3.modeloRemuneraciones valores = new modeloRemuneraciones();
-        int utm = valores.obtenerUTM();
+        double utm = valores.obtenerUTM();
         return utm;
     }
     
-    public int obtenerUF(){
+    public double obtenerUF(){
         modelos3.modeloRemuneraciones valores = new modeloRemuneraciones();
-        int uf = valores.obtenerUF();
+        double uf = valores.obtenerUF();
         return uf;
     }
     
@@ -2027,5 +2040,10 @@ public class controladorPrincipal {
             JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al ingresar los datos.\n", "Error", JOptionPane.ERROR_MESSAGE);
             return "incorrecto";
         }
+    }
+
+    public void generarLibroRemuneraciones() {
+        controladorReportes miControlador = new controladorReportes();
+        miControlador.GenerarLibroRemuneraciones();
     }
 }

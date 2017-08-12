@@ -214,7 +214,8 @@ public class modeloJornadasOC {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("SELECT fsal_joroc, horsal_joroc, freg_joroc, horlleg_joroc, raz_cli, obs_joroc, clientes.rut_cli, clientes.dig_cli, "
-                    + "gir_cli, dir_cli, tel_cli, ciu_cli, coalesce(obs_cli,'') obs_cli, coalesce(countg, 0) countg, coalesce(counte, 0) counte, tras_oc FROM Jornadas_oc INNER JOIN Clientes ON Jornadas_oc.rut_cli = Clientes.rut_cli "
+                    + "gir_cli, dir_cli, tel_cli, ciu_cli, coalesce(obs_cli,'') obs_cli, coalesce(countg, 0) countg, coalesce(counte, 0) counte, tras_oc "
+                    + "FROM Jornadas_oc INNER JOIN Clientes ON Jornadas_oc.rut_cli = Clientes.rut_cli "
                     + "LEFT JOIN (SELECT id_joroc, COUNT(*) countg FROM Detalle_oc_gru GROUP BY id_joroc) gruas USING(id_joroc) LEFT JOIN (SELECT id_joroc, COUNT(*) counte "
                     + "FROM Detalle_oc_emp GROUP BY id_joroc) emp USING(id_joroc) WHERE id_joroc = ?");
             pstm.setString(1, id);

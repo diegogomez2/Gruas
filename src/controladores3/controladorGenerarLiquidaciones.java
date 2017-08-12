@@ -45,7 +45,6 @@ public class controladorGenerarLiquidaciones {
             public void run() {
                 try {
                     modeloFacturas rutas = new modeloFacturas();
-                    String ruta = rutas.obtenerRuta();
                     dfs.setCurrencySymbol("$ ");
                     dfs.setGroupingSeparator('.');
                     dfs.setMonetaryDecimalSeparator('.');
@@ -56,9 +55,9 @@ public class controladorGenerarLiquidaciones {
                     String[][] data = liquidaciones.obtenerRemuneraciones2(getMes(), getYear());
                     String[][] imp2cat = remuneraciones.obtenerTablaImpuesto();
 //                    float uf = remuneraciones.obtenerUF() / 100;
-                    float uf = remuneraciones.obtenerUF();
+                    double uf = remuneraciones.obtenerUF();
                     int numEmp = data.length;
-                    String path = ruta + "/Liquidaciones " + per;
+                    String path = "Liquidaciones " + per;
                     File dir = new File(path);
                     dir.mkdir();
 //                    int bono300 = miControlador.obtenerBono300();
@@ -424,7 +423,8 @@ public class controladorGenerarLiquidaciones {
                 }
             }
         };
-        runnable.run();
+        //runnable.run();
+        runnable.start();
         return true;
     }
     

@@ -254,7 +254,6 @@ public class vistaJornadasOCP extends javax.swing.JPanel {
             int row = getFilaSeleccionada();
             int tras = Integer.parseInt(getNumTraspaletas(row));
             id = getIdFila(row);
-            System.out.println(tras);
             if(tras > 0){
                 try{
                     miControlador.irVistaIngresarTraspaletaOcs(id);  

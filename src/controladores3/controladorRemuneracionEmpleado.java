@@ -21,7 +21,7 @@ public class controladorRemuneracionEmpleado {
         String[] data = miControlador.obtenerRemuneracionEmpleadoPorRut(rut);
         String[][] imp2cat = miControlador.obtenerTablaImpuesto();
 //        float uf = miControlador.obtenerUF() / 100;
-        float uf = miControlador.obtenerUF();
+        double uf = miControlador.obtenerUF();
         //SUELDO BASE
         int base = Integer.parseInt(data[2]) * Integer.parseInt(data[28]) / 30;
         //GRATIFICACION

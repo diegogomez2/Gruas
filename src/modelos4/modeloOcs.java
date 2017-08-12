@@ -235,7 +235,7 @@ public class modeloOcs {
             PreparedStatement pstm = conn.prepareStatement("SELECT fsal_joroc, "
                     + "raz_cli, ciu_cli, freg_joroc, obs_joroc, clientes.rut_cli, clientes.dig_cli,"
                     + "gir_cli, dir_cli, tel_cli, fec_oc, cod_oc, pag_oc, cond_oc, cont_oc, "
-                    + "total_oc, neto_oc, iva_oc, desp_oc, horfin_oc, checkdesp_oc, vdesp_oc, desc_oc, id_joroc "
+                    + "total_oc, neto_oc, iva_oc, desp_oc, horfin_oc, checkdesp_oc, vdesp_oc, desc_oc, id_joroc, tras_oc "
                     + " FROM Jornadas_oc INNER JOIN Clientes ON "
                     + "Jornadas_oc.rut_cli = clientes.rut_cli WHERE cod_oc = ?");
             pstm.setString(1, id);
@@ -264,8 +264,9 @@ public class modeloOcs {
             String estvdesp = res.getString("vdesp_oc");
             String estdesc = res.getString("desc_oc");
             String estidoc = res.getString("id_joroc");
+            String esttras = res.getString("tras_oc");
             data = new String[]{estfsal, estfreg, estobs, estrutcli, estdigcli, estraz, estgir, estdir, esttel, id, estfot, estcond
-                    , estpago, estcont, esttot, estneto, estiva, estdesp, esthorfin, estcdesp, estvdesp, estciu, estdesc, estidoc};
+                    , estpago, estcont, esttot, estneto, estiva, estdesp, esthorfin, estcdesp, estvdesp, estciu, estdesc, estidoc, esttras};
         }catch(SQLException e){
             System.out.println("Error obtener oc por id");
             System.out.println(e);

@@ -5,6 +5,7 @@
  */
 package vistas;
 
+import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
 import controladores.controladorPrincipal;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -15,6 +16,7 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.UIManager;
 import javax.xml.transform.TransformerException;
 import org.apache.fop.apps.FOPException;
 import org.jdesktop.swingx.JXDatePicker;
@@ -76,6 +78,7 @@ public class vistaPrincipal extends javax.swing.JFrame {
         itemLibroCompras = new javax.swing.JMenuItem();
         itemLibroVentas = new javax.swing.JMenuItem();
         itemLibroAtrasado = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
         menuRemuneraciones = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -234,6 +237,14 @@ public class vistaPrincipal extends javax.swing.JFrame {
         });
         menuLibros.add(itemLibroAtrasado);
 
+        jMenuItem9.setText("Generar libro de remuneraciones");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
+        menuLibros.add(jMenuItem9);
+
         MenuPrincipal.add(menuLibros);
 
         menuRemuneraciones.setText("Remuneraciones");
@@ -292,7 +303,7 @@ public class vistaPrincipal extends javax.swing.JFrame {
 
         MenuPrincipal.add(menuOpciones);
 
-        menuOC.setText("OC");
+        menuOC.setText("Operaciones OC");
 
         menuOc.setText("Mostrar clientes por OC");
         menuOc.addActionListener(new java.awt.event.ActionListener() {
@@ -588,6 +599,11 @@ public class vistaPrincipal extends javax.swing.JFrame {
 //        }
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        controladorPrincipal miControlador = new controladorPrincipal();
+        miControlador.generarLibroRemuneraciones();
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -599,10 +615,11 @@ public class vistaPrincipal extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+                UIManager.setLookAndFeel("com.jgoodies.looks.windows.WindowsLookAndFeel");
             }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(vistaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
@@ -645,6 +662,7 @@ public class vistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JMenuItem menuAgregarTarifa;
     private javax.swing.JMenu menuCobranza;
     private javax.swing.JMenu menuCompras;

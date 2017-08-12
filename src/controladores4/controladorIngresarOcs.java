@@ -48,6 +48,8 @@ public class controladorIngresarOcs {
         vistaIO.setId(data[11]);
         vistaIO.setTextoCiudad(data[12]);
         vistaIO.setTextoFechaOt();
+        vistaIO.setTextoFechaInicio(data[0]);
+        vistaIO.setTextoFechaTermino(data[2]);
 //        int size = valores.size();
         vistaIO.setTextoNeto("0");
         vistaIO.setTextoIva("0");
@@ -94,6 +96,9 @@ public class controladorIngresarOcs {
 //        }
         if (vistaIO.getTextoFechaOc().compareTo("") == 0) {
             respuesta += "-Fecha de OT.\n";
+        }
+        if(vistaIO.getHorasEmpleadosVacia().compareTo("") == 0){
+            respuesta += "Falta asignar horas al (los) trabajador(es)";
         }
         return respuesta;
     }
@@ -180,7 +185,8 @@ public class controladorIngresarOcs {
         vistaITO.setId(data[11]);
         vistaITO.setTextoCiudad(data[12]);
         vistaITO.setTextoFechaOt();
-        vistaITO.setTextoNeto("0");
+        vistaITO.setTextoFechaInicio(data[0]);
+        vistaITO.setTextoFechaTermino(data[2]);
         vistaITO.setTextoIva("0");
         vistaITO.setTextoBruto("0");
         vistaITO.setTextoDescuento("0");

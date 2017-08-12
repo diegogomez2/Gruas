@@ -20,7 +20,7 @@ public class controladorCambiarUF {
     
     public void mostrarVistaCambiarUF(){
         controladorPrincipal miControlador = new controladorPrincipal();
-        int utm = miControlador.obtenerUF();
+        double utm = miControlador.obtenerUF();
         vistaCU = new vistaCambiarUF(new javax.swing.JFrame(), true);
         vistaCU.setTextoNuevoValorUF(String.valueOf(0));
         vistaCU.setTextoValorUF(String.valueOf(utm));
