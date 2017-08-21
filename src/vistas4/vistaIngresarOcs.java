@@ -1260,7 +1260,7 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
     
     public class MyTableModelEmpleados extends DefaultTableModel{
         public MyTableModelEmpleados() {
-          super(new String[]{"Empleado", "Fecha de salida", "Hora de salida", "Fecha de regreso", "Hora de regreso", "Horas totales", "Horas extra nor.", 
+          super(new String[]{"Empleado", "Fecha de salida", "Hora de salida", "Fecha de regreso", "Hora de regreso", "Horas trabajadas", "Horas extra nor.", 
               "Horas extra fes.", "Días media colación", "Días sin colación", "Ton. empleado", "Id"}, 0);
         }
 
