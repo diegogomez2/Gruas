@@ -39,7 +39,7 @@ public class modeloUsuarios {
         }
         catch(SQLException | ClassNotFoundException e){
             System.out.println("Error verificar login");
-            System.out.println(e);
+            System.out.println(e.getLocalizedMessage());
             return 2;
         }
         return 0;

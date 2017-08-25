@@ -75,6 +75,10 @@ public class modeloTarifas {
     
     public String agregarTarifa(String dia, String ton, String hin, String hfin, String prec){
         try{
+            if(hfin.compareTo("00:00") == 0){
+                hfin = "24:00";
+            }
+            System.out.println(hfin);
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("SELECT Count(*) as total from horarios where hin_hor = ?"
@@ -96,7 +100,7 @@ public class modeloTarifas {
             pstm.close();
             res.close();
             
-            if(registros > 0){
+            if(registros > 0){  
                 //GET HOR
                 pstm = conn.prepareStatement("SELECT id_hor from horarios where hin_hor = ? and hfin_hor = ?");
                 pstm.setString(1, hin);
