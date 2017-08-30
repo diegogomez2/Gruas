@@ -71,7 +71,7 @@ public class vistaDetalleJornadasTraspaletaOC extends javax.swing.JDialog {
             }
         });
 
-        jLabel2.setText("Número de traspaletas");
+        jLabel2.setText("Número de transpaletas");
 
         spinnerNumTras.setEnabled(false);
 

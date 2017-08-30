@@ -3,6 +3,7 @@
 <Form version="1.9" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
+    <Property name="title" type="java.lang.String" value="Ingresar compra"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -187,7 +188,7 @@
                                               <Group type="102" alignment="0" attributes="0">
                                                   <Group type="103" groupAlignment="0" attributes="0">
                                                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="textoTot" min="-2" pref="225" max="-2" attributes="0"/>
+                                                      <Component id="textoNeto" min="-2" pref="225" max="-2" attributes="0"/>
                                                   </Group>
                                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -212,7 +213,7 @@
                                           </Group>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="textoNeto" min="-2" pref="229" max="-2" attributes="0"/>
+                                              <Component id="textoTot" min="-2" pref="229" max="-2" attributes="0"/>
                                               <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
@@ -354,9 +355,9 @@
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="textoTot" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="textoIva" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="textoNeto" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="textoIva" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="textoTot" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                           <Component id="botonActualizarMontos" min="-2" max="-2" attributes="0"/>
@@ -802,10 +803,10 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel3">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Total"/>
+                    <Property name="text" type="java.lang.String" value="Neto"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JFormattedTextField" name="textoTot">
+                <Component class="javax.swing.JFormattedTextField" name="textoNeto">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                   </Properties>
@@ -828,10 +829,10 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel5">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Neto"/>
+                    <Property name="text" type="java.lang.String" value="Total"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JFormattedTextField" name="textoNeto">
+                <Component class="javax.swing.JFormattedTextField" name="textoTot">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                   </Properties>

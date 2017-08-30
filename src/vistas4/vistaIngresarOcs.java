@@ -50,23 +50,23 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
     NumberFormat FORMAT = NumberFormat.getCurrencyInstance();
     DecimalFormatSymbols dfs = new DecimalFormatSymbols();
     DocumentFilter onlyNumbers = new DocumentFilter() {
-            Pattern regEx = Pattern.compile("\\d+");
+        Pattern regEx = Pattern.compile("\\d+");
 
-            @Override
-            public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
-                Matcher matcher = regEx.matcher(text);
-                if (!matcher.matches()) {
-                    return;
-                }
-                super.replace(fb, offset, length, text, attrs);
+        @Override
+        public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+            Matcher matcher = regEx.matcher(text);
+            if (!matcher.matches()) {
+                return;
             }
-        };
-    
+            super.replace(fb, offset, length, text, attrs);
+        }
+    };
+
     /**
      * Creates new form vistaIngresarOC
      */
     public vistaIngresarOcs(java.awt.Frame parent, boolean modal, Object[] dataTon) {
-        super(parent, modal); 
+        super(parent, modal);
         initComponents();
         jButton1.setVisible(false);
         comboTonelajes = new JComboBox<Object>(dataTon);
@@ -627,10 +627,10 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
         controladores4.controladorIngresarOcs miControladorIO = new controladores4.controladorIngresarOcs();
         String respuesta = miControladorIO.camposVacios();
         boolean esVacio = respuesta.length() == 0;
-        if(!esVacio){
+        if (!esVacio) {
             JOptionPane.showMessageDialog(this, respuesta, "Debe rellenar los siguientes campos", JOptionPane.INFORMATION_MESSAGE);
-        }else{
-            if(miControladorIO.irVistaJornadasOCP(id, horas)){
+        } else {
+            if (miControladorIO.irVistaJornadasOCP(id, horas)) {
                 setVisible(false);
                 controladores4.controladorIngresarOcs micontroladorOcs = new controladores4.controladorIngresarOcs();
                 micontroladorOcs.actualizarHoras(id);
@@ -655,8 +655,8 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
         setNuevoNeto(Integer.parseInt(getTextoNeto()) + Integer.parseInt(getTextoDespacho()) - Integer.parseInt(getTextoDescuento()));
         double nuevoIva = nuevoNeto * 0.19;
         double nuevoBruto = nuevoNeto + nuevoIva;
-        setTextoIva(String.valueOf((int)nuevoIva));
-        setTextoBruto(String.valueOf((int)nuevoBruto));
+        setTextoIva(String.valueOf((int) nuevoIva));
+        setTextoBruto(String.valueOf((int) nuevoBruto));
         setTextoNuevoNeto(String.valueOf(nuevoNeto));
     }//GEN-LAST:event_textoDespachoFocusLost
 
@@ -665,15 +665,15 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
         setNuevoNeto(Integer.parseInt(getTextoNeto()) - Integer.parseInt(getTextoDescuento()) + Integer.parseInt(getTextoDespacho()));
         double nuevoIva = nuevoNeto * 0.19;
         double nuevoBruto = nuevoNeto + nuevoIva;
-        setTextoIva(String.valueOf((int)nuevoIva));
-        setTextoBruto(String.valueOf((int)nuevoBruto));
+        setTextoIva(String.valueOf((int) nuevoIva));
+        setTextoBruto(String.valueOf((int) nuevoBruto));
         setTextoNuevoNeto(String.valueOf(nuevoNeto));
     }//GEN-LAST:event_textoDescuentoFocusLost
 
     private void checkDespachoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkDespachoActionPerformed
-        if(checkDespacho.isSelected()){
+        if (checkDespacho.isSelected()) {
             textoDespacho.setEnabled(true);
-        }else{
+        } else {
             textoDespacho.setEnabled(false);
         }
     }//GEN-LAST:event_checkDespachoActionPerformed
@@ -683,8 +683,8 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
         setNuevoNeto(Integer.parseInt(getTextoNeto()) - Integer.parseInt(getTextoDescuento()) + Integer.parseInt(getTextoDespacho()));
         double nuevoIva = nuevoNeto * 0.19;
         double nuevoBruto = nuevoNeto + nuevoIva;
-        setTextoIva(String.valueOf((int)nuevoIva));
-        setTextoBruto(String.valueOf((int)nuevoBruto));
+        setTextoIva(String.valueOf((int) nuevoIva));
+        setTextoBruto(String.valueOf((int) nuevoBruto));
         setTextoNuevoNeto(String.valueOf(nuevoNeto));
     }//GEN-LAST:event_textoNetoFocusLost
 
@@ -723,7 +723,7 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-               
+
             }
         });
     }
@@ -793,7 +793,6 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
     private javax.swing.JTextField textoTelefono;
     // End of variables declaration//GEN-END:variables
 
-    
     public String getTextoContacto() {
         return textoContacto.getText();
     }
@@ -836,27 +835,30 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
 
     public String getTextoFechaOc() {
         Date fecha = textoFechaOt.getDate();
-        if(fecha == null) return "";
+        if (fecha == null) {
+            return "";
+        }
         String dateString = formatDate.format(textoFechaOt.getDate());
         return dateString;
     }
-    
-    public int getMes(){
+
+    public int getMes() {
         Date fecha = textoFechaOt.getDate();
         Calendar cal = Calendar.getInstance();
         cal.setTime(fecha);
         System.out.println("Mes: " + cal.get(Calendar.MONTH));
-        if(cal.get(Calendar.DAY_OF_MONTH) > 25)
+        if (cal.get(Calendar.DAY_OF_MONTH) > 25) {
             return cal.get(Calendar.MONTH) + 2;
-        return cal.get(Calendar.MONTH) + 1;  
+        }
+        return cal.get(Calendar.MONTH) + 1;
     }
-    
-    public int getYear(){
+
+    public int getYear() {
         Date fecha = textoFechaOt.getDate();
         Calendar cal = Calendar.getInstance();
         cal.setTime(fecha);
         System.out.println("Year: " + cal.get(Calendar.YEAR));
-        return cal.get(Calendar.YEAR);  
+        return cal.get(Calendar.YEAR);
     }
 
     public String getTextoCodigo() {
@@ -883,7 +885,7 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
         neto = neto.replace(".", "");
         return neto;
     }
-    
+
     public String getTextoNuevoNeto() {
         String neto = textoNuevoNeto.getText();
         neto = neto.replace("$", "");
@@ -899,7 +901,9 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
 //        return this.horas;
 //    }
     public String getCheckDespacho() {
-        if(checkDespacho.isSelected()) return "1";
+        if (checkDespacho.isSelected()) {
+            return "1";
+        }
         return "0";
     }
 //    
@@ -933,13 +937,14 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
 //        return horasEx;
 //    }
 //
+
     public String getTextoDespacho() {
-        if(getCheckDespacho().compareTo("0") == 0){
+        if (getCheckDespacho().compareTo("0") == 0) {
             return "0";
         }
-        if(textoDespacho.getText().compareTo("") == 0){
+        if (textoDespacho.getText().compareTo("") == 0) {
             return "0";
-        }else{
+        } else {
             String desp = textoDespacho.getText();
             desp = desp.replace("$", "");
             desp = desp.replace(".", "");
@@ -951,6 +956,7 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
 //        this.ton = ton;
 //    }
 //
+
     public void setFechaInicio(String fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
@@ -978,9 +984,9 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
     public void setId(String id) {
         this.id = id;
     }
-    
+
     public void setTextoBruto(String textoBruto) {
-        try{
+        try {
             Object value = Integer.parseInt(textoBruto);
             if (value instanceof Number) {
                 this.textoBruto.setHorizontalAlignment(JLabel.RIGHT);
@@ -989,14 +995,14 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
                 this.textoBruto.setHorizontalAlignment(JLabel.RIGHT);
                 this.textoBruto.setText("");
             }
-        }catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             this.textoBruto.setHorizontalAlignment(JLabel.RIGHT);
             this.textoBruto.setText("");
         }
     }
-    
+
     public void setTextoNuevoNeto(String textoNuevoNeto) {
-        try{
+        try {
             Object value = Integer.parseInt(textoNuevoNeto);
             if (value instanceof Number) {
                 this.textoNuevoNeto.setHorizontalAlignment(JLabel.RIGHT);
@@ -1005,7 +1011,7 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
                 this.textoNuevoNeto.setHorizontalAlignment(JLabel.RIGHT);
                 this.textoNuevoNeto.setText("");
             }
-        }catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             this.textoNuevoNeto.setHorizontalAlignment(JLabel.RIGHT);
             this.textoNuevoNeto.setText("");
         }
@@ -1038,11 +1044,11 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
     public void setTextoFechaOt() throws ParseException {
         this.textoFechaOt.setDate(new Date());
     }
-    
+
     public void setTextoFechaInicio(String textoFechaInicio) throws ParseException {
         this.textoFechaInicio.setDate(formatDate.parse(textoFechaInicio));
     }
-    
+
     public void setTextoFechaTermino(String textoFechaTermino) throws ParseException {
         this.textoFechaTermino.setDate(formatDate.parse(textoFechaTermino));
     }
@@ -1052,7 +1058,7 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
     }
 
     public void setTextoIva(String textoIva) {
-        try{
+        try {
             Object value = Integer.parseInt(textoIva);
             if (value instanceof Number) {
                 this.textoIva.setHorizontalAlignment(JLabel.RIGHT);
@@ -1061,14 +1067,14 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
                 this.textoIva.setHorizontalAlignment(JLabel.RIGHT);
                 this.textoIva.setText("");
             }
-        }catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             this.textoIva.setHorizontalAlignment(JLabel.RIGHT);
             this.textoIva.setText("");
         }
     }
 
     public void setTextoNeto(String textoNeto) {
-        try{
+        try {
             Object value = Integer.parseInt(textoNeto);
             if (value instanceof Number) {
                 this.textoNeto.setHorizontalAlignment(JLabel.RIGHT);
@@ -1077,7 +1083,7 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
                 this.textoNeto.setHorizontalAlignment(JLabel.RIGHT);
                 this.textoNeto.setText("");
             }
-        }catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             this.textoNeto.setHorizontalAlignment(JLabel.RIGHT);
             this.textoNeto.setText("");
         }
@@ -1102,15 +1108,15 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
     public void setTextoTelefono(String textoTelefono) {
         this.textoTelefono.setText(textoTelefono);
     }
-   
+
     public String getTextoDescuento() {
         String desc = textoDescuento.getText().replace("$", "");
         desc = desc.replace(".", "");
         return desc;
     }
-    
-    public void setTextoDescuento(String desc){
-        try{
+
+    public void setTextoDescuento(String desc) {
+        try {
             Object value = Integer.parseInt(desc);
             if (value instanceof Number) {
                 textoDescuento.setHorizontalAlignment(JLabel.RIGHT);
@@ -1120,15 +1126,15 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
                 textoDescuento.setText("");
                 textoDescuento.setText(FORMAT.format(0));
             }
-        }catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             textoDescuento.setHorizontalAlignment(JLabel.RIGHT);
             textoDescuento.setText("");
             textoDescuento.setText(FORMAT.format(0));
         }
     }
-    
-    public void setTextoValorDespacho(String valor){
-        try{
+
+    public void setTextoValorDespacho(String valor) {
+        try {
             Object value = Integer.parseInt(valor);
             if (value instanceof Number) {
                 textoDespacho.setHorizontalAlignment(JLabel.RIGHT);
@@ -1138,39 +1144,39 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
                 textoDespacho.setText("");
                 textoDespacho.setText(FORMAT.format(0));
             }
-        }catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             textoDespacho.setHorizontalAlignment(JLabel.RIGHT);
             textoDespacho.setText("");
             textoDespacho.setText(FORMAT.format(0));
         }
     }
-    
-    public int getNuevoNeto(){
+
+    public int getNuevoNeto() {
         return nuevoNeto;
     }
-    
-    public void setNuevoNeto(int neto){
+
+    public void setNuevoNeto(int neto) {
         nuevoNeto = neto;
     }
-    
+
     public JTable getTablaGruas() {
         return tablaGruas;
     }
-    
+
     public JTable getTablaEmpleados() {
         return tablaEmpleados;
     }
-    
+
     public JTable getTablaHoras() {
         return tablaHoras;
     }
-    
-    public void agregarGruas(String id) throws ParseException{
+
+    public void agregarGruas(String id) throws ParseException {
         int i = 0;
         modelos4.modeloJornadasOC detalle_gru = new modelos4.modeloJornadasOC();
         Object[][] data = detalle_gru.obtenerGruasPorIdJornadaOC(id);
         tg.setRowCount(data.length);
-        for(Object[] data1 : data){
+        for (Object[] data1 : data) {
             tablaGruas.setValueAt(data1[0], i, 0);
             tablaGruas.setValueAt(data1[1], i, 1);
             tablaGruas.setValueAt(data1[2], i, 2);
@@ -1181,13 +1187,13 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
             i++;
         }
     }
-    
-    public void agregarEmpleados(String id) throws ParseException{
+
+    public void agregarEmpleados(String id) throws ParseException {
         int i = 0;
         modelos4.modeloJornadasOC detalle_emp = new modelos4.modeloJornadasOC();
         Object[][] data = detalle_emp.obtenerEmpleadosPorIdJornadaOC(id);
         te.setRowCount(data.length);
-        for(Object[] data1 : data){
+        for (Object[] data1 : data) {
             tablaEmpleados.setValueAt(data1[0], i, 0);
             tablaEmpleados.setValueAt(data1[1], i, 1);
             tablaEmpleados.setValueAt(data1[2], i, 2);
@@ -1202,101 +1208,117 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
             i++;
         }
     }
-    
-    public void agregarHoras(String id) throws ParseException{
+
+    public void agregarHoras(String id) throws ParseException {
         int i = 0;
         modelos4.modeloJornadasOC detalle_horas = new modelos4.modeloJornadasOC();
         String[][] data = detalle_horas.obtenerHorasPorIdJornadaOC(id);
         th.setRowCount(data.length);
-        for(String[] data1 : data){
+        for (String[] data1 : data) {
             tablaHoras.setValueAt(Double.parseDouble(data1[0]), i, 0);
             tablaHoras.setValueAt(Double.parseDouble(data1[1]), i, 1);
             tablaHoras.setValueAt(Double.parseDouble(data1[2]), i, 2);
             tablaHoras.setValueAt(Double.parseDouble(data1[3]), i, 3);
-            tablaHoras.setValueAt(0, i, 4);
-            tablaHoras.setValueAt(0, i, 5);
-            tablaHoras.setValueAt(0, i, 6);
-            tablaHoras.setValueAt(0, i, 7);
+            tablaHoras.setValueAt(0.0, i, 4);
+            tablaHoras.setValueAt(Double.parseDouble("0"), i, 5);
+            tablaHoras.setValueAt(0.0, i, 6);
+            tablaHoras.setValueAt(0.0, i, 7);
             i++;
         }
     }
 
     public String getHorasEmpleadosVacia() {
         for (int i = 0; i < tablaEmpleados.getRowCount(); i++) {
+            if (tablaEmpleados.getValueAt(i, 5) instanceof Double) {
                 if ((double)tablaEmpleados.getValueAt(i, 5) == 0.0) {
-                    System.out.println(tablaEmpleados.getValueAt(i, 5));
                     return "";
+                }else{
+                    return "novacio";
+                }
+            } else {
+                if((int)tablaEmpleados.getValueAt(i, 5) == 0){
+                    return "";
+                }else{
+                    return "novacio";
+                }
             }
+
         }
         return "novacio";
     }
-    
-    public class MyTableModelGruas extends DefaultTableModel{
+
+    public class MyTableModelGruas extends DefaultTableModel {
+
         public MyTableModelGruas() {
-          super(new String[]{"Grua", "Fecha de salida", "Hora de salida", "Fecha de regreso", "Hora de regreso", "Horas totales", "Id"}, 0);
+            super(new String[]{"Grua", "Fecha de salida", "Hora de salida", "Fecha de regreso", "Hora de regreso", "Horas totales", "Id"}, 0);
         }
 
         @Override
         public Class getColumnClass(int column) {
-          switch (column) {
-              case 5:
-                  return Double.class;
-            default:
-                return String.class;
-          }
+            switch (column) {
+                case 5:
+                    return Double.class;
+                default:
+                    return String.class;
+            }
         }
-        
+
         @Override
-        public Object getValueAt(int row, int col){
+        public Object getValueAt(int row, int col) {
             return super.getValueAt(row, col);
         }
-        
-        @Override 
-        public boolean isCellEditable(int row, int col){
-            if(col == 5) return true;
+
+        @Override
+        public boolean isCellEditable(int row, int col) {
+            if (col == 5) {
+                return true;
+            }
             return false;
         }
     }
-    
-    public class MyTableModelEmpleados extends DefaultTableModel{
+
+    public class MyTableModelEmpleados extends DefaultTableModel {
+
         public MyTableModelEmpleados() {
-          super(new String[]{"Empleado", "Fecha de salida", "Hora de salida", "Fecha de regreso", "Hora de regreso", "Horas trabajadas", "Horas extra nor.", 
-              "Horas extra fes.", "Días media colación", "Días sin colación", "Ton. empleado", "Id"}, 0);
+            super(new String[]{"Empleado", "Fecha de salida", "Hora de salida", "Fecha de regreso", "Hora de regreso", "Horas trabajadas", "Horas extra nor.",
+                "Horas extra fes.", "Días media colación", "Días sin colación", "Ton. empleado", "Id"}, 0);
         }
 
         @Override
         public Class getColumnClass(int column) {
-          switch (column) {
-              case 5:
-                  return Double.class;
-              case 6:
-                  return Double.class;
-              case 7:
-                  return Double.class;
-              case 8:
-                  return Integer.class;
-              case 9:
-                  return Integer.class;
-            default:
-                return String.class;
-          }
+            switch (column) {
+                case 5:
+                    return Double.class;
+                case 6:
+                    return Double.class;
+                case 7:
+                    return Double.class;
+                case 8:
+                    return Integer.class;
+                case 9:
+                    return Integer.class;
+                default:
+                    return String.class;
+            }
         }
-        
+
         @Override
-        public Object getValueAt(int row, int col){
-            if(col == 10 && super.getValueAt(row, col) == null){
+        public Object getValueAt(int row, int col) {
+            if (col == 10 && super.getValueAt(row, col) == null) {
                 return 3;
             }
             return super.getValueAt(row, col);
         }
-        
-        @Override 
-        public boolean isCellEditable(int row, int col){
-            if(col > 4) return true;
+
+        @Override
+        public boolean isCellEditable(int row, int col) {
+            if (col > 4) {
+                return true;
+            }
             return false;
         }
     }
-    
+
     public class MyTableModelHoras extends DefaultTableModel {
 
         public MyTableModelHoras() {
@@ -1318,13 +1340,15 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
             }
             return super.getValueAt(row, col);
         }
-        
+
         @Override
-        public boolean isCellEditable(int row, int col){
-            if(col > 3) return true;
+        public boolean isCellEditable(int row, int col) {
+            if (col > 3) {
+                return true;
+            }
             return false;
         }
-        
+
 //        @Override
 //        public void setValueAt(Object value, int row, int column){
 //            super.setValueAt(value, row, column);

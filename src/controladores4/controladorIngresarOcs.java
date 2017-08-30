@@ -18,7 +18,7 @@ import javax.swing.JTable;
 import modelos.modeloEmpleados;
 import modelos.modeloGruas;
 import vistas4.vistaIngresarOcs;
-import vistas4.vistaIngresarTraspaletaOcs;
+import vistas4.vistaIngresarTranspaletaOcs;
 
 /**
  *
@@ -27,7 +27,7 @@ import vistas4.vistaIngresarTraspaletaOcs;
 public class controladorIngresarOcs {
     
     static vistas4.vistaIngresarOcs vistaIO;
-    static vistas4.vistaIngresarTraspaletaOcs vistaITO;
+    static vistas4.vistaIngresarTranspaletaOcs vistaITO;
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
     DateFormat newFormat = new SimpleDateFormat("dd-MM-yyyy");
     DateFormat dt = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -170,7 +170,7 @@ public class controladorIngresarOcs {
     }
 
     public void mostrarVistaIngresarTraspaletaOcs(String[] data, Object[] ciudades) throws ParseException {
-        vistaITO = new vistaIngresarTraspaletaOcs(new javax.swing.JFrame(), true);
+        vistaITO = new vistaIngresarTranspaletaOcs(new javax.swing.JFrame(), true);
 //        vistaITO.setDiaInicio(data[0]);
 //        vistaITO.setHoraInicio(data[1]);
 //        vistaITO.setDiaFin(data[2]);

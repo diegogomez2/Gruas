@@ -117,11 +117,11 @@ public class vistaDetalleCompras extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         checkEstado = new javax.swing.JCheckBox();
         jLabel2 = new javax.swing.JLabel();
-        textoTot = new javax.swing.JFormattedTextField(FORMAT);
+        textoNeto = new javax.swing.JFormattedTextField(FORMAT);
         jLabel3 = new javax.swing.JLabel();
         textoIva = new javax.swing.JFormattedTextField(FORMAT);
         jLabel4 = new javax.swing.JLabel();
-        textoNeto = new javax.swing.JFormattedTextField(FORMAT);
+        textoTot = new javax.swing.JFormattedTextField(FORMAT);
         textoImpuestoEsp = new javax.swing.JTextField();
         textoImpuestoVar = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -306,17 +306,17 @@ public class vistaDetalleCompras extends javax.swing.JDialog {
         checkEstado.setText("Pagada");
         checkEstado.setEnabled(false);
 
-        jLabel2.setText("Total");
+        jLabel2.setText("Neto");
 
-        textoTot.setEditable(false);
+        textoNeto.setEditable(false);
 
         jLabel3.setText("Iva");
 
         textoIva.setEditable(false);
 
-        jLabel4.setText("Neto");
+        jLabel4.setText("Total");
 
-        textoNeto.setEditable(false);
+        textoTot.setEditable(false);
 
         textoImpuestoEsp.setEditable(false);
 
@@ -461,7 +461,7 @@ public class vistaDetalleCompras extends javax.swing.JDialog {
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(textoImpuestoEsp, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(textoTot, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE))
+                                .addComponent(textoNeto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE))
                             .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -478,7 +478,7 @@ public class vistaDetalleCompras extends javax.swing.JDialog {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel4)
                                         .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(textoNeto))
+                                    .addComponent(textoTot))
                                 .addContainerGap())))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(checkImpuestos)
@@ -593,9 +593,9 @@ public class vistaDetalleCompras extends javax.swing.JDialog {
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textoTot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textoNeto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textoIva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textoNeto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textoTot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29))
         );
 
@@ -824,9 +824,9 @@ public class vistaDetalleCompras extends javax.swing.JDialog {
             case 1: 
                 return String.class;
             case 2:
-                return Integer.class;
+                return Double.class;
             case 3: 
-                return Integer.class;
+                return Double.class;
             default:
                 return Boolean.class;
           }
@@ -925,8 +925,8 @@ public class vistaDetalleCompras extends javax.swing.JDialog {
         this.comboClasificacion.setSelectedItem(comboClas);
     }
     
-    public void setTextoTot(String textoTot){
-        this.textoTot.setValue(Integer.parseInt(textoTot));
+    public void setTextoNeto(String textoTot){
+        this.textoNeto.setValue(Integer.parseInt(textoTot));
     }
     
     public void setTextoIva(String textoIva){
@@ -966,8 +966,8 @@ public class vistaDetalleCompras extends javax.swing.JDialog {
         }
     }
     
-    public void setTextoNeto(String textoNeto){
-        this.textoNeto.setValue(Integer.parseInt(textoNeto));
+    public void setTextoTot(String textoNeto){
+        this.textoTot.setValue(Integer.parseInt(textoNeto));
     }
     
     public void setCheckEstado(String checkEstado){
@@ -1057,8 +1057,8 @@ public class vistaDetalleCompras extends javax.swing.JDialog {
             boolean flag = data1[4].toString().compareTo("1") == 0;
             tablaDetalle.setValueAt(data1[0], i, 0);
             tablaDetalle.setValueAt(data1[1], i, 1);
-            tablaDetalle.setValueAt(data1[2], i, 2);
-            tablaDetalle.setValueAt(Integer.parseInt(data1[3].toString()), i, 3);
+            tablaDetalle.setValueAt(Double.parseDouble(data1[2].toString()), i, 2);
+            tablaDetalle.setValueAt(Double.parseDouble(data1[3].toString()), i, 3);
             tablaDetalle.setValueAt(flag, i, 4);
             i++;
         }

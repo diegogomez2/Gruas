@@ -3,6 +3,7 @@
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
+    <Property name="title" type="java.lang.String" value="Modificar compra"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -175,7 +176,7 @@
                               <Group type="102" alignment="1" attributes="0">
                                   <Group type="103" groupAlignment="1" attributes="0">
                                       <Component id="textoImpuestoEsp" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="textoTot" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="textoNeto" alignment="0" max="32767" attributes="0"/>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Group type="103" groupAlignment="1" attributes="0">
                                               <Component id="labelGiro" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -197,7 +198,7 @@
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="textoNeto" min="-2" pref="259" max="-2" attributes="0"/>
+                                      <Component id="textoTot" min="-2" pref="259" max="-2" attributes="0"/>
                                       <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -344,8 +345,8 @@
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="textoTot" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="textoNeto" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="textoTot" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Component id="textoIva" min="-2" pref="20" max="-2" attributes="0"/>
@@ -737,10 +738,10 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel3">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Total"/>
+                    <Property name="text" type="java.lang.String" value="Neto"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JFormattedTextField" name="textoTot">
+                <Component class="javax.swing.JFormattedTextField" name="textoNeto">
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(FORMAT)"/>
                   </AuxValues>
@@ -757,10 +758,10 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel5">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Neto"/>
+                    <Property name="text" type="java.lang.String" value="Total"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JFormattedTextField" name="textoNeto">
+                <Component class="javax.swing.JFormattedTextField" name="textoTot">
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(FORMAT)"/>
                   </AuxValues>

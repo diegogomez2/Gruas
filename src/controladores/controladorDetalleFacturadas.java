@@ -17,7 +17,12 @@ public class controladorDetalleFacturadas {
     public void mostrarVistaDetalleFacturadas(String id, String tipo) {
         controladorPrincipal miControlador = new controladorPrincipal();
         Object[][] data = miControlador.obtenerOtPorIdFacturada(id, tipo);
-        vistaDF = new vistaDetalleFacturadas(new javax.swing.JFrame(), true, data);
+        String orden = "ot";
+        if(data.length == 0){
+            data = miControlador.obtenerOcPorIdFacturada(id, tipo);
+            orden = "oc";
+        }
+        vistaDF = new vistaDetalleFacturadas(new javax.swing.JFrame(), true, data, orden);
         vistaDF.setLocationRelativeTo(null);
         vistaDF.setVisible(true);
     }

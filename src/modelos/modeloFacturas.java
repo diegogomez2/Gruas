@@ -1548,7 +1548,7 @@ public class modeloFacturas {
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM notacredito nc INNER"
                     + " JOIN notadebito n ON nc.id_nd = n.id_nd INNER JOIN Jornadas_oc ON "
-                    + "jornadas.id_nd = n.id_nd WHERE id_nc = ?");
+                    + "jornadas_oc.id_nd = n.id_nd WHERE id_nc = ?");
             pstm.setString(1, id);
             ResultSet res = pstm.executeQuery();
             res.next();
@@ -1609,7 +1609,7 @@ public class modeloFacturas {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
             PreparedStatement pstm = conn.prepareStatement("SELECT cod_oc FROM "
-                    + "Jornadas_oc INNER JOIN Facturas ON jornadas.id_fac = facturas.id_fac INNER JOIN "
+                    + "Jornadas_oc INNER JOIN Facturas ON jornadas_oc.id_fac = facturas.id_fac INNER JOIN "
                     + "Notacredito ON notacredito.id_fac = facturas.id_fac WHERE id_nc = ?");
             pstm.setString(1, id);
             ResultSet res = pstm.executeQuery();
@@ -1619,7 +1619,6 @@ public class modeloFacturas {
                 data[i] = estcod;
                 i++;
             }
-            
         }catch(SQLException e){
             System.out.println("Error obtener ocs por id nc");
             System.out.println(e);

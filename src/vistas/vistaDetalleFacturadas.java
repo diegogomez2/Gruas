@@ -5,6 +5,7 @@
  */
 package vistas;
 
+import controladores4.controladorOcs;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -25,36 +26,49 @@ public class vistaDetalleFacturadas extends javax.swing.JDialog {
      */
     DefaultTableModel datos;
 
-    public vistaDetalleFacturadas(java.awt.Frame parent, boolean modal, Object[][] data) {
+    public vistaDetalleFacturadas(java.awt.Frame parent, boolean modal, Object[][] data, final String orden) {
         super(parent, modal);
         initComponents();
-        String[] columNames = {"Código OT", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
-            "Neto", "IVA", "Total"};
-        datos = new DefaultTableModel(data, columNames){
+        String[] columNames;
+        if (orden.compareTo("ot") == 0) {
+            columNames = new String[]{"Código OT", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
+                "Neto", "IVA", "Total"};
+        } else {
+            columNames = new String[]{"Código OC", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
+                "Neto", "IVA", "Total"};
+        }
+        datos = new DefaultTableModel(data, columNames) {
             @Override
-            public boolean isCellEditable(int row, int column){
+            public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
         tablaOts.setModel(datos);
-        
-        if(tablaOts.getRowCount() > 0) tablaOts.setRowSelectionInterval(0, 0);
-        tablaOts.addMouseListener(new MouseAdapter(){
-            public void mousePressed(MouseEvent evt){
-                JTable table = (JTable)evt.getSource();
+
+        if (tablaOts.getRowCount() > 0) {
+            tablaOts.setRowSelectionInterval(0, 0);
+        }
+        tablaOts.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent evt) {
+                JTable table = (JTable) evt.getSource();
                 Point p = evt.getPoint();
                 int row = table.rowAtPoint(p);
-                if(evt.getClickCount() == 2){
+                if (evt.getClickCount() == 2) {
                     controladores.controladorOts miControlador = new controladores.controladorOts();
+                    controladores4.controladorOcs miControladorOcs = new controladorOcs();
                     try {
-                        miControlador.irVistaDetalleOts(tablaOts.getValueAt(row, 0).toString());
+                        if (orden.compareTo("ot") == 0) {
+                            miControlador.irVistaDetalleOts(tablaOts.getValueAt(row, 0).toString());
+                        }else{
+                            miControladorOcs.irVistaDetalleOcs(tablaOts.getValueAt(row, 0).toString());
+                        }
                     } catch (ParseException ex) {
                         Logger.getLogger(vistaJornadasP.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
-        }); 
-        
+        });
+
     }
 
     /**

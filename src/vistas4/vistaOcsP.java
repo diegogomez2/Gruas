@@ -36,6 +36,7 @@ public class vistaOcsP extends javax.swing.JPanel {
     MyTableModel datos;
     NumberFormat FORMAT = NumberFormat.getCurrencyInstance();
     DecimalFormatSymbols dfs = new DecimalFormatSymbols();
+
     /**
      * Creates new form vistaOcsP
      */
@@ -231,7 +232,7 @@ public class vistaOcsP extends javax.swing.JPanel {
             idOt = getIdOc(row);
             if (miControlador.getIdFactura(idOt).compareTo("1") == 0) {
                 JOptionPane.showMessageDialog(null, "Esta orden de trabajo ya ha sido facturada");
-            }else {
+            } else {
                 miControlador.ingresarFactura(idOt);
                 JTabbedPane tabs = (JTabbedPane) this.getParent();
                 micontroladorFacturas.crearControladorPrincipal(tabs);
@@ -258,10 +259,14 @@ public class vistaOcsP extends javax.swing.JPanel {
             int row = getFilaSeleccionada();
             id = getIdFila(row);
             idOc = getIdOc(row);
-            miControlador.anularFactura(idOc);
-            JTabbedPane tabs = (JTabbedPane) this.getParent();
-            micontroladorFacturas.crearControladorPrincipal(tabs);
-            miControlador.crearControladorPrincipal(tabs);
+            int dialogResult = JOptionPane.showOptionDialog(null, "Esta seguro que desea anulaar la OC \nCódigo: " + idOc,
+                    "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, 0);
+            if(dialogResult == JOptionPane.YES_OPTION){
+                miControlador.anularFactura(idOc);
+                JTabbedPane tabs = (JTabbedPane) this.getParent();
+                micontroladorFacturas.crearControladorPrincipal(tabs);
+                miControlador.crearControladorPrincipal(tabs);
+            }
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una orden de trabajo para ser anulada");
         }
@@ -269,7 +274,7 @@ public class vistaOcsP extends javax.swing.JPanel {
 
     private void botonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarActionPerformed
         controladores4.controladorOcs miControlador = new controladores4.controladorOcs();
-        JTabbedPane tabs = (JTabbedPane)this.getParent();
+        JTabbedPane tabs = (JTabbedPane) this.getParent();
         miControlador.crearControladorPrincipal(tabs);
     }//GEN-LAST:event_botonActualizarActionPerformed
 
@@ -281,21 +286,21 @@ public class vistaOcsP extends javax.swing.JPanel {
         if (selected) {
             int row = getFilaSeleccionada();
             idOc = getIdOc(row);
-            int dialogResult = JOptionPane.showOptionDialog(null, "Esta seguro que desea eliminar la OC \nCódigo: "
-                , "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, 0);
-            if(dialogResult == JOptionPane.YES_OPTION){
+            int dialogResult = JOptionPane.showOptionDialog(null, "Esta seguro que desea eliminar la OC \nCódigo: " + idOc,
+                    "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, 0);
+            if (dialogResult == JOptionPane.YES_OPTION) {
                 try {
                     miControlador.restarMensualidad(idOc);
                 } catch (ParseException ex) {
                     Logger.getLogger(vistaOcsP.class.getName()).log(Level.SEVERE, null, ex);
+                } finally {
+                    miControlador.eliminarOc(idOc);
+                    JOptionPane.showMessageDialog(null, "Orden de trabajo eliminada con éxito");
+                    JTabbedPane tabs = (JTabbedPane) this.getParent();
+                    micontroladorFacturas.crearControladorPrincipal(tabs);
+                    miControlador.crearControladorPrincipal(tabs);
                 }
-                miControlador.eliminarOc(idOc);
             }
-            JTabbedPane tabs = (JTabbedPane) this.getParent();
-            micontroladorFacturas.crearControladorPrincipal(tabs);
-            miControlador.crearControladorPrincipal(tabs);
-            JOptionPane.showMessageDialog(null, "Orden de trabajo eliminada con éxito");
-
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una orden de trabajo para ser eliminada");
         }
@@ -334,19 +339,21 @@ public class vistaOcsP extends javax.swing.JPanel {
         tablaOcs.setRowSorter(sorter);
         sorter.setRowFilter(RowFilter.regexFilter(query));
     }
-    
-    public class MyTableModel extends DefaultTableModel{
+
+    public class MyTableModel extends DefaultTableModel {
+
         public MyTableModel() {
-          super(new String[]{"Código OC", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
-            "Neto", "IVA", "Total", "Estado", "Cliente"}, 0);
-        }
-        public MyTableModel(Object[][] data){
             super(new String[]{"Código OC", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
-            "Neto", "IVA", "Total", "Estado", "Cliente"}, 0);
-            
+                "Neto", "IVA", "Total", "Estado", "Cliente"}, 0);
+        }
+
+        public MyTableModel(Object[][] data) {
+            super(new String[]{"Código OC", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
+                "Neto", "IVA", "Total", "Estado", "Cliente"}, 0);
+
             int i = 0;
             this.setRowCount(data.length);
-            for(Object[] data1 : data){
+            for (Object[] data1 : data) {
                 int cod = Integer.parseInt(data1[0].toString());
                 int neto = Integer.parseInt(data1[7].toString());
                 int iva = Integer.parseInt(data1[8].toString());
@@ -364,44 +371,45 @@ public class vistaOcsP extends javax.swing.JPanel {
                 this.setValueAt(data1[10], i, 10);
                 this.setValueAt(data1[11], i, 11);
                 i++;
-        }
+            }
         }
 
         @Override
         public Class getColumnClass(int column) {
-          switch (column) {
-            case 0:
-                return Integer.class;
-            case 7:
-                return Integer.class;
-            case 8:
-                return Integer.class;
-            case 9:
-                return Integer.class;
-            default:
-                return String.class;
-          }
-        }
-        
-        @Override
-            public boolean isCellEditable(int row, int column){
-                return false;
+            switch (column) {
+                case 0:
+                    return Integer.class;
+                case 7:
+                    return Integer.class;
+                case 8:
+                    return Integer.class;
+                case 9:
+                    return Integer.class;
+                default:
+                    return String.class;
             }
+        }
+
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
     }
-    
+
     public class CurrencyTableCellRenderer extends DefaultTableCellRenderer {
+
         @Override
         public final Component getTableCellRendererComponent(JTable table, Object value,
-            boolean isSelected, boolean hasFocus, int row, int column) {
-                final Component result = super.getTableCellRendererComponent(table, value,
+                boolean isSelected, boolean hasFocus, int row, int column) {
+            final Component result = super.getTableCellRendererComponent(table, value,
                     isSelected, hasFocus, row, column);
-                if (value instanceof Number) {
-                    setHorizontalAlignment(JLabel.RIGHT);
-                    setText(FORMAT.format(value));
-                } else {
-                    setText("");
-                }
-                return result;
+            if (value instanceof Number) {
+                setHorizontalAlignment(JLabel.RIGHT);
+                setText(FORMAT.format(value));
+            } else {
+                setText("");
             }
+            return result;
+        }
     }
 }

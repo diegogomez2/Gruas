@@ -186,11 +186,11 @@ public class vistaFacturasOCP extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonFactura3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonFactura3ActionPerformed
-        try{
+        try {
             controladores4.controladorCrearFacturaOC miControlador = new controladores4.controladorCrearFacturaOC();
             controladores4.controladorOcs micontroladorOcs = new controladores4.controladorOcs();
             int filas = tablaFacturasOC.getRowCount();
-            if(filas > 0){
+            if (filas > 0) {
                 String flag = verificarRazon();
                 if (flag.compareTo("correcto") == 0) {
                     String[] idOcs = new String[filas];
@@ -205,13 +205,13 @@ public class vistaFacturasOCP extends javax.swing.JPanel {
                     }
                     controladores4.controladorFacturasOC micontroladorFacturasOC = new controladores4.controladorFacturasOC();
                     String id = micontroladorFacturasOC.archivarFacturas(idOcs, neto, iva, total, "factura", "0", "0");
-                    if(id.compareTo("-1") == 0){
+                    if (id.compareTo("-1") == 0) {
                         JOptionPane.showMessageDialog(null, "La factura ya había sido ingresada al sistema", "Error factura duplicada",
-                            JOptionPane.INFORMATION_MESSAGE);
+                                JOptionPane.INFORMATION_MESSAGE);
                         JTabbedPane tabs = (JTabbedPane) this.getParent();
                         micontroladorOcs.crearControladorPrincipal(tabs);
                         miControlador.crearControladorPrincipalOC(tabs);
-                    }else{
+                    } else {
                         try {
                             //docRef va en el tag observaciones, orden va en el tag detalle
                             String docRef, orden;
@@ -223,17 +223,17 @@ public class vistaFacturasOCP extends javax.swing.JPanel {
                             };
 //                            String docRef = JOptionPane.showInputDialog("Ingrese documento de referencia: ");
                             int resp = JOptionPane.showConfirmDialog(null, message, "Datos de facturación: ", JOptionPane.OK_CANCEL_OPTION);
-                            if(resp == JOptionPane.YES_OPTION){
+                            if (resp == JOptionPane.YES_OPTION) {
                                 docRef = documentoRef.getText();
                                 orden = numOrden.getText();
                                 if ((miControlador.crearFacXML(idOcs, Integer.toString(neto), Integer.toString(iva),
-                                    Integer.toString(total), id, docRef, orden).compareTo("correcto") == 0)) {
+                                        Integer.toString(total), id, docRef, orden).compareTo("correcto") == 0)) {
                                     JTabbedPane tabs = (JTabbedPane) this.getParent();
                                     //micontroladorOcs.crearControladorPrincipal(tabs);
                                     miControlador.crearControladorPrincipalOC(tabs);
-                                }     
+                                }
                             }
-                        }catch (ParseException ex) {
+                        } catch (ParseException ex) {
                             ex.printStackTrace();
                             //                            ex.printStackTrace(ps);
                             Logger.getLogger(vistaFacturasOCP.class.getName()).log(Level.SEVERE, null, ex);
@@ -242,10 +242,10 @@ public class vistaFacturasOCP extends javax.swing.JPanel {
                 } else {
                     JOptionPane.showMessageDialog(null, "No se puede generar una factura para clientes distintos");
                 }
-        }else{
-            JOptionPane.showMessageDialog(null, "No hay ocs para generar una factura");
-        }
-        }catch(Exception e){
+            } else {
+                JOptionPane.showMessageDialog(null, "No hay ocs para generar una factura");
+            }
+        } catch (Exception e) {
             //            e.printStackTrace(ps);
             e.printStackTrace();
         }
@@ -288,24 +288,24 @@ public class vistaFacturasOCP extends javax.swing.JPanel {
         controladores4.controladorCrearFacturaOC miControlador = new controladores4.controladorCrearFacturaOC();
         controladores4.controladorOcs micontroladorOcs = new controladores4.controladorOcs();
         int filas = tablaFacturasOC.getRowCount();
-        if(filas > 0){
+        if (filas > 0) {
             String flag = verificarRazon();
             JTextField idfac = new JTextField();
             JComboBox combo = new JComboBox(new String[]{"Factura", "Boleta", "Factura exenta"});
             Object[] message = {
-                "Folio: ",idfac,
+                "Folio: ", idfac,
                 "Tipo documento: ", combo
             };
             String id_fac, tiponc;
-            if(flag.compareTo("correcto") == 0){
+            if (flag.compareTo("correcto") == 0) {
                 int resp = JOptionPane.showConfirmDialog(null, message, "N° de folio de factura: ", JOptionPane.OK_CANCEL_OPTION);
-                if(resp == JOptionPane.OK_OPTION){
+                if (resp == JOptionPane.OK_OPTION) {
                     id_fac = idfac.getText();
                     tiponc = combo.getSelectedItem().toString();
                     boolean existe = verificarExisteFactura(id_fac, tiponc);
-                    if(existe){
+                    if (existe) {
                         String razonFac = verificarRazonFactura(id_fac, tiponc);
-                        if(razonFac.compareTo(getRazonFila(0)) == 0){
+                        if (razonFac.compareTo(getRazonFila(0)) == 0) {
                             String[] idOcs = new String[filas];
                             int neto = 0, iva = 0, total = 0, desc = 0;
                             for (int i = 0; i < filas; i++) {
@@ -318,72 +318,86 @@ public class vistaFacturasOCP extends javax.swing.JPanel {
                             }
                             controladores4.controladorFacturasOC micontroladorFacturas = new controladores4.controladorFacturasOC();
                             String id = micontroladorFacturas.archivarFacturas(idOcs, neto, iva, total, "nota debito", id_fac, tiponc);
-                            if(id.compareTo("incorrecto") != 0){
-                                if(id.compareTo("-1") == 0){
+                            if (id.compareTo("incorrecto") != 0) {
+                                if (id.compareTo("-1") == 0) {
                                     JOptionPane.showMessageDialog(null, "La nota de débito ya había sido ingresada al sistema", "Error nota de débito duplicada",
-                                        JOptionPane.INFORMATION_MESSAGE);
+                                            JOptionPane.INFORMATION_MESSAGE);
                                     JTabbedPane tabs = (JTabbedPane) this.getParent();
                                     micontroladorOcs.crearControladorPrincipal(tabs);
                                     miControlador.crearControladorPrincipalOC(tabs);
-                                }else{
+                                } else {
                                     try {
                                         if ((miControlador.crearNotaDebXML(idOcs, Integer.toString(neto), Integer.toString(iva),
-                                            Integer.toString(total), id, id_fac).compareTo("correcto") == 0)) {
-                                    JTabbedPane tabs = (JTabbedPane) this.getParent();
-                                    micontroladorOcs.crearControladorPrincipal(tabs);
-                                    miControlador.crearControladorPrincipalOC(tabs);
-                                }
+                                                Integer.toString(total), id, id_fac).compareTo("correcto") == 0)) {
+                                            JTabbedPane tabs = (JTabbedPane) this.getParent();
+                                            micontroladorOcs.crearControladorPrincipal(tabs);
+                                            miControlador.crearControladorPrincipalOC(tabs);
+                                        }
                                     } catch (ParseException ex) {
                                         Logger.getLogger(vistaFacturasOCP.class.getName()).log(Level.SEVERE, null, ex);
                                     }
                                 }
                             }
-                }else{
-                    JOptionPane.showMessageDialog(null, "No se puede generar una nota de débito para una factura con clientes distintos");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "No se puede generar una nota de débito para una factura con clientes distintos");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "La " + tiponc + " con folio " + id_fac + " no existe.");
+                    }
                 }
-            }else{
-                JOptionPane.showMessageDialog(null, "La " + tiponc + " con folio " + id_fac + " no existe.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se puede generar una nota de débito para clientes distintos");
             }
-        }
-        }else{
-            JOptionPane.showMessageDialog(null, "No se puede generar una nota de débito para clientes distintos");
-        }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "No hay ocs para generar una nota de débito");
         }
     }//GEN-LAST:event_botonNotaDebActionPerformed
 
     private void botonFacExActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonFacExActionPerformed
-//        controladores.controladorCrearFactura miControlador = new controladores.controladorCrearFactura();
-//        controladores.controladorOts micontroladorOts = new controladores.controladorOts();
-//        int filas = tablaFacturas.getRowCount();
-//        if(filas > 0){
-//            String flag = verificarRazon();
-//            if(flag.compareTo("correcto") == 0){
-//                String[] idOts = new String[filas];
-//                int neto = 0, iva = 0, total = 0, desc = 0;
-//                for (int i = 0; i < filas; i++) {
-//                    idOts[i] = getIdFact(i);
-//                    desc = getDescFact(i);
+        controladores4.controladorCrearFacturaOC miControlador = new controladores4.controladorCrearFacturaOC();
+        controladores4.controladorOcs micontroladorOcs = new controladores4.controladorOcs();
+        int filas = tablaFacturasOC.getRowCount();
+        if (filas > 0) {
+            String flag = verificarRazon();
+            if (flag.compareTo("correcto") == 0) {
+                String[] idOcs = new String[filas];
+                int neto = 0, iva = 0, total = 0, desc = 0;
+                for (int i = 0; i < filas; i++) {
+                    idOcs[i] = getIdFact(i);
+                    desc = getDescFact(i);
 //                    neto += getNetoFact(i) - desc;
-//                    iva += getIvaFact(i);
-//                    total += getTotalFact(i);
-//                }
-//                controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
-//                String id = micontroladorFacturas.archivarFacturas(idOts, neto, iva, total, "factura ex", "0", "0");
-//                String docRef = JOptionPane.showInputDialog("Ingrese documento de referencia: ");
-//                if ((miControlador.crearFacExXML(idOts, Integer.toString(neto), Integer.toString(iva),
-//                    Integer.toString(total), id, docRef).compareTo("correcto") == 0)) {
-//            JTabbedPane tabs = (JTabbedPane) this.getParent();
-//            micontroladorOts.crearControladorPrincipal(tabs);
-//            miControlador.crearControladorPrincipal(tabs);
-//        }
-//        }else{
-//            JOptionPane.showMessageDialog(null, "No se puede generar una factura exenta para clientes distintos");
-//        }
-//        }else{
-//            JOptionPane.showMessageDialog(null, "No hay ots para generar una factura exenta");
-//        }
+                    neto += getNetoFact(i);
+                    iva += getIvaFact(i);
+                    total += getTotalFact(i);
+                }
+                controladores4.controladorFacturasOC micontroladorFacturasOC = new controladores4.controladorFacturasOC();
+                String id = micontroladorFacturasOC.archivarFacturas(idOcs, neto, iva, total, "factura ex", "0", "0");
+                String docRef, orden;
+                JTextField documentoRef = new JTextField();
+                JTextField numOrden = new JTextField();
+                Object[] message = {
+                    "Ingrese documento de referencia: ", documentoRef,
+                    "Número de orden: ", numOrden
+                };
+//                            String docRef = JOptionPane.showInputDialog("Ingrese documento de referencia: ");
+                int resp = JOptionPane.showConfirmDialog(null, message, "Datos de facturación: ", JOptionPane.OK_CANCEL_OPTION);
+                if (resp == JOptionPane.YES_OPTION) {
+                    docRef = documentoRef.getText();
+                    orden = numOrden.getText();
+                    if ((miControlador.crearFacExXML(idOcs, Integer.toString(neto), Integer.toString(iva),
+                            Integer.toString(total), id, docRef, orden).compareTo("correcto") == 0)) {
+                        JTabbedPane tabs = (JTabbedPane) this.getParent();
+                        micontroladorOcs.crearControladorPrincipal(tabs);
+                        miControlador.crearControladorPrincipalOC(tabs);
+                    }
+
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No se puede generar una factura exenta para clientes distintos");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No hay ocs para generar una factura exenta");
+        }
     }//GEN-LAST:event_botonFacExActionPerformed
 
     private void botonQuitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonQuitarActionPerformed
@@ -408,7 +422,7 @@ public class vistaFacturasOCP extends javax.swing.JPanel {
 
     private void botonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarActionPerformed
         controladores.controladorFacturas miControlador = new controladores.controladorFacturas();
-        JTabbedPane tabs = (JTabbedPane)this.getParent();
+        JTabbedPane tabs = (JTabbedPane) this.getParent();
         miControlador.crearControladorPrincipalOC(tabs);
     }//GEN-LAST:event_botonActualizarActionPerformed
 
@@ -431,11 +445,11 @@ public class vistaFacturasOCP extends javax.swing.JPanel {
     public String getIdFila(int row) {
         return tablaFacturasOC.getValueAt(row, 0).toString();
     }
-    
+
     public String getIdOc(int row) {
         return tablaFacturasOC.getValueAt(row, 0).toString();
     }
-    
+
     public String verificarRazon() {
         String razon = getRazonFila(0);
         for (int i = 1; i < tablaFacturasOC.getRowCount(); i++) {
@@ -445,15 +459,15 @@ public class vistaFacturasOCP extends javax.swing.JPanel {
         }
         return "correcto";
     }
-    
+
     public String getRazonFila(int row) {
         return tablaFacturasOC.getValueAt(row, 1).toString();
     }
-    
+
     public String getIdFact(int row) {
         return tablaFacturasOC.getValueAt(row, 0).toString();
     }
-    
+
     public int getNetoFact(int row) {
         return Integer.parseInt(tablaFacturasOC.getValueAt(row, 7).toString());
     }
@@ -461,7 +475,7 @@ public class vistaFacturasOCP extends javax.swing.JPanel {
     public int getDescFact(int row) {
         return Integer.parseInt(tablaFacturasOC.getModel().getValueAt(tablaFacturasOC.convertRowIndexToModel(row), 10).toString());
     }
-    
+
     public int getIvaFact(int row) {
         return Integer.parseInt(tablaFacturasOC.getValueAt(row, 8).toString());
     }
@@ -469,12 +483,12 @@ public class vistaFacturasOCP extends javax.swing.JPanel {
     public int getTotalFact(int row) {
         return Integer.parseInt(tablaFacturasOC.getValueAt(row, 9).toString());
     }
-    
-    public boolean verificarExisteFactura(String fol, String tipo){
+
+    public boolean verificarExisteFactura(String fol, String tipo) {
         modelos.modeloFacturas factura = new modeloFacturas();
         return factura.verificarExisteFactura(fol, tipo);
     }
-    
+
     public String verificarRazonFactura(String fol, String tipo) {
         modelos.modeloFacturas factura = new modeloFacturas();
         return factura.obtenerRazonFacturaOC(fol, tipo.toLowerCase());

@@ -41,9 +41,9 @@ public class controladorModificarCompras {
         vistaMC.setTextoNumTC(data[15]);
         vistaMC.setCheckEstado(data[16]);
         vistaMC.setComboClas(data[17]);
-        vistaMC.setTextoTot(data[18]);
+        vistaMC.setTextoNeto(data[18]);
         vistaMC.setTextoIva(data[19]);
-        vistaMC.setTextoNeto(data[20]);
+        vistaMC.setTextoTot(data[20]);
         vistaMC.setTextoImpuestoEsp(data[21]);
         vistaMC.setTextoImpuestoVar(data[22]);
         if(data[10].compareTo("Otros pagos") != 0){

@@ -268,7 +268,7 @@ public class vistaOtsP extends javax.swing.JPanel {
                 JTabbedPane tabs = (JTabbedPane) this.getParent();
                 micontroladorFacturas.crearControladorPrincipal(tabs);
                 miControlador.crearControladorPrincipal(tabs);
-                //JOptionPane.showMessageDialog(null, "Orden de trabajo facturada con éxito");   
+                JOptionPane.showMessageDialog(null, "Orden de trabajo anulada con éxito");   
             }
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una orden de trabajo para ser anulada");

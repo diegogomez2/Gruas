@@ -37,9 +37,9 @@ public class controladorDetalleCompras {
         vistaDC.setTextoNumTC(data[15]);
         vistaDC.setCheckEstado(data[16]);
         vistaDC.setComboClas(data[17]);
-        vistaDC.setTextoTot(data[18]);
+        vistaDC.setTextoNeto(data[18]);
         vistaDC.setTextoIva(data[19]);
-        vistaDC.setTextoNeto(data[20]);
+        vistaDC.setTextoTot(data[20]);
         vistaDC.setTextoImpuestoEsp(data[21]);
         vistaDC.setTextoImpuestoVar(data[22]);
         if(data[10].compareTo("Otros pagos") != 0){

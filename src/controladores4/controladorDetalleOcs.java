@@ -14,7 +14,7 @@ import java.text.ParseException;
  */
 public class controladorDetalleOcs {
     static vistas4.vistaDetalleOcs vistaDO;
-    static vistas4.vistaDetalleTraspaletaOcs vistaDTO;
+    static vistas4.vistaDetalleTranspaletaOcs vistaDTO;
     
     public void mostrarVistaDetalleOcs(String[] data) throws ParseException{
 //        controladorPrincipal miControlador = new controladorPrincipal();
@@ -65,7 +65,7 @@ public class controladorDetalleOcs {
 
     public void mostrarVistaDetalleTraspaletaOcs(String[] data) throws ParseException {
         modelos4.modeloJornadasOC ocs = new modelos4.modeloJornadasOC();
-        vistaDTO = new vistas4.vistaDetalleTraspaletaOcs(new javax.swing.JFrame(), true);
+        vistaDTO = new vistas4.vistaDetalleTranspaletaOcs(new javax.swing.JFrame(), true);
         vistaDTO.setTextoObs(data[2]);
         vistaDTO.setTextoRutCliente(data[3] + "-" + data[4]);
         vistaDTO.setTextoRazon(data[5]);

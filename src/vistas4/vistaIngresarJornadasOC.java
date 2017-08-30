@@ -608,7 +608,7 @@ public class vistaIngresarJornadasOC extends javax.swing.JDialog {
         });
 
         tipoDoc.add(radioTras);
-        radioTras.setText("Trapaleta");
+        radioTras.setText("Transpaleta");
         radioTras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radioTrasActionPerformed(evt);

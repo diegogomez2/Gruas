@@ -41,10 +41,12 @@ public class controladorOcs {
         controladorPrincipal miControlador = new controladorPrincipal();
         tabs.remove(1);
         tabs.remove(1);
+        tabs.remove(1);
+        tabs.remove(1);
         tabs.insertTab("OCs", null, miControlador.crearControladorOcsP(), null, 1);
         tabs.insertTab("A facturar", null, miControlador.crearControladorFacturasOCP(), null, 2);
-//        tabs.insertTab("Facturadas", null, miControlador.crearControladorFacturadasP(), null, 6);
-//        tabs.insertTab("Histórico", null, miControlador.crearControladorHistoricoP(), null, 7);
+        tabs.insertTab("Facturadas", null, miControlador.crearControladorFacturadasOCP(), null, 3);
+        tabs.insertTab("Histórico", null, miControlador.crearControladorHistoricoOCP(), null, 4);
         tabs.setSelectedIndex(1);
     }
     

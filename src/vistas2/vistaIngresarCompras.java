@@ -179,11 +179,11 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
-        textoTot = new javax.swing.JFormattedTextField(FORMAT);
+        textoNeto = new javax.swing.JFormattedTextField(FORMAT);
         jLabel4 = new javax.swing.JLabel();
         textoIva = new javax.swing.JFormattedTextField(FORMAT);
         jLabel5 = new javax.swing.JLabel();
-        textoNeto = new javax.swing.JFormattedTextField(FORMAT);
+        textoTot = new javax.swing.JFormattedTextField(FORMAT);
         botonActualizarMontos = new javax.swing.JButton();
         textoImpuestoEsp = new javax.swing.JTextField();
         textoImpuestoVar = new javax.swing.JTextField();
@@ -199,6 +199,7 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
         botonCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Ingresar compra");
 
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(16);
 
@@ -362,17 +363,17 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activo fijo (maquinaria)", "Activo vehiculo", "Combustibles (petróleo/gas)", "Repuestos", "Neumáticos", "Aceite y lubricantes", "Mantenciones", "Gastos de oficina", "Gastos generales", "Arriendo leasing", "Salud y seguridad", "Molymet", "Otros" }));
 
-        jLabel3.setText("Total");
+        jLabel3.setText("Neto");
 
-        textoTot.setEditable(false);
+        textoNeto.setEditable(false);
 
         jLabel4.setText("Iva");
 
         textoIva.setEditable(false);
 
-        jLabel5.setText("Neto");
+        jLabel5.setText("Total");
 
-        textoNeto.setEditable(false);
+        textoTot.setEditable(false);
 
         botonActualizarMontos.setText("Actualizar montos");
         botonActualizarMontos.addActionListener(new java.awt.event.ActionListener() {
@@ -552,7 +553,7 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel3)
-                                            .addComponent(textoTot, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(textoNeto, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel4)
@@ -569,7 +570,7 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
                                             .addComponent(textoImpuestoVar))))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(textoNeto, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(textoTot, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel5))))
                         .addContainerGap(34, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -682,9 +683,9 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textoTot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textoNeto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textoIva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textoNeto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textoTot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(15, 15, 15)
                 .addComponent(botonActualizarMontos)
                 .addGap(31, 31, 31))
@@ -1532,8 +1533,8 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
                             Double.valueOf(tablaDetalle.getValueAt(i, 3).toString()));
                     double ivaFloat = totParcial * 0.19;
                     ivaParcial = (int)Math.round(ivaFloat);
-                    tot += totParcial;
-                    net += totParcial + ivaParcial;
+                    net += totParcial;
+                    tot += totParcial + ivaParcial;
                     iva += ivaParcial;
                 }
             }
@@ -1546,8 +1547,8 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
         }catch(NullPointerException e){
             
         }
-        textoTot.setValue(tot);
-        textoIva.setValue(iva);
         textoNeto.setValue(net);
+        textoIva.setValue(iva);
+        textoTot.setValue(tot);
     }
 }

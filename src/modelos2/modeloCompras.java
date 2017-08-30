@@ -254,7 +254,7 @@ public class modeloCompras {
                 PreparedStatement pstm = conn.prepareStatement("INSERT into Productos (id_com, cod_prod, det_prod,"
                         + "cant_prod, prec_prod, iva_prod) values (?, ?, ?, ?, ?, ?)");
                 pstm.setInt(1, Integer.parseInt(id));
-                pstm.setInt(2, Integer.parseInt(data1[0]));
+                pstm.setString(2, data1[0]);
                 pstm.setString(3, data1[1]);
                 pstm.setDouble(4, Double.parseDouble(data1[2]));
                 pstm.setDouble(5, Double.parseDouble(data1[3]));
@@ -424,7 +424,7 @@ public class modeloCompras {
             String estimpvar = res.getString("impvar");
             data = new String[]{esttip, estfol, estrut + "-" + estdig , estraz, estgir, estdir, estcon, 
                 estfecin, estord, estfecpag, estfor, estasu, estobs, estmed, estban, estntc, estest, estclas, 
-                esttot, estiva, estnet, estimpes, estimpvar};
+                estnet, estiva, esttot, estimpes, estimpvar};
         }catch(SQLException e){
             System.out.println("Error al obtener proveedor por rut");
             System.out.println(e);

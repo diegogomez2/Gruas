@@ -31,7 +31,7 @@ public class vistaJornadasOCP extends javax.swing.JPanel {
     
     public vistaJornadasOCP(String tipo, Object[][] data) {
         initComponents();
-        String[] columNames = {"Código", "Cliente", "Fecha de salida", "Observaciones", "N° de grúas", "N° de operadores", "N° de traspaletas"};
+        String[] columNames = {"Código", "Cliente", "Fecha de salida", "Observaciones", "N° de grúas", "N° de operadores", "N° de transpaletas"};
         datos = new DefaultTableModel(data, columNames) {
             @Override
             public boolean isCellEditable(int row, int column) {
