@@ -46,7 +46,7 @@ public class modeloOts {
             PreparedStatement pstm = conn.prepareStatement("update jornadas set cont_ot = ?, fec_ot = ?, pag_ot = ?,"
                     + "cond_ot = ?, desp_ot = ?, cod_ot = ?, neto_ot = ?, iva_ot = ?, total_ot = ?, "
                     + "horfin_ot=?, hortot_ot=?, horsal_jor=?, horlleg_jor=?, checkdesp_ot = ?, vdesp_ot = ?, "
-                    + "checkhormin_ot=?, desc_ot=?, horex_ot=?, horex2_ot=?, horcol30_ot=?, horcol1_ot=? where id_jor = ?");
+                    + "checkhormin_ot=?, desc_ot=?, horex_ot=?, horex2_ot=?, horcol30_ot=?, horcol1_ot=?, fhsal_jor=CONCAT(DATE(fhsal_jor),' ', ?) where id_jor = ?");
             pstm.setString(1, data[0]);
             pstm.setString(2, data[1]);
             pstm.setString(3, data[2]);
@@ -72,7 +72,8 @@ public class modeloOts {
             pstm.setDouble(19, Double.parseDouble(data[19]));
             pstm.setInt(20, Integer.parseInt(data[20]));
             pstm.setInt(21, Integer.parseInt(data[21]));
-            pstm.setInt(22, Integer.parseInt(data[5]));
+            pstm.setString(22, data[12]);
+            pstm.setInt(23, Integer.parseInt(data[5]));
             pstm.execute();
             pstm.close();
         }catch(SQLException e){

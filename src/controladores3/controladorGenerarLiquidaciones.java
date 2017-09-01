@@ -80,10 +80,10 @@ public class controladorGenerarLiquidaciones {
                             //BONO RESPONSABILIDAD
                             int bonoResp = 0;
                             //BONO ADICIONAL
-                            int bonoCol1 = Integer.parseInt(data[i][8]);
-                            int bonoCol30 = Integer.parseInt(data[i][9]);
-                            int bonoCol = bonoCol1 + bonoCol30/2;
-                            int totalBonCol = (int)(((double) base * 0.0077777) * ((double)bonoCol / 2));
+                            double bonoCol1 = Double.parseDouble(data[i][8]);
+                            double bonoCol30 = Double.parseDouble(data[i][9]);
+                            double bonoCol = bonoCol1 + bonoCol30/2;
+                            int totalBonCol = (int)Math.round(((double) base * 0.0077777) * bonoCol);
                             //HORAS EXTRA
                             double horasExNor = Double.parseDouble(data[i][12]);
                             double horasExFes = Double.parseDouble(data[i][13]);

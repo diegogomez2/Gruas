@@ -78,12 +78,14 @@ public class vistaPrincipal extends javax.swing.JFrame {
         itemLibroVentas = new javax.swing.JMenuItem();
         itemLibroAtrasado = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItem10 = new javax.swing.JMenuItem();
         menuRemuneraciones = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem11 = new javax.swing.JMenuItem();
         menuOpciones = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
         menuOC = new javax.swing.JMenu();
@@ -244,6 +246,14 @@ public class vistaPrincipal extends javax.swing.JFrame {
         });
         menuLibros.add(jMenuItem9);
 
+        jMenuItem10.setText("Generar libro de remuneraciones atrasado");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
+        menuLibros.add(jMenuItem10);
+
         MenuPrincipal.add(menuLibros);
 
         menuRemuneraciones.setText("Remuneraciones");
@@ -287,6 +297,14 @@ public class vistaPrincipal extends javax.swing.JFrame {
             }
         });
         menuRemuneraciones.add(jMenuItem5);
+
+        jMenuItem11.setText("Generar reportes trabajadores atrasado");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
+        menuRemuneraciones.add(jMenuItem11);
 
         MenuPrincipal.add(menuRemuneraciones);
 
@@ -603,6 +621,16 @@ public class vistaPrincipal extends javax.swing.JFrame {
         miControlador.generarLibroRemuneraciones();
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        controladorPrincipal miControlador = new controladorPrincipal();
+        miControlador.crearControladorGenerarLibroAtrasadoRemu();
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        controladorPrincipal miControlador = new controladorPrincipal();
+        miControlador.crearControladorGenerarReporteTrabajadoresAtrasado();
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -654,6 +682,8 @@ public class vistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemUsuarios;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

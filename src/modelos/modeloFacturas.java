@@ -1120,16 +1120,22 @@ public class modeloFacturas {
            PreparedStatement pstm = conn.prepareStatement("SELECT fol_fac, fec_fac, "
                    + "clientes.rut_cli, dig_cli, raz_cli, neto_fac, iva_fac, tot_fac FROM Facturas "
                    + "INNER JOIN Jornadas on Jornadas.id_fac = Facturas.id_fac INNER JOIN Clientes ON "
-                   + "Clientes.rut_cli = Jornadas.rut_cli WHERE MONTH(fec_fac) = ? and tipo_fac = ? GROUP BY Facturas.id_fac "
+                   + "Clientes.rut_cli = Jornadas.rut_cli WHERE MONTH(fec_fac) = ? and tipo_fac = ? "
+                   + "UNION "
+                   + "SELECT fol_fac, fec_fac, clientes.rut_cli, dig_cli, raz_cli, neto_fac, iva_fac, tot_fac FROM Facturas "
+                   + "INNER JOIN Jornadas_oc on Jornadas_oc.id_fac = Facturas.id_fac INNER JOIN Clientes ON "
+                   + "Clientes.rut_cli = Jornadas_oc.rut_cli WHERE MONTH(fec_fac) = ? and tipo_fac = ? "
                    + "ORDER BY fol_fac");
            pstm.setString(1, mes);
            pstm.setString(2, "factura");
+           pstm.setString(3, mes);
+           pstm.setString(4, "factura");
            ResultSet res = pstm.executeQuery();
             int i = 0;
             while(res.next()){
                 String estfol = res.getString("fol_fac");
                 String estfec = res.getString("fec_fac");
-                String estrut = res.getString("Clientes.rut_cli");
+                String estrut = res.getString("rut_cli");
                 String estdig = res.getString("dig_cli");
                 String estraz = res.getString("raz_cli");
                 String estnet = res.getString("neto_fac");
@@ -1141,7 +1147,7 @@ public class modeloFacturas {
             }
             res.close();
        }catch(Exception e){
-           
+           e.printStackTrace();
        }
        return datos;
    }
@@ -1172,16 +1178,24 @@ public class modeloFacturas {
            PreparedStatement pstm = conn.prepareStatement("SELECT fol_nd, fec_nd, "
                    + "clientes.rut_cli, dig_cli, raz_cli, neto_nd, iva_nd, tot_nd FROM Notadebito "
                    + "INNER JOIN Jornadas on Jornadas.id_nd = Notadebito.id_nd INNER JOIN Clientes ON "
-                   + "Clientes.rut_cli = Jornadas.rut_cli WHERE MONTH(fec_nd) = ? and tipo_nd = ? GROUP BY fol_nd "
+                   + "Clientes.rut_cli = Jornadas.rut_cli WHERE MONTH(fec_nd) = ? and tipo_nd = ? "
+                   + "UNION "
+                   + "SELECT fol_nd, fec_nd, "
+                   + "clientes.rut_cli, dig_cli, raz_cli, neto_nd, iva_nd, tot_nd FROM Notadebito "
+                   + "INNER JOIN Jornadas_oc on Jornadas_oc.id_nd = Notadebito.id_nd INNER JOIN Clientes ON "
+                   + "Clientes.rut_cli = Jornadas_oc.rut_cli WHERE MONTH(fec_nd) = ? and tipo_nd = ? "
+                   + "GROUP BY fol_nd "
                    + "ORDER BY fol_nd");
            pstm.setString(1, mes);
            pstm.setString(2, "notadebito");
+           pstm.setString(3, mes);
+           pstm.setString(4, "notadebito");
            ResultSet res = pstm.executeQuery();
             int i = 0;
             while(res.next()){
                 String estfol = res.getString("fol_nd");
                 String estfec = res.getString("fec_nd");
-                String estrut = res.getString("Clientes.rut_cli");
+                String estrut = res.getString("rut_cli");
                 String estdig = res.getString("dig_cli");
                 String estraz = res.getString("raz_cli");
                 String estnet = res.getString("neto_nd");
@@ -1193,7 +1207,7 @@ public class modeloFacturas {
             }
             res.close();
        }catch(Exception e){
-           
+           e.printStackTrace();
        }
        return datos;
    }
@@ -1229,9 +1243,21 @@ public class modeloFacturas {
                    + "UNION "
                    + "SELECT fol_nc, fec_nc, rut_cli, dig_cli, raz_cli, neto_nd neto, iva_nd iva, tot_nd tot "
                    + "FROM Notacredito INNER JOIN Notadebito USING(id_nd) INNER JOIN Jornadas USING(id_nd) INNER JOIN "
-                   + "Clientes USING(rut_cli) WHERE MONTH(fec_nc) = ? AND tipo_nc = 'notacredito' ORDER BY fol_nc");
+                   + "Clientes USING(rut_cli) WHERE MONTH(fec_nc) = ? AND tipo_nc = 'notacredito' "
+                   + "UNION "
+                   + "SELECT fol_nc, fec_nc, rut_cli, dig_cli, raz_cli, "
+                   + "neto_fac neto, iva_fac iva, tot_fac tot FROM Notacredito INNER JOIN Facturas USING(id_fac) "
+                   + "INNER JOIN Jornadas_oc USING(id_fac) INNER JOIN Clientes USING(rut_cli) WHERE MONTH(fec_nc) = ? "
+                   + "AND tipo_nc = 'notacredito'"
+                   + "UNION "
+                   + "SELECT fol_nc, fec_nc, rut_cli, dig_cli, raz_cli, neto_nd neto, iva_nd iva, tot_nd tot "
+                   + "FROM Notacredito INNER JOIN Notadebito USING(id_nd) INNER JOIN Jornadas_oc USING(id_nd) INNER JOIN "
+                   + "Clientes USING(rut_cli) WHERE MONTH(fec_nc) = ? AND tipo_nc = 'notacredito' "
+                   + "ORDER BY fol_nc");
            pstm.setString(1, mes);
            pstm.setString(2, mes);
+           pstm.setString(3, mes);
+           pstm.setString(4, mes);
            ResultSet res = pstm.executeQuery();
             int i = 0;
             while(res.next()){
@@ -1249,7 +1275,7 @@ public class modeloFacturas {
             }
             res.close();
        }catch(Exception e){
-           
+           e.printStackTrace();
        }
        return datos;
    }

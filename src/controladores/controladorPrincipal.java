@@ -5,6 +5,7 @@
  */
 package controladores;
 
+import controladores3.controladorGenerarReporteTrabajadoresAtrasado;
 import java.text.ParseException;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -1311,7 +1312,7 @@ public class controladorPrincipal {
         String id = compra.ingresarCompra(data);
         if (id.compareTo("incorrecto") == 0) {
             JOptionPane.showMessageDialog(miVistaL, "Ha ocurrido un error al ingresar los datos de la compra\n",
-                     "Error", JOptionPane.ERROR_MESSAGE);
+                    "Error", JOptionPane.ERROR_MESSAGE);
             return "incorrecto";
         } else {
             return id;
@@ -1667,6 +1668,12 @@ public class controladorPrincipal {
         }
     }
 
+    public boolean generarLibroAtrasadoRemu(String year, String mes) {
+        controladorReportes miControlador = new controladorReportes();
+        miControlador.GenerarLibroRemuneracionesAtrasado(year, mes);
+        return true;
+    }
+
     //Funciones remuneraciones
     public int obtenerSueldoMin() {
         modelos3.modeloRemuneraciones sueldos = new modeloRemuneraciones();
@@ -1950,6 +1957,86 @@ public class controladorPrincipal {
         JOptionPane.showMessageDialog(null, "Reporte generado con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
         return true;
     }
+    
+    public boolean generarReporteTrabajador(String year, String month) {
+        DateFormat perDate = new SimpleDateFormat("MMMM-yyyy");
+        DateFormat numDate = new SimpleDateFormat("yyyy-MM");
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH, 1);
+        cal.set(Calendar.DATE, cal.getActualMinimum(Calendar.DAY_OF_MONTH));
+        String mes = "" + (Integer.parseInt(month) - 1);
+//        String per = perDate.format(new Date());
+        String per = month + "-" + year;
+        String fec = numDate.format(new Date());
+        String fecIn = "2017-" + mes + "-26";
+        String fecFin = year + "-" + month + "-25";
+//        System.out.println(fecIn + " " + fecFin);
+        NumberFormat FORMAT = NumberFormat.getCurrencyInstance();
+        DecimalFormatSymbols dfs = new DecimalFormatSymbols();
+        try {
+            String path = "Reporte trabajadores-" + per;
+            File dir = new File(path);
+            dir.mkdir();
+            modeloEmpleados empleado = new modeloEmpleados();
+            Object[] ruts = empleado.listarRutEmpleados();
+            int numEmp = ruts.length;
+            for (int i = 0; i < numEmp; i++) {
+                String file = path + "/Reporte_trabajador_" + ruts[i] + "_" + formatDate.format(new Date()) + ".xls";
+                Object[][] ots = empleado.obtenerReporteEmpleados(ruts[i].toString(), fecIn, fecFin);
+                HSSFWorkbook workbook = new HSSFWorkbook();
+                HSSFSheet sheet = workbook.createSheet("FirstSheet");
+                HSSFRow rowhead = sheet.createRow((short) 0);
+                rowhead.createCell(0).setCellValue("GRUAS HORQUILLA SANTA TERESITA F.M.LTDA");
+                rowhead = sheet.createRow(1);
+                rowhead.createCell(3).setCellValue("1 Fecha de informe: " + formatDate.format(new Date()));
+                rowhead = sheet.createRow(2);
+                rowhead.createCell(3).setCellValue("Servicios de operador " + formatDate2.format(new Date()));
+                rowhead = sheet.createRow(4);
+                rowhead.createCell(0).setCellValue("O.T.");
+                rowhead.createCell(1).setCellValue("FECHA.");
+                rowhead.createCell(2).setCellValue("CLIENTE");
+//                rowhead.createCell(3).setCellValue("O.T.");
+//                rowhead.createCell(4).setCellValue("O.T.");
+                rowhead.createCell(5).setCellValue("SALE");
+                rowhead.createCell(6).setCellValue("TERMINA");
+                rowhead.createCell(7).setCellValue("OFICINA");
+                rowhead.createCell(8).setCellValue("HORAS EXTRA");
+                rowhead.createCell(8).setCellValue("HORAS ARRIENDO");
+                rowhead = sheet.createRow(5);
+                rowhead.createCell(0).setCellValue("*** " + ruts[i].toString());
+                int j = 0;
+                for (Object[] ot : ots) {
+                    rowhead = sheet.createRow(j + 6);
+                    rowhead.createCell(0).setCellValue(ot[2].toString());
+                    rowhead.createCell(1).setCellValue(ot[3].toString());
+                    rowhead.createCell(2).setCellValue(ot[4].toString());
+//                    rowhead.createCell(3).setCellValue(ot[3].toString());
+//                    rowhead.createCell(4).setCellValue(ot[4].toString());
+                    rowhead.createCell(5).setCellValue(ot[5].toString());
+                    rowhead.createCell(6).setCellValue(ot[6].toString());
+                    rowhead.createCell(7).setCellValue(ot[7].toString());
+                    rowhead.createCell(8).setCellValue("0");
+                    rowhead.createCell(8).setCellValue(ot[9].toString());
+                    j++;
+                }
+                FileOutputStream fileOut;
+                fileOut = new FileOutputStream(file);
+                workbook.write(fileOut);
+                fileOut.close();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            Logger.getLogger(controladorPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR", JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }
+        JOptionPane.showMessageDialog(null, "Reporte generado con éxito", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+        return true;
+    }
 
     public void generarReporteClientes() {
         controladorReportes miControlador = new controladorReportes();
@@ -2038,5 +2125,20 @@ public class controladorPrincipal {
     public void generarLibroRemuneraciones() {
         controladorReportes miControlador = new controladorReportes();
         miControlador.GenerarLibroRemuneraciones();
+    }
+
+//    public void generarLibroRemuneracionesAtrasado() {
+//        controladorReportes miControlador = new controladorReportes();
+//        miControlador.GenerarLibroRemuneracionesAtrasado();
+//    }
+
+    public void crearControladorGenerarLibroAtrasadoRemu() {
+        controladorGenerarLibroAtrasadoRemu micontrolador = new controladorGenerarLibroAtrasadoRemu();
+        micontrolador.mostrarVistaGenerarLibroAtrasadoRemu();
+    }
+
+    public void crearControladorGenerarReporteTrabajadoresAtrasado() {
+        controladorGenerarReporteTrabajadoresAtrasado micontrolador = new controladorGenerarReporteTrabajadoresAtrasado();
+        micontrolador.mostrarVistaGenerarReporteTrabajadoresAtrasado();
     }
 }

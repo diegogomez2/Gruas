@@ -843,7 +843,8 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
     }
 
     public int getMes() {
-        Date fecha = textoFechaOt.getDate();
+//        Date fecha = textoFechaOt.getDate();
+        Date fecha = textoFechaInicio.getDate();
         Calendar cal = Calendar.getInstance();
         cal.setTime(fecha);
         System.out.println("Mes: " + cal.get(Calendar.MONTH));
@@ -1230,15 +1231,15 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
     public String getHorasEmpleadosVacia() {
         for (int i = 0; i < tablaEmpleados.getRowCount(); i++) {
             if (tablaEmpleados.getValueAt(i, 5) instanceof Double) {
-                if ((double)tablaEmpleados.getValueAt(i, 5) == 0.0) {
+                if ((double) tablaEmpleados.getValueAt(i, 5) == 0.0) {
                     return "";
-                }else{
+                } else {
                     return "novacio";
                 }
             } else {
-                if((int)tablaEmpleados.getValueAt(i, 5) == 0){
+                if ((int) tablaEmpleados.getValueAt(i, 5) == 0) {
                     return "";
-                }else{
+                } else {
                     return "novacio";
                 }
             }

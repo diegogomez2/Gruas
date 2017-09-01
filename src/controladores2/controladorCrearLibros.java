@@ -400,7 +400,7 @@ public class controladorCrearLibros {
             }
             
             datos = modelo.obtenerResumenNDMes(mes);
-            
+
             Element totales = doc.createElement("TotalesPeriodo");
 
             Element tipoDoc = doc.createElement("TpoDoc");
@@ -458,6 +458,7 @@ public class controladorCrearLibros {
             //FACTURAS
             
             String [][] facturas = modelo.obtenerFacturasMes(mes);
+
             for(int i = 0; i < facturas.length; i++){
                 Element detalle = doc.createElement("Detalle");
                 
@@ -609,6 +610,7 @@ public class controladorCrearLibros {
             
         }catch(Exception e){
             e.printStackTrace();
+            System.out.println("Error generar libro ventas");
         }
         return true;
     }

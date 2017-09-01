@@ -36,14 +36,15 @@ public class controladorRemuneracionEmpleado {
         //BONO RESPONSABILIDAD
         int bonoResp = 0;
         //BONO ADICIONAL
-        int bonoCol1 = Integer.parseInt(data[8]);
-        int bonoCol30 = Integer.parseInt(data[9]);
-        int bonoCol = bonoCol1 + bonoCol30/2;
+        double bonoCol1 = Double.parseDouble(data[8]);
+        double bonoCol30 = Double.parseDouble(data[9]);
+        double bonoCol = bonoCol1 + bonoCol30/2;
 //        int totalBonCol = (int) (((double) base * 0.0077777) * ((double) bonoCol / 2));
-        int totalBonCol = (int) (((double) base * 0.0077777) * bonoCol);
+        int totalBonCol = (int) Math.round(((double) base * 0.0077777) * bonoCol);
         //HORAS EXTRA
         double horasExNor = Double.parseDouble(data[12]);
         double horasExFes = Double.parseDouble(data[13]);
+        System.out.println(data[12] + " " + data[13]);
         double horasEx = 0;
         double bonoHor = 0;
         double cantHorEx = 0;

@@ -77,6 +77,7 @@ public class controladorIngresarOts {
         textoIva = Integer.toString(/*iva*/ + Integer.parseInt(vistaIO.getTextoIva()));
         textoBruto = Integer.toString(/*bruto*/ + Integer.parseInt(vistaIO.getTextoBruto()));
         String checkHoraMin = vistaIO.getCheckHoraMin() ? "1" : "0";
+        System.out.println("Spinner hora salida: " + vistaIO.getSpinnerHoraSalida());
         String[] data = {vistaIO.getTextoContacto(), vistaIO.getTextoFechaOt(), vistaIO.getComboFormaPago(),
             vistaIO.getComboCondPago(), vistaIO.getTextoDespachado(), id, vistaIO.getTextoCodigo(),
             textoNeto, textoIva, textoBruto, vistaIO.getSpinnerFinFaena(), Integer.toString(horas), vistaIO.getSpinnerHoraSalida(),
