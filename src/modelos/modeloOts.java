@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package modelos;
 
 import java.sql.Connection;
@@ -306,7 +301,6 @@ public class modeloOts {
     }
     
     public String getMaxTarifa(String diaInicio, String horaInicio, String day, String ton){
-        //String data[] = new String[]{};
         String data = "";
         try{
             Class.forName("com.mysql.jdbc.Driver");
@@ -493,7 +487,6 @@ public class modeloOts {
                     + " ON clientes.rut_cli = jornadas.rut_cli where cod_ot = ?");
             pstm.setString(1, idOt);
             ResultSet res = pstm.executeQuery();
-            int i = 0;
             while(res.next()){
                 String estrut = res.getString("rut_cli");
                 String estdig = res.getString("dig_cli");
@@ -511,7 +504,6 @@ public class modeloOts {
                 String estcheckhor = res.getString("checkhormin_ot");
                 data = new String[]{estrut + "-" + estdig.toUpperCase(), estraz, estgir, estdir, estciu, estcom, esttot, estnet,
                 estiva, estfact, estcodot, esthor, estcheckhor};
-                i++;
             }
             res.close();
        }catch(SQLException e){
@@ -705,10 +697,7 @@ public class modeloOts {
     }
     
     public String[] obtenerTotales(String id_jor){
-        String[] datos;
-        
-        datos = new String[3];
-        
+        String[] datos = null;        
         try{
             PreparedStatement pstm = conn.prepareStatement("SELECT neto_ot, , iva_ot, total_ot FROM Jornadas "
                     + "Where id_jor = ?");

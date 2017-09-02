@@ -415,8 +415,8 @@ public class modeloJornadasOC {
                 String esthorcol1 = res.getString("horcol1");
                 String esthorcol30 = res.getString("horcol30");
                 String estpes = res.getString("pes");
-                data[i] = new String[]{estnom + " " + estapp + " " + estapm, estfsal, esthsal, estfreg, esthreg, estid, esthortot, esthorex, esthorex2, esthorcol1, esthorcol30, 
-                estpes};
+                data[i] = new String[]{estnom + " " + estapp + " " + estapm, estfsal, esthsal, estfreg, esthreg, estid, esthortot, esthorex, esthorex2, 
+                    esthorcol30, esthorcol1, estpes};
                 i++;
             }
             res.close();

@@ -154,7 +154,6 @@ public class controladorIngresarOcs {
         int numEmp = tablaEmpleados.getRowCount();
         String[][] horas = new String[numEmp][8];
         for(int i = 0; i < numEmp; i++){
-            System.out.println(tablaEmpleados.getModel().getValueAt(i, 11));
             horas[i] = new String[]{tablaEmpleados.getValueAt(i, 0).toString(), tablaEmpleados.getValueAt(i, 5).toString(), tablaEmpleados.getValueAt(i, 6).toString(), tablaEmpleados.getValueAt(i, 7).toString(), 
             tablaEmpleados.getValueAt(i, 8).toString(), tablaEmpleados.getValueAt(i, 9).toString(), tablaEmpleados.getValueAt(i, 10).toString(), tablaEmpleados.getModel().getValueAt(i, 11).toString()};
         }
@@ -171,10 +170,6 @@ public class controladorIngresarOcs {
 
     public void mostrarVistaIngresarTraspaletaOcs(String[] data, Object[] ciudades) throws ParseException {
         vistaITO = new vistaIngresarTranspaletaOcs(new javax.swing.JFrame(), true);
-//        vistaITO.setDiaInicio(data[0]);
-//        vistaITO.setHoraInicio(data[1]);
-//        vistaITO.setDiaFin(data[2]);
-//        vistaITO.setHoraFin(data[3]);
         vistaITO.setTextoObs(data[4]);
         vistaITO.setTextoRutCliente(data[5] + "-" + data[6]);
         vistaITO.setTextoRazon(data[7]);
@@ -193,7 +188,6 @@ public class controladorIngresarOcs {
         vistaITO.setNuevoNeto(0);
         vistaITO.setTextoNuevoNeto("0");
         vistaITO.setNumTras(data[16]);
-//        vistaIO.setHoras((int)Float.parseFloat(valores.get(size - 1).get(3)));
         vistaITO.setLocationRelativeTo(null);
         vistaITO.setVisible(true);  
     }

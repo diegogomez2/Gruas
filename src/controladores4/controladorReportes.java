@@ -17,7 +17,6 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -831,7 +830,7 @@ public class controladorReportes {
                             rowhead.createCell(7).setCellValue(totalBonoAV);
                             rowhead.createCell(8).setCellValue(totalBonCol);
                             rowhead.createCell(9).setCellValue(bonoAd);
-                            rowhead.createCell(10).setCellValue(cantHorEx);
+                            rowhead.createCell(10).setCellValue(valorHorEx);
                             rowhead.createCell(11).setCellValue(totImp);
                             
                             rowhead.createCell(12).setCellValue(data[j][0]);
@@ -1284,7 +1283,7 @@ public class controladorReportes {
                             rowhead.createCell(7).setCellValue(totalBonoAV);
                             rowhead.createCell(8).setCellValue(totalBonCol);
                             rowhead.createCell(9).setCellValue(bonoAd);
-                            rowhead.createCell(10).setCellValue(cantHorEx);
+                            rowhead.createCell(10).setCellValue(valorHorEx);
                             rowhead.createCell(11).setCellValue(totImp);
                             
                             rowhead.createCell(12).setCellValue(data[j][0]);

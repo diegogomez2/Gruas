@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package modelos;
 
 import java.sql.*;
@@ -430,14 +425,10 @@ public class modeloGruas {
     
     /* Obtiene las gruas disponibles en periodo de tiempo*/
     public Object[] obtenerDescGruasDisp(String fhsal, String fhreg) {
-        //String fechSal, String horaSal, String fechReg, String horaReg
         int registros = 0;
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-//            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Gruas where "
-//                    + "pat_gru not in (SELECT pat_gru from jornadas where "
-//                    + "( subtime(?, '01:00') <= fhreg_jor and addtime(?, '01:00') >= fhsal_jor and pat_gru is not null))");
             PreparedStatement pstm = conn.prepareStatement("SELECT COUNT(*) AS total FROM Gruas WHERE pat_gru not in( "
                     + "SELECT pat_gru from Jornadas where ( ? <= fhreg_jor and ? >= fhsal_jor and pat_gru is not null and nc_ot = 0) "
                     + "UNION ALL "
@@ -494,8 +485,6 @@ public class modeloGruas {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-//            PreparedStatement pstm = conn.prepareStatement("SELECT COUNT(*) total FROM Jornadas "
-//                    + "WHERE ( ? <= fhreg_jor and ? >= fhsal_jor AND pat_gru = ? AND nc_ot = 0)");
             PreparedStatement pstm = conn.prepareStatement("SELECT SUM(total) total FROM("
                     + "SELECT count(*) as total FROM Jornadas WHERE ( ? <= fhreg_jor AND ? >= fhsal_jor AND pat_gru = ? AND nc_ot = 0) "
                     + "UNION ALL "
@@ -526,14 +515,10 @@ public class modeloGruas {
     
     /* Chequea la disponibilidad de una grua en un periodo determinado dejando fuera la id de la jornada (se usa en el modificar) */
     public int checkGruaDispId(String fhsal, String fhreg, String pat, String id) {
-        //String fechSal, String horaSal, String fechReg, String horaReg
         int registros = 0;
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-//            PreparedStatement pstm = conn.prepareStatement("SELECT count(*) as total from jornadas "
-//                    + " where ( ? <= fhreg_jor and "
-//                    + "? >= fhsal_jor and pat_gru = ? and id_jor <> ? and nc_ot = 0)");
             PreparedStatement pstm = conn.prepareStatement("SELECT SUM(total) total FROM("
                     + "SELECT count(*) as total FROM Jornadas WHERE ( ? <= fhreg_jor AND ? >= fhsal_jor AND pat_gru = ? AND id_jor <> ? AND nc_ot = 0) "
                     + "UNION ALL "
@@ -616,12 +601,9 @@ public class modeloGruas {
                 String estfechart = res.getString("frt");
                 String estfechaum = res.getString("fum");
                 String estfechakmhum = res.getString("kmhum");
-                //String esthpm = res.getString("hpm_gru");
                 String estfechabaja = res.getString("fba");
                 String estobs = res.getString("obs");
                 String estfechain = res.getString("fin");
-                //String estkmh = res.getString("kmh_gru");
-                //String estocu = res.getString("ocu_gru");
                 String estkmh = res.getString("horo");
                 data[i] = new String[]{estpat, estano, estdes, estmar, estmod, estton, estpeso, esttiponeum, esttiponeum2, estnchasis, esttipocombs, estmastil, estaltmastil, 
                     estancho, estlargo, estlargounas, estaltlevante, estneumdel, estneumtras, estnmotor, estnserie, estfechart, estfechaum, estfechakmhum, estfechabaja, 

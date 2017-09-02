@@ -638,10 +638,6 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
                 controladores.controladorEmpleados micontroladorEmpleados = new controladores.controladorEmpleados();
                 micontroladorOcs.actualizarHorometro();
                 micontroladorOcs.agregarMensualidad(getMes(), getYear());
-//                micontroladorEmpleados.agregarMensualidad(getRutEmp(), getMes(), getYear(), getHoras(), getSpinnerHorasExtraNormales(), getSpinnerHorasExtraFestivos(), getSpinnerColacion(), ton);
-//                micontroladorEmpleados.agregarHoras(getRutEmp(), horas, ton);
-//                micontroladorEmpleados.agregarColacion(getRutEmp(), getSpinnerColacion());
-//                miControladorIO.agregarHorasExtra(id, getSpinnerHorasExtraNormales(), getSpinnerHorasExtraFestivos());
             }
         }
     }//GEN-LAST:event_botonIngresarActionPerformed
@@ -1349,14 +1345,5 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
             }
             return false;
         }
-
-//        @Override
-//        public void setValueAt(Object value, int row, int column){
-//            super.setValueAt(value, row, column);
-//            double nextValue = (Double)getValueAt(row,1) * (Double)getValueAt(row, 2) ;
-//            System.out.println(nextValue);
-//            super.setValueAt(nextValue, row, 3);
-//            
-//        }
     }
 }

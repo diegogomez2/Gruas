@@ -5,12 +5,10 @@
  */
 package controladores;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import vistas.vistaEmpleadosP;
@@ -66,11 +64,6 @@ public class controladorEmpleados {
     public void agregarColacion(String rut, int horas){
         modelos.modeloEmpleados empleado = new modelos.modeloEmpleados();
         empleado.agregarColacion(rut, horas);
-    }
-    
-    public void agregarHoras(String rut, int horas, String ton){
-        modelos.modeloEmpleados emp = new modelos.modeloEmpleados();
-        emp.actualizarHorasMes(rut, horas, ton); //agregar ton
     }
     
     public void agregarHorasExtra(String rut, double horas, double horasCalc){

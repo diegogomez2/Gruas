@@ -84,12 +84,12 @@ public class vistaIngresarJornadasOC extends javax.swing.JDialog {
         textoGruas = (JTextField) comboGruas.getEditor().getEditorComponent();
         textoOperadores = (JTextField) comboOperadores.getEditor().getEditorComponent();
         textoHoraSalida = (JTextField) comboHoraSal.getEditor().getEditorComponent();
-        
+
         Format time = new SimpleDateFormat("HH:mm");
         MaskFormatter mask = new MaskFormatter("##:##");
         JFormattedTextField hora = new JFormattedTextField(mask);
         tablaGruas.setModel(tg);
-        
+
         tablaGruas.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(comboGruas));
         tablaGruas.getColumnModel().getColumn(1).setCellEditor(new DatePickerCellEditor(formatDate));
         tablaGruas.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(hora));
@@ -107,7 +107,7 @@ public class vistaIngresarJornadasOC extends javax.swing.JDialog {
         th.setRowCount(tonelajes.length);
         setTonTablaHoras(tonelajes);
         int i = 0;
-        
+
         hideTras();
 
         final JTextComponent tcc = (JTextComponent) comboClientes.getEditor().getEditorComponent();
@@ -648,7 +648,7 @@ public class vistaIngresarJornadasOC extends javax.swing.JDialog {
 
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
         controladores4.controladorIngresarJornadasOC miControladorIJOC = new controladores4.controladorIngresarJornadasOC();
-        if(radioOC.isSelected()){
+        if (radioOC.isSelected()) {
             String respuesta = miControladorIJOC.camposVacios();
             boolean esVacio = respuesta.length() == 0;
             if (!esVacio) {
@@ -658,26 +658,26 @@ public class vistaIngresarJornadasOC extends javax.swing.JDialog {
                     if (miControladorIJOC.irVistaJornadasOCP()) {
                         setVisible(false);
                     } else {
-    //                    JOptionPane.showMessageDialog(this, "Se generó un error al ingresar la jornada\n"
-    //                            + "Por favor compruebe que el cliente, grúa y empleados sean correctos", "Error", JOptionPane.INFORMATION_MESSAGE);
+                        //                    JOptionPane.showMessageDialog(this, "Se generó un error al ingresar la jornada\n"
+                        //                            + "Por favor compruebe que el cliente, grúa y empleados sean correctos", "Error", JOptionPane.INFORMATION_MESSAGE);
                     }
                 } catch (ParseException ex) {
                     Logger.getLogger(vistaIngresarJornadasOC.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             /* Desde aqui se ingresa como traspaleta */
-        }else{
+        } else {
             String respuesta = miControladorIJOC.camposVaciosTras();
             boolean esVacio = respuesta.length() == 0;
-            if(!esVacio){
+            if (!esVacio) {
                 JOptionPane.showMessageDialog(this, respuesta, "Debe rellenar los siguientes campos", JOptionPane.INFORMATION_MESSAGE);
-            }else {
+            } else {
                 try {
                     if (miControladorIJOC.irVistaJornadasTrasOCP()) {
                         setVisible(false);
                     } else {
-    //                    JOptionPane.showMessageDialog(this, "Se generó un error al ingresar la jornada\n"
-    //                            + "Por favor compruebe que el cliente, grúa y empleados sean correctos", "Error", JOptionPane.INFORMATION_MESSAGE);
+                        //                    JOptionPane.showMessageDialog(this, "Se generó un error al ingresar la jornada\n"
+                        //                            + "Por favor compruebe que el cliente, grúa y empleados sean correctos", "Error", JOptionPane.INFORMATION_MESSAGE);
                     }
                 } catch (ParseException ex) {
                     Logger.getLogger(vistaIngresarJornadasOC.class.getName()).log(Level.SEVERE, null, ex);
@@ -707,14 +707,14 @@ public class vistaIngresarJornadasOC extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void radioOCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioOCActionPerformed
-        if(radioOC.isSelected()){
+        if (radioOC.isSelected()) {
             showOC();
             hideTras();
         }
     }//GEN-LAST:event_radioOCActionPerformed
 
     private void radioTrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioTrasActionPerformed
-        if(radioTras.isSelected()){
+        if (radioTras.isSelected()) {
             showTras();
             hideOC();
         }
@@ -801,7 +801,7 @@ public class vistaIngresarJornadasOC extends javax.swing.JDialog {
         String dateString = formatDate.format(textoFechaRegreso.getDate());
         return dateString;
     }
-    
+
     public String getTextoFechaSalida() {
         Date fecha = textoFechaSalida.getDate();
         if (fecha == null) {
@@ -830,74 +830,93 @@ public class vistaIngresarJornadasOC extends javax.swing.JDialog {
     }
 
     public String getTextoFechaSalidaGrua(int i) {
-        Date fecha = (Date)tablaGruas.getValueAt(i, 1);
+        Date fecha = (Date) tablaGruas.getValueAt(i, 1);
         if (fecha == null) {
-            return "";
+            return getTextoFechaSalida();
+//            return "";
         }
         String dateString = formatDate.format(fecha);
         return dateString;
     }
-    
+
     public String getTextoFechaSalidaEmp(int i) {
-        Date fecha = (Date)tablaEmpleados.getValueAt(i, 1);
+        Date fecha = (Date) tablaEmpleados.getValueAt(i, 1);
         if (fecha == null) {
-            return "";
+//            return "";
+                return getTextoFechaSalida();
         }
         String dateString = formatDate.format(fecha);
         return dateString;
     }
-    
+
     public String getTextoFechaRegresoGrua(int i) {
-        Date fecha = (Date)tablaGruas.getValueAt(i, 3);
+        Date fecha = (Date) tablaGruas.getValueAt(i, 3);
         if (fecha == null) {
-            return "";
+            return getTextoFechaRegreso();
+//            return "";
         }
         String dateString = formatDate.format(fecha);
         return dateString;
     }
-    
+
     public String getTextoFechaRegresoEmp(int i) {
-        Date fecha = (Date)tablaEmpleados.getValueAt(i, 3);
+        Date fecha = (Date) tablaEmpleados.getValueAt(i, 3);
         if (fecha == null) {
-            return "";
+//            return "";
+                return getTextoFechaRegreso();
         }
         String dateString = formatDate.format(fecha);
         return dateString;
     }
 
     public String getTextoHoraSalidaGrua(int i) {
-        if(tablaGruas.getValueAt(i, 2) == null) return "";
+        if (tablaGruas.getValueAt(i, 2) == null) {
+            return "00:00";
+//            return "";
+        }
         String hora = tablaGruas.getValueAt(i, 2).toString();
-        if(hora == null) return "";
+        if (hora == null) {
+            return "00:00";
+//            return "";
+        }
         return hora;
     }
-    
+
     public String getTextoHoraSalidaEmp(int i) {
-        if(tablaEmpleados.getValueAt(i, 2) == null) return "";
+        if (tablaEmpleados.getValueAt(i, 2) == null) {
+            return "00:00";
+//            return "";
+        }
         String hora = tablaEmpleados.getValueAt(i, 2).toString();
         return hora;
     }
 
     public String getTextoHoraRegresoGrua(int i) {
-        if(tablaGruas.getValueAt(i, 4) == null) return "";
+        if (tablaGruas.getValueAt(i, 4) == null) {
+            return "23:59";
+//            return "";
+        }
         String hora = tablaGruas.getValueAt(i, 4).toString();
         return hora;
     }
-    
+
     public String getTextoHoraRegresoEmp(int i) {
-        if(tablaEmpleados.getValueAt(i, 4) == null) return "";
+        if (tablaEmpleados.getValueAt(i, 4) == null) {
+            return "23:59";
+//            return "";
+        }
         String hora = tablaEmpleados.getValueAt(i, 4).toString();
         return hora;
     }
-    
+
     public String getTextoHoraSalida() {
         return "";
     }
-    
-    public String getTextoHoraRegreso(){
+
+    public String getTextoHoraRegreso() {
         return "";
     }
-    
+
     public String getTextoObs() {
         return textoObs.getText();
     }
@@ -939,8 +958,8 @@ public class vistaIngresarJornadasOC extends javax.swing.JDialog {
     public String getGruasVacia() {
         for (int i = 0; i < tablaGruas.getRowCount(); i++) {
 //            for(int j = 0; j < tablaGruas.getColumnCount(); j++){
-                if (tablaGruas.getValueAt(i, 0) == null || tablaGruas.getValueAt(i, 0) == "") {
-                    return "";
+            if (tablaGruas.getValueAt(i, 0) == null || tablaGruas.getValueAt(i, 0) == "") {
+                return "";
 //                }
             }
         }
@@ -950,8 +969,8 @@ public class vistaIngresarJornadasOC extends javax.swing.JDialog {
     public String getEmpleadosVacia() {
         for (int i = 0; i < tablaEmpleados.getRowCount(); i++) {
 //            for(int j = 0; j < tablaEmpleados.getColumnCount(); j++){
-                if (tablaEmpleados.getValueAt(i, 0) == null) {
-                    return "";
+            if (tablaEmpleados.getValueAt(i, 0) == null) {
+                return "";
 //                }
             }
         }
@@ -1103,7 +1122,7 @@ public class vistaIngresarJornadasOC extends javax.swing.JDialog {
         public MyTableModelGruas() {
             super(new String[]{"Grua", "Fecha de salida", "Hora de salida", "Fecha de regreso", "Hora de regreso"}, 0);
         }
-        
+
         @Override
         public Class getColumnClass(int column) {
             switch (column) {
@@ -1137,7 +1156,7 @@ public class vistaIngresarJornadasOC extends javax.swing.JDialog {
             switch (column) {
                 case 1:
                     return Date.class;
-                case 2: 
+                case 2:
                     return String.class;
                 case 3:
                     return Date.class;
@@ -1175,10 +1194,10 @@ public class vistaIngresarJornadasOC extends javax.swing.JDialog {
             }
             return super.getValueAt(row, col);
         }
-        
+
         @Override
-        public boolean isCellEditable(int row, int col){
-            switch(col){
+        public boolean isCellEditable(int row, int col) {
+            switch (col) {
                 case 0:
                     return false;
                 case 3:
@@ -1187,13 +1206,13 @@ public class vistaIngresarJornadasOC extends javax.swing.JDialog {
                     return true;
             }
         }
-        
+
         @Override
-        public void setValueAt(Object value, int row, int column){
+        public void setValueAt(Object value, int row, int column) {
             super.setValueAt(value, row, column);
-            double nextValue = (Double)getValueAt(row,1) * (Double)getValueAt(row, 2) ;
+            double nextValue = (Double) getValueAt(row, 1) * (Double) getValueAt(row, 2);
             super.setValueAt(nextValue, row, 3);
-            
+
         }
     }
 
@@ -1206,79 +1225,79 @@ public class vistaIngresarJornadasOC extends javax.swing.JDialog {
     }
 
     public class DateEditor extends DefaultCellEditor {
- 
-    //Class[] argTypes = new Class[]{String.class};
-    //java.lang.reflect.Constructor constructor;
-    //Object value;
-    Date value; // use Date, not Object
-    DateFormat format; // used for formatting and parsing
- 
-    //public GenericEditor() {
-    public DateEditor(DateFormat format) {
-        super(new JTextField());
-        getComponent().setName("Table.editor");
-        this.format = format; // set format
-    }
- 
-    public boolean stopCellEditing() {
-        String s = (String)super.getCellEditorValue();
-        // Here we are dealing with the case where a user
-        // has deleted the string value in a cell, possibly
-        // after a failed validation. Return null, so that
-        // they have the option to replace the value with
-        // null or use escape to restore the original.
-        // For Strings, return "" for backward compatibility.
-        if ("".equals(s)) {
-            //if (constructor.getDeclaringClass() == String.class) {
-            //    value = s;
+
+        //Class[] argTypes = new Class[]{String.class};
+        //java.lang.reflect.Constructor constructor;
+        //Object value;
+        Date value; // use Date, not Object
+        DateFormat format; // used for formatting and parsing
+
+        //public GenericEditor() {
+        public DateEditor(DateFormat format) {
+            super(new JTextField());
+            getComponent().setName("Table.editor");
+            this.format = format; // set format
+        }
+
+        public boolean stopCellEditing() {
+            String s = (String) super.getCellEditorValue();
+            // Here we are dealing with the case where a user
+            // has deleted the string value in a cell, possibly
+            // after a failed validation. Return null, so that
+            // they have the option to replace the value with
+            // null or use escape to restore the original.
+            // For Strings, return "" for backward compatibility.
+            if ("".equals(s)) {
+                //if (constructor.getDeclaringClass() == String.class) {
+                //    value = s;
+                //}
+                value = null; // empty String converted into null Date
+                //super.stopCellEditing();
+                return super.stopCellEditing(); // return to not parse
+            }
+
+            try {
+                //value = constructor.newInstance(new Object[]{s});
+                value = format.parse(s); // parse instead of using the constructor
+            } catch (Exception e) {
+                ((JComponent) getComponent()).setBorder(new LineBorder(Color.red));
+                return false;
+            }
+            return super.stopCellEditing();
+        }
+
+        public Component getTableCellEditorComponent(JTable table, Object value,
+                boolean isSelected,
+                int row, int column) {
+            this.value = null;
+            ((JComponent) getComponent()).setBorder(new LineBorder(Color.black));
+            //try {
+            //    Class<?> type = table.getColumnClass(column);
+            //    // Since our obligation is to produce a value which is
+            //    // assignable for the required type it is OK to use the
+            //    // String constructor for columns which are declared
+            //    // to contain Objects. A String is an Object.
+            //    if (type == Object.class) {
+            //        type = String.class;
+            //    }
+            //    constructor = type.getConstructor(argTypes);
             //}
-            value = null; // empty String converted into null Date
-            //super.stopCellEditing();
-            return super.stopCellEditing(); // return to not parse
+            //catch (Exception e) {
+            //    return null;
+            //}
+            if (value instanceof Date) {
+                value = format.format((Date) value); // format as desired instead of using toString()
+            }
+            return super.getTableCellEditorComponent(table, value, isSelected, row, column);
         }
- 
-        try {
-            //value = constructor.newInstance(new Object[]{s});
-            value = format.parse(s); // parse instead of using the constructor
+
+        public Object getCellEditorValue() {
+            return value;
         }
-        catch (Exception e) {
-            ((JComponent)getComponent()).setBorder(new LineBorder(Color.red));
-            return false;
-        }
-        return super.stopCellEditing();
     }
- 
-    public Component getTableCellEditorComponent(JTable table, Object value,
-                                             boolean isSelected,
-                                             int row, int column) {
-        this.value = null;
-        ((JComponent)getComponent()).setBorder(new LineBorder(Color.black));
-        //try {
-        //    Class<?> type = table.getColumnClass(column);
-        //    // Since our obligation is to produce a value which is
-        //    // assignable for the required type it is OK to use the
-        //    // String constructor for columns which are declared
-        //    // to contain Objects. A String is an Object.
-        //    if (type == Object.class) {
-        //        type = String.class;
-        //    }
-        //    constructor = type.getConstructor(argTypes);
-        //}
-        //catch (Exception e) {
-        //    return null;
-        //}
-        if (value instanceof Date) {
-            value = format.format((Date)value); // format as desired instead of using toString()
-        }
-        return super.getTableCellEditorComponent(table, value, isSelected, row, column);
-    }
- 
-    public Object getCellEditorValue() {
-        return value;
-    }
-}
-    
+
     class DateRenderer extends DefaultTableCellRenderer {
+
         public DateRenderer() {
             setOpaque(false);
         }
@@ -1286,33 +1305,32 @@ public class vistaIngresarJornadasOC extends javax.swing.JDialog {
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value,
                 boolean isSelected, boolean hasFocus, int row, int column) {
-            if(isSelected){
+            if (isSelected) {
                 setBackground(Color.yellow);
             }
-            if(value != null && value != ""){
+            if (value != null && value != "") {
                 setValue(formatClock.format(value));
             }
             return this;
         }
     }
-    
+
     /* Para traspaleta*/
-    
     public int getSpinnerTras() {
         return Integer.parseInt(spinnerNumTras.getValue().toString());
     }
-    
-    public void hideTras(){
+
+    public void hideTras() {
         labelNumTras.setVisible(false);
         spinnerNumTras.setVisible(false);
     }
-    
-    public void showTras(){
+
+    public void showTras() {
         labelNumTras.setVisible(true);
         spinnerNumTras.setVisible(true);
     }
-    
-    public void hideOC(){
+
+    public void hideOC() {
         labelGruas.setVisible(false);
         spinnerGruas.setVisible(false);
         scrollGruas.setVisible(false);
@@ -1321,8 +1339,8 @@ public class vistaIngresarJornadasOC extends javax.swing.JDialog {
         scrollTrabajadores.setVisible(false);
         scrollHoras.setVisible(false);
     }
-    
-    public void showOC(){
+
+    public void showOC() {
         labelGruas.setVisible(true);
         spinnerGruas.setVisible(true);
         scrollGruas.setVisible(true);
