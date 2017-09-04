@@ -78,9 +78,10 @@ public class vistaAgendaDePagosP extends javax.swing.JPanel {
         
         tablaPagos.setModel(datos);
         TableColumnModel tcm = tablaPagos.getColumnModel();
-        tcm.removeColumn(tcm.getColumn(7));
-        tcm.removeColumn(tcm.getColumn(7));
-        tcm.removeColumn(tcm.getColumn(7));
+        //valor anterior 7
+        tcm.removeColumn(tcm.getColumn(9));
+        tcm.removeColumn(tcm.getColumn(9));
+        tcm.removeColumn(tcm.getColumn(9));
         tablaPagos.setAutoCreateRowSorter(true);
         if(tablaPagos.getRowCount() > 0) tablaPagos.setRowSelectionInterval(0, 0);
         tablaPagos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -255,20 +256,20 @@ public class vistaAgendaDePagosP extends javax.swing.JPanel {
     }
     
     public String getIdFila(int row){
-        return tablaPagos.getModel().getValueAt(tablaPagos.convertRowIndexToModel(row), 8).toString();
+        return tablaPagos.getModel().getValueAt(tablaPagos.convertRowIndexToModel(row), 10).toString();
     }
     
     public String getIdFac(int row){
-        return tablaPagos.getModel().getValueAt(tablaPagos.convertRowIndexToModel(row), 9).toString();
+        return tablaPagos.getModel().getValueAt(tablaPagos.convertRowIndexToModel(row), 11).toString();
     }
     
     public class MyTableModel extends DefaultTableModel{
         public MyTableModel() {
-          super(new String[]{"Medio de pago", "Rut proveedor", "Razón social", "Folio", 
+          super(new String[]{"Folio", "Folio interno" , "Medio de pago", "Rut proveedor", "Razón social", "Folio cheque", 
             "N° de cheque/cuota", "Monto", "Fecha de pago", "Estado", "Id", "Fac"}, 0);
         }
         public MyTableModel(Object[][] data){
-            super(new String[]{"Medio de pago", "Rut proveedor", "Razón social", "Folio", 
+            super(new String[]{"Folio", "Folio interno" , "Medio de pago", "Rut proveedor", "Razón social", "Folio cheque", 
             "N° de cheque/cuota", "Monto", "Fecha de pago", "Estado", "Id", "Fac"}, 0);
             
             int i = 0;
@@ -276,17 +277,19 @@ public class vistaAgendaDePagosP extends javax.swing.JPanel {
             for(Object[] data1 : data){
                 int monto = Integer.parseInt(data1[5].toString());
                 int num = Integer.parseInt(data1[4].toString());
-                this.setValueAt(data1[0], i, 0);
-                this.setValueAt(data1[1], i, 1);
-                this.setValueAt(data1[2], i, 2);
-                this.setValueAt(data1[3], i, 3);
+                this.setValueAt(data1[10], i, 0);
+                this.setValueAt(data1[11], i, 1);
+                this.setValueAt(data1[0], i, 2);
+                this.setValueAt(data1[1], i, 3);
+                this.setValueAt(data1[2], i, 4);
+                this.setValueAt(data1[3], i, 5);
 //                this.setValueAt(data1[4], i, 4);
-                this.setValueAt(num, i, 4);
-                this.setValueAt(monto, i, 5);
-                this.setValueAt(data1[6], i, 6);
-                this.setValueAt(data1[7], i, 7);
-                this.setValueAt(data1[8], i, 8);
-                this.setValueAt(data1[9], i, 9);
+                this.setValueAt(num, i, 6);
+                this.setValueAt(monto, i, 7);
+                this.setValueAt(data1[6], i, 8);
+                this.setValueAt(data1[7], i, 9);
+                this.setValueAt(data1[8], i, 10);
+                this.setValueAt(data1[9], i, 11);
                 i++;
         }
         }
@@ -294,9 +297,9 @@ public class vistaAgendaDePagosP extends javax.swing.JPanel {
         @Override
         public Class getColumnClass(int column) {
           switch (column) {
-            case 4:
+            case 6:
                 return Integer.class;
-            case 7:
+            case 9:
                 return Integer.class;
             default:
                 return String.class;
@@ -325,7 +328,7 @@ public class OwnTableCellRenderer extends DefaultTableCellRenderer {
         setHorizontalAlignment(SwingConstants.LEFT);
         setBackground(Color.white);
         setForeground(Color.black);
-        String valor = table.getModel().getValueAt(table.convertRowIndexToModel(row),6).toString();
+        String valor = table.getModel().getValueAt(table.convertRowIndexToModel(row),8).toString();
         Date fec;
         try{
 //            fec = formatDate.parse(valor);
@@ -345,7 +348,7 @@ public class OwnTableCellRenderer extends DefaultTableCellRenderer {
             setForeground(Color.black);
             setBackground(Color.white);
         }
-        valor = table.getModel().getValueAt(table.convertRowIndexToModel(row), 7).toString();
+        valor = table.getModel().getValueAt(table.convertRowIndexToModel(row), 9).toString();
         if(valor.compareTo("Pagado") == 0){
             setForeground(Color.black);
             setBackground(Color.GREEN);
@@ -357,7 +360,7 @@ public class OwnTableCellRenderer extends DefaultTableCellRenderer {
         if(value instanceof Number){
             setHorizontalAlignment(SwingConstants.RIGHT);
             setText(value.toString());
-            if(column == 5){
+            if(column == 7){
                 Number num = (Number)value;
                 String text = FORMAT.format(num);
                 setText(text);

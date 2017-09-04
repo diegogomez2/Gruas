@@ -349,6 +349,7 @@ public class vistaCobranzasP extends javax.swing.JPanel {
             this.setRowCount(data.length);
             for(Object[] data1 : data){
                 //int ot = Integer.parseInt(data1[0].toString());
+                System.out.println(data1[0].toString());
                 int fol = Integer.parseInt(data1[0].toString());
                 int dias = Integer.parseInt(data1[4].toString());
                 int neto = Integer.parseInt(data1[5].toString());

@@ -1655,7 +1655,7 @@ public class modeloFacturas {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Compras WHERE fec_in_com >= ? AND fec_in_com <= ?");
+            PreparedStatement pstm = conn.prepareStatement("SELECT count(1) as total FROM Compras_fac WHERE fec_in_com >= ? AND fec_in_com <= ?");
             pstm.setString(1, fecIn);
             pstm.setString(2, fecFin);
             ResultSet res = pstm.executeQuery();
@@ -1680,11 +1680,11 @@ public class modeloFacturas {
             int i = 0;
             while(res.next()){
                 String estfol = res.getString("fol_com");
-                String estraz = res.getString("raz_cli");
-                String estgir = res.getString("gir_cli");
-                String estdir = res.getString("dir_cli");
-                String estciu = res.getString("ciu_cli");
-                String estcom = res.getString("com_cli");
+                String estraz = res.getString("raz_pro");
+                String estgir = res.getString("gir_pro");
+                String estdir = res.getString("dir_pro");
+                String estciu = res.getString("ciu_pro");
+                String estcom = res.getString("com_pro");
                 String estfec = res.getString("fec_in_com");
                 java.util.Date fecha = formatDate.parse(estfec);
                 estfec = newFormat.format(fecha);

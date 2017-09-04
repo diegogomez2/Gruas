@@ -266,6 +266,7 @@ public class vistaOcsP extends javax.swing.JPanel {
                 JTabbedPane tabs = (JTabbedPane) this.getParent();
                 micontroladorFacturas.crearControladorPrincipal(tabs);
                 miControlador.crearControladorPrincipal(tabs);
+                JOptionPane.showMessageDialog(null, "La OC ha sido anulada con éxito.", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una orden de trabajo para ser anulada");

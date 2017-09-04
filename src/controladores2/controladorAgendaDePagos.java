@@ -6,7 +6,6 @@
 package controladores2;
 
 import controladores.controladorPrincipal;
-import java.text.ParseException;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import vistas2.vistaAgendaDePagosP;
@@ -18,25 +17,10 @@ import vistas2.vistaAgendaDePagosP;
 public class controladorAgendaDePagos {
     static vistaAgendaDePagosP vistaAgendaDePagosP;
 
-//    public void irVistaIngresarCompras() {
-//        controladorPrincipal miControlador = new controladorPrincipal();
-//        miControlador.crearControladorIngresarCompras();
-//    }
-//
-//    public void eliminarCompras(String id) {
-//        controladorPrincipal miControlador = new controladorPrincipal();
-//        miControlador.crearControladorEliminarCompras(id);
-//    }
-//
     public void irVistaCambiarEstado(String id, String fac) {
         controladorPrincipal miControlador = new controladorPrincipal();
         miControlador.crearControladorCambiarEstadoPago(id, fac);
     }
-//
-//    public void irVistaDetalleCompras(String id) throws ParseException {
-//        controladorPrincipal miControlador = new controladorPrincipal();
-//        miControlador.crearControladorDetalleCompra(id);
-//    }
 
     public JPanel mostrarTabControlAgendaDePagos(String tipo, Object[][] data) {
         vistaAgendaDePagosP = new vistaAgendaDePagosP(tipo, data);

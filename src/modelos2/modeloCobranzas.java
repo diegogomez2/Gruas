@@ -72,7 +72,15 @@ public class modeloCobranzas {
                     + "SELECT fol_fac as fol, c.rut_cli, dig_cli, raz_cli, ges_fac as ges, con_cli, tel_cli, tot_fac as tot, neto_fac as neto, iva_fac as iva, "
                     + "fec_fac as fec, abo_fac as abo, pag_oc, cond_oc, tipo_fac tipo, f.id_fac id FROM Facturas f LEFT JOIN Notacredito n ON "
                     + "f.id_fac = n.id_fac INNER JOIN ( SELECT id_fac, rut_cli, pag_oc, cond_oc FROM Jornadas_oc GROUP BY id_fac ) b ON b.id_fac = f.id_fac INNER JOIN Clientes c "
-                    + "ON c.rut_cli = b.rut_cli WHERE n.id_fac is null ORDER BY fec DESC ");
+                    + "ON c.rut_cli = b.rut_cli WHERE n.id_fac is null  "
+                    + "UNION "
+                    + "SELECT fol_nd as fol, c.rut_cli, dig_cli, raz_cli, ges_nd as ges, con_cli, tel_cli, "
+                    + "tot_nd as tot, neto_nd as neto, iva_nd as iva, fec_nd as fec, abo_nd as abo, pag_oc, "
+                    + "cond_oc, tipo_nd as tipo, f.id_nd as id FROM "
+                    + "Notadebito f LEFT JOIN Notacredito n ON n.id_fac = f.id_fac INNER JOIN( "
+                    + "SELECT id_fac, rut_cli, pag_oc, cond_oc FROM Jornadas_oc GROUP BY id_fac ) b ON b.id_fac = f.id_fac "
+                    + "INNER JOIN Clientes c on c.rut_cli = b.rut_cli INNER JOIN Facturas ON "
+                    + "facturas.id_fac = f.id_fac WHERE n.id_fac is null ORDER BY fec DESC");
             ResultSet res = pstm.executeQuery();
             int i = 0;
             while(res.next()){

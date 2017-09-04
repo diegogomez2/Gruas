@@ -59,9 +59,9 @@ public class vistaAgendaDeOtrosPagosP extends javax.swing.JPanel {
         /************/
         //tablaPagos.getColumnModel().getColumn(7).setCellRenderer();
         TableColumnModel tcm = tablaPagos.getColumnModel();
-        tcm.removeColumn(tcm.getColumn(9));
-        tcm.removeColumn(tcm.getColumn(9));
-        tcm.removeColumn(tcm.getColumn(9));
+        tcm.removeColumn(tcm.getColumn(11));
+        tcm.removeColumn(tcm.getColumn(11));
+        tcm.removeColumn(tcm.getColumn(11));
         tablaPagos.setAutoCreateRowSorter(true);
         //tablaPagos.setDefaultRenderer(Object.class, new OwnTableCellRenderer());
         if(tablaPagos.getRowCount() > 0) tablaPagos.setRowSelectionInterval(0, 0);
@@ -224,11 +224,11 @@ public class vistaAgendaDeOtrosPagosP extends javax.swing.JPanel {
     }
     
     public String getIdFila(int row){
-        return tablaPagos.getModel().getValueAt(tablaPagos.convertRowIndexToModel(row), 10).toString();
+        return tablaPagos.getModel().getValueAt(tablaPagos.convertRowIndexToModel(row), 12).toString();
     }
     
     public String getIdFac(int row){
-        return tablaPagos.getModel().getValueAt(tablaPagos.convertRowIndexToModel(row), 11).toString();
+        return tablaPagos.getModel().getValueAt(tablaPagos.convertRowIndexToModel(row), 13).toString();
     }
     
     public class CurrencyTableCellRenderer extends DefaultTableCellRenderer {
@@ -249,17 +249,19 @@ public class vistaAgendaDeOtrosPagosP extends javax.swing.JPanel {
 
     public class MyTableModel extends DefaultTableModel{
         public MyTableModel() {
-          super(new String[]{"Medio de pago", "Asunto", "Rut proveedor", "Razón social", "Folio", 
+          super(new String[]{"Folio", "Folio interno", "Medio de pago", "Asunto", "Rut proveedor", "Razón social", "Folio cheque", 
             "Observaciones de pago", "N° de cheque/cuota", "Monto", "Fecha de pago", "Estado", "Id", "Fac"}, 0);
         }
         public MyTableModel(Object[][] data){
-            super(new String[]{"Medio de pago", "Asunto", "Rut proveedor", "Razón social", "Folio", 
+            super(new String[]{"Folio", "Folio interno", "Medio de pago", "Asunto", "Rut proveedor", "Razón social", "Folio", 
             "Observaciones de pago", "N° de cheque/cuota", "Monto", "Fecha de pago", "Estado", "Id", "Fac"}, 0);
             
             int i = 0;
             this.setRowCount(data.length);
             for(Object[] data1 : data){
                 int monto = Integer.parseInt(data1[7].toString());
+                this.setValueAt(data1[0], i, 0);
+                this.setValueAt(data1[0], i, 0);
                 this.setValueAt(data1[0], i, 0);
                 this.setValueAt(data1[1], i, 1);
                 this.setValueAt(data1[2], i, 2);

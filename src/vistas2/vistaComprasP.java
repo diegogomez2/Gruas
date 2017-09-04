@@ -299,11 +299,12 @@ public class vistaComprasP extends javax.swing.JPanel {
             for(Object[] data1 : data){
                 int id = Integer.parseInt(data1[0].toString());
                 int folr = Integer.parseInt(data1[2].toString());
-                int foli = Integer.parseInt(data1[3].toString());
+                //Se cambia ahora que folio es String 
+//                int foli = Integer.parseInt(data1[3].toString());
                 this.setValueAt(id, i, 0);
                 this.setValueAt(data1[1], i, 1);
                 this.setValueAt(folr, i, 2);
-                this.setValueAt(foli, i, 3);
+                this.setValueAt(data1[3], i, 3);
                 this.setValueAt(data1[4], i, 4);
                 this.setValueAt(data1[5], i, 5);
                 this.setValueAt(data1[6], i, 6);
@@ -317,8 +318,6 @@ public class vistaComprasP extends javax.swing.JPanel {
                 case 0:
                     return Integer.class;
                 case 2:
-                    return Integer.class;
-                case 3:
                     return Integer.class;
                 default:
                     return String.class;

@@ -6,6 +6,8 @@
 package controladores2;
 
 import controladores.*;
+import java.util.Calendar;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import modelos2.modeloCompras;
@@ -37,7 +39,7 @@ public class controladorIngresarCompras {
             vistaIC.getComboForma(), vistaIC.getTextoAsunto(), vistaIC.getTextoObs(), 
             vistaIC.getComboMedio(), vistaIC.getTextoBanco(), vistaIC.getTextoNumTC(), vistaIC.getCheckEstado(), 
             vistaIC.getComboClas(), vistaIC.getTextoTot(), vistaIC.getTextoIva(), vistaIC.getTextoNeto(), 
-            vistaIC.getTextoImpuestoEsp(), vistaIC.getTextoImpuestoVar()};
+            vistaIC.getTextoImpuestoEsp(), vistaIC.getTextoImpuestoVar(), String.valueOf(getMes()), String.valueOf(getYear())};
         String id = miControlador.ingresarCompra(data);
         if(id.compareTo("incorrecto") == 0){
             return false;
@@ -180,5 +182,20 @@ public class controladorIngresarCompras {
             dataImpuestos[i] = new String[]{tabla.getValueAt(i, 0).toString(), tabla.getValueAt(i, 1).toString()};
         }
         return miControlador.ingresarImpuestos(dataImpuestos, id);
+    }
+    public int getMes(){
+        Date fecha = vistaIC.getFechaCompra().getDate();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(fecha);
+        if(cal.get(Calendar.DAY_OF_MONTH) > 25)
+            return cal.get(Calendar.MONTH) + 2;
+        return cal.get(Calendar.MONTH) + 1;  
+    }
+    
+    public int getYear(){
+        Date fecha = vistaIC.getFechaCompra().getDate();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(fecha);
+        return cal.get(Calendar.YEAR);  
     }
 }

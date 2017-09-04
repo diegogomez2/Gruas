@@ -95,7 +95,7 @@ public class modeloCompras {
             pstm.setInt(1, Integer.parseInt(data[0]));
             pstm.setString(2, data[1]);
             pstm.setString(3, data[2]);
-            pstm.setInt(4, Integer.parseInt(data[3]));
+            pstm.setString(4, data[3] + "/" + data[20] + "/" + data[21]);
             pstm.setString(5, data[4]);
             pstm.setString(6, data[5]);
             pstm.setString(7, data[6]);
@@ -657,7 +657,7 @@ public class modeloCompras {
         
         try{
             PreparedStatement pstm = conn.prepareStatement("SELECT med_com, Cuotas.id_com, Compras_fac.rut_pro, dig_pro,"
-                    + " raz_pro, coalesce(fol_cuo, '') as fol_cuo, num_cuo, fec_cuo, est_cuo, id_cuo, mon_cuo FROM Cuotas INNER JOIN Compras_fac ON Cuotas.id_com"
+                    + " raz_pro, coalesce(fol_cuo, '') as fol_cuo, num_cuo, fec_cuo, est_cuo, id_cuo, mon_cuo, fol_com, fol_int_com FROM Cuotas INNER JOIN Compras_fac ON Cuotas.id_com"
                     + "= Compras_fac.id_com INNER JOIN Proveedores ON Compras_fac.rut_pro = Proveedores.rut_pro"
                     + " WHERE MONTH(fec_cuo) = MONTH(curdate()) and not form_com = 'Otros pagos' ORDER BY fec_cuo");
             ResultSet res = pstm.executeQuery();
@@ -677,8 +677,10 @@ public class modeloCompras {
                 String estid = res.getString("id_cuo");
                 String estfac = res.getString("Cuotas.id_com");
                 String estmon = res.getString("mon_cuo");
+                String estfolcom = res.getString("fol_com");
+                String estfolintcom = res.getString("fol_int_com");
                 //String estid = res.getString("Cuotas.id_com");
-                data[i] = new String[]{estmed, estrut + "-" + estdig, estraz, estfol, estnum, estmon, estfec, estest, estid, estfac};
+                data[i] = new String[]{estmed, estrut + "-" + estdig, estraz, estfol, estnum, estmon, estfec, estest, estid, estfac, estfolcom, estfolintcom};
                 i++;
             }
             res.close();
@@ -714,7 +716,7 @@ public class modeloCompras {
         try{
             PreparedStatement pstm = conn.prepareStatement("SELECT med_com, Cuotas.id_com, Compras_fac.rut_pro, dig_pro,"
                     + " raz_pro, coalesce(fol_cuo,'') as fol_cuo, num_cuo, fec_cuo, est_cuo, id_cuo, "
-                    + "coalesce(asun_com,'') as asun_com, coalesce(obs_com,'') as obs_com, mon_cuo FROM Cuotas "
+                    + "coalesce(asun_com,'') as asun_com, coalesce(obs_com,'') as obs_com, mon_cuo, fol_com, fol_int_com FROM Cuotas "
                     + "INNER JOIN Compras_fac ON Cuotas.id_com"
                     + "= Compras_fac.id_com INNER JOIN Proveedores ON Compras_fac.rut_pro = Proveedores.rut_pro"
                     + " WHERE MONTH(fec_cuo) = MONTH(curdate()) and form_com = 'Otros pagos' ORDER BY fec_cuo");
@@ -737,9 +739,11 @@ public class modeloCompras {
                 String estest = res.getString("est_cuo");
                 String estid = res.getString("id_cuo");
                 String estfac = res.getString("id_com");
+                String estfolcom = res.getString("fol_com");
+                String estfolintcom = res.getString("fol_int_com");
                 //String estid = res.getString("Cuotas.id_com");
                 data[i] = new String[]{estmed, estasu, estrut + "-" + estdig, estraz, estfol, estobs, estnum, estmon,
-                    estfec, estest, estid, estfac};
+                    estfec, estest, estid, estfac, estfolcom, estfolintcom};
                 i++;
             }
             res.close();

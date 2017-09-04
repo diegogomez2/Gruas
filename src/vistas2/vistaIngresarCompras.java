@@ -40,6 +40,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 import javax.swing.text.JTextComponent;
 import modelos2.modeloProveedores;
+import org.jdesktop.swingx.JXDatePicker;
 import org.jdesktop.swingx.renderer.DefaultTableRenderer;
 import org.jdesktop.swingx.renderer.FormatStringValue;
 import org.jdesktop.swingx.renderer.StringValue;
@@ -1550,5 +1551,9 @@ public class vistaIngresarCompras extends javax.swing.JDialog {
         textoNeto.setValue(net);
         textoIva.setValue(iva);
         textoTot.setValue(tot);
+    }
+    
+    public JXDatePicker getFechaCompra(){
+        return textoFechaIngreso;
     }
 }

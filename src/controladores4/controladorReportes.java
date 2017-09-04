@@ -815,9 +815,11 @@ public class controladorReportes {
                             if(mapSalud.get(salud.toUpperCase()) == null){
                                 mapSalud.put(salud.toUpperCase(), new ArrayList<SaludInfo>());
                             }
-                            AfpInfo info = new AfpInfo(data[j][0], data[j][1], totImp, descAFP, sis, totalAFP);
+                            //cambie descAfp por totalAfp
+                            AfpInfo info = new AfpInfo(data[j][0], data[j][1], totImp, (int)totalAFP, sis, totalAFP);
                             mapAfp.get(afp).add(info);
-                            SaludInfo sInfo = new SaludInfo(data[j][0], data[j][1], totImp, descSalud);
+                            //cambie descSalud por totalSalud
+                            SaludInfo sInfo = new SaludInfo(data[j][0], data[j][1], totImp, (int)totalSalud);
                             mapSalud.get(salud.toUpperCase()).add(sInfo);
                             rowhead = sheet_rem.createRow((short) 5 + k + (i*34));
                             rowhead.createCell(0).setCellValue(data[j][0]);
@@ -965,7 +967,11 @@ public class controladorReportes {
                     for(String key : mapSalud.keySet()){
                         List<SaludInfo> aux = mapSalud.get(key);
                         rowhead = sheet_salud.createRow((short) j++);
-                        rowhead.createCell(5).setCellValue("Isapre " + key);
+                        if(key.toLowerCase().compareTo("fonasa") == 0 || key.toLowerCase().compareTo("sin info") == 0){
+                            rowhead.createCell(5).setCellValue(key);
+                        }else{
+                            rowhead.createCell(5).setCellValue("Isapre " + key);  
+                        }
                         rowhead.getCell(5).setCellStyle(style);
                         rowhead = sheet_salud.createRow((short) j++);
                         rowhead.createCell(0).setCellValue("rut");
