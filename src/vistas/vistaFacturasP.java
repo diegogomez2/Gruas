@@ -269,7 +269,11 @@ public class vistaFacturasP extends javax.swing.JPanel {
                 if ((miControlador.crearBolXML(idOts, Integer.toString(neto), Integer.toString(iva),
                         Integer.toString(total), id).compareTo("correcto") == 0)) {
                     JTabbedPane tabs = (JTabbedPane) this.getParent();
-                    micontroladorOts.crearControladorPrincipal(tabs);
+                    try {
+                        micontroladorOts.crearControladorPrincipal(tabs);
+                    } catch (ParseException ex) {
+                        Logger.getLogger(vistaFacturasP.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     miControlador.crearControladorPrincipal(tabs);
                 }
             }else{
@@ -319,7 +323,11 @@ public class vistaFacturasP extends javax.swing.JPanel {
                                     JOptionPane.showMessageDialog(null, "La nota de débito ya había sido ingresada al sistema", "Error nota de débito duplicada",
                                             JOptionPane.INFORMATION_MESSAGE);
                                     JTabbedPane tabs = (JTabbedPane) this.getParent();
-                                    micontroladorOts.crearControladorPrincipal(tabs);
+                                    try {
+                                        micontroladorOts.crearControladorPrincipal(tabs);
+                                    } catch (ParseException ex) {
+                                        Logger.getLogger(vistaFacturasP.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
                                     miControlador.crearControladorPrincipal(tabs);
                                 }else{
                                     try {
@@ -371,7 +379,11 @@ public class vistaFacturasP extends javax.swing.JPanel {
                 if ((miControlador.crearFacExXML(idOts, Integer.toString(neto), Integer.toString(iva),
                         Integer.toString(total), id, docRef).compareTo("correcto") == 0)) {
                     JTabbedPane tabs = (JTabbedPane) this.getParent();
-                    micontroladorOts.crearControladorPrincipal(tabs);
+                    try {
+                        micontroladorOts.crearControladorPrincipal(tabs);
+                    } catch (ParseException ex) {
+                        Logger.getLogger(vistaFacturasP.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     miControlador.crearControladorPrincipal(tabs);
                 }
             }else{
@@ -394,8 +406,12 @@ public class vistaFacturasP extends javax.swing.JPanel {
             idOt = getIdOt(row);
             miControlador.quitarFactura(idOt);
             JTabbedPane tabs = (JTabbedPane) this.getParent();
-            micontroladorFacturas.crearControladorPrincipal(tabs);
-            //JOptionPane.showMessageDialog(null, "Orden de trabajo facturada con éxito");
+            try {
+                micontroladorFacturas.crearControladorPrincipal(tabs);
+                //JOptionPane.showMessageDialog(null, "Orden de trabajo facturada con éxito");
+            } catch (ParseException ex) {
+                Logger.getLogger(vistaFacturasP.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una orden de trabajo quitar");
@@ -405,7 +421,11 @@ public class vistaFacturasP extends javax.swing.JPanel {
     private void botonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarActionPerformed
         controladores.controladorFacturas miControlador = new controladores.controladorFacturas();
         JTabbedPane tabs = (JTabbedPane)this.getParent();
-        miControlador.crearControladorPrincipal(tabs);
+        try {
+            miControlador.crearControladorPrincipal(tabs);
+        } catch (ParseException ex) {
+            Logger.getLogger(vistaFacturasP.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botonActualizarActionPerformed
 
 

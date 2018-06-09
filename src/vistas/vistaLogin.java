@@ -5,6 +5,9 @@
  */
 package vistas;
 import java.awt.event.KeyEvent;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -124,20 +127,32 @@ public class vistaLogin extends javax.swing.JFrame {
     private void TextoUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextoUsuarioKeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
             controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
-            miControlador.autenticarUsuario();
+            try {
+                miControlador.autenticarUsuario();
+            } catch (ParseException ex) {
+                Logger.getLogger(vistaLogin.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_TextoUsuarioKeyPressed
 
     private void TextoContraseñaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextoContraseñaKeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
             controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
-            miControlador.autenticarUsuario();
+            try {
+                miControlador.autenticarUsuario();
+            } catch (ParseException ex) {
+                Logger.getLogger(vistaLogin.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_TextoContraseñaKeyPressed
 
     private void BotonIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonIngresarActionPerformed
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
-        miControlador.autenticarUsuario();
+        try {
+            miControlador.autenticarUsuario();
+        } catch (ParseException ex) {
+            Logger.getLogger(vistaLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_BotonIngresarActionPerformed
 
     /**

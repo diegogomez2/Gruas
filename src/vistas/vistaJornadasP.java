@@ -11,10 +11,7 @@ import java.awt.event.MouseEvent;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -259,12 +256,12 @@ public class vistaJornadasP extends javax.swing.JPanel {
             if (trab.compareTo("") != 0 && grua.compareTo("") != 0) {
                 try {
                     miControlador.irVistaIngresarOts(id);
+                    JTabbedPane tabs = (JTabbedPane) this.getParent();
+                    miControladorOt.crearControladorPrincipal(tabs);
+                    miControlador.crearControladorPrincipal(tabs);
                 } catch (ParseException ex) {
                     Logger.getLogger(vistaJornadasP.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                JTabbedPane tabs = (JTabbedPane) this.getParent();
-                miControladorOt.crearControladorPrincipal(tabs);
-                miControlador.crearControladorPrincipal(tabs);
             } else {
                 JOptionPane.showMessageDialog(null, "Debe llenar los datos faltantes para asignar una OT a esta jornada");
             }

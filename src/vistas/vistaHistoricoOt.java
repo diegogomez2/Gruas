@@ -9,10 +9,13 @@ import java.awt.Component;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
@@ -38,7 +41,7 @@ public class vistaHistoricoOt extends javax.swing.JPanel {
     NumberFormat FORMAT = NumberFormat.getCurrencyInstance();
     DecimalFormatSymbols dfs = new DecimalFormatSymbols();
     
-    public vistaHistoricoOt(String tipo, Object[][] data) {
+    public vistaHistoricoOt(String tipo, Object[][] data) throws ParseException {
         initComponents();
         dfs.setCurrencySymbol("$");
         dfs.setGroupingSeparator('.');
@@ -180,24 +183,26 @@ public class vistaHistoricoOt extends javax.swing.JPanel {
           super(new String[]{"Código OT", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
              "Neto", "IVA", "Total", "Estado", "Empleado", "Cliente"}, 0);
         }
-        public MyTableModel(Object[][] data){
+        public MyTableModel(Object[][] data) throws ParseException{
             super(new String[]{"Código OT", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
              "Neto", "IVA", "Total", "Estado", "Empleado", "Cliente"}, 0);
             
             int i = 0;
             this.setRowCount(data.length);
+            DateFormat fecfor = new SimpleDateFormat("dd-MM-yyyy");
             for(Object[] data1 : data){
                 int ot = Integer.parseInt(data1[0].toString());
                 int neto = Integer.parseInt(data1[7].toString());
                 int iva = Integer.parseInt(data1[8].toString());
                 int tot = Integer.parseInt(data1[9].toString());
+                Date fec = fecfor.parse(data1[6].toString());
                 this.setValueAt(ot, i, 0);
                 this.setValueAt(data1[1], i, 1);
                 this.setValueAt(data1[2], i, 2);
                 this.setValueAt(data1[3], i, 3);
                 this.setValueAt(data1[4], i, 4);
                 this.setValueAt(data1[5], i, 5);
-                this.setValueAt(data1[6], i, 6);
+                this.setValueAt(fecfor, i, 6);
                 this.setValueAt(neto, i, 7);
                 this.setValueAt(iva, i, 8);
                 this.setValueAt(tot, i, 9);

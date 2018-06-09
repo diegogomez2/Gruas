@@ -839,8 +839,8 @@ public class vistaIngresarOcs extends javax.swing.JDialog {
     }
 
     public int getMes() {
-//        Date fecha = textoFechaOt.getDate();
-        Date fecha = textoFechaInicio.getDate();
+        Date fecha = textoFechaOt.getDate();
+        //Date fecha = textoFechaInicio.getDate();
         Calendar cal = Calendar.getInstance();
         cal.setTime(fecha);
         System.out.println("Mes: " + cal.get(Calendar.MONTH));

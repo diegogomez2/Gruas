@@ -6,6 +6,7 @@
 package vistas2;
 
 import controladores2.controladorCobranzas;
+import controladores4.controladorReportes;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -17,7 +18,6 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.text.ParseException;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
@@ -67,7 +67,7 @@ public class vistaCobranzasP extends javax.swing.JPanel {
         tablaFacturadas.setDefaultRenderer(Integer.class, new OwnTableCellRenderer());
         tablaFacturadas.setAutoCreateRowSorter(true);
         if(tablaFacturadas.getRowCount() > 0) tablaFacturadas.setRowSelectionInterval(0, 0);
-        tablaFacturadas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        //tablaFacturadas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tablaFacturadas.addMouseListener(new MouseAdapter(){
             public void mousePressed(MouseEvent evt){
                 JTable table = (JTable)evt.getSource();
@@ -105,6 +105,7 @@ public class vistaCobranzasP extends javax.swing.JPanel {
         botonPago = new javax.swing.JButton();
         botonVer = new javax.swing.JButton();
         botonVerPagos = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         tablaFacturadas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -118,6 +119,7 @@ public class vistaCobranzasP extends javax.swing.JPanel {
             }
         ));
         tablaFacturadas.getTableHeader().setReorderingAllowed(false);
+        tablaFacturadas.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         jScrollPane1.setViewportView(tablaFacturadas);
 
         textoFiltro.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -163,6 +165,13 @@ public class vistaCobranzasP extends javax.swing.JPanel {
             }
         });
 
+        jButton1.setText("Generar informe ");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -173,6 +182,8 @@ public class vistaCobranzasP extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(botonActualizar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -198,7 +209,8 @@ public class vistaCobranzasP extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textoFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
-                    .addComponent(botonActualizar))
+                    .addComponent(botonActualizar)
+                    .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -224,8 +236,7 @@ public class vistaCobranzasP extends javax.swing.JPanel {
 
     private void botonCobranzaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCobranzaActionPerformed
         controladorCobranzas miControlador = new controladorCobranzas();
-        
-        boolean selected = tablaFacturadas.getSelectedRowCount() > 0;
+        boolean selected = (tablaFacturadas.getSelectedRowCount() > 0 && tablaFacturadas.getSelectedRowCount() < 1);
         if(selected){
             int row = getFilaSeleccionada();
             String id = getIdFila(row);
@@ -245,7 +256,7 @@ public class vistaCobranzasP extends javax.swing.JPanel {
 
     private void botonPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonPagoActionPerformed
         controladorCobranzas miControlador = new controladorCobranzas();
-        boolean selected = tablaFacturadas.getSelectedRowCount() > 0;
+        boolean selected = (tablaFacturadas.getSelectedRowCount() > 0 && tablaFacturadas.getSelectedRowCount() < 1);
         if(selected){
             int row = getFilaSeleccionada();
             String id = getIdFila(row);
@@ -265,7 +276,7 @@ public class vistaCobranzasP extends javax.swing.JPanel {
 
     private void botonVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonVerActionPerformed
         controladorCobranzas miControlador = new controladorCobranzas();
-        boolean selected = tablaFacturadas.getSelectedRowCount() > 0;
+        boolean selected = (tablaFacturadas.getSelectedRowCount() > 0 && tablaFacturadas.getSelectedRowCount() < 1);
         if(selected){
             int row = getFilaSeleccionada();
 //            String id = getIdFila(row);
@@ -285,7 +296,7 @@ public class vistaCobranzasP extends javax.swing.JPanel {
 
     private void botonVerPagosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonVerPagosActionPerformed
         controladorCobranzas miControlador = new controladorCobranzas();
-        boolean selected = tablaFacturadas.getSelectedRowCount() > 0;
+        boolean selected = (tablaFacturadas.getSelectedRowCount() > 0 && tablaFacturadas.getSelectedRowCount() < 1);
         if(selected){
             int row = getFilaSeleccionada();
             String id = getFacFila(row);
@@ -302,6 +313,21 @@ public class vistaCobranzasP extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_botonVerPagosActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        controladores4.controladorReportes miControlador = new controladorReportes();
+        boolean selected = tablaFacturadas.getSelectedRowCount() > 0;
+        if(selected){
+            int[] rows = getFilasSeleccionadas();
+            if(verificarRazon(rows)){
+                miControlador.generarInformeCobranza(tablaFacturadas, rows);
+            }else{
+                JOptionPane.showMessageDialog(null, "Debe seleccionar facturas de un mismo ");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una factura para visualizar sus pagos");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonActualizar;
@@ -309,13 +335,32 @@ public class vistaCobranzasP extends javax.swing.JPanel {
     private javax.swing.JButton botonPago;
     private javax.swing.JButton botonVer;
     private javax.swing.JButton botonVerPagos;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaFacturadas;
     private javax.swing.JTextField textoFiltro;
     // End of variables declaration//GEN-END:variables
+    public boolean verificarRazon(int[] rows) {
+        String razon = getRazonFila(rows[0]);
+        for (int row : rows) {
+            if(razon.compareTo(getRazonFila(row)) != 0){
+                return false;
+            }
+        }
+            return true;
+    }
+    
+    public String getRazonFila(int row) {
+        return tablaFacturadas.getValueAt(row, 2).toString();
+    }
+    
     public int getFilaSeleccionada() {
         return tablaFacturadas.getSelectedRow();
+    }
+    
+    public int[] getFilasSeleccionadas(){
+        return tablaFacturadas.getSelectedRows();
     }
     
     public String getIdFila(int row){
@@ -349,7 +394,6 @@ public class vistaCobranzasP extends javax.swing.JPanel {
             this.setRowCount(data.length);
             for(Object[] data1 : data){
                 //int ot = Integer.parseInt(data1[0].toString());
-                System.out.println(data1[0].toString());
                 int fol = Integer.parseInt(data1[0].toString());
                 int dias = Integer.parseInt(data1[4].toString());
                 int neto = Integer.parseInt(data1[5].toString());

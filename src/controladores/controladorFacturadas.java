@@ -16,7 +16,7 @@ import javax.swing.JTabbedPane;
 public class controladorFacturadas {
     static vistas.vistaFacturadasP vistaFacturadasP;
     
-    JPanel mostrarTabControlFacturadasP(String tipo, Object[][] data) {
+    JPanel mostrarTabControlFacturadasP(String tipo, Object[][] data) throws ParseException {
         vistaFacturadasP = new vistas.vistaFacturadasP(tipo, data);  
         return vistaFacturadasP;
     }

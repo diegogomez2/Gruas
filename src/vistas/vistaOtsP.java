@@ -11,10 +11,14 @@ import javax.swing.RowFilter;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
@@ -22,6 +26,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.RowSorter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -41,7 +46,7 @@ public class vistaOtsP extends javax.swing.JPanel {
     NumberFormat FORMAT = NumberFormat.getCurrencyInstance();
     DecimalFormatSymbols dfs = new DecimalFormatSymbols();
 
-    public vistaOtsP(String tipo, Object[][] data) {
+    public vistaOtsP(String tipo, Object[][] data) throws ParseException {
         initComponents();
         dfs.setCurrencySymbol("$");
         dfs.setGroupingSeparator('.');
@@ -236,9 +241,17 @@ public class vistaOtsP extends javax.swing.JPanel {
             } else {
                 miControlador.ingresarFactura(idOt);
                 JTabbedPane tabs = (JTabbedPane) this.getParent();
-                micontroladorFacturas.crearControladorPrincipal(tabs);
-                miControlador.crearControladorPrincipal(tabs);
-                //JOptionPane.showMessageDialog(null, "Orden de trabajo facturada con éxito");
+                try {
+                    micontroladorFacturas.crearControladorPrincipal(tabs);
+                } catch (ParseException ex) {
+                    Logger.getLogger(vistaOtsP.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                try {
+                    miControlador.crearControladorPrincipal(tabs);
+                    //JOptionPane.showMessageDialog(null, "Orden de trabajo facturada con éxito");
+                } catch (ParseException ex) {
+                    Logger.getLogger(vistaOtsP.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
             }
         } else {
@@ -266,8 +279,16 @@ public class vistaOtsP extends javax.swing.JPanel {
             if(dialogResult == JOptionPane.YES_OPTION){
                 miControlador.anularFactura(idOt);
                 JTabbedPane tabs = (JTabbedPane) this.getParent();
-                micontroladorFacturas.crearControladorPrincipal(tabs);
-                miControlador.crearControladorPrincipal(tabs);
+                try {
+                    micontroladorFacturas.crearControladorPrincipal(tabs);
+                } catch (ParseException ex) {
+                    Logger.getLogger(vistaOtsP.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                try {
+                    miControlador.crearControladorPrincipal(tabs);
+                } catch (ParseException ex) {
+                    Logger.getLogger(vistaOtsP.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 JOptionPane.showMessageDialog(null, "Orden de trabajo anulada con éxito");   
             }
         } else {
@@ -276,9 +297,17 @@ public class vistaOtsP extends javax.swing.JPanel {
     }//GEN-LAST:event_botonAnularActionPerformed
 
     private void botonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarActionPerformed
+        TableRowSorter sorter = (TableRowSorter)tablaOts.getRowSorter();
+        List<?extends RowSorter.SortKey> sortKeys = sorter.getSortKeys();
         controladores.controladorOts miControlador = new controladores.controladorOts();
         JTabbedPane tabs = (JTabbedPane)this.getParent();
-        miControlador.crearControladorPrincipal(tabs);
+        try {
+            miControlador.crearControladorPrincipal(tabs);
+        } catch (ParseException ex) {
+            Logger.getLogger(vistaOtsP.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        sorter = (TableRowSorter)tablaOts.getRowSorter();
+        sorter.setSortKeys(sortKeys);
     }//GEN-LAST:event_botonActualizarActionPerformed
 
     private void botonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarActionPerformed
@@ -295,15 +324,15 @@ public class vistaOtsP extends javax.swing.JPanel {
             if(dialogResult == JOptionPane.YES_OPTION) {
                 try {
                     micontroladorEmpleados.restarMensualidad(idOt);
+                    JTabbedPane tabs = (JTabbedPane) this.getParent();
+                    micontroladorFacturas.crearControladorPrincipal(tabs);
+                    miControlador.crearControladorPrincipal(tabs);
                 } catch (ParseException ex) {
                     Logger.getLogger(vistaOtsP.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 miControlador.eliminarOt(idOt);
                 JOptionPane.showMessageDialog(null, "OT eliminada con éxito.");
             }
-            JTabbedPane tabs = (JTabbedPane) this.getParent();
-            micontroladorFacturas.crearControladorPrincipal(tabs);
-            miControlador.crearControladorPrincipal(tabs);
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una orden de trabajo para ser eliminada");
         }
@@ -348,7 +377,7 @@ public class vistaOtsP extends javax.swing.JPanel {
           super(new String[]{"Código OT", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
             "Neto", "IVA", "Total", "Estado", "Operador", "Cliente"}, 0);
         }
-        public MyTableModel(Object[][] data){
+        public MyTableModel(Object[][] data) throws ParseException{
             super(new String[]{"Código OT", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
             "Neto", "IVA", "Total", "Estado", "Operador", "Cliente"}, 0);
             
@@ -359,13 +388,16 @@ public class vistaOtsP extends javax.swing.JPanel {
                 int neto = Integer.parseInt(data1[7].toString());
                 int iva = Integer.parseInt(data1[8].toString());
                 int tot = Integer.parseInt(data1[9].toString());
+                DateFormat fecfor = new SimpleDateFormat("dd-MM-yyyy");
+                Date fec =  fecfor.parse(data1[6].toString());
                 this.setValueAt(cod, i, 0);
                 this.setValueAt(data1[1], i, 1);
                 this.setValueAt(data1[2], i, 2);
                 this.setValueAt(data1[3], i, 3);
                 this.setValueAt(data1[4], i, 4);
                 this.setValueAt(data1[5], i, 5);
-                this.setValueAt(data1[6], i, 6);
+//                this.setValueAt(data1[6], i, 6);
+                this.setValueAt(fec, i, 6);
                 this.setValueAt(neto, i, 7);
                 this.setValueAt(iva, i, 8);
                 this.setValueAt(tot, i, 9);
@@ -381,6 +413,8 @@ public class vistaOtsP extends javax.swing.JPanel {
           switch (column) {
             case 0:
                 return Integer.class;
+            case 6:
+                return Date.class;
             case 7:
                 return Integer.class;
             case 8:

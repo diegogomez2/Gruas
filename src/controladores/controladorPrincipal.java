@@ -84,7 +84,7 @@ public class controladorPrincipal {
         miVistaL = new vistaLogin();
     }
 
-    public void autenticarUsuario() {
+    public void autenticarUsuario() throws ParseException {
         String rut, pass;
         modeloUsuarios usuario = new modeloUsuarios();
         rut = miVistaL.getTextoUsuario();
@@ -103,7 +103,7 @@ public class controladorPrincipal {
         }
     }
 
-    public void mostrarVentana() {
+    public void mostrarVentana() throws ParseException {
         miVistaL.setVisible(false);
         vistas.vistaPrincipal miVistaP = new vistaPrincipal();
         miVistaP.setVisible(true);
@@ -295,7 +295,7 @@ public class controladorPrincipal {
     }
 
     //OTS
-    public JPanel crearControladorOtsP() {
+    public JPanel crearControladorOtsP() throws ParseException {
         modelos.modeloOts ots;
         ots = new modelos.modeloOts();
         Object[][] data;
@@ -319,7 +319,7 @@ public class controladorPrincipal {
         return micontroladorFacturas.mostrarTabControlFacturas(tipo, data);
     }
 
-    public JPanel crearControladorFacturadasP() {
+    public JPanel crearControladorFacturadasP() throws ParseException {
         modelos.modeloFacturas facturas;
         facturas = new modelos.modeloFacturas();
         Object[][] data;
@@ -328,7 +328,7 @@ public class controladorPrincipal {
         return micontroladorFacturadas.mostrarTabControlFacturadasP(tipo, data);
     }
 
-    public JPanel crearControladorHistoricoP() {
+    public JPanel crearControladorHistoricoP() throws ParseException {
         modelos.modeloOts ots;
         ots = new modelos.modeloOts();
         Object[][] data;

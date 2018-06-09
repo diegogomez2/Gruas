@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -23,6 +24,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import modelos.modeloClientes;
 import modelos.modeloEmpleados;
 import modelos.modeloFacturas;
@@ -30,6 +32,12 @@ import modelos.modeloGruas;
 import modelos.modeloOts;
 import modelos3.modeloRemuneraciones;
 import modelos4.modeloOcs;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.graphics.PDXObject;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -572,11 +580,11 @@ public class controladorReportes {
         DateFormat date2 = new SimpleDateFormat("dd-MMMM-yyyy");
         NumberFormat FORMAT = NumberFormat.getCurrencyInstance();
         DecimalFormatSymbols dfs = new DecimalFormatSymbols();
-        
+
         Thread runnable;
-        runnable = new Thread(){
-            public void run(){
-                try{
+        runnable = new Thread() {
+            public void run() {
+                try {
                     DateFormat yearDate = new SimpleDateFormat("yyyy");
                     DateFormat monthDate = new SimpleDateFormat("M");
                     String month = monthDate.format(new Date());
@@ -588,16 +596,16 @@ public class controladorReportes {
                     double uf = remu.obtenerUF();
                     double utm = remu.obtenerUTM();
                     String[][] imp2cat = remu.obtenerTablaImpuesto();
-                    
+
                     //Listas para detalle afp y salud
                     HashMap<String, ArrayList<AfpInfo>> mapAfp = new HashMap<>();
                     HashMap<String, ArrayList<SaludInfo>> mapSalud = new HashMap<>();
                     List<AfpInfo> listaAfp = new ArrayList<>();
                     List<SaludInfo> listaSalud = new ArrayList<>();
-                    
+
                     modelos.modeloEmpleados emp = new modeloEmpleados();
                     String[][] data = emp.obtenerRemuneraciones2(getMes(), getYear());
-                    
+
                     String path = "Libro de remuneraciones - " + per + ".xls";
                     File file = new File(path);
                     HSSFWorkbook workbook = new HSSFWorkbook();
@@ -614,46 +622,46 @@ public class controladorReportes {
                     //J para recorrer los datos de los trabajadores
                     int j = 0;
                     int numTrab = data.length;
-                    for(int i = 0; i < 2; i++){
+                    for (int i = 0; i < 2; i++) {
                         //Primera linea
-                        rowhead = sheet_rem.createRow((short) 0+ i*34);
+                        rowhead = sheet_rem.createRow((short) 0 + i * 34);
                         rowhead.createCell(0).setCellValue("parte:1");
                         rowhead.createCell(3).setCellValue("Libro de Remuneraciones - Gruas Santa Teresita FM Limitada");
                         rowhead.getCell(3).setCellStyle(style);
-                        rowhead.createCell(11).setCellValue("pag:"+(i+1));
-                        
+                        rowhead.createCell(11).setCellValue("pag:" + (i + 1));
+
                         rowhead.createCell(12).setCellValue("parte:2");
                         rowhead.createCell(15).setCellValue("Libro de Remuneraciones - Gruas Santa Teresita FM Limitada");
                         rowhead.getCell(15).setCellStyle(style);
-                        rowhead.createCell(23).setCellValue("pag:"+(i+1));
-                        
+                        rowhead.createCell(23).setCellValue("pag:" + (i + 1));
+
                         rowhead.createCell(24).setCellValue("parte:3");
                         rowhead.createCell(27).setCellValue("Libro de Remuneraciones - Gruas Santa Teresita FM Limitada");
                         rowhead.getCell(27).setCellStyle(style);
-                        rowhead.createCell(35).setCellValue("pag:"+(i+1));
-                        
+                        rowhead.createCell(35).setCellValue("pag:" + (i + 1));
+
                         //Segunda linea
-                        rowhead = sheet_rem.createRow((short) 1 + (i*34));
+                        rowhead = sheet_rem.createRow((short) 1 + (i * 34));
                         rowhead.createCell(0).setCellValue("Rut_empresa:77.037.960-1");
                         rowhead.createCell(2).setCellValue("Mes: " + month);
                         rowhead.createCell(4).setCellValue("Año: " + year);
                         rowhead.createCell(6).setCellValue("UF: $" + uf);
                         rowhead.createCell(9).setCellValue("UTM: $" + utm);
-                        
+
                         rowhead.createCell(12).setCellValue("Rut_empresa:77.037.960-1");
                         rowhead.createCell(14).setCellValue("Mes: " + month);
                         rowhead.createCell(16).setCellValue("Año: " + year);
                         rowhead.createCell(18).setCellValue("UF: $" + uf);
                         rowhead.createCell(21).setCellValue("UTM: $" + utm);
-                        
+
                         rowhead.createCell(24).setCellValue("Rut_empresa:77.037.960-1");
                         rowhead.createCell(26).setCellValue("Mes: " + month);
                         rowhead.createCell(28).setCellValue("Año: " + year);
                         rowhead.createCell(30).setCellValue("UF: $" + uf);
                         rowhead.createCell(33).setCellValue("UTM: $" + utm);
-                        
+
                         //Tercera linea
-                        rowhead = sheet_rem.createRow((short) 4 + (i*34));
+                        rowhead = sheet_rem.createRow((short) 4 + (i * 34));
                         rowhead.createCell(0).setCellValue("rut_trabajador");
                         rowhead.createCell(1).setCellValue("nombre_trabajador");
                         rowhead.createCell(2).setCellValue("dias_trab");
@@ -666,7 +674,7 @@ public class controladorReportes {
                         rowhead.createCell(9).setCellValue("otros_bonos");
                         rowhead.createCell(10).setCellValue("horas_extra");
                         rowhead.createCell(11).setCellValue("tot_h_imp");
-                        
+
                         rowhead.createCell(12).setCellValue("rut_trabajador");
                         rowhead.createCell(13).setCellValue("nombre_trabajador");
                         rowhead.createCell(14).setCellValue("colacion");
@@ -679,7 +687,7 @@ public class controladorReportes {
                         rowhead.createCell(21).setCellValue("afc_trab");
                         rowhead.createCell(22).setCellValue("afc_empl");
                         rowhead.createCell(23).setCellValue("tot_desc_leg");
-                        
+
                         rowhead.createCell(24).setCellValue("rut_trabajador");
                         rowhead.createCell(25).setCellValue("nombre_trabajador");
                         rowhead.createCell(26).setCellValue("imp_renta");
@@ -691,13 +699,15 @@ public class controladorReportes {
                         rowhead.createCell(32).setCellValue("tot_desc");
                         rowhead.createCell(33).setCellValue("total_a_pago");
                         rowhead.createCell(34).setCellValue("sis");
-                        
+
                         //Cuarta linea                        
-                        for(int k = 0; k < 28; k++, j++){
-                            if (j == numTrab) break;
+                        for (int k = 0; k < 28; k++, j++) {
+                            if (j == numTrab) {
+                                break;
+                            }
                             int base = Integer.parseInt(data[j][2]) * Integer.parseInt(data[j][28]) / 30;
                             //GRATIFICACION
-                            int grat = (int)(base * 0.25);
+                            int grat = (int) (base * 0.25);
                             //BONO ANTIGUEDAD
                             int bonoAnt = miControlador.obtenerBonoAnt(data[j][5]);
                             //BONO 300
@@ -709,8 +719,8 @@ public class controladorReportes {
                             //BONO ADICIONAL
                             double bonoCol1 = Double.parseDouble(data[j][8]);
                             double bonoCol30 = Double.parseDouble(data[j][9]);
-                            double bonoCol = bonoCol1 + bonoCol30/2;
-                            int totalBonCol = (int)Math.round(((double) base * 0.0077777) * bonoCol);
+                            double bonoCol = bonoCol1 + bonoCol30 / 2;
+                            int totalBonCol = (int) Math.round(((double) base * 0.0077777) * bonoCol);
                             //HORAS EXTRA
                             double horasExNor = Double.parseDouble(data[j][12]);
                             double horasExFes = Double.parseDouble(data[j][13]);
@@ -718,50 +728,50 @@ public class controladorReportes {
                             //total de horas extras normales = 1; festivas = 2
                             double totalHorex = 0;
                             double resHorEx = 0;
-                            if(horasExNor > 45){
+                            if (horasExNor > 45) {
                                 cantHorEx = 45;
                                 totalHorex = 45;
                                 resHorEx = horasExNor - 45;
-                            }else{
+                            } else {
                                 cantHorEx = horasExNor;
                                 totalHorex = cantHorEx;
                             }
-                            if(cantHorEx + horasExFes > 45) {
+                            if (cantHorEx + horasExFes > 45) {
                                 resHorEx = resHorEx + (horasExFes - 45 + cantHorEx) * 2;
                                 totalHorex = 45 - cantHorEx;
                                 cantHorEx = 45;
-                            }else{
+                            } else {
                                 cantHorEx += horasExFes;
                                 totalHorex += horasExFes * 2;
                             }
 
                             //BONO ASIGNACION VOLUNTARIA
                             double totalBonoAV = base * 0.0077777 * resHorEx;
-                            double valorHorEx = (int)((double) base * 0.0077777 * totalHorex);
+                            double valorHorEx = (int) ((double) base * 0.0077777 * totalHorex);
                             //TOTAL IMPONIBLE
                             double totImp = base + grat + bonoAnt + bonoAd + bonoResp + totalBonoAV + totalBonCol + totalBon300 + valorHorEx;
                             //DESCUENTO AFP
                             int descAFP = Integer.parseInt(data[j][21]);
-                            int totalAFP = (int)(totImp * ((double)descAFP / 10000));
-                            int sis = (int)(totImp * 0.0141);
+                            int totalAFP = (int) (totImp * ((double) descAFP / 10000));
+                            int sis = (int) (totImp * 0.0141);
                             //DESCUENTO SALUD
                             double descSalud = 0, totalSalud = 0;
                             String salud;
-                            if(data[j][4].toLowerCase().compareTo("fonasa") == 0){
+                            if (data[j][4].toLowerCase().compareTo("fonasa") == 0) {
                                 salud = "FONASA";
                                 descSalud = Integer.parseInt(data[j][22]);
-                                totalSalud = (int)(totImp * ((double)descSalud / 10000));
-                            }else{
-                                if(data[i][23].compareTo("") == 0){
+                                totalSalud = (int) (totImp * ((double) descSalud / 10000));
+                            } else {
+                                if (data[i][23].compareTo("") == 0) {
                                     salud = data[j][4];
-                                }else{
+                                } else {
                                     salud = data[j][23];
                                 }
-                                descSalud = ((double)Integer.parseInt(data[j][24]) / 1000) * uf;
+                                descSalud = ((double) Integer.parseInt(data[j][24]) / 1000) * uf;
                                 totalSalud = descSalud;
                             }
                             //DESCUENTO CESANTIA
-                            int ces = (int)(totImp * 0.006);
+                            int ces = (int) (totImp * 0.006);
                             int cesEmp = (int) (totImp * 0.024);
                             //DESCUENTOS LEGALES
                             double descLegales = ces + totalSalud + totalAFP;
@@ -769,8 +779,8 @@ public class controladorReportes {
                             double totTrib = totImp - totalAFP - totalSalud - ces;
                             int descRenta = 0;
                             double totAux = 0;
-                            for(String[] imp2cat1: imp2cat){
-                                if(totTrib > Float.parseFloat(imp2cat1[0]) / 10 && totTrib <= Float.parseFloat(imp2cat1[1]) / 10){
+                            for (String[] imp2cat1 : imp2cat) {
+                                if (totTrib > Float.parseFloat(imp2cat1[0]) / 10 && totTrib <= Float.parseFloat(imp2cat1[1]) / 10) {
                                     descRenta = (int) (totTrib * Float.parseFloat(imp2cat1[2]) / 1000 - Float.parseFloat(imp2cat1[3]) / 100);
                                     totAux = totTrib - descRenta;
                                     break;
@@ -795,7 +805,7 @@ public class controladorReportes {
                             int cuo = Integer.parseInt(data[j][20]);
                             int cuoPres = 0;
                             int cuores = Math.max(0, Integer.parseInt(data[j][26]) - 1);
-                            if(cuo != 0){
+                            if (cuo != 0) {
                                 cuoPres = pres / cuo;
                             }
                             //DESCUENTOS MENSUALES
@@ -806,22 +816,22 @@ public class controladorReportes {
                             int totDesc = antic + adel + cuoPres + caja;
                             //LIQUIDO
                             double liq = liqAl + col + trans + af - antic - adel - cuoPres;
-                            
+
                             //Agrego los datos de afp a listaAfp
                             String afp = data[j][3];
-                            if(mapAfp.get(afp) == null){
+                            if (mapAfp.get(afp) == null) {
                                 mapAfp.put(afp, new ArrayList<AfpInfo>());
                             }
-                            if(mapSalud.get(salud.toUpperCase()) == null){
+                            if (mapSalud.get(salud.toUpperCase()) == null) {
                                 mapSalud.put(salud.toUpperCase(), new ArrayList<SaludInfo>());
                             }
                             //cambie descAfp por totalAfp
-                            AfpInfo info = new AfpInfo(data[j][0], data[j][1], totImp, (int)totalAFP, sis, totalAFP);
+                            AfpInfo info = new AfpInfo(data[j][0], data[j][1], totImp, (int) totalAFP, sis, totalAFP);
                             mapAfp.get(afp).add(info);
                             //cambie descSalud por totalSalud
-                            SaludInfo sInfo = new SaludInfo(data[j][0], data[j][1], totImp, (int)totalSalud);
+                            SaludInfo sInfo = new SaludInfo(data[j][0], data[j][1], totImp, (int) totalSalud);
                             mapSalud.get(salud.toUpperCase()).add(sInfo);
-                            rowhead = sheet_rem.createRow((short) 5 + k + (i*34));
+                            rowhead = sheet_rem.createRow((short) 5 + k + (i * 34));
                             rowhead.createCell(0).setCellValue(data[j][0]);
                             rowhead.createCell(1).setCellValue(data[j][1]);
                             rowhead.createCell(2).setCellValue(Integer.parseInt(data[j][28]));
@@ -834,7 +844,7 @@ public class controladorReportes {
                             rowhead.createCell(9).setCellValue(bonoAd);
                             rowhead.createCell(10).setCellValue(valorHorEx);
                             rowhead.createCell(11).setCellValue(totImp);
-                            
+
                             rowhead.createCell(12).setCellValue(data[j][0]);
                             rowhead.createCell(13).setCellValue(data[j][1]);
                             rowhead.createCell(14).setCellValue(col);
@@ -861,7 +871,7 @@ public class controladorReportes {
                             rowhead.createCell(34).setCellValue(sis);
                         }
                     }
-                    
+
                     //Totales
                     rowhead = sheet_rem.createRow(66);
                     rowhead.createCell(2).setCellFormula("SUM(C6:C34,C40:C66)");
@@ -874,7 +884,7 @@ public class controladorReportes {
                     rowhead.createCell(9).setCellFormula("SUM(J6:J34,J40:J66)");
                     rowhead.createCell(10).setCellFormula("SUM(K6:K34,K40:K66)");
                     rowhead.createCell(11).setCellFormula("SUM(L6:L34,L40:L66)");
-                    
+
                     rowhead.createCell(14).setCellFormula("SUM(O6:O34,O40:O66)");
                     rowhead.createCell(15).setCellFormula("SUM(P6:P34,P40:P66)");
                     rowhead.createCell(16).setCellFormula("SUM(Q6:Q34,Q40:Q66)");
@@ -885,7 +895,7 @@ public class controladorReportes {
                     rowhead.createCell(21).setCellFormula("SUM(V6:V34,V40:V66)");
                     rowhead.createCell(22).setCellFormula("SUM(W6:W34,W40:W66)");
                     rowhead.createCell(23).setCellFormula("SUM(X6:X34,X40:X66)");
-                    
+
                     rowhead.createCell(26).setCellFormula("SUM(AA6:AA34,AA40:AA66)");
                     rowhead.createCell(27).setCellFormula("SUM(AB6:AB34,AB40:AB66)");
                     rowhead.createCell(28).setCellFormula("SUM(AC6:AC34,AC40:AC66)");
@@ -895,8 +905,7 @@ public class controladorReportes {
                     rowhead.createCell(32).setCellFormula("SUM(AG6:AG34,AG40:AG66)");
                     rowhead.createCell(33).setCellFormula("SUM(AH6:AH34,AH40:AH66)");
                     rowhead.createCell(34).setCellFormula("SUM(AI6:AI34,AI40:AI66)");
-                    
-                    
+
                     //Hoja detalle afp
                     j = 0;
 
@@ -907,15 +916,15 @@ public class controladorReportes {
                     rowhead.createCell(11).setCellValue("pag:1");
 
                     //Segunda linea
-                    rowhead = sheet_afp.createRow((short) j++ );
+                    rowhead = sheet_afp.createRow((short) j++);
                     rowhead.createCell(0).setCellValue("Rut_empresa:77.037.960-1");
                     rowhead.createCell(2).setCellValue("Mes: " + month);
                     rowhead.createCell(4).setCellValue("Año: " + year);
                     rowhead.createCell(6).setCellValue("UF: $" + uf);
                     rowhead.createCell(9).setCellValue("UTM: $" + utm);
 
-                    j+=2;
-                    for(String key : mapAfp.keySet()){
+                    j += 2;
+                    for (String key : mapAfp.keySet()) {
                         List<AfpInfo> aux = mapAfp.get(key);
                         rowhead = sheet_afp.createRow((short) j++);
                         rowhead.createCell(5).setCellValue("AFP " + key);
@@ -928,7 +937,7 @@ public class controladorReportes {
                         rowhead.createCell(4).setCellValue("sis");
                         rowhead.createCell(5).setCellValue("tot_afp");
                         rowhead.createCell(8).setCellValue("afiliados: " + aux.size());
-                        for(AfpInfo usuario : aux){
+                        for (AfpInfo usuario : aux) {
                             rowhead = sheet_afp.createRow((short) j++);
                             rowhead.createCell(0).setCellValue(usuario.getRut());
                             rowhead.createCell(1).setCellValue(usuario.getNombre());
@@ -939,13 +948,13 @@ public class controladorReportes {
                         }
                         rowhead = sheet_afp.createRow((short) j++);
                         int totalTrab = aux.size();
-                        rowhead.createCell(2).setCellFormula("SUM(C" + (j-totalTrab) + ":C" + (j-1) + ")");
-                        rowhead.createCell(3).setCellFormula("SUM(D" + (j-totalTrab) + ":D" + (j-1) + ")");
-                        rowhead.createCell(4).setCellFormula("SUM(E" + (j-totalTrab) + ":E" + (j-1) + ")");
-                        rowhead.createCell(5).setCellFormula("SUM(F" + (j-totalTrab) + ":F" + (j-1) + ")");
+                        rowhead.createCell(2).setCellFormula("SUM(C" + (j - totalTrab) + ":C" + (j - 1) + ")");
+                        rowhead.createCell(3).setCellFormula("SUM(D" + (j - totalTrab) + ":D" + (j - 1) + ")");
+                        rowhead.createCell(4).setCellFormula("SUM(E" + (j - totalTrab) + ":E" + (j - 1) + ")");
+                        rowhead.createCell(5).setCellFormula("SUM(F" + (j - totalTrab) + ":F" + (j - 1) + ")");
                         j++;
                     }
-                    
+
                     //Hoja detalle salud
                     j = 0;
 
@@ -956,21 +965,21 @@ public class controladorReportes {
                     rowhead.createCell(11).setCellValue("pag:1");
 
                     //Segunda linea
-                    rowhead = sheet_salud.createRow((short) j++ );
+                    rowhead = sheet_salud.createRow((short) j++);
                     rowhead.createCell(0).setCellValue("Rut_empresa:77.037.960-1");
                     rowhead.createCell(2).setCellValue("Mes: " + month);
                     rowhead.createCell(4).setCellValue("Año: " + year);
                     rowhead.createCell(6).setCellValue("UF: $" + uf);
                     rowhead.createCell(9).setCellValue("UTM: $" + utm);
 
-                    j+=2;
-                    for(String key : mapSalud.keySet()){
+                    j += 2;
+                    for (String key : mapSalud.keySet()) {
                         List<SaludInfo> aux = mapSalud.get(key);
                         rowhead = sheet_salud.createRow((short) j++);
-                        if(key.toLowerCase().compareTo("fonasa") == 0 || key.toLowerCase().compareTo("sin info") == 0){
+                        if (key.toLowerCase().compareTo("fonasa") == 0 || key.toLowerCase().compareTo("sin info") == 0) {
                             rowhead.createCell(5).setCellValue(key);
-                        }else{
-                            rowhead.createCell(5).setCellValue("Isapre " + key);  
+                        } else {
+                            rowhead.createCell(5).setCellValue("Isapre " + key);
                         }
                         rowhead.getCell(5).setCellStyle(style);
                         rowhead = sheet_salud.createRow((short) j++);
@@ -979,7 +988,7 @@ public class controladorReportes {
                         rowhead.createCell(2).setCellValue("tot_h_imp");
                         rowhead.createCell(3).setCellValue("desc_salud");
                         rowhead.createCell(8).setCellValue("afiliados: " + aux.size());
-                        for(SaludInfo usuario : aux){
+                        for (SaludInfo usuario : aux) {
                             rowhead = sheet_salud.createRow((short) j++);
                             rowhead.createCell(0).setCellValue(usuario.getRut());
                             rowhead.createCell(1).setCellValue(usuario.getNombre());
@@ -988,22 +997,22 @@ public class controladorReportes {
                         }
                         rowhead = sheet_salud.createRow((short) j++);
                         int totalTrab = aux.size();
-                        rowhead.createCell(2).setCellFormula("SUM(C" + (j-totalTrab) + ":C" + (j-1) + ")");
-                        rowhead.createCell(3).setCellFormula("SUM(D" + (j-totalTrab) + ":D" + (j-1) + ")");
+                        rowhead.createCell(2).setCellFormula("SUM(C" + (j - totalTrab) + ":C" + (j - 1) + ")");
+                        rowhead.createCell(3).setCellFormula("SUM(D" + (j - totalTrab) + ":D" + (j - 1) + ")");
                         j++;
                     }
-                    
+
                     FileOutputStream fileOut;
                     fileOut = new FileOutputStream(file);
                     workbook.write(fileOut);
                     fileOut.close();
                     JOptionPane.showMessageDialog(null, "Libro de remuneraciones generado con éxito", "Operación exitosa",
                             JOptionPane.INFORMATION_MESSAGE);
-                }catch(IOException ie){
+                } catch (IOException ie) {
                     JOptionPane.showMessageDialog(null, "El archivo està siendo ocupado\nCierre el archivo y vuelva a intentarlo", "Error",
                             JOptionPane.INFORMATION_MESSAGE);
                     ie.printStackTrace();
-                }catch(Exception e){
+                } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Error al crear libro de remuneraciones", "Error",
                             JOptionPane.INFORMATION_MESSAGE);
                     e.printStackTrace();
@@ -1012,30 +1021,30 @@ public class controladorReportes {
         };
         runnable.start();
     }
-    
-    public int getMes(){
+
+    public int getMes() {
         Date fecha = new Date();
         Calendar cal = Calendar.getInstance();
         cal.setTime(fecha);
-        return cal.get(Calendar.MONTH) + 1;  
+        return cal.get(Calendar.MONTH) + 1;
     }
-    
-    public int getYear(){
+
+    public int getYear() {
         Date fecha = new Date();
         Calendar cal = Calendar.getInstance();
         cal.setTime(fecha);
-        return cal.get(Calendar.YEAR);  
+        return cal.get(Calendar.YEAR);
     }
 
     public void GenerarLibroRemuneracionesAtrasado(final String year, final String month) {
         DateFormat date2 = new SimpleDateFormat("dd-MMMM-yyyy");
         NumberFormat FORMAT = NumberFormat.getCurrencyInstance();
         DecimalFormatSymbols dfs = new DecimalFormatSymbols();
-        
+
         Thread runnable;
-        runnable = new Thread(){
-            public void run(){
-                try{
+        runnable = new Thread() {
+            public void run() {
+                try {
                     DateFormat yearDate = new SimpleDateFormat("yyyy");
                     DateFormat monthDate = new SimpleDateFormat("M");
 //                    String month2 = monthDate.format(new Date());
@@ -1047,16 +1056,16 @@ public class controladorReportes {
                     double uf = remu.obtenerUF();
                     double utm = remu.obtenerUTM();
                     String[][] imp2cat = remu.obtenerTablaImpuesto();
-                    
+
                     //Listas para detalle afp y salud
                     HashMap<String, ArrayList<AfpInfo>> mapAfp = new HashMap<>();
                     HashMap<String, ArrayList<SaludInfo>> mapSalud = new HashMap<>();
                     List<AfpInfo> listaAfp = new ArrayList<>();
                     List<SaludInfo> listaSalud = new ArrayList<>();
-                    
+
                     modelos.modeloEmpleados emp = new modeloEmpleados();
                     String[][] data = emp.obtenerRemuneraciones2(Integer.parseInt(month), Integer.parseInt(year));
-                    
+
                     String path = "Libro de remuneraciones - " + month + "-" + year + ".xls";
                     File file = new File(path);
                     HSSFWorkbook workbook = new HSSFWorkbook();
@@ -1073,46 +1082,46 @@ public class controladorReportes {
                     //J para recorrer los datos de los trabajadores
                     int j = 0;
                     int numTrab = data.length;
-                    for(int i = 0; i < 2; i++){
+                    for (int i = 0; i < 2; i++) {
                         //Primera linea
-                        rowhead = sheet_rem.createRow((short) 0+ i*34);
+                        rowhead = sheet_rem.createRow((short) 0 + i * 34);
                         rowhead.createCell(0).setCellValue("parte:1");
                         rowhead.createCell(3).setCellValue("Libro de Remuneraciones - Gruas Santa Teresita FM Limitada");
                         rowhead.getCell(3).setCellStyle(style);
-                        rowhead.createCell(11).setCellValue("pag:"+(i+1));
-                        
+                        rowhead.createCell(11).setCellValue("pag:" + (i + 1));
+
                         rowhead.createCell(12).setCellValue("parte:2");
                         rowhead.createCell(15).setCellValue("Libro de Remuneraciones - Gruas Santa Teresita FM Limitada");
                         rowhead.getCell(15).setCellStyle(style);
-                        rowhead.createCell(23).setCellValue("pag:"+(i+1));
-                        
+                        rowhead.createCell(23).setCellValue("pag:" + (i + 1));
+
                         rowhead.createCell(24).setCellValue("parte:3");
                         rowhead.createCell(27).setCellValue("Libro de Remuneraciones - Gruas Santa Teresita FM Limitada");
                         rowhead.getCell(27).setCellStyle(style);
-                        rowhead.createCell(35).setCellValue("pag:"+(i+1));
-                        
+                        rowhead.createCell(35).setCellValue("pag:" + (i + 1));
+
                         //Segunda linea
-                        rowhead = sheet_rem.createRow((short) 1 + (i*34));
+                        rowhead = sheet_rem.createRow((short) 1 + (i * 34));
                         rowhead.createCell(0).setCellValue("Rut_empresa:77.037.960-1");
                         rowhead.createCell(2).setCellValue("Mes: " + month);
                         rowhead.createCell(4).setCellValue("Año: " + year);
                         rowhead.createCell(6).setCellValue("UF: $" + uf);
                         rowhead.createCell(9).setCellValue("UTM: $" + utm);
-                        
+
                         rowhead.createCell(12).setCellValue("Rut_empresa:77.037.960-1");
                         rowhead.createCell(14).setCellValue("Mes: " + month);
                         rowhead.createCell(16).setCellValue("Año: " + year);
                         rowhead.createCell(18).setCellValue("UF: $" + uf);
                         rowhead.createCell(21).setCellValue("UTM: $" + utm);
-                        
+
                         rowhead.createCell(24).setCellValue("Rut_empresa:77.037.960-1");
                         rowhead.createCell(26).setCellValue("Mes: " + month);
                         rowhead.createCell(28).setCellValue("Año: " + year);
                         rowhead.createCell(30).setCellValue("UF: $" + uf);
                         rowhead.createCell(33).setCellValue("UTM: $" + utm);
-                        
+
                         //Tercera linea
-                        rowhead = sheet_rem.createRow((short) 4 + (i*34));
+                        rowhead = sheet_rem.createRow((short) 4 + (i * 34));
                         rowhead.createCell(0).setCellValue("rut_trabajador");
                         rowhead.createCell(1).setCellValue("nombre_trabajador");
                         rowhead.createCell(2).setCellValue("dias_trab");
@@ -1125,7 +1134,7 @@ public class controladorReportes {
                         rowhead.createCell(9).setCellValue("otros_bonos");
                         rowhead.createCell(10).setCellValue("horas_extra");
                         rowhead.createCell(11).setCellValue("tot_h_imp");
-                        
+
                         rowhead.createCell(12).setCellValue("rut_trabajador");
                         rowhead.createCell(13).setCellValue("nombre_trabajador");
                         rowhead.createCell(14).setCellValue("colacion");
@@ -1138,7 +1147,7 @@ public class controladorReportes {
                         rowhead.createCell(21).setCellValue("afc_trab");
                         rowhead.createCell(22).setCellValue("afc_empl");
                         rowhead.createCell(23).setCellValue("tot_desc_leg");
-                        
+
                         rowhead.createCell(24).setCellValue("rut_trabajador");
                         rowhead.createCell(25).setCellValue("nombre_trabajador");
                         rowhead.createCell(26).setCellValue("imp_renta");
@@ -1150,13 +1159,15 @@ public class controladorReportes {
                         rowhead.createCell(32).setCellValue("tot_desc");
                         rowhead.createCell(33).setCellValue("total_a_pago");
                         rowhead.createCell(34).setCellValue("sis");
-                        
+
                         //Cuarta linea                        
-                        for(int k = 0; k < 28; k++, j++){
-                            if (j == numTrab) break;
+                        for (int k = 0; k < 28; k++, j++) {
+                            if (j == numTrab) {
+                                break;
+                            }
                             int base = Integer.parseInt(data[j][2]) * Integer.parseInt(data[j][28]) / 30;
                             //GRATIFICACION
-                            int grat = (int)(base * 0.25);
+                            int grat = (int) (base * 0.25);
                             //BONO ANTIGUEDAD
                             int bonoAnt = miControlador.obtenerBonoAnt(data[j][5]);
                             //BONO 300
@@ -1168,8 +1179,8 @@ public class controladorReportes {
                             //BONO ADICIONAL
                             double bonoCol1 = Double.parseDouble(data[j][8]);
                             double bonoCol30 = Double.parseDouble(data[j][9]);
-                            double bonoCol = bonoCol1 + bonoCol30/2;
-                            int totalBonCol = (int)Math.round(((double) base * 0.0077777) * bonoCol);
+                            double bonoCol = bonoCol1 + bonoCol30 / 2;
+                            int totalBonCol = (int) Math.round(((double) base * 0.0077777) * bonoCol);
                             //HORAS EXTRA
                             double horasExNor = Double.parseDouble(data[j][12]);
                             double horasExFes = Double.parseDouble(data[j][13]);
@@ -1177,50 +1188,50 @@ public class controladorReportes {
                             //total de horas extras normales = 1; festivas = 2
                             double totalHorex = 0;
                             double resHorEx = 0;
-                            if(horasExNor > 45){
+                            if (horasExNor > 45) {
                                 cantHorEx = 45;
                                 totalHorex = 45;
                                 resHorEx = horasExNor - 45;
-                            }else{
+                            } else {
                                 cantHorEx = horasExNor;
                                 totalHorex = cantHorEx;
                             }
-                            if(cantHorEx + horasExFes > 45) {
+                            if (cantHorEx + horasExFes > 45) {
                                 resHorEx = resHorEx + (horasExFes - 45 + cantHorEx) * 2;
                                 totalHorex = 45 - cantHorEx;
                                 cantHorEx = 45;
-                            }else{
+                            } else {
                                 cantHorEx += horasExFes;
                                 totalHorex += horasExFes * 2;
                             }
 
                             //BONO ASIGNACION VOLUNTARIA
                             double totalBonoAV = base * 0.0077777 * resHorEx;
-                            double valorHorEx = (int)((double) base * 0.0077777 * totalHorex);
+                            double valorHorEx = (int) ((double) base * 0.0077777 * totalHorex);
                             //TOTAL IMPONIBLE
                             double totImp = base + grat + bonoAnt + bonoAd + bonoResp + totalBonoAV + totalBonCol + totalBon300 + valorHorEx;
                             //DESCUENTO AFP
                             int descAFP = Integer.parseInt(data[j][21]);
-                            int totalAFP = (int)(totImp * ((double)descAFP / 10000));
-                            int sis = (int)(totImp * 0.0141);
+                            int totalAFP = (int) (totImp * ((double) descAFP / 10000));
+                            int sis = (int) (totImp * 0.0141);
                             //DESCUENTO SALUD
                             double descSalud = 0, totalSalud = 0;
                             String salud;
-                            if(data[j][4].toLowerCase().compareTo("fonasa") == 0){
+                            if (data[j][4].toLowerCase().compareTo("fonasa") == 0) {
                                 salud = "FONASA";
                                 descSalud = Integer.parseInt(data[j][22]);
-                                totalSalud = (int)(totImp * ((double)descSalud / 10000));
-                            }else{
-                                if(data[i][23].compareTo("") == 0){
+                                totalSalud = (int) (totImp * ((double) descSalud / 10000));
+                            } else {
+                                if (data[i][23].compareTo("") == 0) {
                                     salud = data[j][4];
-                                }else{
+                                } else {
                                     salud = data[j][23];
                                 }
-                                descSalud = ((double)Integer.parseInt(data[j][24]) / 1000) * uf;
+                                descSalud = ((double) Integer.parseInt(data[j][24]) / 1000) * uf;
                                 totalSalud = descSalud;
                             }
                             //DESCUENTO CESANTIA
-                            int ces = (int)(totImp * 0.006);
+                            int ces = (int) (totImp * 0.006);
                             int cesEmp = (int) (totImp * 0.024);
                             //DESCUENTOS LEGALES
                             double descLegales = ces + totalSalud + totalAFP;
@@ -1228,8 +1239,8 @@ public class controladorReportes {
                             double totTrib = totImp - totalAFP - totalSalud - ces;
                             int descRenta = 0;
                             double totAux = 0;
-                            for(String[] imp2cat1: imp2cat){
-                                if(totTrib > Float.parseFloat(imp2cat1[0]) / 10 && totTrib <= Float.parseFloat(imp2cat1[1]) / 10){
+                            for (String[] imp2cat1 : imp2cat) {
+                                if (totTrib > Float.parseFloat(imp2cat1[0]) / 10 && totTrib <= Float.parseFloat(imp2cat1[1]) / 10) {
                                     descRenta = (int) (totTrib * Float.parseFloat(imp2cat1[2]) / 1000 - Float.parseFloat(imp2cat1[3]) / 100);
                                     totAux = totTrib - descRenta;
                                     break;
@@ -1254,7 +1265,7 @@ public class controladorReportes {
                             int cuo = Integer.parseInt(data[j][20]);
                             int cuoPres = 0;
                             int cuores = Math.max(0, Integer.parseInt(data[j][26]) - 1);
-                            if(cuo != 0){
+                            if (cuo != 0) {
                                 cuoPres = pres / cuo;
                             }
                             //DESCUENTOS MENSUALES
@@ -1265,20 +1276,20 @@ public class controladorReportes {
                             int totDesc = antic + adel + cuoPres + caja;
                             //LIQUIDO
                             double liq = liqAl + col + trans + af - antic - adel - cuoPres;
-                            
+
                             //Agrego los datos de afp a listaAfp
                             String afp = data[j][3];
-                            if(mapAfp.get(afp) == null){
+                            if (mapAfp.get(afp) == null) {
                                 mapAfp.put(afp, new ArrayList<AfpInfo>());
                             }
-                            if(mapSalud.get(salud.toUpperCase()) == null){
+                            if (mapSalud.get(salud.toUpperCase()) == null) {
                                 mapSalud.put(salud.toUpperCase(), new ArrayList<SaludInfo>());
                             }
                             AfpInfo info = new AfpInfo(data[j][0], data[j][1], totImp, descAFP, sis, totalAFP);
                             mapAfp.get(afp).add(info);
                             SaludInfo sInfo = new SaludInfo(data[j][0], data[j][1], totImp, descSalud);
                             mapSalud.get(salud.toUpperCase()).add(sInfo);
-                            rowhead = sheet_rem.createRow((short) 5 + k + (i*34));
+                            rowhead = sheet_rem.createRow((short) 5 + k + (i * 34));
                             rowhead.createCell(0).setCellValue(data[j][0]);
                             rowhead.createCell(1).setCellValue(data[j][1]);
                             rowhead.createCell(2).setCellValue(Integer.parseInt(data[j][28]));
@@ -1291,7 +1302,7 @@ public class controladorReportes {
                             rowhead.createCell(9).setCellValue(bonoAd);
                             rowhead.createCell(10).setCellValue(valorHorEx);
                             rowhead.createCell(11).setCellValue(totImp);
-                            
+
                             rowhead.createCell(12).setCellValue(data[j][0]);
                             rowhead.createCell(13).setCellValue(data[j][1]);
                             rowhead.createCell(14).setCellValue(col);
@@ -1318,7 +1329,7 @@ public class controladorReportes {
                             rowhead.createCell(34).setCellValue(sis);
                         }
                     }
-                    
+
                     //Totales
                     rowhead = sheet_rem.createRow(66);
                     rowhead.createCell(2).setCellFormula("SUM(C6:C34,C40:C66)");
@@ -1331,7 +1342,7 @@ public class controladorReportes {
                     rowhead.createCell(9).setCellFormula("SUM(J6:J34,J40:J66)");
                     rowhead.createCell(10).setCellFormula("SUM(K6:K34,K40:K66)");
                     rowhead.createCell(11).setCellFormula("SUM(L6:L34,L40:L66)");
-                    
+
                     rowhead.createCell(14).setCellFormula("SUM(O6:O34,O40:O66)");
                     rowhead.createCell(15).setCellFormula("SUM(P6:P34,P40:P66)");
                     rowhead.createCell(16).setCellFormula("SUM(Q6:Q34,Q40:Q66)");
@@ -1342,7 +1353,7 @@ public class controladorReportes {
                     rowhead.createCell(21).setCellFormula("SUM(V6:V34,V40:V66)");
                     rowhead.createCell(22).setCellFormula("SUM(W6:W34,W40:W66)");
                     rowhead.createCell(23).setCellFormula("SUM(X6:X34,X40:X66)");
-                    
+
                     rowhead.createCell(26).setCellFormula("SUM(AA6:AA34,AA40:AA66)");
                     rowhead.createCell(27).setCellFormula("SUM(AB6:AB34,AB40:AB66)");
                     rowhead.createCell(28).setCellFormula("SUM(AC6:AC34,AC40:AC66)");
@@ -1352,8 +1363,7 @@ public class controladorReportes {
                     rowhead.createCell(32).setCellFormula("SUM(AG6:AG34,AG40:AG66)");
                     rowhead.createCell(33).setCellFormula("SUM(AH6:AH34,AH40:AH66)");
                     rowhead.createCell(34).setCellFormula("SUM(AI6:AI34,AI40:AI66)");
-                    
-                    
+
                     //Hoja detalle afp
                     j = 0;
 
@@ -1364,15 +1374,15 @@ public class controladorReportes {
                     rowhead.createCell(11).setCellValue("pag:1");
 
                     //Segunda linea
-                    rowhead = sheet_afp.createRow((short) j++ );
+                    rowhead = sheet_afp.createRow((short) j++);
                     rowhead.createCell(0).setCellValue("Rut_empresa:77.037.960-1");
                     rowhead.createCell(2).setCellValue("Mes: " + month);
                     rowhead.createCell(4).setCellValue("Año: " + year);
                     rowhead.createCell(6).setCellValue("UF: $" + uf);
                     rowhead.createCell(9).setCellValue("UTM: $" + utm);
 
-                    j+=2;
-                    for(String key : mapAfp.keySet()){
+                    j += 2;
+                    for (String key : mapAfp.keySet()) {
                         List<AfpInfo> aux = mapAfp.get(key);
                         rowhead = sheet_afp.createRow((short) j++);
                         rowhead.createCell(5).setCellValue("AFP " + key);
@@ -1385,7 +1395,7 @@ public class controladorReportes {
                         rowhead.createCell(4).setCellValue("sis");
                         rowhead.createCell(5).setCellValue("tot_afp");
                         rowhead.createCell(8).setCellValue("afiliados: " + aux.size());
-                        for(AfpInfo usuario : aux){
+                        for (AfpInfo usuario : aux) {
                             rowhead = sheet_afp.createRow((short) j++);
                             rowhead.createCell(0).setCellValue(usuario.getRut());
                             rowhead.createCell(1).setCellValue(usuario.getNombre());
@@ -1396,13 +1406,13 @@ public class controladorReportes {
                         }
                         rowhead = sheet_afp.createRow((short) j++);
                         int totalTrab = aux.size();
-                        rowhead.createCell(2).setCellFormula("SUM(C" + (j-totalTrab) + ":C" + (j-1) + ")");
-                        rowhead.createCell(3).setCellFormula("SUM(D" + (j-totalTrab) + ":D" + (j-1) + ")");
-                        rowhead.createCell(4).setCellFormula("SUM(E" + (j-totalTrab) + ":E" + (j-1) + ")");
-                        rowhead.createCell(5).setCellFormula("SUM(F" + (j-totalTrab) + ":F" + (j-1) + ")");
+                        rowhead.createCell(2).setCellFormula("SUM(C" + (j - totalTrab) + ":C" + (j - 1) + ")");
+                        rowhead.createCell(3).setCellFormula("SUM(D" + (j - totalTrab) + ":D" + (j - 1) + ")");
+                        rowhead.createCell(4).setCellFormula("SUM(E" + (j - totalTrab) + ":E" + (j - 1) + ")");
+                        rowhead.createCell(5).setCellFormula("SUM(F" + (j - totalTrab) + ":F" + (j - 1) + ")");
                         j++;
                     }
-                    
+
                     //Hoja detalle salud
                     j = 0;
 
@@ -1413,15 +1423,15 @@ public class controladorReportes {
                     rowhead.createCell(11).setCellValue("pag:1");
 
                     //Segunda linea
-                    rowhead = sheet_salud.createRow((short) j++ );
+                    rowhead = sheet_salud.createRow((short) j++);
                     rowhead.createCell(0).setCellValue("Rut_empresa:77.037.960-1");
                     rowhead.createCell(2).setCellValue("Mes: " + month);
                     rowhead.createCell(4).setCellValue("Año: " + year);
                     rowhead.createCell(6).setCellValue("UF: $" + uf);
                     rowhead.createCell(9).setCellValue("UTM: $" + utm);
 
-                    j+=2;
-                    for(String key : mapSalud.keySet()){
+                    j += 2;
+                    for (String key : mapSalud.keySet()) {
                         List<SaludInfo> aux = mapSalud.get(key);
                         rowhead = sheet_salud.createRow((short) j++);
                         rowhead.createCell(5).setCellValue("Isapre " + key);
@@ -1432,7 +1442,7 @@ public class controladorReportes {
                         rowhead.createCell(2).setCellValue("tot_h_imp");
                         rowhead.createCell(3).setCellValue("desc_salud");
                         rowhead.createCell(8).setCellValue("afiliados: " + aux.size());
-                        for(SaludInfo usuario : aux){
+                        for (SaludInfo usuario : aux) {
                             rowhead = sheet_salud.createRow((short) j++);
                             rowhead.createCell(0).setCellValue(usuario.getRut());
                             rowhead.createCell(1).setCellValue(usuario.getNombre());
@@ -1441,22 +1451,22 @@ public class controladorReportes {
                         }
                         rowhead = sheet_salud.createRow((short) j++);
                         int totalTrab = aux.size();
-                        rowhead.createCell(2).setCellFormula("SUM(C" + (j-totalTrab) + ":C" + (j-1) + ")");
-                        rowhead.createCell(3).setCellFormula("SUM(D" + (j-totalTrab) + ":D" + (j-1) + ")");
+                        rowhead.createCell(2).setCellFormula("SUM(C" + (j - totalTrab) + ":C" + (j - 1) + ")");
+                        rowhead.createCell(3).setCellFormula("SUM(D" + (j - totalTrab) + ":D" + (j - 1) + ")");
                         j++;
                     }
-                    
+
                     FileOutputStream fileOut;
                     fileOut = new FileOutputStream(file);
                     workbook.write(fileOut);
                     fileOut.close();
                     JOptionPane.showMessageDialog(null, "Libro de remuneraciones generado con éxito", "Operación exitosa",
                             JOptionPane.INFORMATION_MESSAGE);
-                }catch(IOException ie){
+                } catch (IOException ie) {
                     JOptionPane.showMessageDialog(null, "El archivo està siendo ocupado\nCierre el archivo y vuelva a intentarlo", "Error",
                             JOptionPane.INFORMATION_MESSAGE);
                     ie.printStackTrace();
-                }catch(Exception e){
+                } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Error al crear libro de remuneraciones", "Error",
                             JOptionPane.INFORMATION_MESSAGE);
                     e.printStackTrace();
@@ -1464,5 +1474,153 @@ public class controladorReportes {
             }
         };
         runnable.start();
+    }
+
+    public boolean generarInformeCobranza(final JTable tabla, final int[] rows) {
+        DateFormat perDate = new SimpleDateFormat("MMMM-yyyy");
+        DateFormat date = new SimpleDateFormat("dd-MM-yyyy");
+        final String per = date.format(new Date());
+        final NumberFormat FORMAT = NumberFormat.getCurrencyInstance();
+        final DecimalFormatSymbols dfs = new DecimalFormatSymbols();
+        Thread runnable = new Thread() {
+            public void run() {
+                try {
+                    dfs.setCurrencySymbol("$ ");
+                    dfs.setGroupingSeparator('.');
+                    dfs.setMonetaryDecimalSeparator('.');
+                    ((DecimalFormat) FORMAT).setDecimalFormatSymbols(dfs);
+                    String path = "Informes de cobranza/" + tabla.getValueAt(rows[0], 2);
+                    File dir = new File(path);
+                    dir.mkdirs();
+                    String fileName = path + "/" + per + ".pdf"; // name of our file
+                    PDDocument doc = new PDDocument();
+                    PDPage page = new PDPage();
+                    doc.addPage(page);
+                    PDPageContentStream content = new PDPageContentStream(doc, page);
+                    int total = 0;
+                    modeloClientes model = new modeloClientes();
+                    String[] data = model.obtenerRutContactoPorRazon(tabla.getValueAt(rows[0], 2).toString());
+                        try {
+                            //HEADER
+                            content.beginText();
+                            content.setFont(PDType1Font.HELVETICA, 10);
+                            content.setLeading(14.5f);
+                            content.moveTextPositionByAmount(50, 770);
+                            content.endText();
+                            
+                            content.drawLine(30, 750, 600, 750);
+                            File imagen = new File(("src/icono/Logo_Gruas.bmp"));
+                            String imPath = imagen.getAbsolutePath();
+                            System.out.println(imPath);
+                            PDImageXObject image = PDImageXObject.createFromFile(imPath, doc);
+                            content.drawImage(image, 50, 600);
+                            
+                            content.beginText();
+                            content.moveTextPositionByAmount(400, 680);
+                            content.showText("INFORME COBRANZA");
+                            content.newLine();
+                            content.showText(per);
+                            content.newLineAtOffset(-130, -80);
+                            content.showText("CLIENTE");
+                            content.newLine();
+                            content.endText();
+
+                            content.drawLine(30, 580, 600, 580);
+                            
+                            content.beginText();
+                            content.moveTextPositionByAmount(50, 560);
+                            content.showText("Rut: ");
+                            content.newLineAtOffset(100, 0);
+                            content.showText(data[0]);
+                            content.newLineAtOffset(-100, -15);
+                            content.showText("Razón Social:");
+                            content.newLineAtOffset(100, 0);
+                            content.showText(data[1]);
+                            content.newLineAtOffset(-100, -15);
+                            content.showText("Contacto:");
+                            content.newLineAtOffset(100, 0);
+
+                            content.newLine();
+                            content.endText();
+                            
+                            content.drawLine(30, 510, 600, 510);
+                            
+                            content.beginText();
+                            content.moveTextPositionByAmount(50, 480);
+                            content.showText("Estimado cliente, las facturas que se exponen a continuación se encuentran pendientes");
+                            content.newLine();
+                            content.showText("de pago. Favor regularizar la situación.");
+                            content.endText();
+                            
+                            content.drawLine(30, 440, 600, 440);
+                            
+                            content.beginText();
+                            content.moveTextPositionByAmount(70, 430);
+                            content.showText("N° Folio");
+                            content.newLineAtOffset(70, 0);
+                            content.showText("Fecha");
+                            content.newLineAtOffset(70, 0);
+                            content.showText("Días emisión");
+                            content.newLineAtOffset(80, 0);
+                            content.showText("Total factura");
+                            content.newLineAtOffset(80, 0);
+                            content.showText("Monto abono");
+                            content.newLineAtOffset(80, 0);
+                            content.showText("Saldo deuda");
+                            content.newLineAtOffset(80, 0);
+                            content.endText();
+                            
+                            content.drawLine(30, 425, 600, 425);
+                            
+                            content.beginText();
+                            content.moveTextPositionByAmount(75, 390);
+                            for (int row : rows) {
+                                String folio = tabla.getValueAt(row, 0).toString();
+                                String fecha = tabla.getValueAt(row, 3).toString();
+                                String dias = tabla.getValueAt(row, 4).toString();
+                                int monto = Integer.parseInt(tabla.getValueAt(row, 7).toString());
+                                int abono = Integer.parseInt(tabla.getValueAt(row, 11).toString());
+                                int saldo = Integer.parseInt(tabla.getValueAt(row, 12).toString());
+                                total += saldo;
+                                
+                                content.showText(folio);
+                                content.newLineAtOffset(60, 0);
+                                content.showText(fecha);
+                                content.newLineAtOffset(90, 0);
+                                content.showText(dias);
+                                content.newLineAtOffset(70, 0);
+                                content.showText(FORMAT.format(monto));
+                                content.newLineAtOffset(80, 0);
+                                content.showText(FORMAT.format(abono));
+                                content.newLineAtOffset(80, 0);
+                                content.showText(FORMAT.format(saldo));
+                                content.newLineAtOffset(-380, -15);
+                            }
+                            
+                            content.newLineAtOffset(310, -45);
+                            content.showText("Total deuda");
+                            content.newLineAtOffset(70, 0);
+                            content.showText(FORMAT.format(total));
+                            content.endText();
+                            
+                            content.close();
+                            doc.save(fileName); // saving as pdf file with name perm 
+                            doc.close(); // cleaning memory 
+                            
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        
+                    JOptionPane.showMessageDialog(null, "Informe de cobranza generado con éxito", "Operación exitosa",
+                            JOptionPane.INFORMATION_MESSAGE);
+//                    liquidaciones.limpiarRemuneraciones();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        //runnable.run();
+        runnable.start();
+        return true;
     }
 }

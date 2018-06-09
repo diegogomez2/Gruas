@@ -30,7 +30,7 @@ public class controladorFacturas {
         return vistaFacturasP;
     }
     
-    public void crearControladorPrincipal(JTabbedPane tabs){
+    public void crearControladorPrincipal(JTabbedPane tabs) throws ParseException{
         controladorPrincipal miControlador = new controladorPrincipal();
         tabs.remove(4);
         tabs.remove(4);

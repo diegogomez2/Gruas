@@ -16,7 +16,7 @@ import javax.swing.JTabbedPane;
 public class controladorHistorico {
     static vistas.vistaHistoricoOt vistaHistoricoP;
     
-    JPanel mostrarTabControlHistorico(String tipo, Object[][] data) {
+    JPanel mostrarTabControlHistorico(String tipo, Object[][] data) throws ParseException {
         vistaHistoricoP = new vistas.vistaHistoricoOt(tipo, data);  
         return vistaHistoricoP;
     }

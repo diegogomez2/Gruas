@@ -240,7 +240,7 @@ public class controladorCrearFacturaOC {
                     detalle.appendChild(prcItem);
                     //REVISAR EL DSCO
 //                    int descEfectivo = 0;
-//                    int newMonto = (int)(Float.parseFloat(valores.get(j).get(0)) * Float.parseFloat(valores.get(j).get(3)) - Float.parseFloat(desc));
+                    int newMonto = (int)(Float.parseFloat(valorNeto) * Float.parseFloat("1"));
 //                    if(newMonto >= 0){
 //                        descEfectivo = Integer.parseInt(desc);
 //                    }else{
@@ -251,9 +251,10 @@ public class controladorCrearFacturaOC {
 //                        descItem.appendChild(doc.createTextNode(String.valueOf(descEfectivo)));
 //                        detalle.appendChild(descItem);
 //                    }
-                    
                     //REVISAR TB
-//                    Element mtoItem = doc.createElement("MontoItem");
+                    Element mtoItem = doc.createElement("MontoItem");
+                    mtoItem.appendChild(doc.createTextNode(String.valueOf(newMonto)));
+                    detalle.appendChild(mtoItem);
 //                    if(newMonto >= 0){
 //                        desc = "0";
 //                        mtoItem.appendChild(doc.createTextNode(String.valueOf(newMonto)));

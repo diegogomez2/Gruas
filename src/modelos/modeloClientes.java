@@ -254,6 +254,29 @@ public class modeloClientes {
         return data;
     }
     
+    public String[] obtenerRutContactoPorRazon(String razon){
+        String[] data = {};
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, login, password);
+            PreparedStatement pstm = conn.prepareStatement("SELECT rut_cli, dig_cli, raz_cli, coalesce(con_cli, '') con_cli FROM Clientes WHERE raz_cli = ?");
+            pstm.setString(1, razon);
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            String estrut = res.getString("rut_cli");
+            String estdig = res.getString("dig_cli");
+            String estraz = res.getString("raz_cli");
+            String estcon = res.getString("con_cli");
+            data = new String[]{estrut + "-" + estdig, estraz, estcon};
+        }catch(SQLException e){
+            System.out.println("Error al obtener obs por razon");
+            System.out.println(e);
+        }catch(ClassNotFoundException e){
+            System.out.println(e);
+        }
+        return data;
+    }
+    
     public Object[][] listarReporteClientes(){
         int registros = 0;
         

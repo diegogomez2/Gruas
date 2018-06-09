@@ -15,7 +15,7 @@ import javax.swing.JTabbedPane;
  */public class controladorOts {
     static vistas.vistaOtsP vistaOtsP;
     
-    JPanel mostrarTabControlOts(String tipo, Object[][] data) {
+    JPanel mostrarTabControlOts(String tipo, Object[][] data) throws ParseException {
         vistaOtsP = new vistas.vistaOtsP(tipo, data);  
         return vistaOtsP;
     }
@@ -32,7 +32,7 @@ import javax.swing.JTabbedPane;
         return idFact;
     }
 
-    public void crearControladorPrincipal(JTabbedPane tabs){
+    public void crearControladorPrincipal(JTabbedPane tabs) throws ParseException{
         controladorPrincipal miControlador = new controladorPrincipal();
         tabs.remove(4);
         tabs.remove(4);

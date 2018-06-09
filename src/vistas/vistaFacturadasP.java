@@ -9,10 +9,13 @@ import java.awt.Component;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
@@ -39,13 +42,12 @@ public class vistaFacturadasP extends javax.swing.JPanel {
     NumberFormat FORMAT = NumberFormat.getCurrencyInstance();
     DecimalFormatSymbols dfs = new DecimalFormatSymbols();
     
-    public vistaFacturadasP(String tipo, Object[][] data) {
+    public vistaFacturadasP(String tipo, Object[][] data) throws ParseException {
         initComponents();
         dfs.setCurrencySymbol("$");
         dfs.setGroupingSeparator('.');
         dfs.setMonetaryDecimalSeparator('.');
         ((DecimalFormat) FORMAT).setDecimalFormatSymbols(dfs);
-        botonGuiaDesp.setVisible(false);
         datos = new MyTableModel(data);
         tablaFacturadas.setModel(datos);
         tablaFacturadas.getColumnModel().getColumn(7).setCellRenderer(new CurrencyTableCellRenderer());
@@ -85,7 +87,6 @@ public class vistaFacturadasP extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaFacturadas = new javax.swing.JTable();
         botonGenerarNC = new javax.swing.JButton();
-        botonGuiaDesp = new javax.swing.JButton();
         textoFiltro = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         botonActualizar = new javax.swing.JButton();
@@ -108,13 +109,6 @@ public class vistaFacturadasP extends javax.swing.JPanel {
         botonGenerarNC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonGenerarNCActionPerformed(evt);
-            }
-        });
-
-        botonGuiaDesp.setText("Generar guía despacho");
-        botonGuiaDesp.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonGuiaDespActionPerformed(evt);
             }
         });
 
@@ -149,14 +143,9 @@ public class vistaFacturadasP extends javax.swing.JPanel {
                         .addComponent(textoFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(botonGuiaDesp)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botonGenerarNC)))
                 .addContainerGap())
         );
-
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {botonGenerarNC, botonGuiaDesp});
-
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -168,9 +157,7 @@ public class vistaFacturadasP extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botonGenerarNC)
-                    .addComponent(botonGuiaDesp))
+                .addComponent(botonGenerarNC)
                 .addGap(11, 11, 11))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -239,25 +226,6 @@ public class vistaFacturadasP extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_botonGenerarNCActionPerformed
 
-    private void botonGuiaDespActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuiaDespActionPerformed
-//        String id;
-//        //controladores.controladorPrincipal miControladorP = new controladores.controladorPrincipal();
-//        controladores.controladorFacturadas miControlador = new controladores.controladorFacturadas();
-//        controladores.controladorCrearFactura miControladorC = new controladores.controladorCrearFactura();
-//        boolean selected = tablaFacturadas.getSelectedRowCount() > 0;
-//        if(selected){
-//            int row = getFilaSeleccionada();
-//            id = getIdFila(row);
-//            String[] ots = miControlador.obtenerOtsPorIdFacturada(id);
-//            if((miControladorC.crearGuiaDespXML(ots, id).compareTo("correcto") == 0)){
-//                JTabbedPane tabs = (JTabbedPane)this.getParent();
-//                miControlador.crearControladorPrincipal(tabs);
-//            } 
-//        }else{
-//            JOptionPane.showMessageDialog(null, "Debe seleccionar una factura para generar una guía de despacho");
-//        }
-    }//GEN-LAST:event_botonGuiaDespActionPerformed
-
     private void textoFiltroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoFiltroKeyReleased
         String query = textoFiltro.getText();
         filtrar(query);
@@ -273,7 +241,6 @@ public class vistaFacturadasP extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonActualizar;
     private javax.swing.JButton botonGenerarNC;
-    private javax.swing.JButton botonGuiaDesp;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaFacturadas;
@@ -302,24 +269,26 @@ public class vistaFacturadasP extends javax.swing.JPanel {
           super(new String[]{"N°Folio", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
              "Neto", "IVA", "Total", "Tipo"}, 0);
         }
-        public MyTableModel(Object[][] data){
+        public MyTableModel(Object[][] data) throws ParseException{
             super(new String[]{"N°Folio", "Razon", "Giro", "Dirección", "Ciudad", "Comuna", "Fecha",
              "Neto", "IVA", "Total", "Tipo"}, 0);
                 int i = 0;
             try{
                 this.setRowCount(data.length);
+                DateFormat fecfor = new SimpleDateFormat("dd-MM-yy");
                 for(Object[] data1 : data){
                     int fol = Integer.parseInt(data1[0].toString());
                     int neto = Integer.parseInt(data1[7].toString());
                     int iva = Integer.parseInt(data1[8].toString());
                     int tot = Integer.parseInt(data1[9].toString());
+                    Date fecha = fecfor.parse(data1[6].toString());
                     this.setValueAt(fol, i, 0);
                     this.setValueAt(data1[1], i, 1);
                     this.setValueAt(data1[2], i, 2);
                     this.setValueAt(data1[3], i, 3);
                     this.setValueAt(data1[4], i, 4);
                     this.setValueAt(data1[5], i, 5);
-                    this.setValueAt(data1[6], i, 6);
+                    this.setValueAt(fecha, i, 6);
                     this.setValueAt(neto, i, 7);
                     this.setValueAt(iva, i, 8);
                     this.setValueAt(tot, i, 9);

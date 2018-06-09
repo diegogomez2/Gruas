@@ -7,11 +7,11 @@ package vistas;
 
 import controladores.controladorPrincipal;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -32,7 +32,7 @@ public class vistaPrincipal extends javax.swing.JFrame {
      */
     SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
     
-    public vistaPrincipal() {
+    public vistaPrincipal() throws ParseException {
         initComponents();
         setLocationRelativeTo(null);
         controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
@@ -439,17 +439,21 @@ public class vistaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuOperacionesActionPerformed
 
     private void itemOperacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemOperacionesActionPerformed
-        vistaPrincipal.removeAll();
-        controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
-        vistaPrincipal.addTab("Clientes", miControlador.crearControladorClientesP());
-        vistaPrincipal.addTab("Grúas", miControlador.crearControladorGruasP());
-        vistaPrincipal.addTab("Trabajadores", miControlador.crearControladorEmpleadosP());
-        vistaPrincipal.addTab("Jornada diaria", miControlador.crearControladorJornadaP());
-        vistaPrincipal.addTab("OTs", miControlador.crearControladorOtsP());
-        vistaPrincipal.addTab("A facturar", miControlador.crearControladorFacturasP());
-        vistaPrincipal.addTab("Facturadas", miControlador.crearControladorFacturadasP());
-        vistaPrincipal.addTab("Histórico", miControlador.crearControladorHistoricoP());
-        //vistaPrincipal.addTab("Usuarios", miControlador.crearControladorUsuariosP());
+        try{
+            vistaPrincipal.removeAll();
+            controladores.controladorPrincipal miControlador = new controladores.controladorPrincipal();
+            vistaPrincipal.addTab("Clientes", miControlador.crearControladorClientesP());
+            vistaPrincipal.addTab("Grúas", miControlador.crearControladorGruasP());
+            vistaPrincipal.addTab("Trabajadores", miControlador.crearControladorEmpleadosP());
+            vistaPrincipal.addTab("Jornada diaria", miControlador.crearControladorJornadaP());
+            vistaPrincipal.addTab("OTs", miControlador.crearControladorOtsP());
+            vistaPrincipal.addTab("A facturar", miControlador.crearControladorFacturasP());
+            vistaPrincipal.addTab("Facturadas", miControlador.crearControladorFacturadasP());
+            vistaPrincipal.addTab("Histórico", miControlador.crearControladorHistoricoP());
+            //vistaPrincipal.addTab("Usuarios", miControlador.crearControladorUsuariosP());
+        }catch(ParseException e){
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_itemOperacionesActionPerformed
 
     private void itemComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemComprasActionPerformed
@@ -662,7 +666,11 @@ public class vistaPrincipal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new vistaPrincipal().setVisible(true);
+                try {
+                    new vistaPrincipal().setVisible(true);
+                } catch (ParseException ex) {
+                    Logger.getLogger(vistaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
