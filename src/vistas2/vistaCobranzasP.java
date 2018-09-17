@@ -419,7 +419,7 @@ public class vistaCobranzasP extends javax.swing.JPanel {
                 this.setValueAt(data1[13], i, 14);
                 this.setValueAt(data1[14], i, 15);
                 this.setValueAt(data1[15], i, 16);
-                if(i == 448) break;
+                //if(i == 448) break;
                 i++;
             }
         }
@@ -483,7 +483,11 @@ public class vistaCobranzasP extends javax.swing.JPanel {
         setHorizontalAlignment(SwingConstants.LEFT);
         setBackground(Color.white);
         setForeground(Color.black);
-        String valor = table.getModel().getValueAt(table.convertRowIndexToModel(row),12).toString();
+        String valor;
+            valor = table.getModel().getValueAt(table.convertRowIndexToModel(row),12).toString(); 
+
+        //String valor = table.getModel().getValueAt(table.convertRowIndexToModel(row),12).toString() != null ? 
+                //table.getModel().getValueAt(table.convertRowIndexToModel(row),12).toString() : "SIN TOTAL";
 //        Object val = -1;
 //        try{
 //            val = FORMAT.parse(valor);

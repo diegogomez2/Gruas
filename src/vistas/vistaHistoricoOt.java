@@ -160,7 +160,11 @@ public class vistaHistoricoOt extends javax.swing.JPanel {
     private void botonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarActionPerformed
         controladores.controladorHistorico miControlador = new controladores.controladorHistorico();
         JTabbedPane tabs = (JTabbedPane)this.getParent();
-        miControlador.crearControladorPrincipal(tabs);
+        try {
+            miControlador.crearControladorPrincipal(tabs);
+        } catch (ParseException ex) {
+            Logger.getLogger(vistaHistoricoOt.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botonActualizarActionPerformed
 
 
@@ -202,7 +206,7 @@ public class vistaHistoricoOt extends javax.swing.JPanel {
                 this.setValueAt(data1[3], i, 3);
                 this.setValueAt(data1[4], i, 4);
                 this.setValueAt(data1[5], i, 5);
-                this.setValueAt(fecfor, i, 6);
+                this.setValueAt(data1[6], i, 6);
                 this.setValueAt(neto, i, 7);
                 this.setValueAt(iva, i, 8);
                 this.setValueAt(tot, i, 9);

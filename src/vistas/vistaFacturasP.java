@@ -274,7 +274,11 @@ public class vistaFacturasP extends javax.swing.JPanel {
                     } catch (ParseException ex) {
                         Logger.getLogger(vistaFacturasP.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    miControlador.crearControladorPrincipal(tabs);
+                    try {
+                        miControlador.crearControladorPrincipal(tabs);
+                    } catch (ParseException ex) {
+                        Logger.getLogger(vistaFacturasP.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }else{
                 JOptionPane.showMessageDialog(null, "No se puede generar una boleta para clientes distintos");
@@ -328,7 +332,11 @@ public class vistaFacturasP extends javax.swing.JPanel {
                                     } catch (ParseException ex) {
                                         Logger.getLogger(vistaFacturasP.class.getName()).log(Level.SEVERE, null, ex);
                                     }
-                                    miControlador.crearControladorPrincipal(tabs);
+                                    try {
+                                        miControlador.crearControladorPrincipal(tabs);
+                                    } catch (ParseException ex) {
+                                        Logger.getLogger(vistaFacturasP.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
                                 }else{
                                     try {
                                         if ((miControlador.crearNotaDebXML(idOts, Integer.toString(neto), Integer.toString(iva),
@@ -384,7 +392,11 @@ public class vistaFacturasP extends javax.swing.JPanel {
                     } catch (ParseException ex) {
                         Logger.getLogger(vistaFacturasP.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    miControlador.crearControladorPrincipal(tabs);
+                    try {
+                        miControlador.crearControladorPrincipal(tabs);
+                    } catch (ParseException ex) {
+                        Logger.getLogger(vistaFacturasP.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }else{
                 JOptionPane.showMessageDialog(null, "No se puede generar una factura exenta para clientes distintos");

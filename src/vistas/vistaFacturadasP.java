@@ -234,7 +234,11 @@ public class vistaFacturadasP extends javax.swing.JPanel {
     private void botonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarActionPerformed
         controladores.controladorFacturadas miControlador = new controladores.controladorFacturadas();
         JTabbedPane tabs = (JTabbedPane)this.getParent();
-        miControlador.crearControladorPrincipal(tabs);
+        try {
+            miControlador.crearControladorPrincipal(tabs);
+        } catch (ParseException ex) {
+            Logger.getLogger(vistaFacturadasP.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botonActualizarActionPerformed
 
 

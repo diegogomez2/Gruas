@@ -2009,7 +2009,7 @@ public class controladorCrearFactura {
         }
     }
     
-    public void crearControladorPrincipal(JTabbedPane tabs) {
+    public void crearControladorPrincipal(JTabbedPane tabs) throws ParseException {
         controladorPrincipal miControlador = new controladorPrincipal();
         tabs.remove(5);
         tabs.remove(6);
