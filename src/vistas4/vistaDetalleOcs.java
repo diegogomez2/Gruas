@@ -873,8 +873,8 @@ public class vistaDetalleOcs extends javax.swing.JDialog {
             tablaEmpleados.setValueAt(Double.parseDouble(data1[6].toString()), i, 5);
             tablaEmpleados.setValueAt(Double.parseDouble(data1[7].toString()), i, 6);
             tablaEmpleados.setValueAt(Double.parseDouble(data1[8].toString()), i, 7);
-            tablaEmpleados.setValueAt(Integer.parseInt(data1[9].toString()), i, 8);
-            tablaEmpleados.setValueAt(Integer.parseInt(data1[10].toString()), i, 9);
+            tablaEmpleados.setValueAt(Double.parseDouble(data1[9].toString()), i, 8);
+            tablaEmpleados.setValueAt(Double.parseDouble(data1[10].toString()), i, 9);
             tablaEmpleados.setValueAt(data1[11], i, 10);
             i++;
         }

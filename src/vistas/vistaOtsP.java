@@ -369,7 +369,7 @@ public class vistaOtsP extends javax.swing.JPanel {
     public void filtroPorRazon(String query) {
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<DefaultTableModel>(datos);
         tablaOts.setRowSorter(sorter);
-        sorter.setRowFilter(RowFilter.regexFilter(query));
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + query));
     }
     
     public class MyTableModel extends DefaultTableModel{

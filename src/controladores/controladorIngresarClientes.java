@@ -40,7 +40,7 @@ public class controladorIngresarClientes {
             if (rut_dv.length == 2) {
                 try {
                     int num = Integer.parseInt(rut_dv[0]);
-                    char dv = rut_dv[1].charAt(0);
+                    char dv = rut_dv[1].toLowerCase().charAt(0);
                     if (validarRut(num, dv)) {
                         return true;
                     } else {

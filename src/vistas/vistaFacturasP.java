@@ -201,39 +201,41 @@ public class vistaFacturasP extends javax.swing.JPanel {
             if(filas > 0){
                 String flag = verificarRazon();
                 if (flag.compareTo("correcto") == 0) {
-                    String[] idOts = new String[filas];
-                    int neto = 0, iva = 0, total = 0, desc = 0;
-                    for (int i = 0; i < filas; i++) {
-                        idOts[i] = getIdFact(i);
-                        desc = getDescFact(i);
+                    //docRef va en el tag observaciones
+                    String docRef = JOptionPane.showInputDialog("Ingrese documento de referencia: ");
+                    if(docRef != null){
+                        String[] idOts = new String[filas];
+                        int neto = 0, iva = 0, total = 0, desc = 0;
+                        for (int i = 0; i < filas; i++) {
+                            idOts[i] = getIdFact(i);
+                            desc = getDescFact(i);
 //                        neto += getNetoFact(i) - desc;
-                        neto += getNetoFact(i);
-                        iva += getIvaFact(i);
-                        total += getTotalFact(i);
-                    }
-                    controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
-                    String id = micontroladorFacturas.archivarFacturas(idOts, neto, iva, total, "factura", "0", "0");
-                    if(id.compareTo("-1") == 0){
-                        JOptionPane.showMessageDialog(null, "La factura ya había sido ingresada al sistema", "Error factura duplicada",
-                                JOptionPane.INFORMATION_MESSAGE);
-                        JTabbedPane tabs = (JTabbedPane) this.getParent();
-                        micontroladorOts.crearControladorPrincipal(tabs);
-                        miControlador.crearControladorPrincipal(tabs);
-                    }else{
-                        try {
-                            //docRef va en el tag observaciones
-                            String docRef = JOptionPane.showInputDialog("Ingrese documento de referencia: ");
-                            if ((miControlador.crearFacXML(idOts, Integer.toString(neto), Integer.toString(iva),
-                                    Integer.toString(total), id, docRef).compareTo("correcto") == 0)) {
-                                JTabbedPane tabs = (JTabbedPane) this.getParent();
-                                micontroladorOts.crearControladorPrincipal(tabs);
-                                miControlador.crearControladorPrincipal(tabs);
-                            }
-                        } catch (ParseException ex) {
-                            ex.printStackTrace();
+                            neto += getNetoFact(i);
+                            iva += getIvaFact(i);
+                            total += getTotalFact(i);
+                        }
+                        controladores.controladorFacturas micontroladorFacturas = new controladores.controladorFacturas();
+                        String id = micontroladorFacturas.archivarFacturas(idOts, neto, iva, total, "factura", "0", "0");
+                        if(id.compareTo("-1") == 0){
+                            JOptionPane.showMessageDialog(null, "La factura ya había sido ingresada al sistema", "Error factura duplicada",
+                                    JOptionPane.INFORMATION_MESSAGE);
+                            JTabbedPane tabs = (JTabbedPane) this.getParent();
+                            micontroladorOts.crearControladorPrincipal(tabs);
+                            miControlador.crearControladorPrincipal(tabs);
+                        }else{
+                            try {
+                                if ((miControlador.crearFacXML(idOts, Integer.toString(neto), Integer.toString(iva),
+                                        Integer.toString(total), id, docRef).compareTo("correcto") == 0)) {
+                                    JTabbedPane tabs = (JTabbedPane) this.getParent();
+                                    micontroladorOts.crearControladorPrincipal(tabs);
+                                    miControlador.crearControladorPrincipal(tabs);
+                                }
+                            } catch (ParseException ex) {
+                                ex.printStackTrace();
 //                            ex.printStackTrace(ps);
-                            Logger.getLogger(vistaFacturasP.class.getName()).log(Level.SEVERE, null, ex);
-                        } 
+                                Logger.getLogger(vistaFacturasP.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "No se puede generar una factura para clientes distintos");

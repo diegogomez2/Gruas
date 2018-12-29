@@ -236,7 +236,7 @@ public class vistaCobranzasP extends javax.swing.JPanel {
 
     private void botonCobranzaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCobranzaActionPerformed
         controladorCobranzas miControlador = new controladorCobranzas();
-        boolean selected = (tablaFacturadas.getSelectedRowCount() > 0 && tablaFacturadas.getSelectedRowCount() < 1);
+        boolean selected = (tablaFacturadas.getSelectedRowCount() > 0 && tablaFacturadas.getSelectedRowCount() == 1);
         if(selected){
             int row = getFilaSeleccionada();
             String id = getIdFila(row);
@@ -256,7 +256,7 @@ public class vistaCobranzasP extends javax.swing.JPanel {
 
     private void botonPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonPagoActionPerformed
         controladorCobranzas miControlador = new controladorCobranzas();
-        boolean selected = (tablaFacturadas.getSelectedRowCount() > 0 && tablaFacturadas.getSelectedRowCount() < 1);
+        boolean selected = (tablaFacturadas.getSelectedRowCount() > 0 && tablaFacturadas.getSelectedRowCount() == 1);
         if(selected){
             int row = getFilaSeleccionada();
             String id = getIdFila(row);
@@ -276,7 +276,7 @@ public class vistaCobranzasP extends javax.swing.JPanel {
 
     private void botonVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonVerActionPerformed
         controladorCobranzas miControlador = new controladorCobranzas();
-        boolean selected = (tablaFacturadas.getSelectedRowCount() > 0 && tablaFacturadas.getSelectedRowCount() < 1);
+        boolean selected = (tablaFacturadas.getSelectedRowCount() > 0 && tablaFacturadas.getSelectedRowCount() == 1);
         if(selected){
             int row = getFilaSeleccionada();
 //            String id = getIdFila(row);
@@ -296,7 +296,7 @@ public class vistaCobranzasP extends javax.swing.JPanel {
 
     private void botonVerPagosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonVerPagosActionPerformed
         controladorCobranzas miControlador = new controladorCobranzas();
-        boolean selected = (tablaFacturadas.getSelectedRowCount() > 0 && tablaFacturadas.getSelectedRowCount() < 1);
+        boolean selected = (tablaFacturadas.getSelectedRowCount() > 0 && tablaFacturadas.getSelectedRowCount() == 1);
         if(selected){
             int row = getFilaSeleccionada();
             String id = getFacFila(row);

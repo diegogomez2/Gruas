@@ -112,7 +112,9 @@ public class controladorIngresarOts {
         Date fecha2 = formatDate.parse(diaFin);
         int minHor;
         int horMin = 0, minMin = 0;
-        if(Integer.parseInt(ton) >= 11){
+        Double d = Double.parseDouble(ton);
+        Integer intTon = d.intValue();
+        if(intTon >= 11){
             minHor = 3;
         }else{
             minHor = 2;

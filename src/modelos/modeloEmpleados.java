@@ -298,8 +298,8 @@ public class modeloEmpleados {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, login, password);
-            PreparedStatement pstm = conn.prepareStatement("SELECT rut_emp FROM empleados WHERE apP_emp = ? "
-                    + "AND apM_emp = ? AND nom_emp = ?");
+            PreparedStatement pstm = conn.prepareStatement("SELECT rut_emp FROM empleados WHERE regexp_replace(apP_emp, ' +', ' ') = ? "
+                    + "AND regexp_replace(apM_emp, ' +', ' ') = ? AND regexp_replace(nom_emp, ' +', ' ')= ?");
             pstm.setString(1, apP);
             pstm.setString(2, apM);
             pstm.setString(3, nombres);

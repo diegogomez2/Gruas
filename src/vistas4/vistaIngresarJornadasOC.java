@@ -53,6 +53,7 @@ public class vistaIngresarJornadasOC extends javax.swing.JDialog {
 
     modelos.modeloClientes cliente = new modeloClientes();
     DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+    DateFormat formatDate2 = new SimpleDateFormat("dd-MM-yyyy");
     SimpleDateFormat formatClock = new SimpleDateFormat("HH:mm");
     DateFormat formatDia = new SimpleDateFormat("EEE");
     JComboBox comboGruas = new JComboBox();
@@ -91,15 +92,15 @@ public class vistaIngresarJornadasOC extends javax.swing.JDialog {
         tablaGruas.setModel(tg);
 
         tablaGruas.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(comboGruas));
-        tablaGruas.getColumnModel().getColumn(1).setCellEditor(new DatePickerCellEditor(formatDate));
+        tablaGruas.getColumnModel().getColumn(1).setCellEditor(new DatePickerCellEditor(formatDate2));
         tablaGruas.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(hora));
-        tablaGruas.getColumnModel().getColumn(3).setCellEditor(new DatePickerCellEditor(formatDate));
+        tablaGruas.getColumnModel().getColumn(3).setCellEditor(new DatePickerCellEditor(formatDate2));
         tablaGruas.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(hora));
         tablaEmpleados.setModel(te);
         tablaEmpleados.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(comboOperadores));
-        tablaEmpleados.getColumnModel().getColumn(1).setCellEditor(new DatePickerCellEditor(formatDate));
+        tablaEmpleados.getColumnModel().getColumn(1).setCellEditor(new DatePickerCellEditor(formatDate2));
         tablaEmpleados.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(hora));
-        tablaEmpleados.getColumnModel().getColumn(3).setCellEditor(new DatePickerCellEditor(formatDate));
+        tablaEmpleados.getColumnModel().getColumn(3).setCellEditor(new DatePickerCellEditor(formatDate2));
         tablaEmpleados.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(hora));
         tablaHoras.setModel(th);
         tg.setRowCount(0);

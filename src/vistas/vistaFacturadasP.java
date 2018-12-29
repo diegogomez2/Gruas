@@ -292,7 +292,7 @@ public class vistaFacturadasP extends javax.swing.JPanel {
                     this.setValueAt(data1[3], i, 3);
                     this.setValueAt(data1[4], i, 4);
                     this.setValueAt(data1[5], i, 5);
-                    this.setValueAt(fecha, i, 6);
+                    this.setValueAt(data1[6], i, 6);
                     this.setValueAt(neto, i, 7);
                     this.setValueAt(iva, i, 8);
                     this.setValueAt(tot, i, 9);

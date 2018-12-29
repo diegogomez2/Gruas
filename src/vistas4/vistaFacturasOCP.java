@@ -193,50 +193,50 @@ public class vistaFacturasOCP extends javax.swing.JPanel {
             if (filas > 0) {
                 String flag = verificarRazon();
                 if (flag.compareTo("correcto") == 0) {
-                    String[] idOcs = new String[filas];
-                    int neto = 0, iva = 0, total = 0, desc = 0;
-                    for (int i = 0; i < filas; i++) {
-                        idOcs[i] = getIdFact(i);
-                        desc = getDescFact(i);
-                        //                        neto += getNetoFact(i) - desc;
-                        neto += getNetoFact(i);
-                        iva += getIvaFact(i);
-                        total += getTotalFact(i);
-                    }
-                    controladores4.controladorFacturasOC micontroladorFacturasOC = new controladores4.controladorFacturasOC();
-                    String id = micontroladorFacturasOC.archivarFacturas(idOcs, neto, iva, total, "factura", "0", "0");
-                    if (id.compareTo("-1") == 0) {
-                        JOptionPane.showMessageDialog(null, "La factura ya había sido ingresada al sistema", "Error factura duplicada",
-                                JOptionPane.INFORMATION_MESSAGE);
-                        JTabbedPane tabs = (JTabbedPane) this.getParent();
-                        micontroladorOcs.crearControladorPrincipal(tabs);
-                        miControlador.crearControladorPrincipalOC(tabs);
-                    } else {
-                        try {
-                            //docRef va en el tag observaciones, orden va en el tag detalle
-                            String docRef, orden;
-                            JTextField documentoRef = new JTextField();
-                            JTextField numOrden = new JTextField();
-                            Object[] message = {
-                                "Ingrese documento de referencia: ", documentoRef,
-                                "Número de orden: ", numOrden
-                            };
-//                            String docRef = JOptionPane.showInputDialog("Ingrese documento de referencia: ");
-                            int resp = JOptionPane.showConfirmDialog(null, message, "Datos de facturación: ", JOptionPane.OK_CANCEL_OPTION);
-                            if (resp == JOptionPane.YES_OPTION) {
-                                docRef = documentoRef.getText();
-                                orden = numOrden.getText();
-                                if ((miControlador.crearFacXML(idOcs, Integer.toString(neto), Integer.toString(iva),
-                                        Integer.toString(total), id, docRef, orden).compareTo("correcto") == 0)) {
-                                    JTabbedPane tabs = (JTabbedPane) this.getParent();
-                                    //micontroladorOcs.crearControladorPrincipal(tabs);
-                                    miControlador.crearControladorPrincipalOC(tabs);
-                                }
+                    //docRef va en el tag observaciones, orden va en el tag detalle
+                    String docRef, orden;
+                    JTextField documentoRef = new JTextField();
+                    JTextField numOrden = new JTextField();
+                    Object[] message = {
+                            "Ingrese documento de referencia: ", documentoRef,
+                            "Número de orden: ", numOrden
+                    };
+                    int resp = JOptionPane.showConfirmDialog(null, message, "Datos de facturación: ", JOptionPane.OK_CANCEL_OPTION);
+                    if (resp == JOptionPane.YES_OPTION) {
+                        String[] idOcs = new String[filas];
+                        int neto = 0, iva = 0, total = 0, desc = 0;
+                        for (int i = 0; i < filas; i++) {
+                            idOcs[i] = getIdFact(i);
+                            desc = getDescFact(i);
+                            //                        neto += getNetoFact(i) - desc;
+                            neto += getNetoFact(i);
+                            iva += getIvaFact(i);
+                            total += getTotalFact(i);
+                        }
+                        controladores4.controladorFacturasOC micontroladorFacturasOC = new controladores4.controladorFacturasOC();
+                        String id = micontroladorFacturasOC.archivarFacturas(idOcs, neto, iva, total, "factura", "0", "0");
+                        if (id.compareTo("-1") == 0) {
+                            JOptionPane.showMessageDialog(null, "La factura ya había sido ingresada al sistema", "Error factura duplicada",
+                                    JOptionPane.INFORMATION_MESSAGE);
+                            JTabbedPane tabs = (JTabbedPane) this.getParent();
+                            micontroladorOcs.crearControladorPrincipal(tabs);
+                            miControlador.crearControladorPrincipalOC(tabs);
+                        } else {
+                            try {
+    //                            String docRef = JOptionPane.showInputDialog("Ingrese documento de referencia: ");
+                                    docRef = documentoRef.getText();
+                                    orden = numOrden.getText();
+                                    if ((miControlador.crearFacXML(idOcs, Integer.toString(neto), Integer.toString(iva),
+                                            Integer.toString(total), id, docRef, orden).compareTo("correcto") == 0)) {
+                                        JTabbedPane tabs = (JTabbedPane) this.getParent();
+                                        //micontroladorOcs.crearControladorPrincipal(tabs);
+                                        miControlador.crearControladorPrincipalOC(tabs);
+                                    }
+                            } catch (ParseException ex) {
+                                ex.printStackTrace();
+                                //                            ex.printStackTrace(ps);
+                                Logger.getLogger(vistaFacturasOCP.class.getName()).log(Level.SEVERE, null, ex);
                             }
-                        } catch (ParseException ex) {
-                            ex.printStackTrace();
-                            //                            ex.printStackTrace(ps);
-                            Logger.getLogger(vistaFacturasOCP.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
                 } else {
